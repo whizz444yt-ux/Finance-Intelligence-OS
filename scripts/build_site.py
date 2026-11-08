@@ -48,11 +48,12 @@ def json_script(value):
 def shell(title, description, body, canonical_path='/', extra_head=''):
     canonical = f'<link rel="canonical" href="{escape(SITE_URL + canonical_path)}">' if SITE_URL else '<meta name="robots" content="noindex,follow">'
     og_url = escape(SITE_URL + canonical_path) if SITE_URL else ''
+    speed_insights = '<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script><script defer src="/_vercel/speed-insights/script.js"></script>'
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)}</title><meta name="description" content="{escape(description)}">{canonical}
 <meta property="og:type" content="website"><meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta property="og:image" content="{escape((SITE_URL + '/assets/social-card.png') if SITE_URL else '/assets/social-card.png')}"><meta property="og:url" content="{og_url}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="/assets/social-card.png">
-<link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/assets/site-shell.css"><script defer src="/assets/runtime-config.js"></script>{extra_head}</head>
+<link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/assets/site-shell.css"><script defer src="/assets/runtime-config.js"></script>{speed_insights}{extra_head}</head>
 <body><a class="skip" href="#content">Skip to content</a><header class="site-head"><div class="head-inner"><a class="brand" href="/"><span class="brand-mark">FI</span><span>FINANCE INTELLIGENCE OS<small>Global research · futures · ICT</small></span></a>{nav_markup(canonical_path)}<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Areas ☰</button></div>{nav_markup(canonical_path, 'mobile-nav')} </header>
 <main id="content">{body}</main><footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, investment adviser, exchange data terminal or trade execution service.</p></div><div class="footer-links"><a href="/data-health/">Sources & Data Health</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a><a href="/legacy/">Archived research</a></div><small>Source labels, provider timestamps and data licensing limitations should remain visible wherever market information is shown.</small></footer><script src="/assets/site-shell.js" defer></script></body></html>'''
 
@@ -62,7 +63,8 @@ def page_intro(kicker, title, desc, stats=''):
 
 
 def card(title, desc, href, eyebrow='Explore', tag=''):
-    return f'<a class="module-card" href="{escape(href)}"><span class="card-eyebrow">{escape(eyebrow)}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p><span class="card-cta">Open module →</span>{f"<span class='card-tag'>{escape(tag)}</span>" if tag else ''}</a>'
+    tag_html = f"<span class='card-tag'>{escape(tag)}</span>" if tag else ''
+    return f'<a class="module-card" href="{escape(href)}"><span class="card-eyebrow">{escape(eyebrow)}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p><span class="card-cta">Open module →</span>{tag_html}</a>'
 
 
 def build():
