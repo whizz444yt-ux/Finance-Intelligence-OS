@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js']:
+for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js','assets/futures-intelligence.js']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -26,6 +26,8 @@ ok('Worker limits Builder models to allow-list','ALLOWED_BUILDER_MODELS' in work
 ok('Worker has GDELT scheduled collection','async scheduled' in worker and 'refreshNews(env)' in worker)
 ok('Worker contains health/news/provider endpoints','/api/v1/health' in worker and '/api/v1/news' in worker and '/api/v1/providers' in worker)
 ok('Worker contains BLS and CFTC endpoints','/api/v1/macro' in worker and '/api/v1/cot' in worker and 'api.bls.gov/publicAPI/v1' in worker and 'publicreporting.cftc.gov/resource/' in worker)
+ok('Worker contains read-only Polymarket and Kalshi endpoints','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker and 'gamma-api.polymarket.com/events' in worker and 'external-api.kalshi.com/trade-api/v2/markets' in worker)
+ok('Worker has production-origin allow-list without wildcard','finance-intelligence-os-whizz444yt-7353.vercel.app' in worker and 'includes("*")' in worker and 'return json' in worker)
 
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
@@ -35,7 +37,7 @@ ok('No service role in browser assets','SUPABASE_SERVICE_ROLE_KEY' not in ''.joi
 # Run generated route build and test final output if it exists.
 dist=ROOT/'dist'
 if dist.exists():
-    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html']
+    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html']
     ok('All primary route entry points generated',all((dist/p).exists() for p in expected),', '.join(p for p in expected if not (dist/p).exists()))
     html=list(dist.rglob('*.html'))
     ok('Legacy ICT SEO route set preserved',len(list((dist/'ict-futures/academy').glob('*.html')))==76 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
