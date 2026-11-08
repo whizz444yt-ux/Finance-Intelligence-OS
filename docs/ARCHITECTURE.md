@@ -33,7 +33,8 @@ Browser
 
 | Route | Provider | Meaning / freshness |
 |---|---|---|
-| `/api/v1/news` | GDELT DOC | Cached news-discovery snapshot, scheduled every 30 minutes; discovery index, not licensed newswire. |\n| `/api/v1/volume-open-interest?report=tff&q=...` | CFTC PRE | Contract-filtered weekly futures-only open-interest history. The endpoint explicitly reports exchange trading volume as not connected; COT data is not daily/intraday volume. |
+| `/api/v1/news` | GDELT DOC | Cached news-discovery snapshot, scheduled every 30 minutes; discovery index, not licensed newswire. |
+| `/api/v1/volume-open-interest?report=tff&q=...` | CFTC PRE | Contract-filtered weekly futures-only open-interest history. The endpoint explicitly reports exchange trading volume as not connected; COT data is not daily/intraday volume. |
 | `/api/v1/macro` | US BLS v1 | Historical CPI, core CPI, unemployment, payroll and PPI observations. Not live market data. |
 | `/api/v1/cot?report=tff` | CFTC PRE | Weekly Traders in Financial Futures report. |
 | `/api/v1/cot?report=disaggregated` | CFTC PRE | Weekly Disaggregated report. |
