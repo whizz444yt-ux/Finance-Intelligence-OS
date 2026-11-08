@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/site-shell.js','assets/economic-data.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
