@@ -1,0 +1,19 @@
+{
+  "name": "ICT Futures Intelligence OS",
+  "short_name": "ICT Futures OS",
+  "description": "Futures-only ICT contract research, session clock, economic events, public positioning, charts and risk tools.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#102339",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "business", "productivity"]
+}

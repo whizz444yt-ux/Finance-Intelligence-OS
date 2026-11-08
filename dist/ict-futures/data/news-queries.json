@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-08",
+  "count": 7,
+  "queries": [
+    {
+      "id": "indices",
+      "label": "US index futures",
+      "query": "(Nasdaq futures OR E-mini Nasdaq OR S&P 500 futures OR E-mini S&P OR Dow futures) AND (CME OR futures OR trading)"
+    },
+    {
+      "id": "metals",
+      "label": "Gold and silver futures",
+      "query": "(COMEX gold futures OR COMEX silver futures OR gold futures OR silver futures) AND (CME OR yields OR dollar OR central bank)"
+    },
+    {
+      "id": "fx",
+      "label": "Currency futures and dollar",
+      "query": "(Euro FX futures OR British pound futures OR US Dollar Index OR Japanese yen futures OR Australian dollar futures) AND (CME OR ICE OR central bank)"
+    },
+    {
+      "id": "energy",
+      "label": "WTI crude futures",
+      "query": "(WTI crude futures OR NYMEX crude oil OR EIA petroleum OR OPEC) AND (inventory OR supply OR demand OR futures)"
+    },
+    {
+      "id": "crypto",
+      "label": "CME Bitcoin futures",
+      "query": "(CME Bitcoin futures OR CME crypto futures OR regulated bitcoin futures) AND (ETF OR regulation OR market)"
+    },
+    {
+      "id": "macro",
+      "label": "US macro and central banks",
+      "query": "(Federal Reserve OR FOMC OR US CPI OR US PPI OR nonfarm payrolls OR PCE inflation OR Treasury auction) AND (futures OR markets OR yields)"
+    },
+    {
+      "id": "positioning",
+      "label": "Futures positioning and open interest",
+      "query": "(CFTC Commitments of Traders OR COT report OR futures open interest OR CME volume) AND (NQ OR ES OR gold OR crude OR euro OR dollar)"
+    }
+  ]
+}

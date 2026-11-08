@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08",
+  "count": 15,
+  "markets": [
+    {
+      "id": "nq",
+      "label": "Nasdaq-100 E-mini · NQ / MNQ",
+      "tier": "T1",
+      "exchange": "CME",
+      "chart": "CME_MINI:NQ1!",
+      "unit": "E-mini: $20 per index point; MNQ: $2 per point",
+      "tickSize": 0.25,
+      "tickValue": 5,
+      "pointValue": 20,
+      "micro": "MNQ · $0.50 tick · $2/point",
+      "sessions": [
+        "NY AM 08:30–11:00",
+        "NY PM 13:30–16:00",
+        "AM Silver Bullet 10:00–11:00",
+        "PM Silver Bullet 14:00–15:00"
+      ],
+      "models": [
+        "Silver Bullet",
+        "Liquidity sweep + MSS",
+        "ICT 2022 Model",
+        "Unicorn",
+        "SMT",
+        "NWOG / NDOG"
+      ],
+      "role": "Primary index-futures trade. High intraday range; NY activity is the main focus.",
+      "drivers": [
+        "US real yields",
+        "Fed repricing",
+        "Mega-cap earnings",
+        "CPI / NFP / PCE",
+        "NQ–ES–YM relative strength"
+      ],
+      "news": [
+        "CPI",
+        "PPI",
+        "NFP",
+        "PCE",
+        "GDP",
+        "FOMC",
+        "ISM",
+        "JOLTS",
+        "NVDA earnings",
+        "AAPL earnings",
+        "MSFT earnings"
+      ],
+      "related": [
+        "ES",
+        "YM",
+        "RTY",
+        "ZN",
+        "DX"
+      ],
+      "compare": [
+        "NQ–ES–YM SMT; compare same expiry and synchronised swings."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "medium",
+        "NY Forex": "-",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "high"
+      },
+      "profile": "Use Weekly/Daily draw on liquidity, PDH/PDL, PWH/PWL and 20/40/60-day extremes. Mark midnight and 09:30 ET opens. Look for a level raid, displacement/MSS and an FVG/OB pullback; target opposing liquidity.",
+      "riskNote": "NQ can move sharply around 08:30 releases, the 09:30 cash open and mega-cap earnings. Reduce size rather than forcing a tight stop.",
+      "microSpec": {
+        "symbol": "MNQ",
+        "unit": "$2 per index point",
+        "tickSize": 0.25,
+        "tickValue": 0.5,
+        "pointValue": 2
+      },
+      "contractRoot": "CME_MINI:NQ1!"
+    },
+    {
+      "id": "es",
+      "label": "S&P 500 E-mini · ES / MES",
+      "tier": "T1",
+      "exchange": "CME",
+      "chart": "CME_MINI:ES1!",
+      "unit": "E-mini: $50 per index point; MES: $5 per point",
+      "tickSize": 0.25,
+      "tickValue": 12.5,
+      "pointValue": 50,
+      "micro": "MES · $1.25 tick · $5/point",
+      "sessions": [
+        "NY AM 08:30–11:00",
+        "NY PM 13:30–16:00",
+        "AM Silver Bullet 10:00–11:00",
+        "PM Silver Bullet 14:00–15:00"
+      ],
+      "models": [
+        "OTE",
+        "FVG entry",
+        "Silver Bullet",
+        "SMT",
+        "ICT 2022 Model"
+      ],
+      "role": "Primary index-futures trade and NQ comparison market. Often a smoother index tape than NQ, but this is a practitioner observation, not a guarantee.",
+      "drivers": [
+        "US real yields",
+        "Fed repricing",
+        "Breadth and index leadership",
+        "CPI / NFP / PCE",
+        "NQ–YM confirmation"
+      ],
+      "news": [
+        "CPI",
+        "PPI",
+        "NFP",
+        "PCE",
+        "GDP",
+        "FOMC",
+        "ISM",
+        "JOLTS"
+      ],
+      "related": [
+        "NQ",
+        "YM",
+        "RTY",
+        "ZN"
+      ],
+      "compare": [
+        "NQ–ES–YM SMT; do not double risk with highly correlated index positions."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "medium",
+        "NY Forex": "-",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "high"
+      },
+      "profile": "Start with the same HTF draw used for NQ. Compare relative strength at a key level; wait for a sweep and ES MSS before using an ES FVG/OTE entry.",
+      "riskNote": "NQ and ES positions can duplicate exposure. Measure combined portfolio risk, not just each order separately.",
+      "microSpec": {
+        "symbol": "MES",
+        "unit": "$5 per index point",
+        "tickSize": 0.25,
+        "tickValue": 1.25,
+        "pointValue": 5
+      },
+      "contractRoot": "CME_MINI:ES1!"
+    },
+    {
+      "id": "gc",
+      "label": "Gold · GC / MGC",
+      "tier": "T1",
+      "exchange": "COMEX",
+      "chart": "COMEX:GC1!",
+      "unit": "GC: 100 troy oz; 1.00 price point = $100; MGC: 10 oz, $10/point",
+      "tickSize": 0.1,
+      "tickValue": 10,
+      "pointValue": 100,
+      "micro": "MGC · 10 oz · $1/tick · $10/point",
+      "sessions": [
+        "London 02:00–05:00",
+        "NY AM 08:30–11:00",
+        "London–NY overlap 08:00–11:00"
+      ],
+      "models": [
+        "Asian range sweep",
+        "Judas + MSS",
+        "Order Block",
+        "Breaker",
+        "OTE",
+        "AMD / PO3"
+      ],
+      "role": "Primary precious-metals trade; active in London and NY.",
+      "drivers": [
+        "US real yields",
+        "US Dollar / DX",
+        "Fed expectations",
+        "Central-bank gold demand",
+        "Geopolitical risk",
+        "Gold–Silver relative strength"
+      ],
+      "news": [
+        "CPI",
+        "PPI",
+        "NFP",
+        "PCE",
+        "FOMC",
+        "Treasury yields",
+        "Geopolitics",
+        "Central-bank gold demand"
+      ],
+      "related": [
+        "SI",
+        "DX",
+        "ZN",
+        "NQ"
+      ],
+      "compare": [
+        "GC–SI comparison; DX and ZN are macro context, not mechanical signals."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/metals/precious/gold.contractSpecs.html",
+      "heat": {
+        "Asia": "medium",
+        "London": "high",
+        "NY Forex": "high",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "medium"
+      },
+      "profile": "Map Daily/4H structure, PDH/PDL and premium/discount. Mark Asian high/low; a London sweep followed by 15M displacement/MSS can frame a 5M FVG/OB pullback. Also monitor DX and Treasury-yield context.",
+      "riskNote": "Gold can produce large stop hunts and news spikes. Keep the structural stop and reduce size; do not compress the stop just to increase size.",
+      "microSpec": {
+        "symbol": "MGC",
+        "unit": "10 troy oz",
+        "tickSize": 0.1,
+        "tickValue": 1,
+        "pointValue": 10
+      },
+      "contractRoot": "COMEX:GC1!"
+    },
+    {
+      "id": "6e",
+      "label": "Euro FX · 6E / M6E",
+      "tier": "T1",
+      "exchange": "CME",
+      "chart": "CME:6E1!",
+      "unit": "6E: €125,000; tick 0.00005 = $6.25; pip 0.0001 = $12.50",
+      "tickSize": 5e-05,
+      "tickValue": 6.25,
+      "pointValue": null,
+      "micro": "M6E · €12,500 · $1.25/tick",
+      "sessions": [
+        "London 02:00–05:00",
+        "Forex NY 07:00–10:00",
+        "NY AM 08:30–11:00"
+      ],
+      "models": [
+        "Asian range sweep",
+        "London Judas",
+        "AMD / PO3",
+        "FVG",
+        "OB",
+        "OTE"
+      ],
+      "role": "Primary currency-futures trade; futures version of EUR/USD.",
+      "drivers": [
+        "Fed vs ECB",
+        "US / Eurozone inflation",
+        "Yield differentials",
+        "DX basket",
+        "6E–6B comparison"
+      ],
+      "news": [
+        "ECB decision",
+        "Eurozone CPI",
+        "PMI",
+        "US CPI",
+        "NFP",
+        "FOMC",
+        "US GDP"
+      ],
+      "related": [
+        "6B",
+        "DX",
+        "ZN"
+      ],
+      "compare": [
+        "6E–6B comparison; DX is a broad dollar context and contains a large EUR weighting."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/fx/g10/euro-fx.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "high",
+        "NY Forex": "high",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Mark Asian range and CBDR reference where used. Compare DX and 6B, then wait for a session sweep, MSS/displacement and 5M FVG/OB pullback. Watch European releases during London.",
+      "riskNote": "Check tick conventions and contract month before calculating pip risk. European and US daylight-saving transitions do not always coincide.",
+      "microSpec": {
+        "symbol": "M6E",
+        "unit": "€12,500",
+        "tickSize": 5e-05,
+        "tickValue": 1.25,
+        "pointValue": null
+      },
+      "contractRoot": "CME:6E1!"
+    },
+    {
+      "id": "6b",
+      "label": "British Pound · 6B / M6B",
+      "tier": "T1",
+      "exchange": "CME",
+      "chart": "CME:6B1!",
+      "unit": "6B: £62,500; tick 0.0001 = $6.25",
+      "tickSize": 0.0001,
+      "tickValue": 6.25,
+      "pointValue": null,
+      "micro": "M6B · £6,250 · $0.625/tick",
+      "sessions": [
+        "London 02:00–05:00",
+        "London Silver Bullet 03:00–04:00",
+        "Forex NY 07:00–10:00"
+      ],
+      "models": [
+        "London Judas",
+        "Liquidity raid + MSS",
+        "FVG",
+        "OB",
+        "AMD / PO3"
+      ],
+      "role": "Primary currency-futures trade; London-focused and can show wide wicks.",
+      "drivers": [
+        "BoE policy",
+        "UK CPI / GDP / labour",
+        "Fed policy",
+        "DX",
+        "6E comparison"
+      ],
+      "news": [
+        "BoE decision",
+        "UK CPI",
+        "UK GDP",
+        "UK jobs",
+        "US CPI",
+        "NFP",
+        "FOMC"
+      ],
+      "related": [
+        "6E",
+        "DX"
+      ],
+      "compare": [
+        "6E–6B divergence; ensure same session and synchronised swings."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/fx/g10/british-pound/specs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "high",
+        "NY Forex": "medium",
+        "NY AM": "medium",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Mark midnight open and Asian extremes. During London, observe a failed push through one side, then require MSS + displacement before a 5M FVG entry.",
+      "riskNote": "Wider wicks mean the stop often needs more room. Reduce size around BoE and UK data; check UK/US DST differences.",
+      "microSpec": {
+        "symbol": "M6B",
+        "unit": "£6,250",
+        "tickSize": 0.0001,
+        "tickValue": 0.625,
+        "pointValue": null
+      },
+      "contractRoot": "CME:6B1!"
+    },
+    {
+      "id": "ym",
+      "label": "Dow E-mini · YM / MYM",
+      "tier": "T2",
+      "exchange": "CBOT",
+      "chart": "CBOT_MINI:YM1!",
+      "unit": "YM: $5 per index point; MYM: $0.50/point",
+      "tickSize": 1,
+      "tickValue": 5,
+      "pointValue": 5,
+      "micro": "MYM · $0.50/point",
+      "sessions": [
+        "NY AM 08:30–11:00",
+        "NY PM 13:30–16:00"
+      ],
+      "models": [
+        "SMT confirmation",
+        "Relative strength",
+        "Index structure"
+      ],
+      "role": "Confirmation market for NQ/ES; not a default standalone ICT entry in this playbook.",
+      "drivers": [
+        "US rates",
+        "Industrial / cyclical leadership",
+        "NQ–ES relative strength",
+        "US macro"
+      ],
+      "news": [
+        "CPI",
+        "NFP",
+        "PCE",
+        "FOMC",
+        "ISM",
+        "Mega-cap earnings"
+      ],
+      "related": [
+        "NQ",
+        "ES",
+        "RTY",
+        "ZN"
+      ],
+      "compare": [
+        "Third index in NQ–ES–YM comparison. A split alone is not an entry."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/equities/dow-jones/e-mini-dow.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "low",
+        "NY Forex": "-",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "medium"
+      },
+      "profile": "When NQ/ES reach a meaningful HTF level, check whether YM confirms the same swing. If sector-specific news explains the split, do not force an SMT interpretation.",
+      "riskNote": "Avoid opening a trade solely because YM diverges. Use it to contextualise NQ/ES.",
+      "microSpec": {
+        "symbol": "MYM",
+        "unit": "$0.50 per index point",
+        "tickSize": 1,
+        "tickValue": 0.5,
+        "pointValue": 0.5
+      },
+      "contractRoot": "CBOT_MINI:YM1!"
+    },
+    {
+      "id": "rty",
+      "label": "Russell 2000 · RTY / M2K",
+      "tier": "T2",
+      "exchange": "CME",
+      "chart": "CME_MINI:RTY1!",
+      "unit": "RTY: $50 × index; tick 0.10 = $5; M2K tick value $0.50",
+      "tickSize": 0.1,
+      "tickValue": 5,
+      "pointValue": 50,
+      "micro": "M2K · $0.50/tick · $5/point",
+      "sessions": [
+        "NY AM 08:30–11:00",
+        "NY PM 13:30–16:00"
+      ],
+      "models": [
+        "Risk appetite context",
+        "Relative strength",
+        "SMT confirmation"
+      ],
+      "role": "Small-cap and rate-sensitive confirmation market.",
+      "drivers": [
+        "Real yields",
+        "Fed expectations",
+        "Credit / risk appetite",
+        "Small-cap breadth"
+      ],
+      "news": [
+        "CPI",
+        "NFP",
+        "FOMC",
+        "Treasury yields",
+        "US growth data"
+      ],
+      "related": [
+        "ES",
+        "NQ",
+        "ZN"
+      ],
+      "compare": [
+        "Compare index strength; a split may reflect sector composition, not a reversal."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/equities/russell/e-mini-russell-2000.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "low",
+        "NY Forex": "-",
+        "NY AM": "medium",
+        "Lunch": "avoid",
+        "NY PM": "medium"
+      },
+      "profile": "Use Daily/4H direction and NY AM relative strength as context for index trades. The PDF treats RTY as a confirmation/bias instrument, not the primary entry chart.",
+      "riskNote": "Rates and macro data can make RTY diverge for legitimate fundamental reasons.",
+      "microSpec": {
+        "symbol": "M2K",
+        "unit": "$5 per index point",
+        "tickSize": 0.1,
+        "tickValue": 0.5,
+        "pointValue": 5
+      },
+      "contractRoot": "CME_MINI:RTY1!"
+    },
+    {
+      "id": "dx",
+      "label": "US Dollar Index · DX",
+      "tier": "T2",
+      "exchange": "ICE US",
+      "chart": "ICEUS:DX1!",
+      "unit": "$1,000 × index; tick 0.005 = $5",
+      "tickSize": 0.005,
+      "tickValue": 5,
+      "pointValue": 1000,
+      "micro": "No micro specified in the playbook",
+      "sessions": [
+        "Daily / 4H bias",
+        "London before 02:00–05:00"
+      ],
+      "models": [
+        "HTF liquidity",
+        "DX–6E inverse comparison",
+        "SMT context"
+      ],
+      "role": "Dollar-bias instrument; use primarily for FX and gold context.",
+      "drivers": [
+        "Fed policy",
+        "US yields",
+        "Inflation / jobs",
+        "DXY currency basket"
+      ],
+      "news": [
+        "FOMC",
+        "CPI",
+        "NFP",
+        "PCE",
+        "Treasury auctions"
+      ],
+      "related": [
+        "6E",
+        "6B",
+        "6J",
+        "6A",
+        "GC",
+        "ZN"
+      ],
+      "compare": [
+        "DX–6E is structurally linked through the index basket; DX–Gold is conditional, not fixed."
+      ],
+      "specsUrl": "https://www.ice.com/products/194/US-Dollar-Index-USDX-Futures",
+      "heat": {
+        "Asia": "low",
+        "London": "high",
+        "NY Forex": "medium",
+        "NY AM": "medium",
+        "Lunch": "-",
+        "NY PM": "-"
+      },
+      "profile": "Use Daily/4H PDH/PDL and dealing range. A DX sweep/reversal can inform the inverse currency bias, but confirm on the traded contract.",
+      "riskNote": "Do not translate every DX tick mechanically into an FX or Gold signal. DX is listed on ICE, not CME.",
+      "microSpec": null,
+      "contractRoot": "ICEUS:DX1!"
+    },
+    {
+      "id": "zn",
+      "label": "10-Year T-Note · ZN",
+      "tier": "T2",
+      "exchange": "CBOT",
+      "chart": "CBOT:ZN1!",
+      "unit": "$100,000 face; 1/64 tick = $15.625; 1 point = $1,000",
+      "tickSize": 0.015625,
+      "tickValue": 15.625,
+      "pointValue": 1000,
+      "micro": "No micro specified in the playbook",
+      "sessions": [
+        "Daily / 4H macro context",
+        "NY AM data window"
+      ],
+      "models": [
+        "Yield context",
+        "HTF levels",
+        "Rates reaction"
+      ],
+      "role": "Treasury-price and yield context for rates-sensitive futures.",
+      "drivers": [
+        "Fed policy",
+        "Treasury auctions",
+        "CPI / PCE",
+        "Growth and labour data"
+      ],
+      "news": [
+        "FOMC",
+        "CPI",
+        "PCE",
+        "NFP",
+        "Treasury auctions"
+      ],
+      "related": [
+        "DX",
+        "NQ",
+        "ES",
+        "GC"
+      ],
+      "compare": [
+        "ZN price down generally means yield up; correlation with equities/Gold is not a rule."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/interest-rates/us-treasury/10-year-us-treasury-note.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "medium",
+        "NY Forex": "medium",
+        "NY AM": "high",
+        "Lunch": "-",
+        "NY PM": "medium"
+      },
+      "profile": "Use ZN Daily/4H direction, Fed expectations and auction context as background. The playbook positions ZN as a bias tool rather than a default entry instrument.",
+      "riskNote": "Bond price and yield move inversely, but cross-asset reactions depend on the cause of the yield move.",
+      "microSpec": null,
+      "contractRoot": "CBOT:ZN1!"
+    },
+    {
+      "id": "cl",
+      "label": "WTI Crude Oil · CL / MCL",
+      "tier": "T3",
+      "exchange": "NYMEX",
+      "chart": "NYMEX:CL1!",
+      "unit": "CL: 1,000 barrels; tick 0.01 = $10; MCL: $1/tick",
+      "tickSize": 0.01,
+      "tickValue": 10,
+      "pointValue": 1000,
+      "micro": "MCL · 100 barrels · $1/tick · $100/point",
+      "sessions": [
+        "NY AM 08:00–11:00",
+        "Primary execution 10:30–14:00 (PDF convention)",
+        "EIA scheduled release"
+      ],
+      "models": [
+        "Liquidity sweep + MSS",
+        "FVG",
+        "OB",
+        "Post-EIA continuation/reversal"
+      ],
+      "role": "Optional, news-driven energy contract.",
+      "drivers": [
+        "EIA inventory",
+        "API inventory",
+        "OPEC decisions",
+        "Geopolitics / shipping",
+        "USD / macro"
+      ],
+      "news": [
+        "EIA Weekly Petroleum Status Report",
+        "API weekly data",
+        "OPEC",
+        "Geopolitics",
+        "US CPI / jobs"
+      ],
+      "related": [
+        "6C",
+        "DX",
+        "NQ"
+      ],
+      "compare": [
+        "CL–6C relationship is contextual, not a formal measured SMT pair."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "low",
+        "NY Forex": "medium",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "medium"
+      },
+      "profile": "Mark overnight and prior-day extremes. Prefer non-release-day sweep + 5M MSS/FVG. On EIA day, use the official revised release time and wait for the initial spread/slippage shock to settle.",
+      "riskNote": "EIA releases can create slippage and fast gaps. CL is physically settled; verify roll and delivery rules; MCL is smaller, not risk-free.",
+      "microSpec": {
+        "symbol": "MCL",
+        "unit": "100 barrels",
+        "tickSize": 0.01,
+        "tickValue": 1,
+        "pointValue": 100
+      },
+      "contractRoot": "NYMEX:CL1!"
+    },
+    {
+      "id": "6j",
+      "label": "Japanese Yen · 6J",
+      "tier": "T3",
+      "exchange": "CME",
+      "chart": "CME:6J1!",
+      "unit": "¥12,500,000; tick 0.0000005 = $6.25",
+      "tickSize": 5e-07,
+      "tickValue": 6.25,
+      "pointValue": null,
+      "micro": "Micro availability/specification must be checked with CME",
+      "sessions": [
+        "Asian range 20:00–00:00",
+        "London 02:00–05:00"
+      ],
+      "models": [
+        "Asian range sweep",
+        "London MSS + FVG",
+        "Risk-off context"
+      ],
+      "role": "Optional currency-futures market for Asia/London research.",
+      "drivers": [
+        "BoJ policy",
+        "Japan inflation / wages",
+        "US yields",
+        "Risk-off flows"
+      ],
+      "news": [
+        "BoJ policy",
+        "Japan CPI",
+        "Japan wages",
+        "US CPI / FOMC",
+        "US Treasury yields"
+      ],
+      "related": [
+        "DX",
+        "6E",
+        "6A"
+      ],
+      "compare": [
+        "6J quoted direction is the inverse of USD/JPY."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/fx/g10/japanese-yen.contractSpecs.html",
+      "heat": {
+        "Asia": "medium",
+        "London": "medium",
+        "NY Forex": "low",
+        "NY AM": "low",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Mark Asian range, then observe London sweep and 15M MSS before looking for a 5M FVG pullback. Check USD/JPY quotation direction carefully.",
+      "riskNote": "Thin session liquidity and policy headlines can cause abrupt repricing; avoid interpreting 6J as USD/JPY without reversing the quotation.",
+      "microSpec": {
+        "symbol": "MJY",
+        "unit": "¥1,250,000",
+        "tickSize": 5e-07,
+        "tickValue": 0.625,
+        "pointValue": null
+      },
+      "contractRoot": "CME:6J1!"
+    },
+    {
+      "id": "6a",
+      "label": "Australian Dollar · 6A",
+      "tier": "T3",
+      "exchange": "CME",
+      "chart": "CME:6A1!",
+      "unit": "A$100,000; tick 0.00005 = $5",
+      "tickSize": 5e-05,
+      "tickValue": 5,
+      "pointValue": null,
+      "micro": "Micro listing/specification must be checked with CME",
+      "sessions": [
+        "Asian range 20:00–00:00",
+        "London 02:00–05:00"
+      ],
+      "models": [
+        "Asian range sweep",
+        "AMD / PO3",
+        "London continuation"
+      ],
+      "role": "Optional Asia-session FX future; sensitive to Australia and China.",
+      "drivers": [
+        "RBA policy",
+        "China growth / data",
+        "Iron ore and commodity sentiment",
+        "US yields"
+      ],
+      "news": [
+        "RBA",
+        "Australian CPI/jobs",
+        "China official data",
+        "US CPI / FOMC"
+      ],
+      "related": [
+        "DX",
+        "6J",
+        "6E"
+      ],
+      "compare": [
+        "Risk sentiment and China data can dominate a technical session template."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/fx/g10/australian-dollar.contractSpecs.html",
+      "heat": {
+        "Asia": "medium",
+        "London": "medium",
+        "NY Forex": "low",
+        "NY AM": "low",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Use Daily/4H structure and mark the Asian range. Look for a sweep and confirmation in London; keep event context from RBA and China data visible.",
+      "riskNote": "RBA and China releases can overwhelm standard session patterns. Confirm the latest contract/tick schedule with CME.",
+      "microSpec": {
+        "symbol": "M6A",
+        "unit": "A$10,000",
+        "tickSize": 5e-05,
+        "tickValue": 0.5,
+        "pointValue": null
+      },
+      "contractRoot": "CME:6A1!"
+    },
+    {
+      "id": "6c",
+      "label": "Canadian Dollar · 6C",
+      "tier": "T3",
+      "exchange": "CME",
+      "chart": "CME:6C1!",
+      "unit": "C$100,000; tick 0.00005 = $5",
+      "tickSize": 5e-05,
+      "tickValue": 5,
+      "pointValue": null,
+      "micro": "Micro symbol/specification should be verified with CME",
+      "sessions": [
+        "NY AM 08:30–11:00"
+      ],
+      "models": [
+        "NY session sweep",
+        "MSS + FVG",
+        "Oil context"
+      ],
+      "role": "Optional CAD future; oil and North American data can be relevant.",
+      "drivers": [
+        "Bank of Canada",
+        "Canada jobs / CPI",
+        "WTI crude",
+        "US data"
+      ],
+      "news": [
+        "BoC",
+        "Canada CPI/jobs",
+        "EIA crude",
+        "US CPI / NFP"
+      ],
+      "related": [
+        "CL",
+        "DX",
+        "6E"
+      ],
+      "compare": [
+        "CL comparison is macro context, not a guaranteed SMT divergence."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/fx/g10/canadian-dollar.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "low",
+        "NY Forex": "medium",
+        "NY AM": "medium",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Monitor Canadian/US data and WTI context, then use Daily structure and a NY session sweep + MSS/FVG.",
+      "riskNote": "Do not assume an oil move guarantees CAD direction; BoC and relative US/Canada rates matter.",
+      "microSpec": {
+        "symbol": "MCD",
+        "unit": "C$10,000",
+        "tickSize": 5e-05,
+        "tickValue": 0.5,
+        "pointValue": null
+      },
+      "contractRoot": "CME:6C1!"
+    },
+    {
+      "id": "si",
+      "label": "Silver · SI / SIL",
+      "tier": "T3",
+      "exchange": "COMEX",
+      "chart": "COMEX:SI1!",
+      "unit": "SI: 5,000 oz; tick 0.005 = $25; SIL: 1,000 oz, $5/tick",
+      "tickSize": 0.005,
+      "tickValue": 25,
+      "pointValue": 5000,
+      "micro": "SIL · 1,000 oz · $5/tick",
+      "sessions": [
+        "London 02:00–05:00",
+        "NY AM 08:30–11:00"
+      ],
+      "models": [
+        "GC–SI comparison",
+        "Liquidity sweep + MSS",
+        "FVG / OB"
+      ],
+      "role": "Optional precious metal; Gold comparison market and more volatile according to playbook convention.",
+      "drivers": [
+        "Gold relationship",
+        "Industrial demand",
+        "US real yields",
+        "USD / Fed",
+        "Geopolitics"
+      ],
+      "news": [
+        "CPI",
+        "NFP",
+        "FOMC",
+        "Central-bank demand",
+        "Industrial metals demand",
+        "Geopolitics"
+      ],
+      "related": [
+        "GC",
+        "DX",
+        "ZN"
+      ],
+      "compare": [
+        "GC–SI comparison only; synchronise contract month and session."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/metals/precious/silver.contractSpecs.html",
+      "heat": {
+        "Asia": "low",
+        "London": "medium",
+        "NY Forex": "medium",
+        "NY AM": "medium",
+        "Lunch": "avoid",
+        "NY PM": "low"
+      },
+      "profile": "Use the Gold methodology as a starting framework, but independently validate SI liquidity, volatility, stop size and GC–SI relationship.",
+      "riskNote": "Silver tick exposure is large on the standard contract. Use micros or avoid oversized positions.",
+      "microSpec": {
+        "symbol": "SIL",
+        "unit": "1,000 troy oz",
+        "tickSize": 0.005,
+        "tickValue": 5,
+        "pointValue": 1000
+      },
+      "contractRoot": "COMEX:SI1!"
+    },
+    {
+      "id": "btc",
+      "label": "CME Bitcoin · BTC / MBT",
+      "tier": "T3",
+      "exchange": "CME",
+      "chart": "CME:BTC1!",
+      "unit": "BTC: 5 BTC; tick $5 per BTC = $25; MBT: 0.1 BTC, tick $0.50",
+      "tickSize": 5,
+      "tickValue": 25,
+      "pointValue": 5,
+      "micro": "MBT · 0.1 BTC · $0.50/tick",
+      "sessions": [
+        "NY AM 08:30–11:00",
+        "CME crypto futures operate 24/7, with maintenance windows"
+      ],
+      "models": [
+        "Liquidity sweep + MSS",
+        "FVG / OB",
+        "NQ risk context"
+      ],
+      "role": "Optional CME-regulated Bitcoin future; not equivalent to spot exchange BTC.",
+      "drivers": [
+        "ETF flows",
+        "Regulation",
+        "Risk sentiment",
+        "NQ relative strength",
+        "CME weekend liquidity"
+      ],
+      "news": [
+        "SEC filings",
+        "CFTC",
+        "ETF issuer flows",
+        "Regulatory releases",
+        "CME notices"
+      ],
+      "related": [
+        "NQ",
+        "ES",
+        "DX"
+      ],
+      "compare": [
+        "NQ correlation is conditional; weekends now trade on CME crypto futures, subject to maintenance."
+      ],
+      "specsUrl": "https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin/specs",
+      "heat": {
+        "Asia": "medium",
+        "London": "low",
+        "NY Forex": "low",
+        "NY AM": "high",
+        "Lunch": "avoid",
+        "NY PM": "medium"
+      },
+      "profile": "Use Daily draw on liquidity, PDH/PDL and dealing range. Watch ETF-flow/regulatory context, then wait for NY-area session sweep, 15M MSS and FVG/OB pullback.",
+      "riskNote": "CME crypto futures launched 24/7 trading on May 29, 2026, subject to specified maintenance windows. Do not rely on the old weekend-gap playbook.",
+      "microSpec": {
+        "symbol": "MBT",
+        "unit": "0.1 BTC",
+        "tickSize": 5,
+        "tickValue": 0.5,
+        "pointValue": 0.1
+      },
+      "contractRoot": "CME:BTC1!"
+    }
+  ]
+}

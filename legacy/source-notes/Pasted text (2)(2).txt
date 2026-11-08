@@ -1,0 +1,238 @@
+Sabse important finding pehle: India mein website ka open hona aur us platform par real-money trading karna do alag cheezein hain.
+
+MeitY ki 25 April 2026 ki official advisory mein Polymarket ko specifically un online betting aur prediction-market platforms mein name kiya gaya hai jo India mein access ke liye block kiye gaye hain. Advisory VPN ke through restrictions circumvent karne aur USDC jaise stablecoins se participation karne ko bhi address karti hai. Isliye main blocked platform ko VPN se access karne ya us par trading restrictions bypass karne ke instructions nahi dunga.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.meity.gov.in\&sz=32)
+
+MeitY
+
+
+
+Official reference: [MeitY advisory on blocked betting and prediction-market platforms (PDF)](https://www.meity.gov.in/static/uploads/2026/04/c99a3ded4d682879951d238b7a671a39.pdf?utm_source=chatgpt.com)
+
+Iska matlab ye nahi hai ki market research karne ke saare options band hain. Public market prices, news, forecasts, company disclosures aur economic data ko research karne ke liye kaafi alternatives available hain.
+
+# Category 1 — India Available: Finance Intelligence & Public Research
+
+Status checked: 26 October 2026. “Available” here means a public research resource or a forecasting service suitable for information gathering. It does not guarantee every feature, paid subscription, prize programme or financial transaction is permitted in India.
+
+## A. News aur prediction intelligence — without real-money wagering
+
+These are the closest alternatives for researching what the crowd expects before major market events.
+
+[What will be the value of the Global Dairy Trade Index at Event 372 (Tuesday 21st January)?](https://images.openai.com/static-rsc-4/Vl1EH1YYDavGaQ8jIBOHgsx15LuicabBXEc9O8j6OWb_ky55zMvlPTX3lgdOknA7fqvYiJ1x_UqK9UKbqTUCzB7kJ89B8KQMcZJXf-XrhWauV6QHuT29PI5Q5mWiPAMQrS6peyIt6oaofORztZ7sTnyQ0waz9vYYcow-nBqcDdw?purpose=inline)
+
+[Metaculus](https://www.metaculus.com/?utm_source=chatgpt.com)
+
+Research / forecasting
+
+Global economic, political, scientific and technological forecasts. Unlike a conventional prediction market, users submit probabilities rather than stake money on shares. Some tournaments can award prizes, so check the specific terms.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.metaculus.com\&sz=32)
+
+metaculus.com
+
++1
+
+
+
+[Good Judgment Open (@GJ_Open) on X](https://images.openai.com/static-rsc-4/_4Fv7xHXt8jbFVC5xF2odlrsgNNo7akvODmCK3MGM114TFsb98TffzRGmQHcXCHIgt4pHcKIAFTQX3MVxh4x_lDhN5ixymxQ_m6rORig4xb2Kradjdr0NrTkts_vQHHeJMXKSXXRXMUZIXH5QjYvvsYO7GMfAJDTq-HfSLdnSXQ?purpose=inline)
+
+[Good Judgment Open](https://www.gjopen.com/?utm_source=chatgpt.com)
+
+Political, economic, business and technology forecasts with a track record of forecaster accuracy. Useful for comparing expert and crowd expectations.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.gjopen.com\&sz=32)
+
+gjopen.com
+
+
+
+[Manifold Markets | Trade on the Future](https://images.openai.com/static-rsc-4/TAaElyLQfNu1LBHzmDclFaYZlc4Zao8G519xpbofpzO6iU7gVynHMOHJs_daQpS4CP8l6OFis9gj6QabpclazeLvI-TmDF5ssdEDg9k7J-xT-pzdOahnrY68G2cILUW7yWYq_ggKa9wL-Ym06a4wGpdzNO8lVxXG6huc0LwtAng?purpose=inline)
+
+[Manifold Markets](https://manifold.markets/?utm_source=chatgpt.com)
+
+Community probabilities for news, elections, technology, stocks and crypto. Its Mana play-money currency cannot be converted to cash, but the platform also offers USDC prize drawings. For a research-only workflow, view forecasts and avoid money-linked features unless their eligibility and legal status are clear.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://docs.manifold.markets\&sz=32)
+
+Manifold Docs
+
++1
+
+
+
+[Fat Prophets - Christmas Special](https://images.openai.com/static-rsc-4/iD7NdrW28yFkpKI91S4gjX_GCu7UJOUrRP0FLzNzZgrVmtzzJ2a2reoJGbN0Vxp80zIdLv9rOBm3y3QLleKgjJr8_XwBl3Er3rG7ngI0C0b05PQW8kb7xQWGOBV4DtBdvhDTCpsZOdgTqQJssdVGlMAc1TVpzxG8KEILcgEMqEE?purpose=inline)
+
+[Reuters Markets](https://www.reuters.com/markets/?utm_source=chatgpt.com)
+
+Breaking business news, company developments, macroeconomic events and cross-asset market context.
+
+[Global Database of Events, Language and Tone (GDELT) - Project CASA](https://images.openai.com/static-rsc-4/RKpxVte7pvg0L0dasWE6oWy2-d3pUW7nH0QBM5qt6bjyN6yHVA2tVTd1Wyae1yyEnqbTNNxnYmzGTL0PvS7EE4oMjBPDF4ZXluX4wOvRT5no-2NLzaVGtNngJLzEEBCIoUCkXcgZ57L6imiqaleuMPx9sZxKro7KF2wnLDRRWG4?purpose=inline)
+
+[GDELT Project](https://www.gdeltproject.org/?utm_source=chatgpt.com)
+
+Global news and event monitoring for research and analytics. Particularly useful if you want to develop your own news-scanning AI.
+
+My recommendation: Use Metaculus and Good Judgment Open to compare forecasts, Reuters for verified reporting and Manifold for community sentiment in its non-cash forecasting features. These give you a research-oriented alternative to real-money event contracts.
+
+## B. Public insider activity — the closest legal alternative to “inside news”
+
+There is an important difference between an insider transaction that has been publicly disclosed and confidential, material information that has not been made public.
+
+The first can be researched through legitimate data sources. I won't help obtain stolen communications, leaked confidential trading information or unpublished price-sensitive information for trading.
+
+| Platform              | Direct link                                                                                                                      | What to investigate                                                        |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| SEC EDGAR             | [Official filings](https://www.sec.gov/edgar/search/?utm_source=chatgpt.com)                                                     | Original US company filings, including earnings and material announcements |
+| SEC Form 4 datasets   | [Insider transactions](https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets?utm_source=chatgpt.com) | Reported corporate insider transactions                                    |
+| SEC Form 13F datasets | [Institutional holdings](https://www.sec.gov/data-research/sec-markets-data/form-13f-data-sets?utm_source=chatgpt.com)           | Institutional positions disclosed in regulatory filings                    |
+| OpenInsider           | [OpenInsider](http://openinsider.com/?utm_source=chatgpt.com)                                                                    | Search and compare reported insider transactions                           |
+| WhaleWisdom           | [WhaleWisdom](https://whalewisdom.com/?utm_source=chatgpt.com)                                                                   | Institutional holdings and portfolio comparisons                           |
+| Dataroma              | [Dataroma](https://www.dataroma.com/?utm_source=chatgpt.com)                                                                     | Selected investors’ publicly reported holdings                             |
+| Quiver Quantitative   | [Quiver](https://www.quiverquant.com/?utm_source=chatgpt.com)                                                                    | Alternative datasets and public-disclosure analytics                       |
+| Capitol Trades        | [Capitol Trades](https://www.capitoltrades.com/?utm_source=chatgpt.com)                                                          | Reported US Congress members’ transactions                                 |
+| NSE India             | [Corporate filings](https://www.nseindia.com/companies-listing/corporate-filings?utm_source=chatgpt.com)                         | Indian company announcements and disclosures                               |
+| BSE India             | [BSE](https://www.bseindia.com/?utm_source=chatgpt.com)                                                                          | Indian listed-company financial results and disclosures                    |
+
+These datasets can be valuable, but institutional filings and some insider disclosures arrive with a delay. A disclosed transaction also does not automatically mean the person is currently bullish or bearish.
+
+For the Indian legal boundary, see the [SEBI Prohibition of Insider Trading Regulations, 2015, as amended on 12 March 2025](https://www.sebi.gov.in/legal/regulations/mar-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-march-12-2025-_92672.html?utm_source=chatgpt.com).&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.sebi.gov.in\&sz=32)
+
+Securities and Exchange Board of India
+
++1
+
+
+
+## C. Early public announcements and earnings intelligence
+
+These sources help you monitor company announcements before or as they reach the wider financial press.
+
+| Platform      | Direct link                                                                                                     | Best use                                            |
+| ------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Business Wire | [Business Wire](https://www.businesswire.com/news/home?utm_source=chatgpt.com)                                  | Original company press releases                     |
+| GlobeNewswire | [GlobeNewswire](https://www.globenewswire.com/?utm_source=chatgpt.com)                                          | Earnings announcements and corporate news           |
+| PR Newswire   | [PR Newswire](https://www.prnewswire.com/news-releases/?utm_source=chatgpt.com)                                 | Company releases and business events                |
+| Quartr        | [Earnings calls and transcripts](https://quartr.com/features/live-calls-and-transcripts?utm_source=chatgpt.com) | Management commentary and earnings-call transcripts |
+| Nasdaq        | [Earnings calendar](https://www.nasdaq.com/market-activity/earnings?utm_source=chatgpt.com)                     | Upcoming results and reported earnings              |
+| GDELT         | [Global news data](https://www.gdeltproject.org/?utm_source=chatgpt.com)                                        | Large-scale news event analysis                     |
+
+A particularly useful workflow is to compare an original company announcement with the analyst consensus, earnings-call guidance and the immediate price reaction.
+
+## D. Macro, commodities and cross-asset intelligence
+
+| Website            | Direct link                                                                                                                  | Research purpose                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Federal Reserve    | [Fed events](https://www.federalreserve.gov/newsevents/calendar.htm?utm_source=chatgpt.com)                                  | Interest-rate decisions and central-bank announcements      |
+| BLS                | [US release calendar](https://www.bls.gov/schedule/news_release/?utm_source=chatgpt.com)                                     | CPI and employment data                                     |
+| BEA                | [Economic releases](https://www.bea.gov/news/schedule?utm_source=chatgpt.com)                                                | GDP, PCE inflation and economic growth                      |
+| CME FedWatch       | [Interest-rate probabilities](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html?utm_source=chatgpt.com) | Market-implied Fed policy expectations                      |
+| FRED               | [Economic datasets](https://fred.stlouisfed.org/?utm_source=chatgpt.com)                                                     | Yields, financial conditions and historical economic series |
+| CFTC               | [COT reports](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm?utm_source=chatgpt.com)                      | Reported futures positioning                                |
+| EIA                | [Open Data](https://www.eia.gov/opendata/?utm_source=chatgpt.com)                                                            | Oil, petroleum inventories and energy supply-demand         |
+| LBMA               | [Precious-metal data](https://www.lbma.org.uk/prices-and-data?utm_source=chatgpt.com)                                        | Gold and precious-metal benchmarks and data resources       |
+| World Gold Council | [Gold research](https://www.gold.org/goldhub?utm_source=chatgpt.com)                                                         | Gold investment, demand and market research                 |
+
+For Gold, the most useful combined view is usually US yields + dollar + Fed expectations + positioning + XAUUSD price action, rather than a single news headline.
+
+## E. Crypto intelligence and public market data
+
+| Platform       | Direct link                                                            | What to monitor                                 |
+| -------------- | ---------------------------------------------------------------------- | ----------------------------------------------- |
+| DeFiLlama      | [defillama.com](https://defillama.com/?utm_source=chatgpt.com)         | Protocol liquidity, TVL and supported DeFi data |
+| Etherscan      | [etherscan.io](https://etherscan.io/?utm_source=chatgpt.com)           | Ethereum transactions, wallets and contracts    |
+| Solscan        | [solscan.io](https://solscan.io/?utm_source=chatgpt.com)               | Solana transactions and token activity          |
+| CryptoQuant    | [cryptoquant.com](https://cryptoquant.com/?utm_source=chatgpt.com)     | Exchange flows and on-chain indicators          |
+| Glassnode      | [glassnode.com](https://glassnode.com/?utm_source=chatgpt.com)         | On-chain metrics and holder behaviour           |
+| CoinGlass      | [coinglass.com](https://www.coinglass.com/?utm_source=chatgpt.com)     | Open interest, funding rates and liquidations   |
+| Nansen         | [nansen.ai](https://www.nansen.ai/?utm_source=chatgpt.com)             | Labelled wallets and blockchain intelligence    |
+| Token Terminal | [tokenterminal.com](https://tokenterminal.com/?utm_source=chatgpt.com) | Crypto protocol fundamentals                    |
+| Token Unlocks  | [token.unlocks.app](https://token.unlocks.app/?utm_source=chatgpt.com) | Scheduled token supply unlocks                  |
+
+These platforms are research and analytics sources, not guaranteed buy/sell signals. Also, access to their websites does not guarantee free data or unrestricted API access.
+
+## F. API links for your own Finance Intelligence OS
+
+You can use these sources to build a system that automatically collects data, normalizes timestamps, summarizes events and creates alerts.
+
+| API               | Link                                                                                                                | Use                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| SEC EDGAR         | [Documentation](https://www.sec.gov/search-filings/edgar-application-programming-interfaces?utm_source=chatgpt.com) | Filings and financial facts         |
+| FRED              | [API docs](https://fred.stlouisfed.org/docs/api/fred/?utm_source=chatgpt.com)                                       | Macroeconomic time series           |
+| Alpha Vantage     | [API docs](https://www.alphavantage.co/documentation/?utm_source=chatgpt.com)                                       | Market data and financial analytics |
+| Finnhub           | [API docs](https://finnhub.io/docs/api?utm_source=chatgpt.com)                                                      | Market data and company information |
+| Twelve Data       | [API docs](https://twelvedata.com/docs?utm_source=chatgpt.com)                                                      | Multi-asset price series            |
+| Trading Economics | [API docs](https://docs.tradingeconomics.com/get_started/?utm_source=chatgpt.com)                                   | Economic calendars and indicators   |
+| EIA               | [API docs](https://www.eia.gov/opendata/?utm_source=chatgpt.com)                                                    | Energy data                         |
+| DeFiLlama         | [API docs](https://api-docs.defillama.com/?utm_source=chatgpt.com)                                                  | Supported DeFi metrics              |
+| CoinGlass         | [API docs](https://docs.coinglass.com/reference/getting-started-with-your-api?utm_source=chatgpt.com)               | Crypto derivatives metrics          |
+
+Check subscription limits, commercial-use rights, data latency and redistribution licensing before you build the system around any one provider.
+
+# Category 2 — India Not Available: Blocked or Not Cleared for Real-Money Use
+
+This category needs a distinction between explicitly blocked by the Indian government, restricted by a platform's own rules, and not legally cleared for real-money participation from India. Those are not always the same status.
+
+## A. Explicitly blocked or legally restricted
+
+Polymarket — India access blocked
+
+Government advisory
+
+MeitY specifically names Polymarket in its 25 April 2026 advisory about blocked online betting and prediction-market sites. The advisory addresses attempts to circumvent access restrictions via VPNs as well as related financial transactions.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.meity.gov.in\&sz=32)
+
+MeitY
+
+
+
+Official references: [MeitY's advisory (PDF)](https://www.meity.gov.in/static/uploads/2026/04/c99a3ded4d682879951d238b7a671a39.pdf?utm_source=chatgpt.com) · [Polymarket geographic-restrictions policy](https://help.polymarket.com/en/articles/13364163-geographic-restrictions?utm_source=chatgpt.com)
+
+Other offshore real-money prediction markets and betting platforms
+
+Do not assume India eligibility
+
+India's Promotion and Regulation of Online Gaming Act, 2025 has been in force since 1 May 2026. The Act covers online money games irrespective of whether outcomes depend on skill, chance or both; MeitY's advisory also refers to prediction-market activities.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.indiacode.nic.in\&sz=32)
+
+India Code
+
++2
+
+
+
+Official references: [PROG Act on India Code](https://www.indiacode.nic.in/indiacode/handle/123456789/22148?col=123456789%2F1362\&view_type=search\&utm_source=chatgpt.com) · [MeitY's 2026 gaming rules announcement](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2254606\&lang=1\&reg=3\&utm_source=chatgpt.com)
+
+The legal status of a particular product can depend on its structure and applicable regulations. For example, some platforms describe their event contracts as financial derivatives, while others operate as betting or crypto prediction markets. I would not label every foreign platform individually illegal without a platform-specific official notice or a reliable legal determination.
+
+## B. What about Kalshi and other international event-contract platforms?
+
+[Kalshi's international eligibility guidance](https://help.kalshi.com/en/articles/14026044-can-i-trade-on-kalshi-from-outside-the-united-states?utm_source=chatgpt.com) says eligibility depends on the platform's Member Agreement and country restrictions. A site's own eligibility checker is not proof that real-money event-contract trading is authorized under Indian law.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://help.kalshi.com\&sz=32)
+
+Kalshi Help Center
+
+
+
+For an India-based user, I would classify offshore money-staked prediction trading as not cleared for use unless an India-qualified legal professional confirms that the specific product and transaction are lawful. I won't provide VPN workarounds, alternate domains or payment routes designed to defeat a restriction.
+
+Also, don't assume that a platform is legally available just because its country list does not explicitly mention India. Technical access, provider eligibility and Indian legal permission are separate questions.
+
+# The practical distinction
+
+| What you want to do                                      | Best route                                                                                                                                                                                                  |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| See probabilities of future political or economic events | [Metaculus](https://www.metaculus.com/?utm_source=chatgpt.com) or [Good Judgment Open](https://www.gjopen.com/?utm_source=chatgpt.com)                                                                      |
+| Track public reports of insider transactions             | [SEC EDGAR](https://www.sec.gov/edgar/search/?utm_source=chatgpt.com) and [NSE corporate filings](https://www.nseindia.com/companies-listing/corporate-filings?utm_source=chatgpt.com)                      |
+| Monitor breaking market news                             | [Reuters Markets](https://www.reuters.com/markets/?utm_source=chatgpt.com) and [GDELT](https://www.gdeltproject.org/?utm_source=chatgpt.com)                                                                |
+| Detect macroeconomic surprises                           | [BLS release calendar](https://www.bls.gov/schedule/news_release/?utm_source=chatgpt.com) and [CME FedWatch](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html?utm_source=chatgpt.com) |
+| Monitor crypto positioning                               | [CoinGlass](https://www.coinglass.com/?utm_source=chatgpt.com) and [CryptoQuant](https://cryptoquant.com/?utm_source=chatgpt.com)                                                                           |
+| Access Polymarket from India by bypassing its block      | Not something I can guide you through; use the lawful public-data and forecasting alternatives above instead                                                                                                |
+
+The strongest approach for your goal is to combine public disclosures, fast news feeds, earnings-call analysis, economic releases, market positioning and aggregated forecasts. That gives you an information advantage you can test and measure without relying on confidential leaks, unverified “insider” groups or blocked real-money prediction markets.

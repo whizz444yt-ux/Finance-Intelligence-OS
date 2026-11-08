@@ -1,0 +1,516 @@
+Aapki existing Finance Intelligence Directory already covers the main websites for stock markets, Forex, Gold, crypto, insider disclosures and AI finance tools. Lekin global market ko genuinely research karne aur apna AI-powered Finance Intelligence Dashboard build karne ke liye kuch aur important data layers add karni chahiye.
+
+Sabse important additions hain: company filings across countries, live earnings-call transcripts, central-bank announcements, bond yields, short-selling data, fund flows, options positioning, commodity supply reports, global news feeds aur developer APIs.
+
+Neeche maine existing list ko unnecessarily repeat karne ke bajay additional resources, their direct links, purpose aur coding use cases ke saath organize kiya hai.
+
+# 1. Company announcements, earnings aur breaking corporate news
+
+Ye sources company ke baare mein news websites par report aane se pehle ya uske aas-paas original announcement dhoondhne mein kaam aate hain.
+
+| Website                                                                                                  | Kya milega?                                                                | Access                                   |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------- |
+| [Business Wire](https://www.businesswire.com/news/home?utm_source=chatgpt.com)                           | Earnings releases, mergers, acquisitions, business announcements           | Public; data services paid ho sakti hain |
+| [GlobeNewswire](https://www.globenewswire.com/?utm_source=chatgpt.com)                                   | Company press releases, financial results aur corporate developments       | Public                                   |
+| [PR Newswire](https://www.prnewswire.com/news-releases/?utm_source=chatgpt.com)                          | Company announcements, product launches aur financial releases             | Public                                   |
+| [Accesswire](https://www.accesswire.com/?utm_source=chatgpt.com)                                         | Public-company disclosures aur press releases                              | Public                                   |
+| [Quartr — Earnings Calls](https://quartr.com/features/live-calls-and-transcripts?utm_source=chatgpt.com) | Earnings calls, live transcripts aur management commentary                 | Freemium/paid features                   |
+| [Nasdaq Earnings Calendar](https://www.nasdaq.com/market-activity/earnings?utm_source=chatgpt.com)       | Upcoming aur reported earnings                                             | Public                                   |
+| [TradingView Calendars](https://www.tradingview.com/economic-calendar/?utm_source=chatgpt.com)           | Economic events aur connected calendar tools                               | Freemium                                 |
+| [GDELT Project](https://www.gdeltproject.org/?utm_source=chatgpt.com)                                    | Global news and events ko research aur data analysis ke liye explore karna | Public data tools                        |
+
+Quartr particularly useful hai kyunki ye earnings calls aur transcripts ko follow karne ke liye dedicated platform hai. TradingView ke calendar ecosystem mein economic events ke alawa earnings, dividends aur IPO events bhi milte hain.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://quartr.com\&sz=32)
+
+Quartr
+
++1
+
+
+
+Practical use: Sirf headline mat padho. Company ka original announcement, management guidance, analyst expectations aur announcement ke baad price reaction compare karo.
+
+# 2. Global company filings — US ke bahar ke markets bhi
+
+Aapki existing list mein US SEC filings achhe se covered hain. International stocks ke liye in official disclosure sources ko add karo.
+
+| Country / market | Official website                                                                                               | Kis kaam aayegi?                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| US               | [SEC EDGAR](https://www.sec.gov/edgar/search/?utm_source=chatgpt.com)                                          | Earnings, material announcements, ownership aur regulatory filings    |
+| United Kingdom   | [London Stock Exchange News](https://www.londonstockexchange.com/en/news?utm_source=chatgpt.com)               | RNS aur listed companies ke announcements                             |
+| Canada           | [SEDAR+](https://www.sedarplus.ca/?utm_source=chatgpt.com)                                                     | Canadian companies ki public securities filings                       |
+| Hong Kong        | [HKEXnews](https://www.hkexnews.hk/?utm_source=chatgpt.com)                                                    | Results, dividends, corporate announcements aur listing documents     |
+| Japan            | [EDINET](https://disclosure2.edinet-fsa.go.jp/?utm_source=chatgpt.com)                                         | Regulatory financial disclosures                                      |
+| Australia        | [ASX Announcements](https://www.asx.com.au/markets/trade-our-cash-market/announcements?utm_source=chatgpt.com) | Listed-company announcements aur financial reports                    |
+| Singapore        | [SGX Securities](https://www.sgx.com/securities?utm_source=chatgpt.com)                                        | Singapore-listed securities aur market information                    |
+| South Korea      | [DART](https://englishdart.fss.or.kr/?utm_source=chatgpt.com)                                                  | Corporate regulatory disclosures                                      |
+| Europe           | [ESMA](https://www.esma.europa.eu/?utm_source=chatgpt.com)                                                     | European securities regulation, registers aur supervisory information |
+| India            | [NSE Corporate Filings](https://www.nseindia.com/companies-listing/corporate-filings?utm_source=chatgpt.com)   | Listed Indian companies ke announcements                              |
+
+LSE ka news explorer RNS aur anya corporate announcement sources ko company, date aur announcement type ke basis par filter karne deta hai. Hong Kong mein HKEXnews listed issuers ke filings ka important original source hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.londonstockexchange.com\&sz=32)
+
+London Stock Exchange
+
++1
+
+
+
+Important: Europe ke liye ESMA useful regulatory starting point hai, lekin har European company ki har filing ke liye ek hi universal search page par depend mat karna. Relevant national regulator, exchange aur company Investor Relations page bhi verify karna.
+
+## Company ka official Investor Relations page
+
+Har major public company ke website par usually Investor Relations ya Investors section dhoondho. Wahan se mil sakta hai:
+
+- Quarterly/annual results.
+- Earnings presentation aur webcast.
+- Management guidance.
+- Dividend, buyback aur acquisition announcements.
+- Investor-day presentations aur financial statements.
+
+Ye company-specific primary-source research ke liye sabse useful bookmarks mein se ek hai.
+
+# 3. Insider transactions, institutional ownership aur public disclosures
+
+Is category mein actual public filings aur third-party analytics ko alag rakho.
+
+| Website                                                                                                                                   | Data                                                                | Main limitation                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ |
+| [SEC Insider Transactions Data](https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets?utm_source=chatgpt.com) | US corporate insiders ki Forms 3, 4 aur 5 se extracted transactions | Filing data hai, advance private information nahi      |
+| [SEC Form 13F Data](https://www.sec.gov/data-research/sec-markets-data/form-13f-data-sets?utm_source=chatgpt.com)                         | Institutional investment managers ki reported holdings              | Periodic, time-lagged snapshot                         |
+| [OpenInsider](http://openinsider.com/?utm_source=chatgpt.com)                                                                             | US corporate insider transactions ka research                       | Filings ko original source se verify karo              |
+| [WhaleWisdom](https://whalewisdom.com/?utm_source=chatgpt.com)                                                                            | Institutional holdings aur 13F analysis                             | Real-time portfolio feed nahi                          |
+| [Dataroma](https://www.dataroma.com/?utm_source=chatgpt.com)                                                                              | Selected prominent investors ki publicly reported holdings          | Complete global institutional coverage assume mat karo |
+| [Quiver Quantitative](https://www.quiverquant.com/?utm_source=chatgpt.com)                                                                | Public disclosures aur alternative datasets                         | Har indicator equally current ya complete nahi hota    |
+| [Capitol Trades](https://www.capitoltrades.com/?utm_source=chatgpt.com)                                                                   | US Congress members ke reported trades                              | Corporate-insider data se alag category                |
+
+SEC ke official datasets insider transactions aur institutional holdings ke structured research ko support karte hain, lekin datasets ko original filing ka replacement nahi maana jaana chahiye. SEC khud full filing verify karne ki salah deta hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.sec.gov\&sz=32)
+
+Insider Transactions Data Sets
+
++1
+
+
+
+### Is data ko kaise interpret karein?
+
+Kisi fund ne ek company ke shares own kiye, iska matlab ye nahi ki fund ne aaj hi buy kiya hai. Isi tarah, executive ki transaction sale, purchase, option exercise ya kisi aur transaction type ki ho sakti hai.
+
+“Insider news” ke liye safe aur useful approach: publicly disclosed insider transactions, beneficial ownership filings, institutional reports aur company announcements track karo. Material non-public information ko paid Telegram groups ya unverified “leaks” se khareedna reliable research method nahi hai.
+
+# 4. Global macroeconomics, central banks aur economic releases
+
+Ye layer Gold, Forex, Bitcoin, equity indices aur bond markets ke liye particularly important hai.
+
+| Website                                                                                                               | Kya monitor karna hai?                                                            | Access                                       |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- |
+| [Federal Reserve](https://www.federalreserve.gov/newsevents/calendar.htm?utm_source=chatgpt.com)                      | FOMC meetings, policy announcements aur Fed events                                | Official/public                              |
+| [US Bureau of Labor Statistics](https://www.bls.gov/schedule/news_release/?utm_source=chatgpt.com)                    | CPI, employment, unemployment aur labour data                                     | Official/public                              |
+| [Bureau of Economic Analysis](https://www.bea.gov/news/schedule?utm_source=chatgpt.com)                               | GDP, PCE inflation, income aur spending                                           | Official/public                              |
+| [US Census Economic Indicators](https://www.census.gov/economic-indicators/calendar?utm_source=chatgpt.com)           | Retail sales, inventories, trade aur housing-related data                         | Official/public                              |
+| [US Treasury Data](https://home.treasury.gov/resource-center/data-chart-center/interest-rates?utm_source=chatgpt.com) | Treasury yields aur interest-rate series                                          | Official/public                              |
+| [ECB Data Portal](https://data.ecb.europa.eu/?utm_source=chatgpt.com)                                                 | Euro-area inflation, rates aur monetary statistics                                | Official/public                              |
+| [Bank of England Statistics](https://www.bankofengland.co.uk/statistics?utm_source=chatgpt.com)                       | UK monetary, banking aur economic statistics                                      | Official/public                              |
+| [Bank of Japan](https://www.boj.or.jp/en/statistics/?utm_source=chatgpt.com)                                          | Japan ke monetary aur economic indicators                                         | Official/public                              |
+| [BIS Statistics](https://www.bis.org/statistics/?utm_source=chatgpt.com)                                              | International banking, debt, credit aur global financial statistics               | Official/public                              |
+| [IMF Data](https://data.imf.org/?utm_source=chatgpt.com)                                                              | International financial statistics, inflation, balance of payments aur macro data | Public; kuch access conditions ho sakti hain |
+| [World Bank Data](https://data.worldbank.org/?utm_source=chatgpt.com)                                                 | Countries ka economic development aur macroeconomic data                          | Public                                       |
+| [OECD Data Explorer](https://data-explorer.oecd.org/?utm_source=chatgpt.com)                                          | Member aur partner economies ke comparable economic indicators                    | Public                                       |
+| [Eurostat](https://ec.europa.eu/eurostat/data/database?utm_source=chatgpt.com)                                        | European Union ke official statistics                                             | Public                                       |
+| [RBI Database on Indian Economy](https://data.rbi.org.in/DBIE/?utm_source=chatgpt.com)                                | Indian monetary, banking aur economic data                                        | Official/public                              |
+
+BIS international banking aur credit statistics ke liye, aur IMF cross-country macroeconomic datasets ke liye valuable sources hain. IMF data ko APIs ke through bhi integrate kiya ja sakta hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://data.imf.org\&sz=32)
+
+IMF Data
+
++2
+
+
+
+### Central-bank research mein kya dekhna hai?
+
+- Fed: rates, inflation outlook aur policy guidance.
+- ECB / BoE / BoJ: local currency, yields aur global liquidity ka context.
+- BLS / BEA: actual economic release ko previous reading aur consensus ke against compare karna.
+- BIS / IMF: ek country ki news ke badle larger global credit aur financial conditions ko samajhna.
+
+Market mein sirf actual number matter nahi karta. Actual, consensus aur previous value ke beech difference, revisions aur market ki pehle se bani expectations bhi important hoti hain.
+
+## 5. Economic calendar, expectations aur interest-rate probabilities
+
+| Website                                                                                                                      | Best use                                                         |
+| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [TradingView Economic Calendar](https://www.tradingview.com/economic-calendar/?utm_source=chatgpt.com)                       | Upcoming global events aur actual/previous readings              |
+| [Trading Economics](https://tradingeconomics.com/calendar?utm_source=chatgpt.com)                                            | Countries, indicators, forecasts aur historical economic data    |
+| [Trading Economics API](https://api.tradingeconomics.com/?utm_source=chatgpt.com)                                            | Economic series aur calendar ko software mein integrate karna    |
+| [CME FedWatch](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html?utm_source=chatgpt.com)                | Fed policy-rate expectations ko Fed Funds futures se infer karna |
+| [US Treasury Yield Curve](https://home.treasury.gov/resource-center/data-chart-center/interest-rates?utm_source=chatgpt.com) | Different maturities ke US government bond yields compare karna  |
+
+Trading Economics ka API economic indicators, exchange rates, government bond yields aur calendar events ko software mein use karne ke liye bana hai. Data coverage aur API limits subscription ke hisaab se vary kar sakte hain.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://api.tradingeconomics.com\&sz=32)
+
+Trading Economics API
+
++1
+
+
+
+Trading example: US inflation expected se zyada aaye, to sirf Gold par bullish/bearish conclusion mat nikalo. Pehle Treasury yields, dollar, policy expectations aur XAUUSD ka actual reaction compare karo.
+
+# 6. Bonds, credit risk, market volatility aur liquidity
+
+Stock aur crypto ke alawa financial system mein bond yields, credit spreads aur volatility bhi major inputs hain.
+
+| Website                                                                                         | Kya milega?                                                                             |
+| ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [FINRA Fixed Income Data](https://www.finra.org/finra-data/fixed-income?utm_source=chatgpt.com) | US fixed-income market information                                                      |
+| [FINRA TRACE](https://www.finra.org/finra-data/fixed-income/trace?utm_source=chatgpt.com)       | Eligible US corporate aur other covered bond transactions ki reported trade information |
+| [SIFMA Research](https://www.sifma.org/resources/research/?utm_source=chatgpt.com)              | Bond markets, securities industry aur market statistics                                 |
+| [Cboe VIX](https://www.cboe.com/tradable_products/vix/?utm_source=chatgpt.com)                  | S&P 500 options se derive hone wala expected-volatility measure                         |
+| [CME Group](https://www.cmegroup.com/?utm_source=chatgpt.com)                                   | Futures, options, interest rates aur commodity-market information                       |
+| [FRED](https://fred.stlouisfed.org/?utm_source=chatgpt.com)                                     | Historical Treasury yields, credit spreads aur macroeconomic series                     |
+| [US Treasury Fiscal Data](https://fiscaldata.treasury.gov/?utm_source=chatgpt.com)              | Federal debt, Treasury auctions aur government-finance datasets                         |
+
+### Kyon important hai?
+
+Equities gir rahi hon aur credit spreads widen ho rahe hon, to risk environment ka signal sirf ek stock-index candle se alag ho sakta hai. Isi tarah VIX expected volatility ka measure hai; ye next candle ki direction predict nahi karta.
+
+Ek useful cross-asset dashboard mein kam se kam US 2-year yield, 10-year yield, dollar index, VIX, Gold aur broad equity indices ko side-by-side dekha ja sakta hai.
+
+# 7. CFTC positioning, short selling, options aur unusual trading activity
+
+Aapke current list mein COT reports aur US options-flow sites hain. Neeche inke saath official market-structure sources bhi add karo.
+
+| Website                                                                                                                   | Kya research kar sakte ho?                               |
+| ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [CFTC Market Reports](https://www.cftc.gov/MarketReports/index.htm?utm_source=chatgpt.com)                                | Futures positioning, swaps aur other derivatives reports |
+| [CFTC COT Reports](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm?utm_source=chatgpt.com)              | Reportable trader categories ki futures positioning      |
+| [FINRA ATS Transparency](https://www.finra.org/finra-data/browse-catalog/ats-transparency-data?utm_source=chatgpt.com)    | US alternative trading systems ki reported activity      |
+| [FINRA Short Sale Volume](https://www.finra.org/finra-data/browse-catalog/short-sale-volume-data?utm_source=chatgpt.com)  | Reported short-sale volume datasets                      |
+| [Nasdaq Short Interest](https://www.nasdaqtrader.com/Trader.aspx?id=ShortInterest\&utm_source=chatgpt.com)                | Reported short-interest information                      |
+| [OCC Market Data](https://www.theocc.com/market-data/market-data-reports/volume-and-open-interest?utm_source=chatgpt.com) | US listed options volume aur open interest               |
+| [Cboe DataShop](https://datashop.cboe.com/option-quote-intervals?utm_source=chatgpt.com)                                  | US listed-options quotes aur intraday interval data      |
+| [Unusual Whales](https://unusualwhales.com/?utm_source=chatgpt.com)                                                       | Options activity aur unusual-trading analytics           |
+| [Cheddar Flow](https://www.cheddarflow.com/?utm_source=chatgpt.com)                                                       | Options-flow research                                    |
+| [Unusual Flow](https://unusualflow.com/?utm_source=chatgpt.com)                                                           | Options activity analytics                               |
+
+CFTC COT reports generally Tuesday ki positioning ko Friday ko publish karte hain, isliye unhe real-time order book nahi samajhna chahiye. Cboe ka detailed options quote data bhi separate data product hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.cftc.gov\&sz=32)
+
+CFTC
+
++2
+
+
+
+Important distinction: short-sale volume, short interest, options volume, open interest aur dark-pool/ATS activity alag metrics hain. Inmein se koi bhi akela reliable buy/sell signal nahi hai.
+
+# 8. Gold, oil, energy aur physical commodity supply
+
+Gold aur crude oil trading ke liye price charts ke saath physical supply-demand data bhi research karna useful hai.
+
+| Website                                                                                                               | Kya milega?                                                                |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [EIA Weekly Petroleum Status Report](https://www.eia.gov/petroleum/supply/weekly/?utm_source=chatgpt.com)             | US crude inventories, production, refinery activity aur petroleum balances |
+| [EIA Open Data / API](https://www.eia.gov/opendata/?utm_source=chatgpt.com)                                           | Energy data ko programmatically access karna                               |
+| [OPEC](https://www.opec.org/?utm_source=chatgpt.com)                                                                  | Oil market reports aur official production-related information             |
+| [International Energy Agency](https://www.iea.org/reports/oil-market-report?utm_source=chatgpt.com)                   | Oil demand, supply aur market outlook reports                              |
+| [USDA WASDE](https://www.usda.gov/oce/commodity/wasde?utm_source=chatgpt.com)                                         | Global agricultural supply, demand aur stocks estimates                    |
+| [LBMA](https://www.lbma.org.uk/prices-and-data?utm_source=chatgpt.com)                                                | Precious-metals market benchmarks aur data resources                       |
+| [World Gold Council](https://www.gold.org/goldhub?utm_source=chatgpt.com)                                             | Gold demand, investment flows aur market research                          |
+| [London Metal Exchange](https://www.lme.com/Market-data/Reports-and-data/Warehouse-and-stocks?utm_source=chatgpt.com) | Industrial-metal inventories aur warehouse reports                         |
+| [CME Commodity Markets](https://www.cmegroup.com/markets/commodities.html?utm_source=chatgpt.com)                     | Futures contracts, prices aur exchange market information                  |
+
+EIA ka official Weekly Petroleum Status Report downloadable tables aur historical issues deta hai; COT ke saath ye oil positioning aur supply-side context ke liye complementary data hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.eia.gov\&sz=32)
+
+U.S. Energy Information Administration
+
++1
+
+
+
+### XAUUSD ke liye daily data checklist
+
+1. US dollar aur Treasury yields.
+2. Fed aur US economic calendar.
+3. CFTC Gold futures positioning.
+4. Gold ETF flows aur World Gold Council research.
+5. Spot Gold price aur relevant futures prices.
+6. Actual price action, liquidity aur risk management.
+
+### Oil ke liye
+
+EIA inventories, OPEC/IEA outlook, futures curve aur CFTC positioning ko compare karo. Inventory report ko price reaction ke bina directional trade signal mat banao.
+
+# 9. Crypto intelligence: on-chain flows, derivatives aur token supply
+
+Aap pehle Arkham, DeFiLlama, Etherscan, Solscan aur CoinGlass include kar chuke ho. In additional platforms se intelligence layer ko broaden kar sakte ho.
+
+| Website                                                                                                         | Main purpose                                                               |
+| --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [CryptoQuant](https://cryptoquant.com/?utm_source=chatgpt.com)                                                  | Exchange flows, miner activity, on-chain indicators aur crypto market data |
+| [Glassnode](https://glassnode.com/?utm_source=chatgpt.com)                                                      | On-chain metrics, holder behaviour aur network analytics                   |
+| [Nansen](https://www.nansen.ai/?utm_source=chatgpt.com)                                                         | Wallet labels, token flows aur wallet intelligence                         |
+| [Token Terminal](https://tokenterminal.com/?utm_source=chatgpt.com)                                             | Crypto protocols ke financial aur fundamental metrics                      |
+| [Token Unlocks](https://token.unlocks.app/?utm_source=chatgpt.com)                                              | Scheduled token unlocks aur token-supply events                            |
+| [CoinGlass API Docs](https://docs.coinglass.com/reference/getting-started-with-your-api?utm_source=chatgpt.com) | Futures, funding, open interest, liquidations aur related crypto data      |
+| [DeFiLlama API Docs](https://api-docs.defillama.com/?utm_source=chatgpt.com)                                    | DeFi protocols, TVL aur supported protocol metrics                         |
+| [Dune](https://dune.com/?utm_source=chatgpt.com)                                                                | Blockchain SQL research aur custom dashboards                              |
+| [Bitcoin Mempool Explorer](https://mempool.space/?utm_source=chatgpt.com)                                       | Bitcoin network, transactions aur mempool activity                         |
+| [Coinbase Developer Docs](https://docs.cdp.coinbase.com/?utm_source=chatgpt.com)                                | Coinbase-supported APIs aur developer integration                          |
+| [Kraken API Docs](https://docs.kraken.com/api/?utm_source=chatgpt.com)                                          | Kraken market-data aur trading API documentation                           |
+
+CryptoQuant exchange, miner aur whale flows ko market data ke saath research karne ke tools deta hai; CoinGlass ka API derivatives, options, ETF aur on-chain categories cover karta hai. DeFiLlama bhi API access provide karta hai, lekin har endpoint ke access terms same nahi hain.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.cryptoquant.com\&sz=32)
+
+On-chain data and market intelligence
+
++2
+
+
+
+### Crypto mein data ko sahi tarike se read karna
+
+Agar whale wallet ne exchange ko BTC transfer kiya, to usse automatic selling conclude nahi kar sakte. Transfer custody change, internal wallet movement ya doosre operational reasons se bhi ho sakta hai.
+
+Isi tarah, high funding rate, high open interest ya large liquidation cluster ko price direction ka guarantee nahi samajhna chahiye.
+
+# 10. Institutional research terminals aur professional intelligence
+
+Agar aap finance research ko Bloomberg-style terminal ya institutional research desk ki tarah organize karna chahte ho, to ye platforms research karne layak hain.
+
+| Platform                                                                                                                 | Kis kaam ke liye?                                                  | Access           |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ---------------- |
+| [Bloomberg Professional](https://www.bloomberg.com/professional/?utm_source=chatgpt.com)                                 | Multi-asset market data, news, analytics aur financial research    | Paid             |
+| [LSEG Workspace](https://www.lseg.com/en/data-analytics/products/workspace?utm_source=chatgpt.com)                       | Financial-market data, analytics, company information aur news     | Paid/conditional |
+| [FactSet](https://www.factset.com/?utm_source=chatgpt.com)                                                               | Institutional financial data, estimates aur investment research    | Paid             |
+| [S&P Capital IQ](https://www.spglobal.com/marketintelligence/en/solutions/sp-capital-iq-platform?utm_source=chatgpt.com) | Company financials, corporate events aur financial analysis        | Paid             |
+| [AlphaSense](https://www.alpha-sense.com/?utm_source=chatgpt.com)                                                        | Company documents, earnings calls, research aur AI-assisted search | Paid/conditional |
+| [Koyfin](https://www.koyfin.com/?utm_source=chatgpt.com)                                                                 | Charts, macroeconomic data, watchlists aur company comparison      | Freemium/paid    |
+| [MarketScreener](https://www.marketscreener.com/?utm_source=chatgpt.com)                                                 | Company news, financial results aur analyst-consensus research     | Freemium/paid    |
+| [Benzinga Pro](https://www.benzinga.com/pro?utm_source=chatgpt.com)                                                      | Market-moving news aur event-driven trading research               | Paid/conditional |
+| [Financial Juice](https://www.financialjuice.com/?utm_source=chatgpt.com)                                                | Financial news feed aur market-event coverage                      | Access varies    |
+
+Ye platforms ek jaise nahi hain. Bloomberg, LSEG aur FactSet broader professional data environments hain; AlphaSense document search aur research workflow par focus karta hai. Inmein se kuch ki pricing aur data access business plan ke according hoti hai.
+
+Meri recommendation: Abhi sabhi expensive terminals ke subscriptions mat lo. Pehle official disclosures, macro data aur apne selected market ke charts ko integrate karo. Jab free/public sources se clear ho jaye ki kaunsa data missing hai, tab paid provider choose karna easier hoga.
+
+# 11. Financial APIs — Apna AI Finance Intelligence Dashboard banane ke liye
+
+Yeh aapki directory ka sabse important addition ho sakta hai agar aap websites ko sirf browse karne ke bajay unka data apne software mein lana chahte ho.
+
+| API / documentation                                                                                                                                         | Kya integrate kar sakte ho?                                                     | Suggested use              |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------- |
+| [SEC EDGAR APIs](https://www.sec.gov/search-filings/edgar-application-programming-interfaces?utm_source=chatgpt.com)                                        | Company submissions aur structured financial facts                              | US company filings         |
+| [FRED API](https://fred.stlouisfed.org/docs/api/fred/?utm_source=chatgpt.com)                                                                               | Historical economic and financial time series                                   | Macro dashboard            |
+| [IMF Data APIs](https://data.imf.org/en/Resource-Pages/IMF-API?utm_source=chatgpt.com)                                                                      | International economic datasets                                                 | Cross-country macro        |
+| [World Bank Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation?utm_source=chatgpt.com) | Development aur economic indicators                                             | Long-term country research |
+| [Alpha Vantage API](https://www.alphavantage.co/documentation/?utm_source=chatgpt.com)                                                                      | Stocks, FX, crypto, fundamentals, indicators aur selected intelligence datasets | Multi-asset prototype      |
+| [Finnhub API](https://finnhub.io/docs/api?utm_source=chatgpt.com)                                                                                           | Market data, company information aur news-related endpoints                     | Research dashboard         |
+| [Twelve Data API](https://twelvedata.com/docs?utm_source=chatgpt.com)                                                                                       | Stocks, Forex, crypto aur technical time series                                 | Charts and price data      |
+| [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs?utm_source=chatgpt.com)                                                     | Financial statements, fundamentals aur market datasets                          | Company-analysis engine    |
+| [Nasdaq Data Link](https://docs.data.nasdaq.com/?utm_source=chatgpt.com)                                                                                    | Supported financial aur alternative datasets                                    | Quant research             |
+| [Trading Economics API](https://docs.tradingeconomics.com/get_started/?utm_source=chatgpt.com)                                                              | Economic indicators, calendar aur related market information                    | Macro-event engine         |
+| [EIA API](https://www.eia.gov/opendata/?utm_source=chatgpt.com)                                                                                             | Energy supply-demand datasets                                                   | Crude oil aur energy       |
+| [DeFiLlama API](https://api-docs.defillama.com/?utm_source=chatgpt.com)                                                                                     | DeFi TVL aur supported protocol metrics                                         | DeFi analytics             |
+| [CoinGlass API](https://docs.coinglass.com/reference/getting-started-with-your-api?utm_source=chatgpt.com)                                                  | Crypto derivatives, options aur supported flow metrics                          | Crypto derivatives engine  |
+
+Alpha Vantage apni documentation mein equities, indices, options, news, sentiment, earnings transcripts, fundamentals, Forex, crypto aur economic indicators jaise endpoints list karta hai. Lekin endpoint available hone ka matlab yeh nahi ki saara data free, real-time ya commercially redistributable hai.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.alphavantage.co\&sz=32)
+
+Alpha Vantage
+
+
+
+### API choose karte waqt yeh 6 cheezein verify karna
+
+- Coverage: Global exchanges hain ya sirf US?
+- Latency: Real-time, delayed, end-of-day ya periodically updated?
+- History: Intraday history kitni available hai?
+- Limits: Requests per minute/day aur subscription restrictions kya hain?
+- Licensing: Personal research, internal business use aur public redistribution ke rights alag ho sakte hain.
+- Reliability: Missing data, symbol changes, splits, revisions aur timestamps ko kaise handle karte hain?
+
+Ek provider ko poore global finance universe ka complete source samajhna galat hoga. Aksar price data, filings, news aur macro data ke liye alag providers ki zaroorat hoti hai.
+
+# 12. Global news monitoring aur alternative data
+
+Traditional finance news ke alawa kuch data sources company ya market ke baare mein additional context provide kar sakte hain.
+
+| Website                                                                      | Use                                                         |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [GDELT](https://www.gdeltproject.org/?utm_source=chatgpt.com)                | Global news aur events par large-scale research             |
+| [Dow Jones](https://www.dowjones.com/professional/?utm_source=chatgpt.com)   | Professional financial news aur information products        |
+| [Factiva](https://professional.dowjones.com/factiva/?utm_source=chatgpt.com) | Business news aur corporate-information research            |
+| [AlphaSense](https://www.alpha-sense.com/?utm_source=chatgpt.com)            | Filings, transcripts aur research documents ko search karna |
+| [World Gold Council](https://www.gold.org/goldhub?utm_source=chatgpt.com)    | Physical gold demand aur investment trends                  |
+| [BIS](https://www.bis.org/statistics/?utm_source=chatgpt.com)                | Global credit, banking aur international finance statistics |
+| [IMF Data](https://data.imf.org/?utm_source=chatgpt.com)                     | Global economic datasets aur country-level comparisons      |
+
+Alternative data ka matlab sirf secret information nahi hota. Ismein public news archives, job-posting trends, shipping data, web activity, transaction aggregates aur other datasets shamil ho sakte hain. Inka use karte waqt source coverage, collection methodology aur timestamp ko samajhna zaroori hai.
+
+# 13. Meri recommended architecture: Finance Intelligence OS
+
+Aapke goal ko dekhte hue main dashboard ko sirf ek collection of links ki tarah nahi, balki source → event → evidence → market reaction → research decision pipeline ki tarah build karunga.
+
+Layer 1 — Global Monitoring
+
+Reuters, company IR, exchange filings, economic calendars, central-bank announcements, GDELT
+
+Layer 2 — Data Collection
+
+SEC, FRED, IMF, EIA, price-data APIs, CFTC, crypto on-chain APIs
+
+Layer 3 — Cross-Asset Analysis
+
+Dollar, yields, Gold, equity indices, crude oil, BTC, volatility and market positioning
+
+Layer 4 — AI Research
+
+Classify events, extract important facts, compare expectations, summarize filings and find contradictory evidence
+
+Layer 5 — Alerts and Decision Support
+
+Event alerts, source citations, data freshness, scenario analysis and manual trade review
+
+## Dashboard mein kya-kya modules hone chahiye?
+
+| Module               | Example functionality                                                      |
+| -------------------- | -------------------------------------------------------------------------- |
+| Global News Feed     | Source, publication time, country, affected asset aur event category       |
+| Company Intelligence | Filings, earnings, guidance, insider disclosures aur institutional reports |
+| Macro Calendar       | Event time, consensus, previous, actual aur revision                       |
+| Cross-Asset Monitor  | DXY, bond yields, equity indices, XAUUSD, oil aur BTC                      |
+| Positioning & Flows  | COT, short-interest datasets, ETF flows, options OI aur crypto derivatives |
+| Research Workbench   | Source documents, AI summaries aur original-source links                   |
+| Alerts Engine        | Selected event, price move ya metric threshold par notification            |
+| Data Health          | Last update, missing values, API errors aur source status                  |
+
+Har record ke saath publication time, event time, data retrieval time aur original source URL store karna important hoga. Isse AI purane data ko latest information samajhne ki galti kam karega.
+
+# 14. Roz ka Global Market Research Workflow
+
+Aap daily research ke liye is order ko use kar sakte ho:
+
+1. Economic calendar: Fed, inflation, employment, GDP aur central-bank events check karo.
+2. News and filings: Company announcements, earnings results, regulatory filings aur major geopolitical developments padho.
+3. Macro context: US dollar, Treasury yields aur relevant country ke rates compare karo.
+4. Market positioning: Relevant futures ke COT reports, reported short interest, ETF flows aur derivatives metrics dekho.
+5. Actual price reaction: Gold, Forex, equity indices, oil ya crypto mein price structure, liquidity aur volatility verify karo.
+6. Decision log: Bullish, bearish aur neutral scenarios likho; entry se pehle invalidation level, stop-loss aur risk/reward define karo.
+
+COT aur many institutional disclosures delayed hote hain, isliye unhe background context ke taur par use karo. Intraday trade ke liye current price, available order-book/market data aur real-time event information ki freshness alag se verify karni hogi.
+
+# 15. Sabse pehle kaunse bookmarks add karein?
+
+Aapki existing directory mein se repeated links ko dobara add karne ki zaroorat nahi. In 15 additional resources se shuruaat karo.
+
+SEC Insider Transactions
+
+Reported US corporate insider activity
+
+Open
+
+SEC 13F Data
+
+Institutional holdings
+
+Open
+
+London Stock Exchange News
+
+UK corporate announcements
+
+Open
+
+HKEXnews
+
+Hong Kong company filings
+
+Open
+
+Quartr
+
+Earnings calls and transcripts
+
+Open
+
+BLS Release Calendar
+
+US inflation and employment
+
+Open
+
+CME FedWatch
+
+Market-implied Fed expectations
+
+Open
+
+BIS Statistics
+
+Global credit and banking
+
+Open
+
+FINRA TRACE
+
+US corporate bond transactions
+
+Open
+
+OCC Market Data
+
+Options volume and open interest
+
+Open
+
+EIA Open Data
+
+Energy data and API
+
+Open
+
+LBMA
+
+Precious-metal benchmarks and data
+
+Open
+
+CryptoQuant
+
+Crypto on-chain flows
+
+Open
+
+GDELT
+
+Global news research
+
+Open
+
+Alpha Vantage API
+
+Multi-asset API development
+
+Open
+
+## Final recommendation
+
+Aapke liye sabse valuable combination hoga official filings + macroeconomic data + current market data + positioning + AI-assisted research. Sirf 100 websites add kar dena intelligence nahi banata; actual value tab aati hai jab data comparable, timestamped aur original sources se verifiable ho.
+
+Agar aap is directory ko coding project mein convert kar rahe ho, to pehle SEC + FRED + official economic calendars + price-data provider + CFTC + EIA + crypto analytics APIs se ek working prototype banao. Uske baad paid news feeds, institutional terminals aur advanced alternative data ko actual need ke according add karo.
+
+Aur ek essential rule: kisi bhi website ka signal automatic trade instruction nahi hona chahiye. Original disclosure verify karo, data freshness check karo aur trade ko independent price action aur defined risk ke against evaluate karo.

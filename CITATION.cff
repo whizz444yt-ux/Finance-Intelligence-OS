@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you use Finance Intelligence OS in research or software, please cite the repository where it is published."
+title: "Finance Intelligence OS — Global Market Cockpit"
+version: 2.2.0
+date-released: 2026-10-26
+type: software
+license: MIT

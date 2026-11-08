@@ -1,0 +1,15 @@
+{
+  "models": [
+    { "name": "page", "kind": "page", "description": "Public marketing, resource hub and evergreen research pages", "urlPattern": "/research/*", "fields": ["title", "slug", "description", "body", "seoTitle", "seoDescription", "heroImage", "publishedAt", "updatedAt", "sources", "evidenceClass"] },
+    { "name": "ict-lesson", "kind": "data", "description": "ICT Academy concept lesson; source/provenance mandatory", "urlPattern": "/academy/*", "fields": ["title", "slug", "track", "level", "definition", "provenance", "prerequisites", "identificationSteps", "bullishExample", "bearishExample", "timeframeContext", "failureCases", "references", "videoMappings", "quiz", "practiceTask", "reviewedAt"] },
+    { "name": "research-article", "kind": "data", "description": "Source-backed market or instrument research article", "urlPattern": "/research/articles/*", "fields": ["title", "slug", "marketIds", "summary", "body", "sources", "publishedAt", "reviewedAt", "evidenceClass"] },
+    { "name": "glossary", "kind": "data", "description": "Financial and futures terminology", "urlPattern": "/glossary/*", "fields": ["term", "slug", "definition", "provenance", "relatedTerms", "references", "reviewedAt"] }
+  ],
+  "editorialRules": [
+    "Never assign ICT primary-source provenance without a direct primary-source reference.",
+    "Separate PLAYBOOK SOURCE, ICT PRIMARY SOURCE, COMMUNITY CONVENTION and SUPPLEMENTAL.",
+    "Video search links must be labelled discovery links; direct videos must be checked for title, channel and content match.",
+    "Each public lesson must include learning purpose, identification criteria, examples, limitations and sources.",
+    "Builder private API keys and personal access tokens must never be included in browser content."
+  ]
+}

@@ -1,0 +1,2323 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-08",
+  "sourceDocument": "ICT Futures Playbook Complete Edition",
+  "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+  "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+  "tracks": [
+    {
+      "name": "Beginner Foundation",
+      "level": "Beginner",
+      "description": "Build the chart-reading base before attempting an entry model.",
+      "sequence": [
+        "Market Structure",
+        "Swing High & Swing Low",
+        "Liquidity",
+        "Buy-Side Liquidity (BSL)",
+        "Sell-Side Liquidity (SSL)",
+        "Equal Highs (EQH)",
+        "Equal Lows (EQL)",
+        "Displacement"
+      ]
+    },
+    {
+      "name": "Liquidity & Structure",
+      "level": "Beginner → Intermediate",
+      "description": "Understand how highs/lows are mapped and how a sweep differs from an accepted breakout.",
+      "sequence": [
+        "Prior Day High / Low (PDH / PDL)",
+        "Prior Week High / Low (PWH / PWL)",
+        "Session High / Low",
+        "Liquidity Sweep / Raid",
+        "Liquidity Run / Breakout Acceptance",
+        "Market Structure Shift (MSS)",
+        "Break of Structure (BOS)",
+        "Internal & External Range Liquidity (IRL / ERL)"
+      ]
+    },
+    {
+      "name": "Imbalances & Blocks",
+      "level": "Intermediate",
+      "description": "Learn boundaries, mitigation and invalidation of common ICT reference zones.",
+      "sequence": [
+        "Fair Value Gap (FVG)",
+        "Consequent Encroachment (CE)",
+        "Higher-Timeframe FVG",
+        "Inversion Fair Value Gap (IFVG)",
+        "Balanced Price Range (BPR)",
+        "Order Block (OB)",
+        "Mean Threshold (MT)",
+        "Breaker Block",
+        "Unicorn Model"
+      ]
+    },
+    {
+      "name": "Time & Narrative Models",
+      "level": "Advanced",
+      "description": "Organise a market narrative around sessions, time anchors and model-specific windows.",
+      "sequence": [
+        "Asian Range",
+        "ICT Killzones",
+        "Silver Bullet",
+        "Midnight / True Day Open",
+        "New Day Opening Gap (NDOG)",
+        "New Week Opening Gap (NWOG)",
+        "AMD / Power of Three",
+        "Judas Swing"
+      ]
+    },
+    {
+      "name": "Advanced & Cross-Market",
+      "level": "Advanced",
+      "description": "Study multi-market confirmation, weekly tendencies and range projections.",
+      "sequence": [
+        "SMT Divergence",
+        "ICT Weekly Profiles",
+        "IPDA 20/40/60 Lookback",
+        "Central Bank Dealers Range (CBDR)",
+        "Flout Range",
+        "Standard-Deviation Projections",
+        "ICT Macros — Research Note"
+      ]
+    },
+    {
+      "name": "Entry Model Playbook",
+      "level": "Intermediate → Advanced",
+      "description": "Learn setup sequences, prerequisites, confirmation, invalidation and limits.",
+      "sequence": [
+        "ICT 2022 Model",
+        "Liquidity Sweep + MSS Model",
+        "FVG Continuation Model",
+        "Inversion FVG (IFVG) Reversal Model",
+        "FVG + OTE Confluence Model",
+        "Market Maker Buy Model (MMBM)",
+        "Market Maker Sell Model (MMSM)"
+      ]
+    },
+    {
+      "name": "Supplemental & Community Terms",
+      "level": "Advanced · definitions vary",
+      "description": "Additional terminology from secondary ICT/SMC references. Review source notes before using these labels.",
+      "sequence": [
+        "Change in State of Delivery (CISD)",
+        "Market Maker Model (MMXM)",
+        "Turtle Soup (false-breakout setup)",
+        "Propulsion Block",
+        "Breakaway Gap",
+        "Opening Range Gap (ORG)",
+        "Event Horizon (EH)",
+        "Reclaimed Order Block",
+        "Suspension Block",
+        "Vacuum Block",
+        "New York Lunch Algorithmic Reversal (community label)"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "market-structure",
+      "name": "Market Structure",
+      "category": "Market Structure",
+      "level": "Beginner",
+      "definition": "Framework for reading swing highs, swing lows and directional sequences. The playbook uses higher-timeframe structure for context before lower-timeframe execution.",
+      "howToUse": [
+        "Mark meaningful confirmed Monthly/Weekly/Daily swings.",
+        "Identify the latest structural break and displacement leg.",
+        "Use 4H/1H to refine context; do not let a 1M fluctuation redefine daily bias."
+      ],
+      "useCase": "Use a pre-defined swing-selection rule and keep it consistent.",
+      "commonMistakes": "Swing selection is discretionary unless the lookback and close rule are specified.",
+      "evidence": "SOURCED · rule-dependent",
+      "related": [
+        "Swing High / Swing Low",
+        "BOS",
+        "MSS",
+        "Displacement",
+        "Dealing Range"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Market Structure ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Market%20Structure%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "swing-high-low",
+      "name": "Swing High & Swing Low",
+      "category": "Market Structure",
+      "level": "Beginner",
+      "definition": "Local turning points used to map structure. The exact pivot lookback is a rule that must be fixed.",
+      "howToUse": [
+        "Choose a pivot rule, such as a three-candle pivot or fixed left/right lookback.",
+        "Wait for pivot confirmation if your rule requires future candles.",
+        "Use meaningful swings for BOS/MSS, not every small fluctuation."
+      ],
+      "useCase": "Mark pivots consistently and distinguish internal from major external swings.",
+      "commonMistakes": "Do not select a swing retrospectively only because it makes a setup look cleaner.",
+      "evidence": "SOURCED · operational rule needed",
+      "related": [
+        "Market Structure",
+        "BOS",
+        "MSS",
+        "Dealing Range"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Swing High & Swing Low ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Swing%20High%20%26%20Swing%20Low%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "bos",
+      "name": "Break of Structure (BOS)",
+      "category": "Market Structure",
+      "level": "Beginner",
+      "definition": "A break of a prior structural swing in the direction of the existing trend. It is a continuation clue, not an automatic entry.",
+      "howToUse": [
+        "Define the swing level before the break.",
+        "Decide whether a wick or candle-body close qualifies.",
+        "Check displacement and the next liquidity pool."
+      ],
+      "useCase": "Use BOS to describe continuation context after a structural level is broken.",
+      "commonMistakes": "A wick through a minor pivot is not automatically a meaningful BOS.",
+      "evidence": "SOURCED · rule-dependent",
+      "related": [
+        "Market Structure",
+        "MSS",
+        "Displacement",
+        "Liquidity"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Break of Structure (BOS) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Break%20of%20Structure%20%28BOS%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "mss",
+      "name": "Market Structure Shift (MSS)",
+      "category": "Market Structure",
+      "level": "Intermediate",
+      "definition": "A break through a relevant swing opposite to prior short-term structure, ideally with displacement. In the playbook, MSS confirms after a liquidity raid.",
+      "howToUse": [
+        "Identify prior short-term structure.",
+        "Wait for a close through the opposing swing under a fixed rule.",
+        "Assess displacement and imbalance.",
+        "Only then evaluate a pullback entry."
+      ],
+      "useCase": "Use MSS after a meaningful level is reached or liquidity is swept.",
+      "commonMistakes": "Do not treat every small lower-timeframe break as a reversal; the PDF distinguishes MSS from CHoCH terminology.",
+      "evidence": "SOURCED · threshold discretionary",
+      "related": [
+        "BOS",
+        "Displacement",
+        "Liquidity Sweep",
+        "FVG"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Market Structure Shift (MSS) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Market%20Structure%20Shift%20%28MSS%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "choch",
+      "name": "CHoCH terminology comparison",
+      "category": "Market Structure",
+      "level": "Intermediate",
+      "definition": "Change of Character is used by parts of the wider price-action/SMC community. The supplied playbook prefers MSS for its reversal framework.",
+      "howToUse": [
+        "Learn the definition used by the educator or indicator.",
+        "Compare swing and close criteria with the playbook MSS definition.",
+        "Record terminology instead of assuming identical rules."
+      ],
+      "useCase": "Translate terminology across different educational sources.",
+      "commonMistakes": "Do not combine incompatible definitions in one backtest.",
+      "evidence": "SUPPLEMENTAL · terminology varies",
+      "related": [
+        "MSS",
+        "BOS",
+        "Market Structure"
+      ],
+      "youtubeQuery": "Inner Circle Trader official CHoCH terminology comparison ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20CHoCH%20terminology%20comparison%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "displacement",
+      "name": "Displacement",
+      "category": "Market Structure",
+      "level": "Intermediate",
+      "definition": "A fast directional move with relatively large candle bodies that breaks a meaningful swing and may leave imbalances. The PDF says the threshold is discretionary.",
+      "howToUse": [
+        "Look for directional candles with large bodies and limited overlap.",
+        "Check whether the move closes beyond a meaningful swing.",
+        "Check for FVG/imbalance.",
+        "Define body-size, ATR or lookback filters before testing."
+      ],
+      "useCase": "Use as evidence behind a structure shift, not a stand-alone direction forecast.",
+      "commonMistakes": "News spikes can create movement without a durable setup.",
+      "evidence": "SOURCED · threshold discretionary",
+      "related": [
+        "MSS",
+        "FVG",
+        "Order Block",
+        "Liquidity Sweep"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Displacement ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Displacement%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "liquidity",
+      "name": "Liquidity",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "In ICT terminology, liquidity refers to orders or stops thought to cluster around obvious highs, lows and reference levels. The playbook uses pools to frame draw on liquidity.",
+      "howToUse": [
+        "Mark prior highs/lows, equal highs/lows and session extremes.",
+        "Separate target pool from trigger.",
+        "Ask which untouched external level aligns with higher-timeframe narrative."
+      ],
+      "useCase": "Use as a map of potential objectives, not proof that stops are visible or guaranteed to be taken.",
+      "commonMistakes": "Do not assume every equal high/low must be swept.",
+      "evidence": "SOURCED · framework",
+      "related": [
+        "BSL",
+        "SSL",
+        "EQH",
+        "EQL",
+        "PDH / PDL",
+        "PWH / PWL"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Liquidity ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "bsl",
+      "name": "Buy-Side Liquidity (BSL)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "A label for potential buy stops and breakout orders above visible highs. The playbook places BSL above equal highs and prior/session highs.",
+      "howToUse": [
+        "Mark obvious highs and equal highs.",
+        "Treat the area above as a potential objective.",
+        "Wait for price behaviour; a sweep does not mean reversal."
+      ],
+      "useCase": "Identify upside objectives and possible buy-side raids.",
+      "commonMistakes": "A horizontal level is not a precise measure of actual resting orders.",
+      "evidence": "SOURCED · ICT terminology",
+      "related": [
+        "SSL",
+        "EQH",
+        "Liquidity Sweep",
+        "PDH / PWH"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Buy-Side Liquidity (BSL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Buy-Side%20Liquidity%20%28BSL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ssl",
+      "name": "Sell-Side Liquidity (SSL)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "A label for potential sell stops and breakout orders below visible lows; counterpart to BSL.",
+      "howToUse": [
+        "Mark obvious lows and equal lows.",
+        "Treat the area below as a potential downside objective.",
+        "Observe rejection versus acceptance below."
+      ],
+      "useCase": "Define downside draw-on-liquidity levels.",
+      "commonMistakes": "A trade below a low can be a genuine breakout, not a reversal raid.",
+      "evidence": "SOURCED · ICT terminology",
+      "related": [
+        "BSL",
+        "EQL",
+        "Liquidity Sweep",
+        "PDL / PWL"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Sell-Side Liquidity (SSL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Sell-Side%20Liquidity%20%28SSL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "eqh",
+      "name": "Equal Highs (EQH)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "Two or more swing highs at approximately similar prices. The area above them is considered potential BSL.",
+      "howToUse": [
+        "Choose a tolerance in ticks or percentage terms.",
+        "Mark highs after pivots are confirmed.",
+        "Use the cluster as a reference area."
+      ],
+      "useCase": "Identify potential upside liquidity pools.",
+      "commonMistakes": "Do not redraw tolerance after seeing the outcome.",
+      "evidence": "SOURCED · tolerance convention",
+      "related": [
+        "EQL",
+        "BSL",
+        "Liquidity Sweep",
+        "Swing High / Swing Low"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Equal Highs (EQH) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equal%20Highs%20%28EQH%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "eql",
+      "name": "Equal Lows (EQL)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "Two or more swing lows at approximately similar prices. The area below them is considered potential SSL.",
+      "howToUse": [
+        "Choose a fixed tolerance.",
+        "Mark confirmed lows.",
+        "Observe approach, sweep, acceptance or rejection."
+      ],
+      "useCase": "Identify potential downside liquidity pools.",
+      "commonMistakes": "Not every EQL is swept and not every sweep reverses.",
+      "evidence": "SOURCED · tolerance convention",
+      "related": [
+        "EQH",
+        "SSL",
+        "Liquidity Sweep"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Equal Lows (EQL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equal%20Lows%20%28EQL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "pdh-pdl",
+      "name": "Prior Day High / Low (PDH / PDL)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "Previous trading day high and low. The playbook treats these as important intraday liquidity references and frequent objectives.",
+      "howToUse": [
+        "Use the correct product trading-day definition.",
+        "Mark previous completed session high and low.",
+        "Check alignment with Daily draw on liquidity."
+      ],
+      "useCase": "Map intraday objectives and possible sweep locations.",
+      "commonMistakes": "Do not mix exchange session dates, chart timezone and calendar dates.",
+      "evidence": "SOURCED · session definition matters",
+      "related": [
+        "PWH / PWL",
+        "Session High / Low",
+        "NDOG"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Prior Day High / Low (PDH / PDL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Prior%20Day%20High%20/%20Low%20%28PDH%20/%20PDL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "pwh-pwl",
+      "name": "Prior Week High / Low (PWH / PWL)",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "Previous completed week high and low; higher-timeframe liquidity reference levels.",
+      "howToUse": [
+        "Use exchange trading-week definition.",
+        "Mark last completed week's high and low.",
+        "Keep visible during weekly/daily narrative."
+      ],
+      "useCase": "Identify external weekly objectives and context for intraday setups.",
+      "commonMistakes": "A developing week's high/low is not the prior week's level.",
+      "evidence": "SOURCED",
+      "related": [
+        "PDH / PDL",
+        "IPDA 20/40/60",
+        "Weekly Profiles"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Prior Week High / Low (PWH / PWL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Prior%20Week%20High%20/%20Low%20%28PWH%20/%20PWL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "session-high-low",
+      "name": "Session High / Low",
+      "category": "Liquidity",
+      "level": "Beginner",
+      "definition": "High and low formed during a defined session, such as Asia or London. The PDF uses these as potential sweep levels.",
+      "howToUse": [
+        "Define exact session timezone and start/end.",
+        "Record high and low of completed range.",
+        "Carry levels forward into next active window."
+      ],
+      "useCase": "Study London/NY range-sweep behaviour.",
+      "commonMistakes": "Sessions and DST differ by region; avoid hardcoded IST offsets.",
+      "evidence": "SOURCED · session convention",
+      "related": [
+        "Asian Range",
+        "London Killzone",
+        "Liquidity Sweep"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Session High / Low ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Session%20High%20/%20Low%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "liquidity-sweep",
+      "name": "Liquidity Sweep / Raid",
+      "category": "Liquidity",
+      "level": "Intermediate",
+      "definition": "Price trades beyond an obvious liquidity level and closes back inside under the playbook's simplified description. A sweep alone is not an entry.",
+      "howToUse": [
+        "Mark pool before price reaches it.",
+        "Observe move beyond level and reclaim/close condition.",
+        "Wait for displacement and MSS if required.",
+        "Define wick/body rules before testing."
+      ],
+      "useCase": "Use sequence: level → raid → confirmation → pullback → objective.",
+      "commonMistakes": "Do not enter solely because a level was wicked through.",
+      "evidence": "SOURCED · operational definition required",
+      "related": [
+        "BSL",
+        "SSL",
+        "MSS",
+        "Displacement",
+        "Judas Swing"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Liquidity Sweep / Raid ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Sweep%20/%20Raid%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "liquidity-run",
+      "name": "Liquidity Run / Breakout Acceptance",
+      "category": "Liquidity",
+      "level": "Intermediate",
+      "definition": "A move through a liquidity level that continues instead of rejecting back inside. The playbook distinguishes a run from a sweep.",
+      "howToUse": [
+        "Mark reference level.",
+        "Observe whether price reclaims or holds beyond it.",
+        "Assess follow-through and nearby objectives."
+      ],
+      "useCase": "Avoid fading genuine acceptance and continuation.",
+      "commonMistakes": "Do not label a breakout a failed sweep only because reversal was expected.",
+      "evidence": "SOURCED · distinction in playbook",
+      "related": [
+        "Liquidity Sweep",
+        "BOS",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Liquidity Run / Breakout Acceptance ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Run%20/%20Breakout%20Acceptance%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "irl-erl",
+      "name": "Internal & External Range Liquidity (IRL / ERL)",
+      "category": "Liquidity",
+      "level": "Advanced",
+      "definition": "External liquidity refers to highs/lows outside a dealing range; internal references include imbalances/zones inside it. Movement between them is a conceptual model.",
+      "howToUse": [
+        "Define dealing range from structural event.",
+        "Mark external highs/lows outside it.",
+        "Map internal FVG/OB references.",
+        "Track movement between them."
+      ],
+      "useCase": "Organise a range map.",
+      "commonMistakes": "Conceptual framework, not proof of a programmed delivery mechanism.",
+      "evidence": "SOURCED / conceptual framework",
+      "related": [
+        "Dealing Range",
+        "PD Arrays",
+        "FVG",
+        "IPDA 20/40/60"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Internal & External Range Liquidity (IRL / ERL) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Internal%20%26%20External%20Range%20Liquidity%20%28IRL%20/%20ERL%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "opposing-liquidity",
+      "name": "Opposing Liquidity / Draw on Liquidity",
+      "category": "Liquidity",
+      "level": "Intermediate",
+      "definition": "The next relevant liquidity pool in the direction of a directional hypothesis. The PDF's models often target opposing liquidity after entry.",
+      "howToUse": [
+        "Set HTF context.",
+        "Identify nearest unclaimed external or session pool.",
+        "Check intermediate arrays and event risk.",
+        "Define partial and final targets before entry."
+      ],
+      "useCase": "Plan exits and assess reward-to-risk.",
+      "commonMistakes": "Do not move the target retrospectively to make a trade look valid.",
+      "evidence": "SOURCED · framework",
+      "related": [
+        "BSL",
+        "SSL",
+        "PDH / PDL",
+        "PWH / PWL"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Opposing Liquidity / Draw on Liquidity ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Opposing%20Liquidity%20/%20Draw%20on%20Liquidity%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "fvg",
+      "name": "Fair Value Gap (FVG)",
+      "category": "Imbalances",
+      "level": "Intermediate",
+      "definition": "Three-candle price imbalance. Bullish: candle 3 low is above candle 1 high. Bearish: candle 3 high is below candle 1 low. It is an entry zone in some models, not a signal by itself.",
+      "howToUse": [
+        "Identify first and third candles.",
+        "For bullish, mark candle 1 high to candle 3 low; reverse for bearish.",
+        "Mark 50% CE if used.",
+        "Define wick-touch versus body-close mitigation/invalidation."
+      ],
+      "useCase": "Require liquidity, displacement, structure and an active window as context.",
+      "commonMistakes": "The PDF reports no robust proof that FVGs outperform equal-sized random zones; fills are not guaranteed.",
+      "evidence": "SOURCED · NO AUDITED EDGE",
+      "related": [
+        "Displacement",
+        "CE",
+        "IFVG",
+        "BPR",
+        "Silver Bullet",
+        "OTE"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Fair Value Gap (FVG) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Fair%20Value%20Gap%20%28FVG%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "htf-fvg",
+      "name": "Higher-Timeframe FVG",
+      "category": "Imbalances",
+      "level": "Intermediate",
+      "definition": "An FVG on a larger timeframe such as 1H, 4H or Daily, used as context on a lower execution timeframe.",
+      "howToUse": [
+        "Identify HTF gap using same candle rule.",
+        "Mark boundaries and midpoint.",
+        "Observe lower-timeframe reaction.",
+        "Use a separate lower-timeframe trigger and invalidation."
+      ],
+      "useCase": "Use as contextual location; lower timeframe refines execution.",
+      "commonMistakes": "An HTF FVG does not have to be filled or respected.",
+      "evidence": "SOURCED · rule-dependent",
+      "related": [
+        "FVG",
+        "PD Arrays",
+        "Premium / Discount"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Higher-Timeframe FVG ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Higher-Timeframe%20FVG%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ce",
+      "name": "Consequent Encroachment (CE)",
+      "category": "Imbalances",
+      "level": "Intermediate",
+      "definition": "The 50% midpoint of an FVG. Some practitioners treat touch of this midpoint as partial mitigation or entry reference.",
+      "howToUse": [
+        "Measure exact FVG boundaries.",
+        "Calculate 50% midpoint.",
+        "Record whether plan requires touch, close or rejection."
+      ],
+      "useCase": "Use as a precise reference within a pre-defined FVG.",
+      "commonMistakes": "CE touch is not proof of support/resistance or automatic fill.",
+      "evidence": "SOURCED / CONVENTION",
+      "related": [
+        "FVG",
+        "Order Block",
+        "OTE"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Consequent Encroachment (CE) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Consequent%20Encroachment%20%28CE%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ifvg",
+      "name": "Inversion Fair Value Gap (IFVG)",
+      "category": "Imbalances",
+      "level": "Advanced",
+      "definition": "A gap whose role is treated as reversed after price closes through its far edge. The playbook specifies a body close, not merely a wick.",
+      "howToUse": [
+        "Mark valid original FVG.",
+        "Wait for body close beyond far boundary.",
+        "Observe return test.",
+        "Define invalidation beyond opposite boundary."
+      ],
+      "useCase": "Study as role-reversal setup after confirmed close-through.",
+      "commonMistakes": "The PDF says the model is popular but audited public statistics are lacking.",
+      "evidence": "CONVENTION / NO AUDITED DATA",
+      "related": [
+        "FVG",
+        "BPR",
+        "MSS",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Inversion Fair Value Gap (IFVG) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Inversion%20Fair%20Value%20Gap%20%28IFVG%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "bpr",
+      "name": "Balanced Price Range (BPR)",
+      "category": "Imbalances",
+      "level": "Advanced",
+      "definition": "Overlap between a bullish FVG and a bearish FVG. The PDF describes it as a consolidation/reference zone, not inherently directional.",
+      "howToUse": [
+        "Identify bullish and bearish FVGs.",
+        "Mark overlap.",
+        "Use broader structure and liquidity for direction."
+      ],
+      "useCase": "Use as balance/reaction area when aligned with context.",
+      "commonMistakes": "Do not treat overlap as a standalone directional signal.",
+      "evidence": "SOURCED / CONVENTION",
+      "related": [
+        "FVG",
+        "IFVG",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Balanced Price Range (BPR) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Balanced%20Price%20Range%20%28BPR%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "volume-imbalance",
+      "name": "Volume Imbalance",
+      "category": "Imbalances",
+      "level": "Advanced",
+      "definition": "A gap between consecutive candle bodies while their wicks overlap. It is distinct from the three-candle FVG definition.",
+      "howToUse": [
+        "Compare two consecutive candle bodies.",
+        "Check wick overlap and body gap.",
+        "Record exact marking convention."
+      ],
+      "useCase": "Use as a finer imbalance reference.",
+      "commonMistakes": "Do not label it as a standard three-candle FVG.",
+      "evidence": "SOURCED · rule definition",
+      "related": [
+        "FVG",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Volume Imbalance ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Volume%20Imbalance%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "fpfvg",
+      "name": "First Presented FVG (FPFVG)",
+      "category": "Imbalances",
+      "level": "Advanced",
+      "definition": "The first FVG of a session that meets trader-defined qualification rules. The PDF labels its perceived quality a community convention.",
+      "howToUse": [
+        "Define session start and FVG rule.",
+        "Set displacement and minimum-size filters.",
+        "Mark the first qualifying gap.",
+        "Log qualifying and non-qualifying sessions."
+      ],
+      "useCase": "Use as a repeatable research label.",
+      "commonMistakes": "The first gap being the best gap is not an audited statistic in the PDF.",
+      "evidence": "CONVENTION / NO AUDITED EDGE",
+      "related": [
+        "FVG",
+        "Silver Bullet",
+        "Session Ranges"
+      ],
+      "youtubeQuery": "Inner Circle Trader official First Presented FVG (FPFVG) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20First%20Presented%20FVG%20%28FPFVG%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "liquidity-void",
+      "name": "Liquidity Void",
+      "category": "Imbalances",
+      "level": "Advanced",
+      "definition": "A fast one-sided move leaving relatively little two-way trading or overlapping candles. The PDF lists liquidity voids among PD Array references.",
+      "howToUse": [
+        "Identify rapid displacement.",
+        "Mark range and bodies/wicks under fixed rule.",
+        "Study retracement without assuming a fill."
+      ],
+      "useCase": "Describe a fast move and possible imbalance.",
+      "commonMistakes": "Not every fast move will retrace or fill.",
+      "evidence": "SUPPLEMENTAL GLOSSARY",
+      "related": [
+        "Displacement",
+        "PD Arrays",
+        "FVG"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Liquidity Void ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Void%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "order-block",
+      "name": "Order Block (OB)",
+      "category": "Blocks & PD Arrays",
+      "level": "Intermediate",
+      "definition": "Last opposing candle/zone before a displacement move. The PDF stresses that displacement quality makes the zone meaningful.",
+      "howToUse": [
+        "Identify displacement and structural break.",
+        "Mark last opposing candle/zone.",
+        "Choose body-only or full-wick boundaries.",
+        "Check freshness and HTF alignment."
+      ],
+      "useCase": "Use as pullback location after sweep and shift.",
+      "commonMistakes": "A candle without displacement is not automatically a meaningful OB.",
+      "evidence": "SOURCED · boundary convention",
+      "related": [
+        "Mean Threshold",
+        "Breaker Block",
+        "Unicorn",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Order Block (OB) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Order%20Block%20%28OB%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "mean-threshold",
+      "name": "Mean Threshold (MT)",
+      "category": "Blocks & PD Arrays",
+      "level": "Intermediate",
+      "definition": "The 50% level of an Order Block range. Different practitioners may define the OB boundary differently.",
+      "howToUse": [
+        "Set OB boundaries.",
+        "Calculate 50% midpoint.",
+        "Record touch, close or hold rule."
+      ],
+      "useCase": "Refine an OB zone, not a standalone entry.",
+      "commonMistakes": "Results change with body versus full-wick boundaries.",
+      "evidence": "SOURCED / CONVENTION",
+      "related": [
+        "Order Block",
+        "CE"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Mean Threshold (MT) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Mean%20Threshold%20%28MT%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "breaker-block",
+      "name": "Breaker Block",
+      "category": "Blocks & PD Arrays",
+      "level": "Advanced",
+      "definition": "A failed Order Block whose polarity is treated as reversed after price closes through it. A return may be studied as a pullback.",
+      "howToUse": [
+        "Identify original OB.",
+        "Require qualifying close through zone.",
+        "Re-label role only after invalidation.",
+        "Wait for return and separate trigger if required."
+      ],
+      "useCase": "Study after liquidity raid and shift.",
+      "commonMistakes": "A wick through the block alone may not meet the PDF's body-close description.",
+      "evidence": "SOURCED / boundary convention",
+      "related": [
+        "Order Block",
+        "Unicorn",
+        "MSS"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Breaker Block ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Breaker%20Block%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "mitigation-block",
+      "name": "Mitigation Block",
+      "category": "Blocks & PD Arrays",
+      "level": "Advanced",
+      "definition": "The PDF distinguishes a mitigation block from a breaker, describing a zone associated with mitigation in a reversal structure; definitions vary.",
+      "howToUse": [
+        "Use the chosen educator's exact definition.",
+        "Write formation and invalidation rules.",
+        "Keep label separate from breaker rules in tests."
+      ],
+      "useCase": "Use only after precise rule is selected.",
+      "commonMistakes": "Do not assume one universal definition.",
+      "evidence": "CONVENTION / variable definitions",
+      "related": [
+        "Order Block",
+        "Breaker Block",
+        "Rejection Block"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Mitigation Block ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Mitigation%20Block%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "rejection-block",
+      "name": "Rejection Block",
+      "category": "Blocks & PD Arrays",
+      "level": "Advanced",
+      "definition": "A zone around a rejection from a reference extreme. Definitions vary, so the page treats it as a glossary topic requiring a fixed rule.",
+      "howToUse": [
+        "Identify source's exact definition.",
+        "Mark wick/body range.",
+        "Require separate context and invalidation rule."
+      ],
+      "useCase": "Document as a defined reference zone.",
+      "commonMistakes": "No universal definition or audited edge is claimed.",
+      "evidence": "SUPPLEMENTAL / terminology varies",
+      "related": [
+        "PD Arrays",
+        "Order Block",
+        "Liquidity"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Rejection Block ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Rejection%20Block%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "unicorn",
+      "name": "Unicorn Model",
+      "category": "Entry Models",
+      "level": "Advanced",
+      "definition": "The PDF defines Unicorn as overlap between a Breaker Block and an FVG, usually after a sweep and shift.",
+      "howToUse": [
+        "Identify breaker using fixed boundaries.",
+        "Identify qualifying FVG.",
+        "Mark overlap.",
+        "Define entry, stop and opposing liquidity target."
+      ],
+      "useCase": "Use only when both required structures overlap.",
+      "commonMistakes": "Without overlap it is not the defined Unicorn setup; no audited public results were found in the PDF.",
+      "evidence": "SOURCED / NO AUDITED EDGE",
+      "related": [
+        "Breaker Block",
+        "FVG",
+        "MSS",
+        "Liquidity Sweep"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Unicorn Model ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Unicorn%20Model%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "pd-arrays",
+      "name": "PD Arrays",
+      "category": "Blocks & PD Arrays",
+      "level": "Intermediate",
+      "definition": "Umbrella term for old highs/lows, OBs, FVGs, liquidity voids, breakers, mitigation and rejection blocks.",
+      "howToUse": [
+        "Build dealing range first.",
+        "List relevant arrays inside and around it.",
+        "Separate entry areas from target liquidity.",
+        "Prioritise only aligned arrays."
+      ],
+      "useCase": "Organise potential reaction and rebalance areas.",
+      "commonMistakes": "Do not plot every possible array; prioritise relevant references.",
+      "evidence": "SOURCED · terminology",
+      "related": [
+        "Premium / Discount",
+        "FVG",
+        "Order Block",
+        "Liquidity"
+      ],
+      "youtubeQuery": "Inner Circle Trader official PD Arrays ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20PD%20Arrays%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "premium-discount",
+      "name": "Premium & Discount",
+      "category": "Range & Retracement",
+      "level": "Beginner",
+      "definition": "Within a defined dealing range, above the 50% equilibrium is premium and below is discount. The PDF advises using a range formed by a meaningful structural event.",
+      "howToUse": [
+        "Select structural swing low/high.",
+        "Mark 50% equilibrium.",
+        "Classify upper/lower half.",
+        "Do not redraw range after outcome."
+      ],
+      "useCase": "Directional filter: longs often sought in discount and shorts in premium with other confirmation.",
+      "commonMistakes": "Cheap/expensive is relative to chosen range and does not guarantee reversal.",
+      "evidence": "SOURCED / operational range needed",
+      "related": [
+        "Dealing Range",
+        "Equilibrium",
+        "OTE",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Premium & Discount ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Premium%20%26%20Discount%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "equilibrium",
+      "name": "Equilibrium (EQ)",
+      "category": "Range & Retracement",
+      "level": "Beginner",
+      "definition": "The 50% midpoint of a defined dealing range; it separates premium from discount.",
+      "howToUse": [
+        "Define range.",
+        "Calculate (high + low) / 2.",
+        "Track behaviour around midpoint."
+      ],
+      "useCase": "Neutral reference and range divider.",
+      "commonMistakes": "Do not use 50% of an arbitrary range without defining endpoints.",
+      "evidence": "SOURCED",
+      "related": [
+        "Premium & Discount",
+        "Dealing Range",
+        "OTE"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Equilibrium (EQ) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equilibrium%20%28EQ%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "dealing-range",
+      "name": "Dealing Range",
+      "category": "Range & Retracement",
+      "level": "Intermediate",
+      "definition": "A high-to-low range chosen from a meaningful structural event, such as BOS or MSS; basis for premium/discount analysis.",
+      "howToUse": [
+        "Select structural event.",
+        "Mark associated swing low/high.",
+        "Record timeframe and anchoring rule.",
+        "Use consistently until a new qualifying event."
+      ],
+      "useCase": "Put price location into consistent HTF framework.",
+      "commonMistakes": "Do not choose convenient endpoints after the fact.",
+      "evidence": "SOURCED / operational definition",
+      "related": [
+        "Premium & Discount",
+        "Equilibrium",
+        "IPDA 20/40/60"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Dealing Range ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Dealing%20Range%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ote",
+      "name": "Optimal Trade Entry (OTE)",
+      "category": "Range & Retracement",
+      "level": "Intermediate",
+      "definition": "The PDF describes a retracement band around 62%–79% of an impulsive leg, with 70.5% as a midpoint convention.",
+      "howToUse": [
+        "Select clear impulsive leg.",
+        "Draw retracement correctly.",
+        "Mark 0.62, 0.705 and 0.79.",
+        "Require FVG/OB and session/context filter."
+      ],
+      "useCase": "Retracement framework after displacement.",
+      "commonMistakes": "Do not draw fibs on choppy legs; OTE is not a stand-alone signal.",
+      "evidence": "SOURCED / CONVENTION",
+      "related": [
+        "FVG",
+        "Order Block",
+        "Premium & Discount",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Optimal Trade Entry (OTE) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Optimal%20Trade%20Entry%20%28OTE%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "fib-extensions",
+      "name": "Fibonacci / Range Extensions",
+      "category": "Range & Retracement",
+      "level": "Advanced",
+      "definition": "Extensions such as -27% and -62% are cited as potential measured objectives. Their use is convention and depends on anchors.",
+      "howToUse": [
+        "Define impulse anchors before applying extensions.",
+        "Choose levels in advance.",
+        "Compare with opposing liquidity and structure."
+      ],
+      "useCase": "Secondary target references when aligned with structure.",
+      "commonMistakes": "Not statistically validated targets.",
+      "evidence": "CONVENTION",
+      "related": [
+        "OTE",
+        "Dealing Range",
+        "Opposing Liquidity"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Fibonacci / Range Extensions ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Fibonacci%20/%20Range%20Extensions%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "time-anchors",
+      "name": "Time Anchors",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "The PDF lists Midnight/True Day Open, 08:30 ET data reference, 09:30 ET cash open, NDOG and NWOG.",
+      "howToUse": [
+        "Set chart to America/New_York.",
+        "Mark midnight, 08:30 and 09:30 separately.",
+        "Use correct exchange session data.",
+        "Convert IST dynamically."
+      ],
+      "useCase": "Daily narrative and session preparation.",
+      "commonMistakes": "An opening anchor is not guaranteed support/resistance.",
+      "evidence": "SOURCED",
+      "related": [
+        "Midnight Open",
+        "NDOG",
+        "NWOG",
+        "Killzones"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Time Anchors ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Time%20Anchors%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "midnight-open",
+      "name": "Midnight / True Day Open",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "00:00 New York price used by the playbook as a daily reference, not necessarily broker server midnight or exchange day open.",
+      "howToUse": [
+        "Set chart to America/New_York.",
+        "Record 00:00 ET price from chosen feed.",
+        "Compare current price and daily structure."
+      ],
+      "useCase": "Daily narrative reference.",
+      "commonMistakes": "Do not confuse with exchange trading-day or broker server day.",
+      "evidence": "SOURCED",
+      "related": [
+        "Time Anchors",
+        "Judas Swing",
+        "AMD / PO3"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Midnight / True Day Open ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Midnight%20/%20True%20Day%20Open%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ndog",
+      "name": "New Day Opening Gap (NDOG)",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "Gap between previous day's close and new day's opening reference under a chosen ICT convention. The PDF distinguishes NDOG from an ordinary FVG.",
+      "howToUse": [
+        "Define prior close and new-day open consistently.",
+        "Mark gap boundaries.",
+        "Treat as reference hypothesis."
+      ],
+      "useCase": "Daily reference with liquidity and structure context.",
+      "commonMistakes": "A gap across maintenance break is not automatically an FVG.",
+      "evidence": "SOURCED / session definition matters",
+      "related": [
+        "NWOG",
+        "Time Anchors",
+        "FVG"
+      ],
+      "youtubeQuery": "Inner Circle Trader official New Day Opening Gap (NDOG) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20New%20Day%20Opening%20Gap%20%28NDOG%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "nwog",
+      "name": "New Week Opening Gap (NWOG)",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "Gap between prior week's close and new week's open. The PDF treats it as a support/resistance or magnet hypothesis.",
+      "howToUse": [
+        "Define week close and weekly open consistently.",
+        "Mark boundaries.",
+        "Observe with weekly liquidity and structure."
+      ],
+      "useCase": "Weekly context reference, not a standalone signal.",
+      "commonMistakes": "Continuous-contract roll gaps can be artificial; check contract month and adjustment.",
+      "evidence": "SOURCED / session definition matters",
+      "related": [
+        "NDOG",
+        "PWH / PWL",
+        "FVG"
+      ],
+      "youtubeQuery": "Inner Circle Trader official New Week Opening Gap (NWOG) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20New%20Week%20Opening%20Gap%20%28NWOG%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "weekly-open",
+      "name": "Weekly Open",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "Opening reference for the new futures trading week, often near Sunday Globex reopen for CME products. Schedules vary by product/holiday.",
+      "howToUse": [
+        "Verify product trading hours.",
+        "Record first eligible price at new week open.",
+        "Compare with prior-week close and NWOG."
+      ],
+      "useCase": "Weekly reference point.",
+      "commonMistakes": "Not all futures share identical schedules.",
+      "evidence": "SOURCED / product-specific",
+      "related": [
+        "NWOG",
+        "PWH / PWL"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Weekly Open ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Weekly%20Open%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "killzones",
+      "name": "ICT Killzones",
+      "category": "Time & Sessions",
+      "level": "Beginner",
+      "definition": "Time windows to pay attention to potential setups. The PDF includes Forex and index-specific windows. A killzone tells when, not where or direction.",
+      "howToUse": [
+        "Choose market-specific window.",
+        "Map HTF levels and session liquidity first.",
+        "Wait for model trigger; do not force a trade because clock is active."
+      ],
+      "useCase": "Organise attention and review trades by time-of-day.",
+      "commonMistakes": "The PDF warns killzones are not signals and do not prove an edge.",
+      "evidence": "SOURCED / community convention",
+      "related": [
+        "Silver Bullet",
+        "Asian Range",
+        "London Killzone",
+        "NY AM"
+      ],
+      "youtubeQuery": "Inner Circle Trader official ICT Killzones ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Killzones%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "asian-range",
+      "name": "Asian Range",
+      "category": "Time & Sessions",
+      "level": "Beginner",
+      "definition": "The PDF's reference range is 20:00–00:00 New York time. Its high/low become potential liquidity references for London/NY.",
+      "howToUse": [
+        "Use ET timezone.",
+        "Record range high/low in exact window.",
+        "Carry levels into London/NY.",
+        "Check if break continues or rejects."
+      ],
+      "useCase": "Important for Gold, 6E and 6B London setups in the playbook.",
+      "commonMistakes": "London breaks can continue; do not automatically fade them.",
+      "evidence": "SOURCED / window convention",
+      "related": [
+        "Judas Swing",
+        "Liquidity Sweep",
+        "AMD / PO3"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Asian Range ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Asian%20Range%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "silver-bullet",
+      "name": "Silver Bullet",
+      "category": "Time & Sessions",
+      "level": "Advanced",
+      "definition": "Three one-hour New York windows in the PDF: 03:00–04:00, 10:00–11:00 and 14:00–15:00 ET. Entry requires an FVG formed inside the selected window.",
+      "howToUse": [
+        "Mark window before it begins.",
+        "Map both-side liquidity and HTF context.",
+        "Wait for shift and in-window FVG.",
+        "No valid FVG in window means no trade under this model."
+      ],
+      "useCase": "Time-constrained FVG model; review each window separately.",
+      "commonMistakes": "No audited public performance statistics were found; time window does not predict direction.",
+      "evidence": "SOURCED / NO AUDITED EDGE",
+      "related": [
+        "FVG",
+        "Killzones",
+        "MSS",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Silver Bullet ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Silver%20Bullet%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "amd-po3",
+      "name": "AMD / Power of Three",
+      "category": "Time & Narrative",
+      "level": "Advanced",
+      "definition": "Accumulation, Manipulation and Distribution as a daily narrative. The PDF associates accumulation with Asia, manipulation with London/NY and later distribution.",
+      "howToUse": [
+        "Define range/accumulation.",
+        "Identify possible manipulation beyond one side.",
+        "Require rejection and directional confirmation.",
+        "Track continuation and reversal outcomes."
+      ],
+      "useCase": "Narrative hypothesis to organise session.",
+      "commonMistakes": "Cited vendor tests are near coin-flip without filters; do not assume every early move reverses.",
+      "evidence": "CONVENTION / NO AUDITED EDGE",
+      "related": [
+        "Judas Swing",
+        "Asian Range",
+        "Liquidity Sweep",
+        "Displacement"
+      ],
+      "youtubeQuery": "Inner Circle Trader official AMD / Power of Three ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20AMD%20/%20Power%20of%20Three%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "judas-swing",
+      "name": "Judas Swing",
+      "category": "Time & Narrative",
+      "level": "Advanced",
+      "definition": "Session-associated false push through a marked level, often around London/NY opens, followed by a move the other way. The PDF says to use pre-defined daily bias.",
+      "howToUse": [
+        "Set daily bias/target.",
+        "Mark midnight open and session extremes.",
+        "Watch for false push.",
+        "Require opposite displacement/MSS before entry consideration."
+      ],
+      "useCase": "Filtered setup hypothesis around session.",
+      "commonMistakes": "PDF's cited spot-gold test found about 50% without filters; not a proven standalone edge.",
+      "evidence": "CONVENTION / weak public evidence",
+      "related": [
+        "AMD / PO3",
+        "Liquidity Sweep",
+        "MSS",
+        "Midnight Open"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Judas Swing ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Judas%20Swing%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ipda",
+      "name": "IPDA 20/40/60 Lookback",
+      "category": "Time & Narrative",
+      "level": "Advanced",
+      "definition": "The PDF frames 20-, 40- and 60-trading-day highs/lows as reference ranges. It says algorithm language is a model, not a proven mechanism.",
+      "howToUse": [
+        "Calculate rolling 20/40/60-session highs/lows.",
+        "Mark on Daily chart.",
+        "Use nearest unclaimed external reference as possible objective.",
+        "Track results."
+      ],
+      "useCase": "Higher-timeframe map for swing liquidity context.",
+      "commonMistakes": "Do not claim a proven algorithm targets these levels.",
+      "evidence": "CONVENTION / model language",
+      "related": [
+        "Dealing Range",
+        "PWH / PWL",
+        "Weekly Profiles"
+      ],
+      "youtubeQuery": "Inner Circle Trader official IPDA 20/40/60 Lookback ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20IPDA%2020/40/60%20Lookback%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "smt",
+      "name": "SMT Divergence",
+      "category": "Cross-Market",
+      "level": "Advanced",
+      "definition": "Related markets fail to confirm comparable highs/lows around the same time. PDF pairs include NQ/ES/YM, 6E/6B/DX and GC/SI.",
+      "howToUse": [
+        "Choose valid related pair/group.",
+        "Match expiry and synchronise session/swing.",
+        "Check divergence at meaningful level.",
+        "Wait for MSS/displacement on execution market."
+      ],
+      "useCase": "Use as confluence/filter, not standalone entry.",
+      "commonMistakes": "No audited public reversal statistics in PDF; sector news and roll mismatch can create false divergence.",
+      "evidence": "CONVENTION / NO AUDITED EDGE",
+      "related": [
+        "NQ–ES–YM",
+        "6E–6B–DX",
+        "GC–SI",
+        "Liquidity Sweep",
+        "MSS"
+      ],
+      "youtubeQuery": "Inner Circle Trader official SMT Divergence ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20SMT%20Divergence%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "weekly-profiles",
+      "name": "ICT Weekly Profiles",
+      "category": "Time & Narrative",
+      "level": "Advanced",
+      "definition": "Possible Tuesday/Wednesday weekly-high/low and midweek-reversal tendencies. PDF labels them tendencies, not fixed rules.",
+      "howToUse": [
+        "Set weekly bias and range early in week.",
+        "Record HTF arrays reached early.",
+        "Track when weekly extremes form.",
+        "Review multiple months."
+      ],
+      "useCase": "Planning hypothesis and journal field.",
+      "commonMistakes": "Do not treat any weekday profile as deterministic.",
+      "evidence": "CONVENTION / NOT RULES",
+      "related": [
+        "IPDA 20/40/60",
+        "PWH / PWL",
+        "AMD / PO3"
+      ],
+      "youtubeQuery": "Inner Circle Trader official ICT Weekly Profiles ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Weekly%20Profiles%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "smt-index",
+      "name": "Index SMT: NQ / ES / YM / RTY",
+      "category": "Cross-Market",
+      "level": "Advanced",
+      "definition": "The playbook compares NQ, ES and YM for non-confirming highs/lows; RTY adds small-cap/risk-appetite context.",
+      "howToUse": [
+        "Compare same session and matched expiry.",
+        "Observe whether one index takes prior high/low while another does not.",
+        "Check sector-specific news.",
+        "Execute only after structure confirms."
+      ],
+      "useCase": "Index relative-strength context.",
+      "commonMistakes": "Do not double risk with correlated NQ and ES positions.",
+      "evidence": "CONVENTION",
+      "related": [
+        "SMT Divergence",
+        "NQ",
+        "ES",
+        "YM",
+        "RTY"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Index SMT: NQ / ES / YM / RTY ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Index%20SMT%3A%20NQ%20/%20ES%20/%20YM%20/%20RTY%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "smt-fx-metals",
+      "name": "FX & Metals SMT Pairs",
+      "category": "Cross-Market",
+      "level": "Advanced",
+      "definition": "The PDF describes 6E/6B versus DX (inverse comparison) and GC versus SI. Swings should match in time and expiry when applicable.",
+      "howToUse": [
+        "Choose 6E/6B/DX or GC/SI.",
+        "Respect inverse direction with DX.",
+        "Synchronise session/swing.",
+        "Check one-market news."
+      ],
+      "useCase": "Confirmation filter with liquidity and MSS.",
+      "commonMistakes": "Correlation can break; PDF provides no predictive win rate.",
+      "evidence": "CONVENTION",
+      "related": [
+        "SMT Divergence",
+        "DX",
+        "6E",
+        "6B",
+        "GC",
+        "SI"
+      ],
+      "youtubeQuery": "Inner Circle Trader official FX & Metals SMT Pairs ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20FX%20%26%20Metals%20SMT%20Pairs%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "cbdr",
+      "name": "Central Bank Dealers Range (CBDR)",
+      "category": "Time & Sessions",
+      "level": "Advanced",
+      "definition": "PDF describes CBDR around 14:00–20:00 ET, often using candle bodies in some sources; source variation noted.",
+      "howToUse": [
+        "Set exact ET start/end.",
+        "Choose body-only or full range.",
+        "Measure height.",
+        "Use only after testing for that contract."
+      ],
+      "useCase": "PDF suggests more direct relevance to FX futures than indices.",
+      "commonMistakes": "Index session breaks complicate applying these projections.",
+      "evidence": "SOURCED / source variation",
+      "related": [
+        "Flout",
+        "Standard-Deviation Projections",
+        "Asian Range"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Central Bank Dealers Range (CBDR) ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Central%20Bank%20Dealers%20Range%20%28CBDR%29%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "flout",
+      "name": "Flout Range",
+      "category": "Time & Sessions",
+      "level": "Advanced",
+      "definition": "Extended CBDR-style range. PDF notes sources differ on exact start (14:00 or 15:00 ET) through midnight.",
+      "howToUse": [
+        "Choose one source definition.",
+        "Record start/end and measurement.",
+        "Do not mix variants in one backtest."
+      ],
+      "useCase": "Alternative range anchor only when definition is explicit.",
+      "commonMistakes": "Exact boundaries vary across sources.",
+      "evidence": "CONVENTION / source variation",
+      "related": [
+        "CBDR",
+        "Standard-Deviation Projections"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Flout Range ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Flout%20Range%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "sd-projections",
+      "name": "Standard-Deviation Projections",
+      "category": "Time & Sessions",
+      "level": "Advanced",
+      "definition": "The PDF repeats an anchor range height as a projection unit at ±1, ±2 and ±2.5. It explicitly says this is not statistical standard deviation.",
+      "howToUse": [
+        "Choose anchor range.",
+        "Measure high-low height.",
+        "Project multiples beyond range/manipulation leg.",
+        "Require structure/liquidity confluence."
+      ],
+      "useCase": "Secondary interest area, particularly in FX/Gold research described by PDF.",
+      "commonMistakes": "Do not call these statistical SD; PDF cautions against over-trusting on indices.",
+      "evidence": "SOURCED / CONVENTION",
+      "related": [
+        "CBDR",
+        "Flout",
+        "OTE"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Standard-Deviation Projections ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Standard-Deviation%20Projections%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ict-macros",
+      "name": "ICT Macros — Research Note",
+      "category": "Time & Narrative",
+      "level": "Advanced",
+      "definition": "The PDF deliberately omits a fixed ICT Macros list because sources disagree on exact time segments. This page documents uncertainty rather than inventing a canonical list.",
+      "howToUse": [
+        "Record which source/educator defines window.",
+        "Store exact timezone and interval.",
+        "Keep source-linked definitions separate.",
+        "Test only after stable definition chosen."
+      ],
+      "useCase": "Research glossary and source-comparison topic.",
+      "commonMistakes": "No single definitive list is claimed in supplied playbook.",
+      "evidence": "SOURCE VARIATION · NOT STANDARDISED",
+      "related": [
+        "Killzones",
+        "Silver Bullet",
+        "Time Anchors"
+      ],
+      "youtubeQuery": "Inner Circle Trader official ICT Macros — Research Note ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Macros%20%E2%80%94%20Research%20Note%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "midnight-open-vs-day-open",
+      "name": "Midnight Open vs Exchange Trading-Day Open",
+      "category": "Time & Sessions",
+      "level": "Intermediate",
+      "definition": "ICT midnight open is a New York reference. It is not necessarily the exchange trading-day open or broker server-day open.",
+      "howToUse": [
+        "Set chart timezone.",
+        "Confirm feed and futures session boundary.",
+        "Label each reference independently."
+      ],
+      "useCase": "Prevent mixing ICT anchors with exchange session definitions.",
+      "commonMistakes": "Do not use these terms interchangeably.",
+      "evidence": "SUPPLEMENTAL CLARIFICATION",
+      "related": [
+        "Midnight / True Day Open",
+        "Weekly Open",
+        "CME Maintenance Break"
+      ],
+      "youtubeQuery": "Inner Circle Trader official Midnight Open vs Exchange Trading-Day Open ICT futures",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Midnight%20Open%20vs%20Exchange%20Trading-Day%20Open%20ICT%20futures",
+      "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
+      "referenceLinks": []
+    },
+    {
+      "id": "cisd",
+      "name": "Change in State of Delivery (CISD)",
+      "category": "Market Structure",
+      "level": "Intermediate",
+      "definition": "A short-term delivery-change label used when price closes through a chosen opening-price reference from a prior directional candle run. It is a defined close/open observation, not proof of institutional intent.",
+      "howToUse": [
+        "Define the directional candle run and its reference open before reviewing the setup.",
+        "For a bullish read, require a candle body close above the chosen bearish-run reference open; for a bearish read, require a body close below the chosen bullish-run reference open.",
+        "Record separately whether price also breaks a selected swing; CISD and MSS are not automatically interchangeable.",
+        "Predefine invalidation and the next liquidity objective."
+      ],
+      "useCase": "Use as a lower-timeframe delivery-shift observation alongside higher-timeframe location and liquidity.",
+      "commonMistakes": "Different educators choose the anchor candle differently. A wick through the level is not a body-close confirmation under the common rule. No audited predictive win rate is established.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "MSS",
+        "Displacement",
+        "Liquidity Sweep / Raid",
+        "Swing High / Swing Low"
+      ],
+      "youtubeQuery": "Inner Circle Trader official CISD change in state of delivery ICT",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20CISD%20change%20in%20state%20of%20delivery%20ICT",
+      "sourceNote": "Supplemental concept beyond the supplied playbook. A secondary explanation describes a candle-body close through a selected reference open; anchor-selection conventions vary.",
+      "referenceLinks": [
+        {
+          "name": "Secondary CISD explanation",
+          "url": "https://therighttrader.com/learn/smart-money-concepts/change-in-state-of-delivery",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Community ICT glossary (not an official ICT source)",
+          "url": "https://www.theinnercircletraders.com/ict-trading-tools/ict-glossary/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "mmxm",
+      "name": "Market Maker Model (MMXM)",
+      "category": "Daily Narrative",
+      "level": "Advanced",
+      "definition": "A broad campaign narrative describing price moving away from an origin range in stages, reaching a higher-timeframe reference area, and potentially reversing through prior ranges or pauses. The wording does not prove the actual orders or intentions of a market maker.",
+      "howToUse": [
+        "Mark the original consolidation or dealing range.",
+        "Map the first directional leg and intermediate consolidations as price moves away from the origin.",
+        "Identify a higher-timeframe reference area where a reversal would need separate confirmation.",
+        "Only map the next leg after a clear structure/delivery shift; mark invalidation and opposing liquidity."
+      ],
+      "useCase": "Use as a multi-leg narrative map during historical chart study, not as an intraday trigger by itself.",
+      "commonMistakes": "Retrofitting every chart into a buy/sell campaign; treating “market maker” language as evidence of a specific institution; assuming the entire path must complete.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "AMD / Power of Three",
+        "Dealing Range",
+        "PD Arrays",
+        "MSS",
+        "Draw on Liquidity"
+      ],
+      "youtubeQuery": "ICT market maker model MMXM buy model sell model",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20market%20maker%20model%20MMXM%20buy%20model%20sell%20model",
+      "sourceNote": "Supplemental community model terminology. Secondary descriptions frame MMXM as a multi-stage campaign; definitions vary and do not establish actual market-maker inventory or a tested return edge.",
+      "referenceLinks": [
+        {
+          "name": "Secondary MMXM explanation",
+          "url": "https://hadalinstruments.com/glossary/market-maker-model/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Community ICT glossary (not an official ICT source)",
+          "url": "https://www.theinnercircletraders.com/ict-trading-tools/ict-glossary/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "turtle-soup",
+      "name": "Turtle Soup (false-breakout setup)",
+      "category": "Liquidity",
+      "level": "Intermediate",
+      "definition": "A false breakout of a prior high or low that fails and reverses back through the level. The label originated outside ICT and is also used in later SMC/ICT discussions.",
+      "howToUse": [
+        "Mark a clearly defined prior high or low before price approaches it.",
+        "Observe a trade beyond the level and whether price is accepted outside or returns back through it.",
+        "Require a separate reversal trigger such as displacement, CISD or MSS if this is part of the written rules.",
+        "Define the stop beyond the failed-break extreme and target the next opposing liquidity."
+      ],
+      "useCase": "Study as a false-breakout/liquidity-trap pattern; do not attribute its invention to ICT.",
+      "commonMistakes": "Calling every breakout wick Turtle Soup; ignoring trend, event risk or session context; entering without a defined reversal trigger.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Liquidity Sweep / Raid",
+        "Liquidity Run / Breakout Acceptance",
+        "MSS",
+        "CISD",
+        "BSL",
+        "SSL"
+      ],
+      "youtubeQuery": "Turtle Soup false breakout setup trading education",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=Turtle%20Soup%20false%20breakout%20setup%20trading%20education",
+      "sourceNote": "Supplemental setup terminology borrowed from earlier false-breakout trading and later used in SMC/ICT communities. This is not presented as an original ICT invention.",
+      "referenceLinks": [
+        {
+          "name": "Community glossary: Turtle Soup terminology",
+          "url": "https://oyamori.com/learning/smart-money-concepts-glossary/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Community terminology glossary",
+          "url": "https://ictflow.com/glossary",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "propulsion-block",
+      "name": "Propulsion Block",
+      "category": "PD Arrays",
+      "level": "Advanced",
+      "definition": "A specialised order-block refinement described in some ICT education. Secondary definitions describe an order-block reaction and a subsequent close through a reference candle level, but the exact sequence differs by source.",
+      "howToUse": [
+        "First identify a valid order block created by displacement.",
+        "Require a revisit and define the midpoint or mean-threshold rule in advance.",
+        "Mark the reaction candle and the exact close required by the chosen source.",
+        "Record invalidation through the opposite side of the block."
+      ],
+      "useCase": "Use only as an advanced refinement after understanding basic Order Blocks and fixing written rules.",
+      "commonMistakes": "Using the label for any reaction inside an OB; changing midpoint/close criteria after the outcome; assuming the pattern has independent edge.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Order Block (OB)",
+        "Mean Threshold (MT)",
+        "Displacement",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "ICT propulsion block order block lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20propulsion%20block%20order%20block%20lesson",
+      "sourceNote": "Supplemental PD-array term. Secondary definitions vary on its precise confirmation sequence; this lesson does not claim a universally standard definition.",
+      "referenceLinks": [
+        {
+          "name": "Supplemental concept decoder",
+          "url": "https://www.fundedenigma.com/education/ict-concepts-decoded",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "breakaway-gap",
+      "name": "Breakaway Gap",
+      "category": "Imbalances & Gaps",
+      "level": "Advanced",
+      "definition": "A label found in some secondary ICT/SMC references for an imbalance left behind during a decisive move that does not promptly rebalance. It should not be confused with an exchange-session opening gap.",
+      "howToUse": [
+        "Identify the exact imbalance boundaries using the source-specific definition.",
+        "Record the impulse leg and the session in which it formed.",
+        "Track whether price retraces, partially mitigates or leaves the zone open.",
+        "Keep continuous-contract rollover gaps and session-opening gaps distinct from three-candle FVGs."
+      ],
+      "useCase": "Use as a descriptive label for an abandoned imbalance only when the chosen source defines it precisely.",
+      "commonMistakes": "Treating every chart gap as an ICT FVG; confusing roll gaps, NDOG/NWOG and candle-formation imbalances.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Fair Value Gap (FVG)",
+        "Liquidity Void",
+        "NDOG",
+        "NWOG",
+        "Displacement"
+      ],
+      "youtubeQuery": "ICT breakaway gap fair value gap concept",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20breakaway%20gap%20fair%20value%20gap%20concept",
+      "sourceNote": "Niche supplemental term appearing in secondary transcript-indexed concept references. Definitions vary; no strategy performance claim is implied.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Community terminology glossary",
+          "url": "https://ictflow.com/glossary",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "opening-range-gap",
+      "name": "Opening Range Gap (ORG)",
+      "category": "Time & Session Concepts",
+      "level": "Advanced",
+      "definition": "A session-reference gap label appearing in some ICT transcript indexes. The exact opening session and price anchors are not universally specified, so they must be documented from the source being followed.",
+      "howToUse": [
+        "Specify the session opening and the prior close/range boundary that define the gap.",
+        "Record exchange, instrument expiry, session and chart timezone.",
+        "Do not confuse it with a conventional opening-range breakout or NDOG/NWOG.",
+        "Observe price interaction without assuming the gap must fill."
+      ],
+      "useCase": "Use only when the exact source definition and futures-session anchor are written down.",
+      "commonMistakes": "Assuming all educators mean the same ORG; transferring forex session assumptions to futures without checking exchange hours.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "NDOG",
+        "NWOG",
+        "Time Anchors",
+        "Asian Range"
+      ],
+      "youtubeQuery": "ICT opening range gap ORG futures concept",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20opening%20range%20gap%20ORG%20futures%20concept",
+      "sourceNote": "Supplemental label from secondary transcript-index references. Anchor definitions may vary; confirm the instrument session and exchange schedule.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "event-horizon",
+      "name": "Event Horizon (EH)",
+      "category": "Imbalances & Gaps",
+      "level": "Advanced",
+      "definition": "A niche term in some transcript-indexed ICT glossaries for a midpoint reference derived between two opening-gap structures, such as NDOG and NWOG. It is not a core, universal ICT definition.",
+      "howToUse": [
+        "Identify the two opening-gap structures required by the selected source.",
+        "Calculate the midpoint using the source-defined boundaries.",
+        "Record both gap boundaries and the arithmetic used.",
+        "Test observed reactions separately; do not assume the midpoint is predictive or magnetic."
+      ],
+      "useCase": "Use only as a documented derived reference when studying the relevant opening gaps.",
+      "commonMistakes": "Inventing boundaries; mixing daily and weekly gaps; presenting one community term as universal ICT doctrine.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "NDOG",
+        "NWOG",
+        "Equilibrium",
+        "Dealing Range"
+      ],
+      "youtubeQuery": "ICT Event Horizon midpoint NDOG NWOG concept",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20Event%20Horizon%20midpoint%20NDOG%20NWOG%20concept",
+      "sourceNote": "Niche supplemental term found in secondary transcript-index material. The site labels it as a convention, not a validated market mechanism.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "reclaimed-order-block",
+      "name": "Reclaimed Order Block",
+      "category": "PD Arrays",
+      "level": "Advanced",
+      "definition": "A community label for a previously violated or lost order-block area that price later re-enters or reclaims. Exact criteria for “reclaimed” vary and must be made explicit.",
+      "howToUse": [
+        "Mark the original order block and record the rule used to declare it failed.",
+        "Wait for price to return through the zone; distinguish a wick touch from a body close.",
+        "Define whether reclaim requires a close back inside, a close beyond the far boundary, or a retest.",
+        "Record the chosen rule and invalidation before reviewing outcomes."
+      ],
+      "useCase": "Use as a descriptive review label only after defining the reclaim condition.",
+      "commonMistakes": "Calling any touch a reclaim; silently changing body/wick criteria; confusing it with a breaker block.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Order Block (OB)",
+        "Breaker Block",
+        "Mitigation Block",
+        "IFVG"
+      ],
+      "youtubeQuery": "ICT reclaimed order block concept",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20reclaimed%20order%20block%20concept",
+      "sourceNote": "Supplemental community terminology. Definitions vary; this lesson deliberately requires the user to state the exact reclaim rule rather than implying a single standard.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Community terminology glossary",
+          "url": "https://ictflow.com/glossary",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "suspension-block",
+      "name": "Suspension Block",
+      "category": "PD Arrays",
+      "level": "Advanced",
+      "definition": "A niche PD-array term appearing in secondary ICT transcript indexes. It is not consistently defined across accessible sources; the lesson treats it as a research term rather than a standard signal.",
+      "howToUse": [
+        "Locate the original lesson or transcript that defines the term.",
+        "Write down the exact candle, range and confirmation rule used by that source.",
+        "Mark the zone on replay and record price interaction without hindsight edits.",
+        "Compare results with a predeclared baseline before considering practical use."
+      ],
+      "useCase": "Use as a research glossary entry until a reliable primary definition can be verified.",
+      "commonMistakes": "Treating a niche label as universally defined; using it as a trade trigger without a reproducible rule.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "PD Arrays",
+        "Order Block (OB)",
+        "Breaker Block",
+        "Displacement"
+      ],
+      "youtubeQuery": "ICT suspension block concept lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20suspension%20block%20concept%20lesson",
+      "sourceNote": "Supplemental niche terminology. The available reference is transcript-indexed secondary material; a consistent primary definition and audited edge were not established.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "vacuum-block",
+      "name": "Vacuum Block",
+      "category": "PD Arrays",
+      "level": "Advanced",
+      "definition": "A niche label reported in secondary ICT transcript indexes for a price area associated with a fast move or limited trading through a region. The term is not consistently defined in the supplied playbook.",
+      "howToUse": [
+        "Find and verify the original source definition before operational use.",
+        "Document the range boundaries, candle sequence and any volume/structure condition.",
+        "Study how price revisits the region using replay data.",
+        "Keep this separate from measurable exchange volume-profile low-volume areas unless the source explicitly equates them."
+      ],
+      "useCase": "Keep as a glossary/research term until a primary definition can be checked.",
+      "commonMistakes": "Equating a term with a low-volume node without evidence; inventing boundaries; using it as a standalone entry.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Liquidity Void",
+        "Displacement",
+        "Volume Profile",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "ICT vacuum block concept lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20vacuum%20block%20concept%20lesson",
+      "sourceNote": "Supplemental niche term from a secondary transcript index. A single stable definition and predictive evidence were not verified.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "ny-lunch-reversal",
+      "name": "New York Lunch Algorithmic Reversal (community label)",
+      "category": "Time & Session Concepts",
+      "level": "Advanced",
+      "definition": "A community label for a possible midday reversal narrative. It is not a core model in the supplied playbook, which explicitly treats the NY lunch window (12:00–1:30 PM ET) as an avoid period.",
+      "howToUse": [
+        "Read the supplied playbook’s NY lunch caution before studying this label.",
+        "If researching historically, predefine the instrument, date range, session boundaries and reversal trigger.",
+        "Separate ordinary low-liquidity chop from a genuine structure shift.",
+        "Record spread, slippage and event context; do not treat the label as a live signal."
+      ],
+      "useCase": "Use only as a research hypothesis for historical testing, not as a recommendation to trade lunch.",
+      "commonMistakes": "Ignoring the PDF’s avoid guidance; assuming an algorithmic mechanism; inferring predictable reversals from a named pattern.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "ICT Killzones",
+        "FVG",
+        "Time Anchors",
+        "Displacement"
+      ],
+      "youtubeQuery": "ICT New York lunch reversal concept",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20New%20York%20lunch%20reversal%20concept",
+      "sourceNote": "Supplemental secondary terminology; it is not endorsed by the supplied futures playbook, which marks NY lunch as an avoid window.",
+      "referenceLinks": [
+        {
+          "name": "Transcript-indexed concept reference",
+          "url": "https://x10hop.com/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "market-maker-buy-model",
+      "name": "Market Maker Buy Model (MMBM)",
+      "category": "Entry Models",
+      "level": "Advanced",
+      "definition": "A directional variant of the broader market-maker-model narrative, commonly described as a range/accumulation and possible sell-side manipulation followed by upside delivery. Exact phase boundaries vary.",
+      "howToUse": [
+        "Start with a higher-timeframe bullish draw on liquidity and a defined dealing range.",
+        "Map a range and a possible sell-side manipulation without assuming one must occur.",
+        "Require a separate bullish displacement or structure confirmation before studying a long entry.",
+        "Map upside opposing liquidity and define invalidation."
+      ],
+      "useCase": "Use as a multi-session narrative hypothesis for chart replay, not as an independent entry signal.",
+      "commonMistakes": "Assuming every daily low is a Judas manipulation; treating a narrative as a proven algorithm; assuming distribution must complete.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Market Maker Model (MMXM)",
+        "AMD / Power of Three",
+        "Judas Swing",
+        "BSL",
+        "SSL"
+      ],
+      "youtubeQuery": "ICT Market Maker Buy Model MMBM lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20Market%20Maker%20Buy%20Model%20MMBM%20lesson",
+      "sourceNote": "Supplemental model taxonomy. The supplied PDF discusses AMD/PO3 and Judas Swing but does not fully define MMBM as a separate audited model.",
+      "referenceLinks": [
+        {
+          "name": "Community glossary: Turtle Soup terminology",
+          "url": "https://oyamori.com/learning/smart-money-concepts-glossary/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Secondary MMXM explanation",
+          "url": "https://hadalinstruments.com/glossary/market-maker-model/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "market-maker-sell-model",
+      "name": "Market Maker Sell Model (MMSM)",
+      "category": "Entry Models",
+      "level": "Advanced",
+      "definition": "A directional variant of the broader market-maker-model narrative, commonly described as range/accumulation and possible buy-side manipulation followed by downside delivery. Exact boundaries are discretionary.",
+      "howToUse": [
+        "Start with a higher-timeframe bearish draw on liquidity and a defined dealing range.",
+        "Map a range and a possible buy-side manipulation without assuming it must occur.",
+        "Require bearish displacement and structure confirmation before studying a short entry.",
+        "Map downside opposing liquidity and define invalidation."
+      ],
+      "useCase": "Use as a multi-session narrative hypothesis for chart replay, not as an entry signal in isolation.",
+      "commonMistakes": "Calling every session high a Judas swing; assuming distribution will always complete; ignoring event-driven repricing.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Market Maker Model (MMXM)",
+        "AMD / Power of Three",
+        "Judas Swing",
+        "BSL",
+        "SSL"
+      ],
+      "youtubeQuery": "ICT Market Maker Sell Model MMSM lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20Market%20Maker%20Sell%20Model%20MMSM%20lesson",
+      "sourceNote": "Supplemental model taxonomy; community definitions vary and no audited strategy edge is implied.",
+      "referenceLinks": [
+        {
+          "name": "Community glossary: Turtle Soup terminology",
+          "url": "https://oyamori.com/learning/smart-money-concepts-glossary/",
+          "type": "Secondary reference"
+        },
+        {
+          "name": "Secondary MMXM explanation",
+          "url": "https://hadalinstruments.com/glossary/market-maker-model/",
+          "type": "Secondary reference"
+        }
+      ]
+    },
+    {
+      "id": "ict-2022-model",
+      "name": "ICT 2022 Model",
+      "category": "Entry Models",
+      "level": "Intermediate",
+      "definition": "The supplied playbook describes this model as a liquidity raid followed by displacement with MSS, then a retracement into the FVG for execution. It is commonly associated with the 2022 Mentorship.",
+      "howToUse": [
+        "Mark higher-timeframe and session liquidity pools before the active window.",
+        "Wait for a raid of a relevant pool.",
+        "Require displacement and a close through the selected opposing swing (MSS).",
+        "Mark the FVG created by that displacement and define the retracement entry rule.",
+        "Place invalidation beyond the raided extreme and target opposing liquidity."
+      ],
+      "useCase": "Use as a complete sequence, not as a single FVG pattern. If a required step is missing, record no trade.",
+      "commonMistakes": "Choosing the pool after the move; calling slow drift displacement; entering on the sweep alone; assuming audited edge.",
+      "evidence": "SOURCED · playbook-described · no audited public strategy statistics",
+      "related": [
+        "Liquidity Sweep / Raid",
+        "MSS",
+        "Displacement",
+        "Fair Value Gap (FVG)",
+        "ICT Killzones"
+      ],
+      "youtubeQuery": "ICT 2022 mentorship model raid MSS FVG lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%202022%20mentorship%20model%20raid%20MSS%20FVG%20lesson",
+      "sourceNote": "Source-derived from the supplied playbook’s Entry Models section. The playbook states that audited public statistics for the model were not found.",
+      "referenceLinks": []
+    },
+    {
+      "id": "liquidity-sweep-mss-model",
+      "name": "Liquidity Sweep + MSS Model",
+      "category": "Entry Models",
+      "level": "Intermediate",
+      "definition": "A reversal framework that waits for a meaningful liquidity level to be swept, then requires a Market Structure Shift with displacement before considering a pullback entry.",
+      "howToUse": [
+        "Pre-mark PDH/PDL, PWH/PWL, equal highs/lows or session extremes.",
+        "Define the sweep as a trade beyond the level followed by a close back inside, or document the chosen alternative.",
+        "Wait for displacement and a selected swing break on the confirmation timeframe.",
+        "Use a pre-defined FVG/OB entry, stop beyond the raided extreme and target the opposing pool."
+      ],
+      "useCase": "Use when higher-timeframe draw and key liquidity location are already defined.",
+      "commonMistakes": "Taking every wick as a sweep; entering on sweep alone; changing swing rules mid-review.",
+      "evidence": "SOURCED · playbook synthesis · not an independently validated strategy",
+      "related": [
+        "Liquidity Sweep / Raid",
+        "MSS",
+        "Displacement",
+        "Fair Value Gap (FVG)",
+        "Draw on Liquidity"
+      ],
+      "youtubeQuery": "ICT futures liquidity sweep MSS reversal model",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20futures%20liquidity%20sweep%20MSS%20reversal%20model",
+      "sourceNote": "Source-derived synthesis of the supplied playbook’s common entry skeleton. Sweep and MSS criteria must be fixed before testing.",
+      "referenceLinks": []
+    },
+    {
+      "id": "fvg-continuation-model",
+      "name": "FVG Continuation Model",
+      "category": "Entry Models",
+      "level": "Intermediate",
+      "definition": "A continuation idea in which an impulsive move aligned with higher-timeframe context leaves an FVG and price later retraces into the imbalance before potentially continuing.",
+      "howToUse": [
+        "Set higher-timeframe context and the next liquidity objective.",
+        "Identify a clean displacement leg in the same direction.",
+        "Mark the FVG and define wick/close mitigation in advance.",
+        "Wait for the predeclared pullback/confirmation; put invalidation beyond the chosen zone or structure."
+      ],
+      "useCase": "Use only when the gap forms during a well-defined impulsive leg and broader context remains valid.",
+      "commonMistakes": "Assuming every FVG fills; entering against higher-timeframe location; confusing reversal and continuation conditions.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Fair Value Gap (FVG)",
+        "Displacement",
+        "Premium & Discount",
+        "OTE"
+      ],
+      "youtubeQuery": "ICT Fair Value Gap continuation model lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20Fair%20Value%20Gap%20continuation%20model%20lesson",
+      "sourceNote": "A structured supplemental model assembled from common FVG usage. The supplied playbook says an FVG is an entry zone, not a signal, and does not prove that every gap fills.",
+      "referenceLinks": []
+    },
+    {
+      "id": "ifvg-reversal-model",
+      "name": "Inversion FVG (IFVG) Reversal Model",
+      "category": "Entry Models",
+      "level": "Advanced",
+      "definition": "The supplied playbook defines an IFVG when price body-closes through the far boundary of an existing FVG, changing its role. A retest entry is a further model convention.",
+      "howToUse": [
+        "Mark the original bullish or bearish FVG and record its direction.",
+        "Wait for a body close through the far boundary; a wick alone does not qualify under the playbook rule.",
+        "Mark the inverse support/resistance role and wait for a retest if that is the written plan.",
+        "Set invalidation beyond the inverted zone and target the next opposing liquidity."
+      ],
+      "useCase": "Use as an advanced pattern after understanding original FVG boundaries and close-based invalidation.",
+      "commonMistakes": "Calling any wick-through an inversion; confusing a session gap with a three-candle FVG; entering without an invalidation rule.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Fair Value Gap (FVG)",
+        "CE",
+        "BPR",
+        "Liquidity Sweep / Raid"
+      ],
+      "youtubeQuery": "ICT IFVG inversion fair value gap model lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20IFVG%20inversion%20fair%20value%20gap%20model%20lesson",
+      "sourceNote": "Partly source-derived: the PDF defines IFVG by a body close through the far FVG boundary. The retest entry sequence is a supplemental convention.",
+      "referenceLinks": []
+    },
+    {
+      "id": "fvg-ote-confluence-model",
+      "name": "FVG + OTE Confluence Model",
+      "category": "Entry Models",
+      "level": "Advanced",
+      "definition": "A confluence idea that looks for an FVG overlapping the 62%–79% retracement band of a defined impulse leg. The supplied playbook highlights 70.5% as a common reference.",
+      "howToUse": [
+        "Select the impulse leg using a consistent structural rule.",
+        "Mark the 62%–79% retracement band and the 70.5% reference.",
+        "Identify FVG boundaries from the displacement move.",
+        "Check overlap, higher-timeframe location and session context.",
+        "Define the stop beyond the swing/raid extreme and target opposing liquidity."
+      ],
+      "useCase": "Use only when impulse anchors and retracement rules are objective and repeatable.",
+      "commonMistakes": "Moving Fibonacci anchors to force overlap; treating confluence as statistical proof; overlooking news and contract rollover.",
+      "evidence": "SUPPLEMENTAL · secondary terminology; definitions may vary · no audited strategy edge implied",
+      "related": [
+        "Fair Value Gap (FVG)",
+        "OTE",
+        "Premium & Discount",
+        "Displacement",
+        "PD Arrays"
+      ],
+      "youtubeQuery": "ICT OTE FVG confluence 70.5 percent lesson",
+      "officialChannel": "https://www.youtube.com/@InnerCircleTrader",
+      "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "videoSearch": "https://www.youtube.com/results?search_query=ICT%20OTE%20FVG%20confluence%2070.5%20percent%20lesson",
+      "sourceNote": "Source-derived combination of the playbook’s FVG and OTE guidance. No audited independent edge is claimed.",
+      "referenceLinks": []
+    }
+  ],
+  "learningPolicy": "Official ICT channel/playlist links are provided as learning destinations. Search-result links are discovery links, not a verified video-to-concept mapping. Third-party educators are not labelled as ICT official content.",
+  "conceptCount": 76
+}

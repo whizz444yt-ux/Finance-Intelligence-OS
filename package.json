@@ -1,0 +1,11 @@
+{
+  "name": "finance-intelligence-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Global financial research cockpit with ICT Futures terminal",
+  "scripts": {
+    "build": "python3 scripts/build_site.py",
+    "validate": "python3 scripts/validate.py",
+    "test": "python3 -m unittest discover -s tests -v"
+  }
+}

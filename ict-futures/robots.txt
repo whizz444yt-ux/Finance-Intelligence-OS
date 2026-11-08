@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://whizz444yt-ux.github.io/new.w/sitemap.xml

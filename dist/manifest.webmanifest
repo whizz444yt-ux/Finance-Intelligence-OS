@@ -1,0 +1,23 @@
+{
+  "name": "Finance Intelligence OS — Global Research Cockpit",
+  "short_name": "Finance OS",
+  "description": "Open-source global finance research dashboard for markets, news discovery, cross-asset catalysts, watchlists and research notes.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#102a43",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "finance",
+    "business",
+    "productivity"
+  ]
+}

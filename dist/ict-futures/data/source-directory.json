@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-08",
+  "count": 52,
+  "sources": [
+    {
+      "category": "Exchanges & contract data",
+      "name": "CME Group — Products & contract specifications",
+      "url": "https://www.cmegroup.com/markets.html",
+      "description": "Official exchange product catalogue, contract specs, trading hours and product education.",
+      "type": "official"
+    },
+    {
+      "category": "Exchanges & contract data",
+      "name": "CME Group — Volume & Open Interest",
+      "url": "https://www.cmegroup.com/market-data/volume-open-interest.html",
+      "description": "Daily preliminary and next-morning official volume/open-interest reports.",
+      "type": "official"
+    },
+    {
+      "category": "Exchanges & contract data",
+      "name": "CME Group — Expiration Calendar",
+      "url": "https://www.cmegroup.com/tools-information/calendars/expiration-calendar.html",
+      "description": "Search last-trade, settlement and delivery events by product and contract code.",
+      "type": "official"
+    },
+    {
+      "category": "Exchanges & contract data",
+      "name": "CME Group — Trading Hours & Holiday Schedule",
+      "url": "https://www.cmegroup.com/trading-hours.html",
+      "description": "Globex trading hours and holiday schedule; verify product-specific exceptions.",
+      "type": "official"
+    },
+    {
+      "category": "Exchanges & contract data",
+      "name": "CME Group — FedWatch",
+      "url": "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html",
+      "description": "Market-implied probabilities for Fed target-rate ranges; probability tool, not a Fed forecast.",
+      "type": "official"
+    },
+    {
+      "category": "Exchanges & contract data",
+      "name": "ICE — US Dollar Index Futures",
+      "url": "https://www.ice.com/products/194/US-Dollar-Index-USDX-Futures",
+      "description": "Official DX tick, unit, expiry cycle and trading hours.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — Commitments of Traders",
+      "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
+      "description": "Public trader-category futures positioning. Tuesday position data is generally released Friday; category data is not an individual trader identity feed.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — COT Release Schedule",
+      "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm",
+      "description": "Official release calendar; holidays can delay publication.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — Bank Participation Reports",
+      "url": "https://www.cftc.gov/MarketReports/BankParticipationReports/index.htm",
+      "description": "Monthly aggregate positions of banks; not named bank employee positions.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "SEC EDGAR — Company Filings Search",
+      "url": "https://www.sec.gov/edgar/search/",
+      "description": "Search public filings including Form 4 insider ownership-change reports for listed companies.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — Market Data & Analysis",
+      "url": "https://www.cftc.gov/MarketReports/index.htm",
+      "description": "COT, bank participation, swaps, FCM financial and market reports.",
+      "type": "official"
+    },
+    {
+      "category": "US Macro & Central Banks",
+      "name": "BLS — 2026 Release Schedule",
+      "url": "https://www.bls.gov/schedule/2026/",
+      "description": "Official CPI, PPI, employment and labour-data schedule; times shown in Eastern Time.",
+      "type": "official"
+    },
+    {
+      "category": "US Macro & Central Banks",
+      "name": "BEA — News Release Schedule",
+      "url": "https://www.bea.gov/news/schedule/",
+      "description": "GDP, Personal Income & Outlays, PCE and national accounts release dates.",
+      "type": "official"
+    },
+    {
+      "category": "US Macro & Central Banks",
+      "name": "Federal Reserve — FOMC Calendar",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "description": "Policy meeting, statement, minutes and press-conference information.",
+      "type": "official"
+    },
+    {
+      "category": "US Macro & Central Banks",
+      "name": "US Treasury — Auction Schedule",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/quarterly-refunding",
+      "description": "Treasury financing and quarterly refunding materials; check auction schedules and results.",
+      "type": "official"
+    },
+    {
+      "category": "Energy & Commodity Events",
+      "name": "EIA — Weekly Petroleum Status Report Schedule",
+      "url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+      "description": "Official weekly crude and petroleum inventory release time; holiday adjustments matter.",
+      "type": "official"
+    },
+    {
+      "category": "Energy & Commodity Events",
+      "name": "EIA — Petroleum Status Reports",
+      "url": "https://www.eia.gov/petroleum/supply/weekly/",
+      "description": "Weekly crude, gasoline, distillate and refinery data.",
+      "type": "official"
+    },
+    {
+      "category": "Energy & Commodity Events",
+      "name": "OPEC — Press Releases",
+      "url": "https://www.opec.org/press-releases.html",
+      "description": "Official OPEC statements, meetings and production communications.",
+      "type": "official"
+    },
+    {
+      "category": "Global Central Banks",
+      "name": "ECB — Governing Council Calendar",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "description": "ECB monetary-policy meeting and press-conference dates.",
+      "type": "official"
+    },
+    {
+      "category": "Global Central Banks",
+      "name": "Bank of England — MPC Dates",
+      "url": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+      "description": "UK rate decision and MPC minutes calendar.",
+      "type": "official"
+    },
+    {
+      "category": "Global Central Banks",
+      "name": "Bank of Japan — Publication Calendar",
+      "url": "https://www.boj.or.jp/en/about/calendar/index.htm",
+      "description": "Monetary-policy meeting and release schedule.",
+      "type": "official"
+    },
+    {
+      "category": "Global Central Banks",
+      "name": "RBA — Board Meeting Schedule",
+      "url": "https://www.rba.gov.au/schedules-events/board-meeting-schedules.html",
+      "description": "Australian monetary-policy meeting dates and other Board schedules.",
+      "type": "official"
+    },
+    {
+      "category": "Global Central Banks",
+      "name": "Bank of Canada — Policy Rate Schedule",
+      "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
+      "description": "Canadian policy-rate announcement calendar.",
+      "type": "official"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "Reuters — Markets",
+      "url": "https://www.reuters.com/markets/",
+      "description": "Professional market reporting; article access may require subscription.",
+      "type": "media"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "Bloomberg — Markets",
+      "url": "https://www.bloomberg.com/markets",
+      "description": "Macro, rates, commodities, FX and futures market news; access may require subscription.",
+      "type": "media"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "CNBC — Futures",
+      "url": "https://www.cnbc.com/futures/",
+      "description": "US futures market coverage and event reaction.",
+      "type": "media"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "FinancialJuice",
+      "url": "https://www.financialjuice.com/",
+      "description": "Market-moving headline stream; verify major claims with original sources.",
+      "type": "media"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "Kitco",
+      "url": "https://www.kitco.com/",
+      "description": "Precious-metals market coverage and commentary.",
+      "type": "media"
+    },
+    {
+      "category": "Market News & Specialist Coverage",
+      "name": "Oilprice.com",
+      "url": "https://oilprice.com/",
+      "description": "Oil and energy news; use EIA/OPEC for primary data.",
+      "type": "media"
+    },
+    {
+      "category": "Charts & Research",
+      "name": "TradingView — Futures Markets",
+      "url": "https://www.tradingview.com/markets/futures/",
+      "description": "Charting and public ideas; symbols may differ by exchange and continuous-contract settings.",
+      "type": "chart"
+    },
+    {
+      "category": "Charts & Research",
+      "name": "TradingView — Economic Calendar",
+      "url": "https://www.tradingview.com/economic-calendar/",
+      "description": "Convenient calendar view; verify event times and values at the issuing institution.",
+      "type": "chart"
+    },
+    {
+      "category": "Charts & Research",
+      "name": "CME Group — Market Data",
+      "url": "https://www.cmegroup.com/market-data.html",
+      "description": "Exchange data products and market data information; free quotes may be delayed.",
+      "type": "official"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "X — public market research search",
+      "url": "https://x.com/search?q=futures%20markets",
+      "description": "Public posts and analyst commentary. Treat as unverified opinion; search is user-driven.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "LinkedIn — public content search",
+      "url": "https://www.linkedin.com/search/results/content/?keywords=futures%20markets",
+      "description": "Professional commentary and research posts; LinkedIn login may be required.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "YouTube — futures research search",
+      "url": "https://www.youtube.com/results?search_query=futures+market+analysis",
+      "description": "Public video commentary and education; distinguish retrospective analysis from verifiable track records.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "Reddit — futures discussions",
+      "url": "https://www.reddit.com/search/?q=futures%20trading",
+      "description": "Community discussion and trader experience; not official evidence.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "TradingView — public ideas",
+      "url": "https://www.tradingview.com/ideas/",
+      "description": "Public chart ideas; preserve author, timestamp, instrument and invalidation.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "Stocktwits — public market sentiment",
+      "url": "https://stocktwits.com/",
+      "description": "Public social sentiment; futures symbol coverage varies.",
+      "type": "social"
+    },
+    {
+      "category": "Prediction Markets",
+      "name": "Polymarket — Public event markets",
+      "url": "https://polymarket.com/",
+      "description": "Public prediction-market events and market pages. Quote prices reflect traded markets, spreads and liquidity; not guaranteed probabilities.",
+      "type": "platform"
+    },
+    {
+      "category": "Prediction Markets",
+      "name": "Polymarket — Gamma API documentation",
+      "url": "https://gamma-api.polymarket.com/docs",
+      "description": "Public event and market discovery API documentation; browser access can be affected by CORS and service limits.",
+      "type": "api"
+    },
+    {
+      "category": "Prediction Markets",
+      "name": "Kalshi — Event markets",
+      "url": "https://kalshi.com/",
+      "description": "Public event-contract marketplace; contract rules, access and jurisdictional eligibility apply.",
+      "type": "platform"
+    },
+    {
+      "category": "Prediction Markets",
+      "name": "Kalshi — API documentation",
+      "url": "https://docs.kalshi.com/",
+      "description": "Official public market-data and trading API documentation; this site uses discovery as read-only context.",
+      "type": "api"
+    },
+    {
+      "category": "ICT Learning",
+      "name": "Inner Circle Trader — Official YouTube channel",
+      "url": "https://www.youtube.com/@InnerCircleTrader",
+      "description": "Original ICT educational material. Concept-specific searches are discovery links unless an individual lesson is verified.",
+      "type": "education"
+    },
+    {
+      "category": "ICT Learning",
+      "name": "Inner Circle Trader — Official playlists",
+      "url": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "description": "Original ICT playlist library for structured learning.",
+      "type": "education"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — Public Reporting Environment",
+      "url": "https://publicreporting.cftc.gov/",
+      "description": "Public CFTC datasets and downloadable reports; verify dataset definitions, contract mapping and reporting lag.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "CFTC — Historical COT reports",
+      "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/HistoricalViewable/index.htm",
+      "description": "Historical report archives for public futures positioning research.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "SEC — Developer resources and APIs",
+      "url": "https://www.sec.gov/about/developer-resources",
+      "description": "Official SEC data/API guidance. Submissions/XBRL endpoints should be called server-side with compliant user-agent and rate limits.",
+      "type": "official"
+    },
+    {
+      "category": "Positioning & disclosures",
+      "name": "SEC — EDGAR API reference",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+      "description": "Public company filing submissions and XBRL data; not futures positions or non-public information.",
+      "type": "official"
+    },
+    {
+      "category": "US Macro & Central Banks",
+      "name": "FRED — API documentation",
+      "url": "https://fred.stlouisfed.org/docs/api/fred/",
+      "description": "Economic time-series API documentation. An API key is required for most programmatic use.",
+      "type": "api"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "Telegram — Public channel discovery",
+      "url": "https://www.google.com/search?q=site%3At.me+futures+markets+research",
+      "description": "Search-indexed public Telegram channels only. Private groups and messages are not accessed. Verify channel identity and claims.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "Discord — Public server directory",
+      "url": "https://discord.com/servers",
+      "description": "Directory of public communities; this website does not access private servers or member messages.",
+      "type": "social"
+    },
+    {
+      "category": "Public Research Channels",
+      "name": "X — Developer API documentation",
+      "url": "https://developer.x.com/en/docs/x-api",
+      "description": "Official API access documentation. Search coverage and history depend on the API tier and permissions.",
+      "type": "api"
+    }
+  ]
+}

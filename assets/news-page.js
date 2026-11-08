@@ -1,0 +1,8 @@
+(async()=>{
+ const grid=document.getElementById('newsGrid'),state=document.getElementById('newsState'),btn=document.getElementById('refreshNews');if(!grid)return;
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const valid=v=>{try{const u=new URL(v);return ['https:','http:'].includes(u.protocol)?u.href:'#'}catch{return '#'}};
+ const render=(items,status='snapshot')=>{grid.innerHTML=items.length?items.map(a=>`<article class="news-card"><h3><a href="${valid(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h3><p>${esc(a.topic||a.domain||'News discovery')} · ${esc(a.seendate||a.publishedAt||'Time unavailable')}</p></article>`).join(''):'<p class="muted">No saved articles. The app does not invent headlines; use official sources and search links while the collector has no snapshot.</p>';state.textContent=`Displayed ${items.length} record(s) · ${status}`;};
+ try{const r=await fetch('/data/news-snapshot.json');const d=await r.json();render(Array.isArray(d.articles)?d.articles:[],`saved ${d.status||'unknown'} snapshot`);}catch{render([],'local snapshot unavailable');}
+ btn?.addEventListener('click',async()=>{btn.disabled=true;btn.textContent='Checking…';try{const base=window.FINANCE_OS_API_BASE||'';if(!base)throw new Error('API gateway is not connected yet.');const r=await fetch(base.replace(/\/$/,'')+'/api/v1/news');if(!r.ok)throw new Error(`Gateway HTTP ${r.status}`);const d=await r.json();render(d.articles||[],d.status||'API response');}catch(e){state.textContent=e.message;}finally{btn.disabled=false;btn.textContent='Check API gateway';}});
+})();

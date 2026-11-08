@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "description": "Futures-specific public research links. These are search destinations, not an ingestion API or endorsed analyst list.",
+  "methods": [
+    {
+      "id": "ict",
+      "label": "ICT / SMC",
+      "terms": "liquidity sweep MSS FVG order block Silver Bullet futures"
+    },
+    {
+      "id": "macro",
+      "label": "Macro / event analysis",
+      "terms": "futures macro drivers yields central bank event reaction"
+    },
+    {
+      "id": "orderflow",
+      "label": "Volume / order flow",
+      "terms": "futures volume open interest footprint order flow"
+    },
+    {
+      "id": "positioning",
+      "label": "COT / positioning",
+      "terms": "CFTC COT positioning open interest futures"
+    },
+    {
+      "id": "technical",
+      "label": "Price action / structure",
+      "terms": "futures market structure trend support resistance"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "tradingview",
+      "label": "TradingView Ideas",
+      "base": "https://www.tradingview.com/symbols/"
+    },
+    {
+      "id": "x",
+      "label": "X search",
+      "base": "https://x.com/search?q="
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn content search",
+      "base": "https://www.linkedin.com/search/results/content/?keywords="
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube search",
+      "base": "https://www.youtube.com/results?search_query="
+    },
+    {
+      "id": "reddit",
+      "label": "Reddit search",
+      "base": "https://www.reddit.com/search/?q="
+    }
+  ]
+}

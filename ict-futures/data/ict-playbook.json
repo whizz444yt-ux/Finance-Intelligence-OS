@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-08",
+  "concepts": [
+    {
+      "name": "Market Structure",
+      "summary": "Swing highs/lows, Break of Structure (BOS), Market Structure Shift (MSS). Use the higher timeframe to frame directional context; define the swing and close rule before testing.",
+      "evidence": "SOURCED / rule-dependent"
+    },
+    {
+      "name": "Liquidity",
+      "summary": "Buy-side and sell-side liquidity; EQH/EQL; PDH/PDL; PWH/PWL; session highs/lows; internal and external range liquidity. A sweep is not an entry by itself.",
+      "evidence": "SOURCED / framework"
+    },
+    {
+      "name": "Displacement",
+      "summary": "A fast directional move with relatively large candle bodies that breaks a meaningful swing and may leave an imbalance. Define objective criteria for a backtest.",
+      "evidence": "SOURCED / discretionary threshold"
+    },
+    {
+      "name": "Fair Value Gap (FVG)",
+      "summary": "Three-candle imbalance: bullish when candle 3 low is above candle 1 high; bearish when candle 3 high is below candle 1 low. CE is the midpoint. An FVG is a zone, not a guaranteed signal.",
+      "evidence": "SOURCED / NO AUDITED EDGE"
+    },
+    {
+      "name": "IFVG & BPR",
+      "summary": "IFVG: a gap whose polarity changes after a qualifying body close through its far edge. BPR: overlap of bullish and bearish FVGs. Define mitigation by wick or close.",
+      "evidence": "SOURCED / rule-dependent"
+    },
+    {
+      "name": "Order Block & Breaker",
+      "summary": "OB: last opposing candle/zone before a displacement move. Breaker: failed OB whose polarity reverses. Require the displacement and define body-vs-wick boundaries.",
+      "evidence": "SOURCED / convention-sensitive"
+    },
+    {
+      "name": "Unicorn & Mitigation",
+      "summary": "Unicorn is the overlap of a breaker block and FVG in the described model. Mitigation block is treated as a distinct zone concept; exact rules vary across practitioners.",
+      "evidence": "CONVENTION"
+    },
+    {
+      "name": "Premium / Discount",
+      "summary": "Choose a structural dealing range, mark equilibrium at 50%; above = premium, below = discount. Do not redraw the range after seeing the outcome.",
+      "evidence": "SOURCED / operational definition needed"
+    },
+    {
+      "name": "OTE",
+      "summary": "The PDF describes the 62–79% retracement band, with 70.5% as a midpoint convention. Pair it with a real impulse leg, key level and defined invalidation.",
+      "evidence": "SOURCED / CONVENTION"
+    },
+    {
+      "name": "Time Anchors",
+      "summary": "Midnight Open, 08:30 ET data reference, 09:30 ET cash open, NDOG/NWOG. A gap across the exchange maintenance break is not automatically an FVG.",
+      "evidence": "SOURCED"
+    },
+    {
+      "name": "AMD / Power of Three",
+      "summary": "Accumulation, Manipulation and Distribution as a daily narrative. Use as a hypothesis, not proof that an early move must reverse.",
+      "evidence": "CONVENTION / NO AUDITED EDGE"
+    },
+    {
+      "name": "Judas Swing",
+      "summary": "A session-associated false push through a marked level followed by a move in the opposite direction. Requires a pre-existing directional hypothesis and confirmation.",
+      "evidence": "CONVENTION / weak public evidence"
+    },
+    {
+      "name": "IPDA 20/40/60",
+      "summary": "The playbook frames 20-, 40- and 60-trading-day highs/lows as reference liquidity ranges. Treat “algorithm” language as a model, not an established mechanism.",
+      "evidence": "CONVENTION"
+    },
+    {
+      "name": "SMT Divergence",
+      "summary": "Related markets make non-confirming highs/lows around a meaningful level. Match session, swing timing and expiry; use as a filter, not a standalone trigger.",
+      "evidence": "CONVENTION / NO AUDITED EDGE"
+    },
+    {
+      "name": "Weekly Profiles",
+      "summary": "Tuesday/Wednesday weekly-high/low profiles and midweek reversal tendencies. Treat as tendencies to record and test, never fixed weekday rules.",
+      "evidence": "CONVENTION / NOT RULES"
+    },
+    {
+      "name": "PD Arrays",
+      "summary": "Umbrella term for reference zones such as old highs/lows, FVGs, order blocks, breakers, liquidity voids and rejection blocks. Premium/discount is the range framework; PD Arrays are the reference levels within it.",
+      "evidence": "SOURCED / terminology"
+    },
+    {
+      "name": "Volume Imbalance",
+      "summary": "A price gap between two consecutive candle bodies while their wicks overlap. It is distinct from the three-candle FVG definition.",
+      "evidence": "SOURCED / rule definition"
+    },
+    {
+      "name": "First Presented FVG (FPFVG)",
+      "summary": "The session’s first FVG that meets a trader-defined qualification rule. The PDF labels its perceived quality as a community convention, not a proven edge.",
+      "evidence": "CONVENTION"
+    },
+    {
+      "name": "CBDR & Flout",
+      "summary": "Central Bank Dealers Range (typically 14:00–20:00 ET in the PDF) and the extended Flout range (sources differ on the start). Record candle-body vs full-range measurement rules.",
+      "evidence": "SOURCED / source variation"
+    },
+    {
+      "name": "Standard-Deviation Projections",
+      "summary": "The PDF uses the anchor range height as a “1 SD” unit and projects multiples such as ±1, ±2 and ±2.5. This is not statistical standard deviation; it is a range projection convention.",
+      "evidence": "SOURCED / CONVENTION"
+    },
+    {
+      "name": "Weekly Profiles",
+      "summary": "Tuesday/Wednesday weekly-high or weekly-low profiles and midweek reversal tendencies. They describe possible timing patterns, not deterministic calendar effects.",
+      "evidence": "CONVENTION / tendency only"
+    }
+  ],
+  "models": [
+    {
+      "name": "Liquidity Sweep + MSS",
+      "context": "At a meaningful HTF/session level, price wicks through a visible liquidity pool and closes back inside; wait for displacement and MSS.",
+      "entry": "After the shift, use a defined FVG/OB pullback.",
+      "stop": "Beyond the swept extreme.",
+      "target": "Opposing liquidity pool.",
+      "invalidation": "No MSS/displacement or no valid pullback = no setup."
+    },
+    {
+      "name": "Silver Bullet",
+      "context": "Three one-hour New York windows in the playbook: 03:00–04:00, 10:00–11:00 and 14:00–15:00 ET.",
+      "entry": "Only use an FVG formed inside the chosen window after context and trigger conditions.",
+      "stop": "Beyond manipulation swing / model-defined far edge.",
+      "target": "Opposing liquidity; consider partials.",
+      "invalidation": "No qualifying FVG inside the window = no trade."
+    },
+    {
+      "name": "ICT 2022 Model",
+      "context": "Raid a relevant liquidity pool, then displacement/MSS with an imbalance. The PDF uses 15M–1H for pools and 1M–5M execution.",
+      "entry": "FVG from the displacement leg.",
+      "stop": "Beyond raided extreme.",
+      "target": "Opposing liquidity pool.",
+      "invalidation": "Any required chain element missing = setup invalid."
+    },
+    {
+      "name": "Judas + MSS",
+      "context": "Session opening fake push through a marked level in the context of a pre-defined HTF bias.",
+      "entry": "Wait for opposite displacement and an FVG/OB pullback.",
+      "stop": "Beyond the swept extreme.",
+      "target": "Opposite liquidity; SD levels only as secondary references.",
+      "invalidation": "No HTF bias or no reversal confirmation = no trade."
+    },
+    {
+      "name": "Unicorn",
+      "context": "Breaker block and FVG overlap after a sweep and displacement/shift.",
+      "entry": "The overlap zone, using explicitly defined boundaries.",
+      "stop": "Beyond breaker invalidation.",
+      "target": "Opposing liquidity pool.",
+      "invalidation": "No overlap = ordinary breaker/FVG, not Unicorn."
+    },
+    {
+      "name": "FVG Continuation",
+      "context": "A directional impulse produces a qualifying FVG with HTF/session alignment.",
+      "entry": "Pullback into FVG, often CE midpoint.",
+      "stop": "Beyond the far edge or structural invalidation.",
+      "target": "Next liquidity level.",
+      "invalidation": "Body close through the gap invalidates the idea per the chosen rule."
+    },
+    {
+      "name": "IFVG",
+      "context": "Price closes through the far edge of an FVG, changing its role; a retest may be studied as a setup.",
+      "entry": "Retest of the inverted FVG after confirmation.",
+      "stop": "Beyond IFVG invalidation.",
+      "target": "Internal then major opposing liquidity.",
+      "invalidation": "The PDF labels this popular but without robust public stats."
+    },
+    {
+      "name": "FVG + OTE",
+      "context": "An impulsive leg and FVG overlap with the 62–79% retracement band.",
+      "entry": "FVG/OB inside the pre-defined OTE zone.",
+      "stop": "Beyond the swing anchor / setup invalidation.",
+      "target": "Opposing liquidity or measured extension.",
+      "invalidation": "Do not use Fibonacci on a non-impulsive or redefined leg."
+    }
+  ],
+  "sessions": [
+    {
+      "id": "asia",
+      "name": "Asian Range",
+      "start": "20:00",
+      "end": "00:00",
+      "purpose": "Mark overnight range extremes / accumulation reference.",
+      "ist": "06:30–10:30 (US standard time); DST-aware conversion required."
+    },
+    {
+      "id": "midnight",
+      "name": "Midnight Open",
+      "start": "00:00",
+      "end": "00:01",
+      "purpose": "Daily reference price; not a trade window.",
+      "ist": "ET converted using the current NY offset."
+    },
+    {
+      "id": "london",
+      "name": "London Killzone",
+      "start": "02:00",
+      "end": "05:00",
+      "purpose": "London session sweep, Judas and currency/metals setups.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "londonsb",
+      "name": "London Silver Bullet",
+      "start": "03:00",
+      "end": "04:00",
+      "purpose": "One-hour FVG model window.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "forexny",
+      "name": "Forex NY Killzone",
+      "start": "07:00",
+      "end": "10:00",
+      "purpose": "Currency-futures active window.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "nyam",
+      "name": "NY AM Index / Metals",
+      "start": "08:30",
+      "end": "11:00",
+      "purpose": "Primary index and metals preparation/execution window.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "cashopen",
+      "name": "US Cash Open",
+      "start": "09:30",
+      "end": "09:31",
+      "purpose": "US equity cash-market reference open.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "amsb",
+      "name": "AM Silver Bullet",
+      "start": "10:00",
+      "end": "11:00",
+      "purpose": "One-hour index FVG model window.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "londonclose",
+      "name": "London Close",
+      "start": "10:00",
+      "end": "12:00",
+      "purpose": "Potential retracement window; instrument dependent.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "lunch",
+      "name": "NY Lunch — Caution",
+      "start": "12:00",
+      "end": "13:30",
+      "purpose": "The PDF marks this as an avoid window across the playbook.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "nypm",
+      "name": "NY PM Index",
+      "start": "13:30",
+      "end": "16:00",
+      "purpose": "Afternoon index-futures window.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "pmsb",
+      "name": "PM Silver Bullet",
+      "start": "14:00",
+      "end": "15:00",
+      "purpose": "One-hour FVG model window; FOMC often overlaps this period.",
+      "ist": "DST-aware conversion required."
+    },
+    {
+      "id": "cmebreak",
+      "name": "CME Maintenance Break",
+      "start": "17:00",
+      "end": "18:00",
+      "purpose": "PDF reference for most CME Globex futures; confirm product and holiday schedules.",
+      "ist": "DST-aware conversion required."
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-11-10",
+      "time": "08:30 ET",
+      "event": "US CPI — October 2026",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.bls.gov/schedule/2026/11_sched_list.htm"
+    },
+    {
+      "date": "2026-11-12",
+      "time": "12:00 ET",
+      "event": "EIA Weekly Petroleum Status Report — holiday-adjusted release",
+      "markets": [
+        "CL",
+        "6C"
+      ],
+      "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+    },
+    {
+      "date": "2026-11-13",
+      "time": "08:30 ET",
+      "event": "US PPI — October 2026",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.bls.gov/schedule/2026/11_sched_list.htm"
+    },
+    {
+      "date": "2026-11-18",
+      "time": "See Fed release",
+      "event": "FOMC minutes — October 27–28 meeting",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "date": "2026-11-25",
+      "time": "08:30 ET",
+      "event": "BEA GDP Second Estimate + Personal Income & Outlays (October 2026)",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.bea.gov/news/schedule/"
+    },
+    {
+      "date": "2026-12-07",
+      "time": "Australia local schedule",
+      "event": "RBA Monetary Policy Board meeting begins",
+      "markets": [
+        "6A"
+      ],
+      "source": "https://www.rba.gov.au/schedules-events/board-meeting-schedules.html"
+    },
+    {
+      "date": "2026-12-08",
+      "time": "All day",
+      "event": "FOMC meeting begins",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "date": "2026-12-09",
+      "time": "09:45 ET",
+      "event": "Bank of Canada policy-rate announcement",
+      "markets": [
+        "6C",
+        "CL",
+        "NQ",
+        "ES",
+        "DX",
+        "ZN"
+      ],
+      "source": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
+    },
+    {
+      "date": "2026-12-09",
+      "time": "See Fed release",
+      "event": "FOMC decision and press conference",
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B",
+        "DX",
+        "ZN",
+        "6J",
+        "6A",
+        "6C",
+        "SI",
+        "BTC"
+      ],
+      "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "date": "2026-12-16",
+      "time": "ECB local schedule",
+      "event": "ECB monetary-policy meeting — Day 1",
+      "markets": [
+        "6E",
+        "DX"
+      ],
+      "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    },
+    {
+      "date": "2026-12-17",
+      "time": "See institution schedule",
+      "event": "BoE MPC decision; ECB Day 2 and press conference; BoJ meeting begins",
+      "markets": [
+        "6B",
+        "6E",
+        "DX",
+        "6J"
+      ],
+      "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates"
+    },
+    {
+      "date": "2026-12-18",
+      "time": "See CME expiry calendar",
+      "event": "BoJ meeting; quarterly equity-index expiry period (verify exact contracts)",
+      "markets": [
+        "NQ",
+        "ES",
+        "YM",
+        "RTY",
+        "6J"
+      ],
+      "source": "https://www.cmegroup.com/tools-information/calendars/expiration-calendar.html"
+    }
+  ]
+}

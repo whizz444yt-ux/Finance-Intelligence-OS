@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "provider": "GDELT DOC API",
+  "status": "not-yet-fetched",
+  "generatedAt": null,
+  "lastCheckedAt": null,
+  "window": "24h",
+  "queryCount": 7,
+  "successfulQueries": 0,
+  "articles": [],
+  "queries": [],
+  "notes": [
+    "Futures-only public-news discovery.",
+    "Best-effort index; not a complete newswire or real-time price feed."
+  ]
+}

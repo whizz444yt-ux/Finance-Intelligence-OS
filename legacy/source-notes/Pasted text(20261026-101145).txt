@@ -1,0 +1,325 @@
+# आपकी पूरी Finance Intelligence Website Directory
+
+नीचे मैंने सभी platforms को category-wise व्यवस्थित किया है, ताकि आप मोबाइल पर सीधे नाम पर tap करके वेबसाइट खोल सकें। हर लिंक के साथ बताया है कि वहाँ क्या मिलेगा, उसका इस्तेमाल क्यों करना है और आपकी research में वह कैसे काम आएगा।
+
+**Legend:**
+- **Free/Public:** सार्वजनिक जानकारी उपलब्ध है।
+- **Freemium:** कुछ सुविधाएँ मुफ्त, कुछ paid।
+- **Paid/Conditional:** सदस्यता, account या API access की जरूरत हो सकती है।
+- **Official:** Exchange, regulator या government का मूल स्रोत।
+
+## 1. India Stock Market — NSE, BSE, Company Filings
+
+ये आपके लिए सबसे पहले खोलने वाली वेबसाइटें हैं।
+
+| Website | क्या है और क्यों उपयोगी है? | Access |
+|---|---|---|
+| [NSE India](https://www.nseindia.com/?utm_source=chatgpt.com) | India के stocks, Nifty, Bank Nifty, derivatives, market data और exchange reports | Public; कुछ data की शर्तें हो सकती हैं |
+| [BSE India](https://www.bseindia.com/?utm_source=chatgpt.com) | Sensex, listed companies, corporate announcements और financial results | Public |
+| [SEBI](https://www.sebi.gov.in/?utm_source=chatgpt.com) | Securities-market regulator के orders, regulations, investigations और disclosures | Official/Public |
+| [NSE Large Deals](https://www.nseindia.com/market-data/large-deals?utm_source=chatgpt.com) | Disclosed bulk deals और block deals की जानकारी | Public |
+| [NSE All Reports](https://www.nseindia.com/all-reports?utm_source=chatgpt.com) | Market reports, bhavcopy और उपलब्ध trading-related datasets | Public; data terms लागू हो सकती हैं |
+| [NSE Corporate Filings](https://www.nseindia.com/companies-listing/corporate-filings?utm_source=chatgpt.com) | Company announcements और exchange disclosures | Official/Public |
+| [NSE Insider Trading Disclosures](https://www.nseindia.com/companies-listing/corporate-filings-insider-trading?utm_source=chatgpt.com) | Reportable insider transactions की disclosures | Public |
+| [NSE Option Chain](https://www.nseindia.com/option-chain?utm_source=chatgpt.com) | Strike-wise option prices, open interest और available derivatives data | Public; live-data conditions लागू |
+| [NSE Live Equity Market](https://www.nseindia.com/market-data/live-equity-market?utm_source=chatgpt.com) | Market prices और equity-market activity | Public; कुछ data delayed हो सकता है |
+| [SEBI Investor Support](https://investor.sebi.gov.in/Investor-support.html?utm_source=chatgpt.com) | Registered intermediaries और investor-support resources | Official/Public |
+
+ये official sources आपको market data के साथ original disclosures verify करने में मदद करेंगे। [Securities and Exchange Board of India](https://www.sebi.gov.in/stock-exchanges.html?utm_source=chatgpt.com)
+
+### इनका इस्तेमाल कैसे करें?
+
+**मान लीजिए, आपको Reliance या किसी दूसरे listed stock में बड़ी movement आने की संभावना लगती है।**
+
+1. NSE/BSE पर company का नाम खोजें।
+2. Latest corporate announcements पढ़ें।
+3. Large-deal disclosures में relevant transactions देखें।
+4. Results, earnings guidance और other filings जाँचें।
+5. Option chain, volume और price structure देखें।
+6. उसके बाद bullish, bearish या sideways scenario बनाएँ।
+
+ध्यान रखें: कोई large deal या insider transaction अपने आप में buy signal नहीं है। Disclosure का समय, transaction का प्रकार और market reaction भी देखना जरूरी है।
+
+---
+
+## 2. India Stock Screeners — अच्छे Stocks ढूँढने के लिए
+
+इन platforms का इस्तेमाल हजारों stocks में से research के योग्य stocks छाँटने के लिए करें।
+
+| Website | क्या करती है? | Access |
+|---|---|---|
+| [Screener.in](https://www.screener.in/?utm_source=chatgpt.com) | Financial statements, valuation ratios, profit growth और custom stock screens | Freemium |
+| [Trendlyne](https://trendlyne.com/?utm_source=chatgpt.com) | Stock screeners, financial analytics, alerts और market research | Freemium |
+| [Tickertape](https://www.tickertape.in/?utm_source=chatgpt.com) | Stock screening, fundamentals और investment research | Freemium |
+| [Moneycontrol](https://www.moneycontrol.com/?utm_source=chatgpt.com) | Indian market news, company financials और stock-market coverage | Freemium |
+| [Economic Times Markets](https://economictimes.indiatimes.com/markets?utm_source=chatgpt.com) | Indian markets, corporate news और economic updates | Freemium |
+| [Mint Markets](https://www.livemint.com/market?utm_source=chatgpt.com) | Business news, markets और financial analysis | Freemium |
+
+**इनमें से क्या चुनें?**
+
+- Company की financial health: Screener.in
+- Technical charts और alerts: TradingView
+- Indian market news: Moneycontrol और Economic Times Markets
+- Additional stock analytics: Trendlyne और Tickertape
+
+एक जरूरी फर्क: stock screener आपको candidates देता है, यह भविष्य में बढ़ने वाले stocks की guaranteed list नहीं देता।
+
+---
+
+# 3. Global Financial News — पूरी दुनिया की मार्केट न्यूज़
+
+| Website | क्या मिलेगा? | Access |
+|---|---|---|
+| [Bloomberg Markets](https://www.bloomberg.com/markets?utm_source=chatgpt.com) | Global equities, bonds, currencies, commodities और macroeconomic analysis | Freemium/Paid |
+| [Reuters Markets](https://www.reuters.com/markets/?utm_source=chatgpt.com) | Breaking financial news, verified reporting और company announcements | Public; कुछ content restricted हो सकता है |
+| [CNBC](https://www.cnbc.com/?utm_source=chatgpt.com) | US stocks, earnings, business और market commentary | Public/Freemium |
+| [Financial Times Markets](https://www.ft.com/markets?utm_source=chatgpt.com) | Global finance, economics और institutional analysis | Paid/Freemium |
+| [Yahoo Finance](https://finance.yahoo.com/?utm_source=chatgpt.com) | Stock quotes, watchlists, financial statements और news | Freemium |
+| [Investing.com](https://www.investing.com/?utm_source=chatgpt.com) | Economic calendar, Forex, Gold, commodities और market news | Freemium |
+| [MarketWatch](https://www.marketwatch.com/?utm_source=chatgpt.com) | US stock-market news और financial commentary | Freemium |
+
+### किसका उपयोग किसलिए करें?
+
+- **Reuters:** जल्दी आने वाली verified news के लिए।
+- **Bloomberg:** Global market context और deeper research के लिए।
+- **Yahoo Finance:** Stocks को watchlist में रखने और company financials देखने के लिए।
+- **Investing.com:** Economic events और Forex/Gold-related research के लिए।
+- **Financial Times:** Macro trends और institutional perspectives के लिए।
+
+### News को trading signal में कैसे बदलें?
+
+मान लीजिए किसी US company के earnings results आने वाले हैं।
+
+आपको चार चीजें देखनी चाहिए:
+
+1. Analysts की expectations क्या थीं?
+2. Actual earnings और company guidance कैसी रही?
+3. News आने के बाद price और volume का reaction क्या हुआ?
+4. क्या market उस खबर को पहले ही price in कर चुका था?
+
+अच्छी खबर हमेशा price को ऊपर नहीं ले जाती। अगर बाजार उससे भी बेहतर परिणाम की उम्मीद कर रहा था, तो stock गिर भी सकता है।
+
+---
+
+# 4. Prediction Markets — Future Events की Probability
+
+इन websites पर लोग future events के संभावित outcomes को लेकर market prices या forecasts बनाते हैं।
+
+| Website | क्या है? | आपके लिए उपयोग |
+|---|---|---|
+| [Polymarket](https://polymarket.com/?utm_source=chatgpt.com) | Event-based prediction markets | Economic, political और crypto-related events की probabilities देखना |
+| [Kalshi](https://kalshi.com/?utm_source=chatgpt.com) | Event contracts का marketplace | Economic indicators और अन्य events पर market expectations |
+| [Manifold Markets](https://manifold.markets/?utm_source=chatgpt.com) | Community-based forecasting platform | लोगों की collective expectations और forecasts |
+| [Metaculus](https://www.metaculus.com/?utm_source=chatgpt.com) | Research-oriented forecasting platform | Scientific, economic और geopolitical questions के forecasts |
+| [Polymarket Documentation](https://docs.polymarket.com/?utm_source=chatgpt.com) | Developer documentation | उपलब्ध market data और APIs को समझना |
+
+### इनका इस्तेमाल क्यों करें?
+
+मान लीजिए अगले सप्ताह US interest-rate decision आने वाला है।
+
+आप ये चीजें compare कर सकते हैं:
+
+- Prediction markets की implied probabilities।
+- Economists की expectations।
+- Federal Reserve के official statements।
+- US inflation और employment data।
+- Dollar, Treasury yields और Gold की price movement।
+
+इससे आपको पता चल सकता है कि market किस outcome की उम्मीद कर रहा है और कौन-सा unexpected outcome volatility पैदा कर सकता है।
+
+**महत्वपूर्ण:** Prediction market की 70% probability का मतलब 70% guaranteed accuracy नहीं है। Liquidity, market participants और contract की conditions भी महत्वपूर्ण हैं। भारत से किसी platform का इस्तेमाल करने से पहले उसके applicable legal restrictions और eligibility rules जाँचें। VPN से website खुलना trading की कानूनी अनुमति का प्रमाण नहीं है।
+
+---
+
+# 5. US Stock Market — Insider Disclosures और Institutional Holdings
+
+अगर आप अमेरिकी कंपनियों के बारे में भारत से research करना चाहते हैं, तो ये resources महत्वपूर्ण हैं।
+
+| Website | क्या जानकारी मिलेगी? | उपयोग |
+|---|---|---|
+| [SEC EDGAR](https://www.sec.gov/edgar/search/?utm_source=chatgpt.com) | Listed companies की regulatory filings | Earnings, acquisitions, risks और official disclosures |
+| [SEC Insider Transactions Data](https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets?utm_source=chatgpt.com) | Reported insider transaction datasets | Corporate insiders की disclosed activity |
+| [SEC Investment Research Guide](https://www.sec.gov/search-filings/edgar-search-assistance/using-edgar-research-investments?utm_source=chatgpt.com) | SEC filings पढ़ने और समझने की जानकारी | Forms और ownership disclosures समझना |
+| [WhaleWisdom](https://whalewisdom.com/?utm_source=chatgpt.com) | Institutional holdings और 13F research | Funds के reported portfolios की तुलना |
+| [Dataroma](https://www.dataroma.com/?utm_source=chatgpt.com) | Selected prominent investors के reported portfolios | Long-term holdings research |
+| [Quiver Quantitative](https://www.quiverquant.com/?utm_source=chatgpt.com) | Alternative datasets और public disclosures पर आधारित analytics | अतिरिक्त research signals |
+| [OpenInsider](http://openinsider.com/?utm_source=chatgpt.com) | US insider transaction research | Reported corporate insider transactions |
+
+### कौन-सी चीज सबसे उपयोगी है?
+
+**SEC EDGAR को primary source रखें।** Third-party platforms पर कोई signal दिखे, तो संभव होने पर मूल filing भी देखें।
+
+उदाहरण के लिए, Form 4 से किसी director या executive के reportable transaction की जानकारी मिल सकती है। लेकिन transaction का प्रकार देखना जरूरी है—open-market purchase, sale, option exercise और दूसरे transaction types का अर्थ अलग हो सकता है।
+
+एक और limitation: institutional holdings की filings अक्सर periodic होती हैं। वे किसी fund की real-time holdings नहीं दिखातीं।
+
+---
+
+# 6. Gold, Silver, Crude Oil और Forex Intelligence
+
+Gold/XAUUSD और Forex के लिए macroeconomic data के साथ futures positioning का अध्ययन उपयोगी हो सकता है।
+
+| Website | क्या है? | उपयोग |
+|---|---|---|
+| [CFTC Commitments of Traders](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm?utm_source=chatgpt.com) | Futures-market positioning reports | अलग-अलग trader categories की positioning देखना |
+| [CME Group COT Tool](https://www.cmegroup.com/tools-information/quikstrike/commitment-of-traders.html?utm_source=chatgpt.com) | COT data analysis tool | Historical futures positioning की तुलना |
+| [Federal Reserve](https://www.federalreserve.gov/?utm_source=chatgpt.com) | US central bank की official website | Monetary policy और interest-rate decisions |
+| [US Bureau of Labor Statistics](https://www.bls.gov/?utm_source=chatgpt.com) | US inflation और employment statistics | CPI, employment और labour-market data |
+| [Bureau of Economic Analysis](https://www.bea.gov/?utm_source=chatgpt.com) | US economic statistics | GDP, income और economic growth |
+| [FRED Economic Data](https://fred.stlouisfed.org/?utm_source=chatgpt.com) | Historical macroeconomic datasets | Yields, inflation और अन्य economic series |
+| [TradingView Economic Calendar](https://www.tradingview.com/economic-calendar/?utm_source=chatgpt.com) | Economic events calendar | Upcoming releases और previous/actual figures |
+| [CME Group](https://www.cmegroup.com/?utm_source=chatgpt.com) | Futures और options market infrastructure | Commodity futures और related market data |
+
+### Gold के लिए research checklist
+
+Gold में trade लेने से पहले ये छह चीजें देखें:
+
+1. US dollar की direction।
+2. US Treasury yields और real yields।
+3. Inflation और employment releases।
+4. Federal Reserve की policy expectations।
+5. COT positioning और crowded trades का context।
+6. XAUUSD का support, resistance, volume और price structure।
+
+COT reports delayed positioning information देती हैं, real-time institutional order flow नहीं। इन्हें intraday entry trigger के रूप में अकेले इस्तेमाल न करें।
+
+---
+
+# 7. Crypto Whale Tracking और On-Chain Intelligence
+
+Crypto में public blockchain transactions को investigate किया जा सकता है। इन platforms से आप wallet activity, token movements, DeFi liquidity और derivatives positioning देख सकते हैं।
+
+| Website | क्या है? | उपयोग |
+|---|---|---|
+| [Arkham Intelligence](https://arkm.com/?utm_source=chatgpt.com) | Blockchain wallet intelligence | Known entities और wallets के transactions investigate करना |
+| [DeFiLlama](https://defillama.com/?utm_source=chatgpt.com) | DeFi analytics | TVL, DEX volumes, stablecoins और protocol metrics |
+| [Dune Analytics](https://dune.com/?utm_source=chatgpt.com) | Blockchain analytics platform | Queries और custom dashboards बनाना |
+| [Etherscan](https://etherscan.io/?utm_source=chatgpt.com) | Ethereum blockchain explorer | Transactions, tokens और smart contracts verify करना |
+| [Solscan](https://solscan.io/?utm_source=chatgpt.com) | Solana blockchain explorer | Wallets, transactions और token activity देखना |
+| [Blockchain.com Explorer](https://www.blockchain.com/explorer?utm_source=chatgpt.com) | Blockchain explorer | Bitcoin और supported blockchain transactions |
+| [Whale Alert](https://whale-alert.io/?utm_source=chatgpt.com) | Large crypto transaction alerts | बड़े transfers पर alerts |
+| [CoinGlass](https://www.coinglass.com/?utm_source=chatgpt.com) | Crypto derivatives analytics | Open interest, funding rates और liquidations |
+
+### सबसे पहले क्या सीखना चाहिए?
+
+**Arkham:** बड़े wallets और labelled entities की activity investigate करें।
+
+**DeFiLlama:** DeFi protocols की liquidity और activity compare करें।
+
+**Etherscan/Solscan:** किसी specific transaction को blockchain पर verify करें।
+
+**CoinGlass:** Price, open interest, funding और liquidations को एक साथ देखें।
+
+उदाहरण के लिए, किसी बड़े BTC wallet ने exchange को coins transfer किए। इसका मतलब संभावित selling pressure हो सकता है, लेकिन यह जरूरी नहीं कि coins बेच दिए गए हों। Transfer custody change, internal wallet movement या अन्य कारणों से भी हो सकता है।
+
+इसी तरह, whale accumulation को भी automatic buy signal न मानें।
+
+---
+
+# 8. Institutional Investors और Smart Money Research
+
+इन platforms का उद्देश्य बड़े investors की publicly disclosed holdings और market activity को समझना है।
+
+| Website | उपयोग |
+|---|---|
+| [WhaleWisdom](https://whalewisdom.com/?utm_source=chatgpt.com) | Institutional portfolio disclosures |
+| [Dataroma](https://www.dataroma.com/?utm_source=chatgpt.com) | Selected prominent investors की reported holdings |
+| [Quiver Quantitative](https://www.quiverquant.com/?utm_source=chatgpt.com) | Public disclosures और alternative datasets |
+| [OpenInsider](http://openinsider.com/?utm_source=chatgpt.com) | Corporate insider transactions |
+| [Finviz](https://finviz.com/?utm_source=chatgpt.com) | US stock screening, technical और fundamental filters |
+| [Koyfin](https://www.koyfin.com/?utm_source=chatgpt.com) | Financial charts, macro research और company comparisons |
+
+### इसका practical उपयोग
+
+मान लीजिए आप किसी US stock में investment की research कर रहे हैं।
+
+- Company की SEC filings देखें।
+- Institutional holdings की reporting dates compare करें।
+- Insider transaction का प्रकार समझें।
+- Financial results और valuation देखें।
+- Price trend और market conditions जाँचें।
+
+याद रखें, किसी बड़े fund ने पहले stock खरीदा था, इसका मतलब यह नहीं है कि वह आज भी उसी position में है।
+
+---
+
+# 9. Options Flow और Unusual Trading Activity
+
+ये tools मुख्यतः US options-market research के लिए उपयोगी हैं।
+
+| Website | क्या मिलेगा? |
+|---|---|
+| [Unusual Whales](https://unusualwhales.com/?utm_source=chatgpt.com) | Options activity, unusual trades और market analytics |
+| [Cheddar Flow](https://www.cheddarflow.com/?utm_source=chatgpt.com) | Options flow और unusual options activity |
+| [Unusual Flow](https://unusualflow.com/?utm_source=chatgpt.com) | Options research और activity analytics |
+| [Cboe](https://www.cboe.com/?utm_source=chatgpt.com) | US options-market data और volatility resources |
+| [NSE Option Chain](https://www.nseindia.com/option-chain?utm_source=chatgpt.com) | Indian stock और index derivatives data |
+
+### Unusual options activity का अर्थ
+
+मान लीजिए किसी stock में सामान्य से बहुत अधिक call-option volume आता है।
+
+यह bullish positioning का संकेत हो सकता है, लेकिन इसके दूसरे कारण भी हो सकते हैं:
+
+- Existing holdings को hedge करना।
+- Multi-leg options strategy।
+- Market maker की risk adjustment।
+- पहले से मौजूद positions को close करना।
+
+इसलिए केवल unusual call volume देखकर buy करना उचित नहीं है। Trade structure, execution price, open interest, expiry और underlying stock की price action देखें।
+
+---
+
+# 10. AI Finance Tools और Open-Source Projects
+
+अगर आपका लक्ष्य सिर्फ websites browse करना नहीं, बल्कि अपना AI-powered Financial Intelligence Dashboard बनाना है, तो ये projects उपयोगी हैं।
+
+| Project | क्या है? | Link |
+|---|---|---|
+| Fincept Terminal | Open-source financial terminal और analytics project | [GitHub Repository](https://github.com/Fincept-Corporation/FinceptTerminal?utm_source=chatgpt.com) |
+| TradingAgents | Multi-agent LLM-based financial research framework | [GitHub Repository](https://github.com/TauricResearch/TradingAgents?utm_source=chatgpt.com) |
+| OpenBB | Financial data और research infrastructure | [GitHub Repository](https://github.com/OpenBB-finance/OpenBB?utm_source=chatgpt.com) |
+| FRED API | Macroeconomic data को software में integrate करना | [Official API Documentation](https://fred.stlouisfed.org/docs/api/fred/?utm_source=chatgpt.com) |
+| SEC EDGAR APIs | Company filings और financial data access | [SEC API Documentation](https://www.sec.gov/search-filings/edgar-application-programming-interfaces?utm_source=chatgpt.com) |
+| Dune | Blockchain data queries और dashboards | [Dune Data Hub](https://dune.com/data-hub?utm_source=chatgpt.com) |
+| Polymarket APIs | Prediction-market data integration के लिए developer resources | [Polymarket Documentation](https://docs.polymarket.com/?utm_source=chatgpt.com) |
+
+**ध्यान दें:** ये सभी एक जैसे products नहीं हैं। कुछ complete applications हैं, कुछ developer frameworks और कुछ data APIs हैं। इन्हें चलाने के लिए अलग-अलग configuration, dependencies या API access की जरूरत हो सकती है।
+
+---
+
+# 11. सभी Websites को एक Dashboard में कैसे Organize करें?
+
+आप browser में अलग-अलग folders बनाकर इन websites को व्यवस्थित कर सकते हैं।
+
+| Folder | इसमें रखें |
+|---|---|
+| India Markets | NSE, BSE, SEBI, Screener.in |
+| Global News | Reuters, Bloomberg, CNBC |
+| US Stocks | SEC EDGAR, WhaleWisdom, Finviz |
+| Gold & Forex | CFTC, CME, FRED, TradingView |
+| Crypto Whales | Arkham, DeFiLlama, Etherscan, Solscan |
+| Crypto Derivatives | CoinGlass |
+| Prediction Markets | Polymarket, Kalshi, Metaculus |
+| AI Research | Fincept Terminal, OpenBB, TradingAgents |
+
+इससे आप रोज की research के लिए एक structured workflow बना सकते हैं।
+
+### मेरी सलाह: शुरुआत में सिर्फ इन 12 को bookmark करें
+
+1. [NSE India](https://www.nseindia.com/?utm_source=chatgpt.com)
+2. [BSE India](https://www.bseindia.com/?utm_source=chatgpt.com)
+3. [Reuters Markets](https://www.reuters.com/markets/?utm_source=chatgpt.com)
+4. [TradingView](https://www.tradingview.com/?utm_source=chatgpt.com)
+5. [SEC EDGAR](https://www.sec.gov/edgar/search/?utm_source=chatgpt.com)
+6. [CFTC COT Reports](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm?utm_source=chatgpt.com)
+7. [FRED](https://fred.stlouisfed.org/?utm_source=chatgpt.com)
+8. [Arkham Intelligence](https://arkm.com/?utm_source=chatgpt.com)
+9. [DeFiLlama](https://defillama.com/?utm_source=chatgpt.com)
+10. [CoinGlass](https://www.coinglass.com/?utm_source=chatgpt.com)
+11. [Polymarket](https://polymarket.com/?utm_source=chatgpt.com)
+12. [OpenBB](https://github.com/OpenBB-finance/OpenBB?utm_source=chatgpt.com)
+
+इनसे आपको Indian markets, global news, institutional disclosures, macroeconomics, crypto activity, derivatives और forecasting का एक मजबूत starting point मिल जाएगा।
+
+**अंतिम बात:** किसी भी platform से मिली information को सीधे trade में convert न करें। Original source verify करें, data का timestamp देखें, market reaction जाँचें और entry से पहले stop-loss तथा risk/reward तय करें। कोई भी website आपको हर market move की advance या guaranteed जानकारी नहीं दे सकती।

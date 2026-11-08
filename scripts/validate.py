@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import json, re, sys, subprocess, tempfile
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+errors=[]; checks=[]
+def ok(name, condition, detail=''):
+    checks.append((name, bool(condition), detail))
+    if not condition: errors.append(name + (': '+detail if detail else ''))
+
+def readj(p): return json.loads((ROOT/p).read_text(encoding='utf-8'))
+
+try:
+    resources=readj(Path('resources.json')); ok('Resource directory has 585 curated records',len(resources.get('resources',[]))==585,f"found {len(resources.get('resources',[]))}")
+    markets=readj(Path('ict-futures/data/market-universe.json')); ok('ICT Futures retains 15 contract families',len(markets.get('markets',[]))==15,f"found {len(markets.get('markets',[]))}")
+    academy=readj(Path('ict-futures/data/ict-academy.json')); ok('ICT Academy retains 76 concepts',len(academy.get('concepts',[]))==76,f"found {len(academy.get('concepts',[]))}")
+    fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
+except Exception as e: errors.append(f'dataset parsing: {e}')
+
+for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js']:
+    r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
+    ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
+
+worker=(ROOT/'cloudflare/src/index.js').read_text()
+ok('Worker limits Builder models to allow-list','ALLOWED_BUILDER_MODELS' in worker and 'Model is not allow-listed' in worker)
+ok('Worker has GDELT scheduled collection','async scheduled' in worker and 'refreshNews(env)' in worker)
+ok('Worker contains health/news/provider endpoints','/api/v1/health' in worker and '/api/v1/news' in worker and '/api/v1/providers' in worker)
+ok('Worker contains BLS and CFTC endpoints','/api/v1/macro' in worker and '/api/v1/cot' in worker and 'api.bls.gov/publicAPI/v1' in worker and 'publicreporting.cftc.gov/resource/' in worker)
+
+sql=(ROOT/'supabase/setup.sql').read_text()
+ok('Supabase schema includes RLS enablement','enable row level security' in sql)
+ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
+ok('No service role in browser assets','SUPABASE_SERVICE_ROLE_KEY' not in ''.join(p.read_text(errors='ignore') for p in (ROOT/'assets').glob('*.js')))
+
+# Run generated route build and test final output if it exists.
+dist=ROOT/'dist'
+if dist.exists():
+    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html']
+    ok('All primary route entry points generated',all((dist/p).exists() for p in expected),', '.join(p for p in expected if not (dist/p).exists()))
+    html=list(dist.rglob('*.html'))
+    ok('Legacy ICT SEO route set preserved',len(list((dist/'ict-futures/academy').glob('*.html')))==76 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
+    bad=[]
+    for p in html:
+        if 'whizz444yt-ux.github.io/new.w' in p.read_text(errors='ignore'): bad.append(str(p.relative_to(dist)))
+    ok('No obsolete hard-coded GitHub Pages hostname',not bad,', '.join(bad[:4]))
+    bad_seo=[str(p.relative_to(dist)) for p in [*dist.rglob('sitemap.xml'),*dist.rglob('robots.txt')] if 'whizz444yt-ux.github.io/new.w' in p.read_text(errors='ignore')]
+    ok('No stale nested robots/sitemap hostname',not bad_seo,', '.join(bad_seo[:4]))
+    ok('Only one authoritative root robots and sitemap',len(list(dist.rglob('robots.txt')))==1 and len(list(dist.rglob('sitemap.xml')))==1)
+    ok('No archived nested source ZIPs exposed in static output',not list(dist.rglob('*.zip')))
+    ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
+    # Validate inline scripts in the two preserved monolithic applications.
+    for page in [dist/'index.html', dist/'ict-futures/index.html']:
+        page_html=page.read_text(encoding='utf-8',errors='replace')
+        inline=[]
+        for match in re.finditer(r'<script(?![^>]*\bsrc=)([^>]*)>(.*?)</script\s*>',page_html,re.I|re.S):
+            attrs,body=match.group(1),match.group(2)
+            if 'application/json' in attrs.lower() or 'application/ld+json' in attrs.lower(): continue
+            if body.strip(): inline.append(body)
+        for i,body in enumerate(inline):
+            with tempfile.NamedTemporaryFile('w',suffix='.js',encoding='utf-8',delete=False) as f:
+                f.write(body); temp=f.name
+            result=subprocess.run(['node','--check',temp],capture_output=True,text=True)
+            Path(temp).unlink(missing_ok=True)
+            ok(f'Inline app JavaScript: {page.relative_to(dist)} [{i+1}]',result.returncode==0,(result.stderr or '').strip()[:400])
+    if not __import__('os').getenv('SITE_URL'):
+        robots=(dist/'robots.txt').read_text()
+        ok('Local output disallows search indexing','Disallow: /' in robots)
+else:
+    errors.append('dist output is missing; run scripts/build_site.py')
+
+for name,passed,detail in checks:
+    print(('PASS' if passed else 'FAIL')+'  '+name+(f' — {detail}' if detail else ''))
+print(f'\n{sum(x[1] for x in checks)}/{len(checks)} checks passed')
+if errors:
+    print('\nErrors:'); print('\n'.join('- '+e for e in errors)); sys.exit(1)

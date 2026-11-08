@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "provider": "GDELT DOC API",
+  "status": "not-yet-fetched",
+  "generatedAt": null,
+  "lastCheckedAt": null,
+  "window": "24h",
+  "queryCount": 0,
+  "successfulQueries": 0,
+  "articles": [],
+  "queries": [],
+  "notes": [
+    "This file is populated by the optional GitHub Actions news-snapshot workflow.",
+    "A public news aggregator is not a verification service or a guaranteed real-time feed."
+  ]
+}
