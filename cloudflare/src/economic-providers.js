@@ -160,7 +160,7 @@ async function fetchFred(env) {
     ]),
     status: successful.length === FRED_SERIES.length ? "fresh" : "partial",
     seriesResults: results.map((x, i) => ({ seriesId: FRED_SERIES[i].id, status: x.status === "fulfilled" ? "success" : "failed", error: x.status === "rejected" ? String(x.reason?.message || "Request failed").slice(0, 180) : null })),
-    requestCount: FRED_SERIES.length
+    requestCount
   };
 }
 
