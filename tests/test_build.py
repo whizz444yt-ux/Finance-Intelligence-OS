@@ -161,6 +161,7 @@ class BuildTests(unittest.TestCase):
             self.assertTrue(content['practicalExercise']['deliverable'])
             self.assertEqual(len(content['knowledgeCheck']['options']),3)
             self.assertIn(content['knowledgeCheck']['correctIndex'],[0,1,2])
+            self.assertEqual(content['knowledgeCheck']['correctAnswer'],content['knowledgeCheck']['options'][content['knowledgeCheck']['correctIndex']])
     def test_p3_nine_guided_tutorials_have_workflows_and_reviews(self):
         data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
         tutorials=data['learningProgram']['tutorials']
@@ -186,7 +187,12 @@ class BuildTests(unittest.TestCase):
         self.assertIn('/auth/v1/user',js)
         self.assertIn('/rest/v1/lesson_progress',js)
         self.assertIn('on_conflict=user_id,lesson_slug',js)
+        self.assertIn('progress_data',js)
+        self.assertIn('lesson_version',js)
         self.assertIn('ictfos.academy.progress.v2',js)
+        migration=(ROOT/'supabase/migrations/20261108144106_add_lesson_progress_data.sql').read_text()
+        self.assertIn('add column if not exists progress_data jsonb',migration)
+        self.assertIn('add column if not exists lesson_version text',migration)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
         self.assertNotIn('service_role',js.lower())
 
