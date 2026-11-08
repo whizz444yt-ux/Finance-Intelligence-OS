@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -82,6 +82,23 @@ ok('Ingestion ledger has explicit browser-deny migration','using (false)' in (RO
 
 
 
+
+p4_engine=(ROOT/'assets/strategy-backtest-engine.mjs').read_text()
+p4_ui=(ROOT/'assets/strategy-lab.js').read_text()
+p4_migration=ROOT/'supabase/migrations/20261108151112_add_strategy_backtest_runs_and_trades.sql'
+ok('P4 engine has deterministic next-bar signal execution and explicit conservative exits',
+   'source-bar-close' in p4_engine and 'next-bar-open' in p4_engine and 'stop-first-same-bar' in p4_engine and 'stop-gap' in p4_engine)
+ok('P4 computes net expectancy, net profit factor, drawdown and reproducible SHA-256 manifests',
+   'expectancyUsdPerTrade' in p4_engine and 'netWinningTradesUsd' in p4_engine and 'maxDrawdownUsd' in p4_engine and 'runFingerprint' in p4_engine)
+ok('P4 implements chronological in-sample, validation and out-of-sample splits',
+   all(x in p4_engine for x in ['in-sample','validation','out-of-sample']) and 'splitPolicy' in p4_engine)
+ok('P4 browser sync uses authenticated private run and trade tables, never a service-role key',
+   '/rest/v1/strategy_backtests' in p4_ui and '/rest/v1/strategy_backtest_trades' in p4_ui and 'SUPABASE_SERVICE_ROLE_KEY' not in p4_ui)
+ok('P4 database migration enforces owner RLS and user-linked trade rows',
+   p4_migration.exists() and 'enable row level security' in p4_migration.read_text() and
+   'foreign key (backtest_id, user_id)' in p4_migration.read_text() and
+   '(select auth.uid()) = user_id' in p4_migration.read_text())
+
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
 ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
@@ -108,7 +125,14 @@ if dist.exists():
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
     ok('P3 builds 76 enhanced standalone lessons',len(p3_lessons)==76 and all('KNOWLEDGE CHECK' in p.read_text(errors='ignore') and 'PRACTICAL EXERCISE' in p.read_text(errors='ignore') for p in p3_lessons))
     ok('P3 builds nine guided tutorials plus their index',len(p3_tutorials)==10 and (dist/'ict-futures/academy/tutorials/index.html').exists())
-    ok('P2 economic dashboard asset matches source',
+        ok('P4 Strategy Lab assets match source',
+        all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['strategy-lab.css','strategy-lab.js','strategy-backtest-engine.mjs']))
+    p4_page=(dist/'strategy-lab/index.html').read_text(errors='ignore') if (dist/'strategy-lab/index.html').exists() else ''
+    ok('P4 Strategy Lab is built with CSV input, chronological OOS and run downloads',
+        'strategyCsv' in p4_page and 'out-of-sample' in p4_page and 'downloadManifest' in p4_page and 'downloadTrades' in p4_page)
+    ok('P4 CSV input template is generated',
+        (dist/'strategy-lab/backtest-input-template.csv').exists() and 'timestamp,open,high,low,close,signal' in (dist/'strategy-lab/backtest-input-template.csv').read_text())
+ok('P2 economic dashboard asset matches source',
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()

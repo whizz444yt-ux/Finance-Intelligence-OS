@@ -58,7 +58,7 @@ python3 scripts/audit_internal_links.py
 |---|---|---|
 | GitHub | Public repo `whizz444yt-ux/Finance-Intelligence-OS` on `main`; CI quality workflow is enabled. | Continue using the linked repository and protect production releases with CI status checks. |
 | Vercel | `finance-intelligence-os` project exists; Git-linked production deploys are triggered for commits on `main`; canonical `SITE_URL` is set. | Verify the latest deployment after build completion; add custom domain only when DNS is ready. |
-| Supabase | Active Mumbai (`ap-south-1`) project; 16 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
+| Supabase | Active Mumbai (`ap-south-1`) project; 20 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
 | Cloudflare | `finance-intelligence-os-edge` Worker deployed with KV binding and a 30-minute GDELT scheduled job. CORS is restricted to configured production origins. | No Worker secrets are currently bound, so Builder Admin and automated Supabase writes remain disabled. |
 | Builder.io | Allow-listed content proxy code remains available. | A Builder Space public API key and read-only Admin PAT have not been configured. |
 
@@ -81,7 +81,7 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 ## Data and safety boundaries
 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
-- RLS is enabled on all 18 project public tables; user-owned rows are scoped to `auth.uid()`. Historical economic observations are read-only to browser roles; the ingestion-run ledger is private and server-role only.
+- RLS is enabled on all 20 project public tables; user-owned rows are scoped to `auth.uid()`. Historical economic observations are read-only to browser roles; the ingestion-run ledger is private and server-role only.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
 - CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS, BEA, EIA, FRED, Treasury and ECB series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
@@ -99,3 +99,15 @@ See `docs/BUILD-REPORT.md`, `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION.md`, `d
 - Progress saves locally and syncs to the signed-in user's Supabase `lesson_progress` row using the authenticated session and its user-owned RLS policy. Migration `20261108144106_add_lesson_progress_data` adds `progress_data` JSONB for exercise checklist state and `lesson_version` for curriculum versioning. No privileged client key is used in the browser.
 - Direct original ICT video links are used only where the catalogue already marks the exact upload as verified. Other YouTube links remain labelled topic-discovery links; supplemental/community terminology remains source-cautioned.
 - CME and CFTC material is linked for general futures mechanics and risk education, not represented as ICT certification or evidence of strategy performance.
+
+
+## P4 — Reproducible Strategy Lab
+
+- The /strategy-lab/ route now contains a browser-based deterministic futures signal backtester. Upload one timestamped OHLC series with causal LONG, SHORT or FLAT signals. The engine does not claim to generate or verify ICT signals; signal generation is an upstream, user-documented step.
+- Required CSV columns: timestamp, open, high, low, close and signal. Timestamps require an explicit UTC offset or Z; rows must be strictly increasing; one contract/expiry is accepted per run. Optional stop_ticks, contract and volume are validated.
+- Entry is next-bar open after a source-bar-close signal. One position at a time; fixed stop and reward/risk target; whole-contract risk sizing; max position cap; commission/slippage; stop-gap adverse fills; conservative stop-first same-bar ambiguity; limit targets without queue/partial-fill improvement; time and end-of-data exits.
+- Results report gross and net P&L, net expectancy per trade, average net R, net profit factor, win rate, commissions, estimated slippage, bar-close mark-to-market max drawdown in USD/percent, underwater duration and full trade ledger.
+- Chronological in-sample / validation / out-of-sample splits are computed independently, with capital reset per split. Keep the OOS segment untouched until the signal rule and parameters are frozen. Run fingerprints use the dataset SHA-256, engine version, full configuration and split policy.
+- Download a JSON manifest and CSV trade ledger. The raw uploaded CSV stays in the browser. Local history stores summary/fingerprint; signed-in users can sync manifests/metrics and trade rows to private RLS-protected Supabase tables.
+- Migration 20261108151112_add_strategy_backtest_runs_and_trades creates strategy_backtests and strategy_backtest_trades; both use user ownership policies and no browser service-role credential.
+- The eight preserved ICT models remain playbook descriptions; they are not yet automatically converted into machine-testable setup detectors. No preloaded historical bars or performance ranking is fabricated. Tick values, commissions, expiry/roll methodology and market-data licensing must be supplied/verified for each dataset.
