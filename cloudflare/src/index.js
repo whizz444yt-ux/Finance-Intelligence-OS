@@ -21,11 +21,12 @@ export default {
   const cors=origin&&(allowed.includes("*")||allowed.includes(origin))?{...CORS_HEADERS,"Access-Control-Allow-Origin":allowed.includes("*")?"*":origin}:CORS_HEADERS;
   if(request.method==="OPTIONS")return new Response(null,{status:204,headers:cors});
   if(request.method!=="GET")return json({error:"Method not allowed"},405,cors);
-  if(url.pathname==="/health"||url.pathname==="/api/v1/health")return json({ok:true,service:"finance-intelligence-os-edge",version:"1.0.3",time:new Date().toISOString(),storageConfigured:Boolean(env.SNAPSHOTS),cmsConfigured:Boolean(env.BUILDER_PUBLIC_API_KEY),databaseConfigured:Boolean(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY)},200,cors);
+  if(url.pathname==="/health"||url.pathname==="/api/v1/health")return json({ok:true,service:"finance-intelligence-os-edge",version:"1.1.0",time:new Date().toISOString(),storageConfigured:Boolean(env.SNAPSHOTS),cmsConfigured:Boolean(env.BUILDER_PUBLIC_API_KEY),databaseConfigured:Boolean(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY)},200,cors);
   if(url.pathname==="/api/v1/providers"){
    const state=env.SNAPSHOTS?await env.SNAPSHOTS.get(PROVIDER_STATE_KEY,"json"):null;
    const macroState=env.SNAPSHOTS?await env.SNAPSHOTS.get("macro:bls:v1","json"):null;
-   const cotState=env.SNAPSHOTS?await env.SNAPSHOTS.get("cot:tff:v1","json"):null;
+   const cotKeys=env.SNAPSHOTS?await env.SNAPSHOTS.list({prefix:"cot:tff:v2:",limit:1}):{keys:[]};
+   const cotState=env.SNAPSHOTS&&cotKeys.keys?.length?await env.SNAPSHOTS.get(cotKeys.keys[0].name,"json"):null;
    return json({providers:[
     {id:"gdelt-doc",label:"GDELT DOC API",access:"public-api",state:state||{status:"not-yet-fetched",lastCheckedAt:null},notes:"Discovery coverage is not comprehensive and not a licensed newswire."},
     {id:"bls-v1",label:"US BLS Public Data API v1",access:"public-api-no-registration",state:macroState?{status:macroState.status,dataAsOf:macroState.dataAsOf,retrievedAt:macroState.retrievedAt}:{status:"available-on-demand"}},
