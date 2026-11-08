@@ -132,21 +132,15 @@ async function fetchFred(env) {
     url.searchParams.set("file_type", "json");
     url.searchParams.set("series_id", meta.id);
     url.searchParams.set("observation_start", "2010-01-01");
-    url.searchParams.set("limit", "1000");
+    url.searchParams.set("limit", "100000");
+    url.searchParams.set("offset", "0");
     url.searchParams.set("sort_order", "desc");
-    const rows = []; let requestCount = 0;
-    for (let offset = 0; offset < 5000; offset += 1000) {
-      requestCount += 1;
-      url.searchParams.set("offset", String(offset));
-      const body = await getJson(url, "FRED");
-      const page = Array.isArray(body.observations) ? body.observations : [];
-      rows.push(...page);
-      if (page.length < 1000 || (body.count !== undefined && offset + page.length >= Number(body.count))) break;
-    }
+    const body = await getJson(url, "FRED");
+    const rows = Array.isArray(body.observations) ? body.observations : [];
     return { rows: rows.map(row => record(
       "fred", "fred:series_observations", meta.id, meta.name, meta.frequency,
       row.date, row.value, meta.unit, canonicalSource(url.toString()), row
-    )).filter(Boolean), requestCount };
+    )).filter(Boolean), requestCount: 1 };
   }));
   const successful = results.filter(x => x.status === "fulfilled");
   const records = successful.flatMap(x => x.value.rows);
