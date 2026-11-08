@@ -57,7 +57,7 @@ ok('Worker protects manual ingestion with a bearer token','url.pathname==="/api/
 ok('Economic history is persisted with idempotent upserts','economic_observations' in worker and 'on_conflict=provider,dataset_id,series_id,frequency,observation_date' in worker and 'ingestion_runs' in worker)
 ok('Economic providers use cadence-aware scheduled ingestion','scheduledEconomicIngestion(env)' in worker and 'cfg.ttlSeconds*1000' in worker)
 ok('Supabase migration keeps ingestion runs private', (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').exists() and 'revoke all on public.ingestion_runs from anon, authenticated' in (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').read_text())
-ok('P2 economic dashboard loads all five providers',all('/api/v1/economic/'+x in (ROOT/'assets/economic-data.js').read_text() for x in ['bea','eia','fred','us_treasury','ecb']))
+ok('P2 economic dashboard loads all five providers',all(('id:"'+x+'"') in (ROOT/'assets/economic-data.js').read_text() for x in ['bea','eia','fred','us_treasury','ecb']) and 'request("/api/v1/economic/"+p.id)' in (ROOT/'assets/economic-data.js').read_text())
 
 ok('P2 exposes bounded read-only Supabase history API','url.pathname==="/api/v1/economic/history"' in worker and 'query.set("and"' in worker and 'Math.min(5000' in worker)
 ok('P2 records provider skips and fetch failures when persistence is configured','recordIngestionRun(env,provider,"skipped"' in worker and 'recordIngestionRun(env,provider,"failed"' in worker)
