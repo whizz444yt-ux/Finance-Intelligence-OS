@@ -61,4 +61,14 @@ class BuildTests(unittest.TestCase):
         desk=(ROOT/'assets/futures-intelligence.js').read_text()
         self.assertIn('24h unavailable',desk)
 
+    def test_cot_fetch_is_scoped_to_selected_contract(self):
+        js=(ROOT/'cloudflare/src/index.js').read_text()
+        self.assertIn('fetchCot(report,market)',js)
+        self.assertIn('upper(contract_market_name)',js)
+        self.assertIn('marketKey',js)
+        self.assertIn('u.searchParams.set("$limit",market?"1000":"5000")',js)
+    def test_built_futures_desk_assets_match_source(self):
+        for name in ['futures-intelligence.js','futures-intelligence.css','news-page.js','risk-calculator.js']:
+            self.assertEqual((ROOT/'dist/assets'/name).read_bytes(),(ROOT/'assets'/name).read_bytes())
+
 if __name__=='__main__': unittest.main()
