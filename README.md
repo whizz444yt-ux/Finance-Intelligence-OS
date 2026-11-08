@@ -63,7 +63,7 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
 - RLS is enabled on all 16 project public tables; user-owned rows are scoped to `auth.uid()`.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
-- CFTC COT is a weekly trader-category report; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
+- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
 - Real-time CME/ICE quotes, DOM/depth, licensed intraday history and redistribution rights are outside the free integration baseline.
 - Polymarket/Kalshi event-market odds are venue probabilities, not futures prices, order flow or guaranteed forecasts; no wallet or order-placement endpoints are connected.
