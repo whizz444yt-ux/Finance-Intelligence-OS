@@ -7,7 +7,7 @@
 | `BUILDER_PUBLIC_API_KEY` | Cloudflare Worker secret | Builder Content API read key; used by the CMS proxy. |
 | `BUILDER_PAT` | Cloudflare Worker secret | Read-only Builder.io Personal Access Token for the Admin API model-list endpoint. Do not reuse an exposed token. |
 | `SUPABASE_URL` | Cloudflare Worker variable | Supabase project URL for server-side ingestion. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Cloudflare Worker secret | Server-only elevated key used by the ingestion worker for protected database writes; never use in browser or repository. |
+| `SUPABASE_SECRET_KEY` | Cloudflare Worker secret | Preferred modern Supabase server-side secret API key (`sb_secret_...`) for protected database writes; never use in browser or repository. |\n| `SUPABASE_SERVICE_ROLE_KEY` | Cloudflare Worker secret | Legacy JWT-based fallback only. The Worker supports it for backward compatibility; prefer `SUPABASE_SECRET_KEY`. |
 | `BEA_API_KEY` | Cloudflare Worker secret | Registered BEA 36-character UserID for BEA NIPA API requests. |
 | `EIA_API_KEY` | Cloudflare Worker secret | Registered EIA API key for weekly petroleum series. |
 | `FRED_API_KEY` | Cloudflare Worker secret | Registered FRED API key for historical macro series. |
@@ -18,4 +18,4 @@
 
 Never commit real values to `.env`, JSON, static HTML, Builder content or Git. `.env.example` contains placeholders only.
 
-Set Worker secrets through Cloudflare Workers & Pages → finance-intelligence-os-edge → Settings → Variables and Secrets, or with `wrangler secret put SECRET_NAME`. Configure `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `INGEST_TOKEN`, and the provider keys for BEA/EIA/FRED. Treasury Fiscal Data and ECB public SDMX do not require API keys. Do not put any provider or service-role key in `[vars]`, the browser runtime, a URL query string that is logged, or Git. The Worker removes BEA/EIA/FRED keys from stored `source_url` values.
+Set Worker secrets through Cloudflare Workers & Pages → finance-intelligence-os-edge → Settings → Variables and Secrets, or with `wrangler secret put SECRET_NAME`. Configure `SUPABASE_URL`, preferably `SUPABASE_SECRET_KEY` (or the legacy `SUPABASE_SERVICE_ROLE_KEY`), `INGEST_TOKEN`, and the provider keys for BEA/EIA/FRED. Treasury Fiscal Data and ECB public SDMX do not require API keys. Do not put any provider or Supabase secret key in `[vars]`, the browser runtime, a URL query string that is logged, or Git. The Worker removes BEA/EIA/FRED keys from stored `source_url` values.
