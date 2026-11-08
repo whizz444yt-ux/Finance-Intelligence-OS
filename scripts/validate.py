@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -66,10 +66,11 @@ ok('P3 enriches all 76 lessons with objectives, walkthrough, example, exercise a
    len(academy_concepts)==76 and all(len(c.get('learning',{}).get('learningObjectives',[]))>=3 and len(c.get('learning',{}).get('guidedWalkthrough',[]))>=3 and c.get('learning',{}).get('workedExample',{}).get('body') and c.get('learning',{}).get('practicalExercise',{}).get('task') and len(c.get('learning',{}).get('knowledgeCheck',{}).get('options',[]))==3 for c in academy_concepts))
 ok('P3 supplies nine guided tutorials with tasks and review criteria',
    len(learning_program.get('tutorials',[]))==9 and all(len(t.get('steps',[]))>=4 and t.get('deliverable') and len(t.get('review',[]))>=3 for t in learning_program.get('tutorials',[])))
+verified_video_urls=[v.get('url') for v in academy_data.get('featuredVideos',[]) if v.get('verifiedOfficial')]
 ok('P3 verified video references are drawn only from marked official records',
-   all(ref['id'] in [v['id'] for v in academy_data.get('featuredVideos',[]) if v.get('verifiedOfficial')] for c in academy_concepts for ref in c.get('learning',{}).get('references',{}).get('officialVideos',[])))
+   all(ref.get('url') in verified_video_urls for c in academy_concepts for ref in c.get('learning',{}).get('references',{}).get('officialVideos',[])))
 ok('P3 progress sync uses authenticated user and existing lesson_progress table',
-   'finance-os-supabase-session-v1' in (ROOT/'assets/academy-learning.js').read_text() and '/rest/v1/lesson_progress' in (ROOT/'assets/academy-learning.js').read_text() and 'on_conflict=user_id,lesson_slug' in (ROOT/'assets/academy-learning.js').read_text())
+   'finance-os-supabase-session-v1' in (ROOT/'assets/academy-learning.js').read_text() and '/rest/v1/lesson_progress' in (ROOT/'assets/academy-learning.js').read_text() and 'on_conflict=user_id,lesson_slug' in (ROOT/'assets/academy-learning.js').read_text() and 'progress_data' in (ROOT/'assets/academy-learning.js').read_text() and 'lesson_version' in (ROOT/'assets/academy-learning.js').read_text())
 ok('P3 progress client exposes no service-role credential',
    'service_role' not in (ROOT/'assets/academy-learning.js').read_text().lower() and 'SUPABASE_SERVICE_ROLE_KEY' not in (ROOT/'assets/academy-learning.js').read_text())
 
