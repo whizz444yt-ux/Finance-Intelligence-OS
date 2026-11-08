@@ -11,8 +11,8 @@
   {id:"polymarket",name:"Polymarket public events",path:"/api/v1/prediction/polymarket",detail:"Read-only prediction-market outcomes, volume and liquidity metadata."},
   {id:"kalshi",name:"Kalshi public market data",path:"/api/v1/prediction/kalshi",detail:"Read-only event-market prices and venue volume metadata."}
  ];
- const stateLabel=s=>({fresh:"Fresh",partial:"Partial",stale:"Stale snapshot",unavailable:"Unavailable","not-yet-fetched":"Not fetched","not-configured":"Not configured","available-on-demand":"Available on request"}[String(s||"").toLowerCase()]||String(s||"Unknown").replaceAll("-"," "));
- const tone=s=>["fresh","partial"].includes(String(s||"").toLowerCase())?"good":["stale","not-yet-fetched","available-on-demand","not-configured"].includes(String(s||"").toLowerCase())?"warn":"bad";
+ const stateLabel=s=>({fresh:"Fresh",partial:"Partial",stale:"Stale snapshot",unavailable:"Unavailable","not-yet-fetched":"Not fetched","not-configured":"Not configured","available-on-demand":"Available on request","official-source-link":"Official source link","needs-worker-secret":"Worker secret needed","needs-public-space-key":"Public key needed"}[String(s||"").toLowerCase()]||String(s||"Unknown").replaceAll("-"," "));
+ const tone=s=>["fresh","partial"].includes(String(s||"").toLowerCase())?"good":["stale","not-yet-fetched","available-on-demand","not-configured","official-source-link","needs-worker-secret","needs-public-space-key"].includes(String(s||"").toLowerCase())?"warn":"bad";
  async function request(path){
   const response=await fetch(API+path,{headers:{Accept:"application/json"},signal:AbortSignal.timeout(18000),cache:"no-store"});
   const payload=await response.json().catch(()=>({}));
