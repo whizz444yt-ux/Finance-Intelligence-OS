@@ -33,7 +33,7 @@ Browser
 
 | Route | Provider | Meaning / freshness |
 |---|---|---|
-| `/api/v1/news` | GDELT DOC | Cached news-discovery snapshot, scheduled every 30 minutes; discovery index, not licensed newswire. |
+| `/api/v1/news` | GDELT DOC | Cached news-discovery snapshot, scheduled every 30 minutes; discovery index, not licensed newswire. |\n| `/api/v1/volume-open-interest?report=tff&q=...` | CFTC PRE | Contract-filtered weekly futures-only open-interest history. The endpoint explicitly reports exchange trading volume as not connected; COT data is not daily/intraday volume. |
 | `/api/v1/macro` | US BLS v1 | Historical CPI, core CPI, unemployment, payroll and PPI observations. Not live market data. |
 | `/api/v1/cot?report=tff` | CFTC PRE | Weekly Traders in Financial Futures report. |
 | `/api/v1/cot?report=disaggregated` | CFTC PRE | Weekly Disaggregated report. |
@@ -43,7 +43,7 @@ Browser
 | `/api/v1/providers` | Gateway registry | Provider configuration and last-known state. |
 | `/api/v1/health` | Gateway | Worker health and secret/configuration presence flags, never secret values. |
 
-The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
+The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Data Health page runs each public gateway endpoint independently and distinguishes an available-on-demand route from a fresh upstream snapshot. Prediction-market data remains a separate venue context. The Entry Models page is descriptive and does not rank models without reproducible results; Strategy Lab publishes no backtest statistics until timestamped historical inputs, costs and validation methodology are available. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
 
 ## Security and access boundaries
 
