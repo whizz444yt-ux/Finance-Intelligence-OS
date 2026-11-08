@@ -66,7 +66,7 @@ class BuildTests(unittest.TestCase):
         self.assertIn('fetchCot(report,market)',js)
         self.assertIn('upper(contract_market_name)',js)
         self.assertIn('marketKey',js)
-        self.assertIn('u.searchParams.set("$limit",market?"1000":"5000")',js)
+        self.assertIn('u.searchParams.set("$limit",market?"2000":"5000")',js)
     def test_built_futures_desk_assets_match_source(self):
         for name in ['futures-intelligence.js','futures-intelligence.css','news-page.js','risk-calculator.js']:
             self.assertEqual((ROOT/'dist/assets'/name).read_bytes(),(ROOT/'assets'/name).read_bytes())
