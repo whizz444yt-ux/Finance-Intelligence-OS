@@ -77,10 +77,11 @@ export default {
   if(url.pathname==="/api/v1/cot"){
    const report=url.searchParams.get("report")==="disaggregated"?"disaggregated":"tff";
    const market=String(url.searchParams.get("q")||"").slice(0,80).toLowerCase();
-   const cacheKey="cot:"+report+":v1";
+   const marketKey=market.replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"all";
+   const cacheKey="cot:"+report+":v2:"+marketKey;
    let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(cacheKey,"json"):null;
    if(!snapshot||!snapshot.retrievedAt||Date.now()-Date.parse(snapshot.retrievedAt)>6*60*60*1000){
-    try{snapshot=await fetchCot(report);if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});}
+    try{snapshot=await fetchCot(report,market);if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});}
     catch(error){if(!snapshot)return json({status:"unavailable",report,rows:[],sourceUrl:cotSource(report),error:"CFTC PRE request failed"},502,cors);snapshot.status="stale";snapshot.lastError="CFTC PRE refresh failed; showing last successful cache";}
    }
    const rows=market?snapshot.rows.filter(row=>JSON.stringify(row).toLowerCase().includes(market)):snapshot.rows;
@@ -190,10 +191,18 @@ function normalizeCotRows(rows,report){
   return{contractName:raw.contract_market_name||raw.market_and_exchange_names||raw.contract_name||"Contract",reportDate:raw.report_date_as_yyyy_mm_dd||raw.report_date||null,traderCategory:category.label,long,short,spread,net:long!==null&&short!==null?long-short:null,openInterest:asNumberOrNull(raw.open_interest_all??raw.open_interest)};
  }).filter(Boolean));
 }
-async function fetchCot(report){
+async function fetchCot(report,market=""){
  const dataset=COT_DATASETS[report];
  const u=new URL("https://publicreporting.cftc.gov/resource/"+dataset.id+".json");
- u.searchParams.set("$limit","200");u.searchParams.set("$order","report_date_as_yyyy_mm_dd DESC");
+ u.searchParams.set("$limit",market?"1000":"5000");
+ u.searchParams.set("$order","report_date_as_yyyy_mm_dd DESC");
+ if(market){
+  const safeMarket=market.toUpperCase().replace(/[^A-Z0-9 &.-]/g,"").trim();
+  if(safeMarket.length>=3){
+   const term=safeMarket.replace(/'/g,"''");
+   u.searchParams.set("$where","upper(contract_market_name) like '%"+term+"%' OR upper(market_and_exchange_names) like '%"+term+"%'");
+  }
+ }
  const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.0 public research"},signal:AbortSignal.timeout(12000)});
  if(!response.ok)throw new Error("CFTC PRE "+response.status);
  const rows=await response.json();if(!Array.isArray(rows))throw new Error("CFTC PRE response was not an array");
