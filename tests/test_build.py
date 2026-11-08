@@ -179,7 +179,7 @@ class BuildTests(unittest.TestCase):
             content=page.read_text()
             self.assertIn('PRACTICAL EXERCISE',content)
             self.assertIn('KNOWLEDGE CHECK',content)
-            self.assertIn('REFERENCES &amp; FURTHER STUDY',content)
+            self.assertIn('REFERENCES & FURTHER STUDY',content)
         self.assertTrue((ROOT/'dist/academy/index.html').exists())
     def test_p3_progress_sync_is_user_authenticated_and_scoped(self):
         js=(ROOT/'assets/academy-learning.js').read_text()
