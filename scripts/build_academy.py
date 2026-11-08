@@ -123,7 +123,7 @@ def render_tutorial(tutorial, all_concepts, site_url=""):
     )
     materials = "".join(f'<li>{escape(str(x))}</li>' for x in tutorial.get("materials") or [])
     review = "".join(f'<li>{escape(str(x))}</li>' for x in tutorial.get("review") or [])
-    related_html = "".join(_link(c.get("name"), f"/ict-futures/academy/{c.get('id')}.html") for c in related)
+    related_html = "".join('<a class="academy-link" href="/ict-futures/academy/' + escape(str(c.get("id","")), quote=True) + '.html">' + escape(str(c.get("name","Lesson"))) + ' →</a>' for c in related)
     canonical = escape((site_url.rstrip("/") + f"/ict-futures/academy/tutorials/{tutorial.get('id')}.html") if site_url else "", quote=True)
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(tutorial.get('title','ICT tutorial'))} — Guided ICT Tutorial</title><meta name="description" content="{escape(str(tutorial.get('objective') or '')[:160])}">
