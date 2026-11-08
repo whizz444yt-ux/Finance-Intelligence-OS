@@ -237,8 +237,8 @@ async function persistEconomicSnapshot(env,snapshot){
  let rowsUpserted=0;
  try{
   const records=Array.isArray(snapshot.records)?snapshot.records:[];
-  for(let i=0;i<records.length;i+=250){
-   const chunk=records.slice(i,i+250);
+  for(let i=0;i<records.length;i+=1000){
+   const chunk=records.slice(i,i+1000);
    await supabaseRequest(env,"economic_observations","POST",
     "on_conflict=provider,dataset_id,series_id,frequency,observation_date",chunk,
     "resolution=merge-duplicates,return=minimal");
