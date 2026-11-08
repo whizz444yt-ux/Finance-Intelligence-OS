@@ -9,6 +9,28 @@ ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
 SITE_URL = os.getenv('SITE_URL', '').rstrip('/')
 
+NAV_ITEMS = [
+    ('Overview', '/'),
+    ('Futures Markets', '/markets/'),
+    ('Volume & OI', '/volume-open-interest/'),
+    ('News Intelligence', '/news/'),
+    ('Macro Calendar', '/macro/'),
+    ('COT & Positioning', '/research/positioning/'),
+    ('Prediction Markets', '/prediction-markets/'),
+    ('ICT Academy', '/academy/'),
+    ('Entry Models', '/entry-models/'),
+    ('Strategy Lab', '/strategy-lab/'),
+    ('Risk & Journal', '/tools/'),
+    ('Sources & Data Health', '/data-health/'),
+]
+
+def nav_markup(current='/', css_class='topnav'):
+    links = []
+    for label, href in NAV_ITEMS:
+        active = ' aria-current="page"' if current == href else ''
+        links.append(f'<a href="{href}"{active}>{escape(label)}</a>')
+    return f'<nav class="{css_class}" aria-label="Finance Intelligence OS areas">{"".join(links)}</nav>'
+
 
 def load(path, default=None):
     try: return json.loads(path.read_text(encoding='utf-8'))
@@ -30,8 +52,8 @@ def shell(title, description, body, canonical_path='/', extra_head=''):
 <title>{escape(title)}</title><meta name="description" content="{escape(description)}">{canonical}
 <meta property="og:type" content="website"><meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta property="og:image" content="{escape((SITE_URL + '/assets/social-card.png') if SITE_URL else '/assets/social-card.png')}"><meta property="og:url" content="{og_url}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="/assets/social-card.png">
 <link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/assets/site-shell.css"><script defer src="/assets/runtime-config.js"></script>{extra_head}</head>
-<body><a class="skip" href="#content">Skip to content</a><header class="site-head"><div class="head-inner"><a class="brand" href="/"><span class="brand-mark">FI</span><span>FINANCE INTELLIGENCE OS<small>Global research · futures · ICT</small></span></a><nav class="topnav" aria-label="Main navigation"><a href="/markets/">Markets</a><a href="/futures-intelligence/">Futures Desk</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/">Research</a><a href="/research/positioning/">COT</a><a href="/academy/">Academy</a><a href="/tools/">Tools</a><a href="/ict-futures/">ICT Futures</a><a href="/ict-futures/#learning">ICT Learning</a><a href="/account/">Account</a></nav><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button></div><nav class="mobile-nav" id="mobileNav"><a href="/markets/">Markets</a><a href="/futures-intelligence/">Futures Desk</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/">Research</a><a href="/research/positioning/">COT</a><a href="/academy/">Academy</a><a href="/tools/">Tools</a><a href="/ict-futures/">ICT Futures</a><a href="/ict-futures/#learning">ICT Learning</a><a href="/account/">Account</a></nav></header>
-<main id="content">{body}</main><footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, investment adviser, exchange data terminal or trade execution service.</p></div><div class="footer-links"><a href="/status/">System status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a><a href="/legacy/">Archived research</a></div><small>Source labels, provider timestamps and data licensing limitations should remain visible wherever market information is shown.</small></footer><script src="/assets/site-shell.js" defer></script></body></html>'''
+<body><a class="skip" href="#content">Skip to content</a><header class="site-head"><div class="head-inner"><a class="brand" href="/"><span class="brand-mark">FI</span><span>FINANCE INTELLIGENCE OS<small>Global research · futures · ICT</small></span></a>{nav_markup(canonical_path)}<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Areas ☰</button></div>{nav_markup(canonical_path, 'mobile-nav')} </header>
+<main id="content">{body}</main><footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, investment adviser, exchange data terminal or trade execution service.</p></div><div class="footer-links"><a href="/data-health/">Sources & Data Health</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a><a href="/legacy/">Archived research</a></div><small>Source labels, provider timestamps and data licensing limitations should remain visible wherever market information is shown.</small></footer><script src="/assets/site-shell.js" defer></script></body></html>'''
 
 
 def page_intro(kicker, title, desc, stats=''):
@@ -80,7 +102,7 @@ def build():
         if old_seo_file.exists(): old_seo_file.unlink()
     # Homepage metadata and quick module bridge.
     home = (DIST/'index.html').read_text(encoding='utf-8')
-    bridge = '<div class="module-bridge"><div class="wrap bridge-inner"><span>FINANCE INTELLIGENCE WORKSPACE</span><nav aria-label="Product modules"><a href="/markets/">Markets</a><a href="/futures-intelligence/">Futures Intelligence Desk</a><a href="/news/">Newsroom</a><a href="/macro/">Macro Data</a><a href="/research/positioning/">COT Positioning</a><a href="/research/">Research Directory</a><a href="/academy/">Academy</a><a href="/tools/">Risk Tools</a><a href="/ict-futures/">ICT Futures Terminal →</a><a href="/ict-futures/#learning">ICT Learning Hub →</a><a href="/account/">Account & Sync</a></nav></div></div>'
+    bridge = '<div class="module-bridge"><div class="wrap bridge-inner"><span>FINANCE INTELLIGENCE OS · 12 RESEARCH AREAS</span>'+nav_markup('/', 'module-nav')+'</div></div>'
     if 'module-bridge' not in home:
         skip = '<a class="skip-link" href="#main-content">Skip to main content</a>'
         home = home.replace(skip, skip + '\n' + bridge, 1)
@@ -167,7 +189,7 @@ def build():
     write(DIST/'legacy/index.html', shell('Archived Research Documents | Finance Intelligence OS','Browse preserved original Finance Intelligence OS research documents.',archive_body,'/legacy/'))
     # Sitemap only when canonical base exists, else create relative noindex sitemap not intended for submission.
     if SITE_URL:
-        urls=['/','/markets/','/futures-intelligence/','/academy/','/research/','/research/positioning/','/news/','/macro/','/tools/','/account/','/status/','/docs/','/legacy/','/ict-futures/']
+        urls=['/','/markets/','/futures-intelligence/','/volume-open-interest/','/data-health/','/prediction-markets/','/entry-models/','/strategy-lab/','/academy/','/research/','/research/positioning/','/news/','/macro/','/tools/','/account/','/status/','/docs/','/legacy/','/ict-futures/']
         urls += [f'/ict-futures/markets/{p.name}' for p in (DIST/'ict-futures/markets').glob('*.html')]
         urls += [f'/ict-futures/academy/{p.name}' for p in (DIST/'ict-futures/academy').glob('*.html')]
         xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{escape(SITE_URL+u)}</loc></url>' for u in urls)+'</urlset>'
