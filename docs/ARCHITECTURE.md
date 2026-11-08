@@ -43,7 +43,7 @@ Browser
 | `/api/v1/economic/bea` | BEA NIPA | Quarterly NIPA Table T10101; requires `BEA_API_KEY`. |
 | `/api/v1/economic/eia` | EIA API v2 series ID route | Weekly US crude-oil ending stocks `PET.WCESTUS1.W`; requires `EIA_API_KEY`. |
 | `/api/v1/economic/fred` | FRED observations API | DFF, DGS10, CPIAUCSL, UNRATE and PCEPI histories; requires `FRED_API_KEY` and paginated series queries. |
-| `/api/v1/economic/us_treasury` | Treasury Fiscal Data | Monthly average interest rates on marketable Treasury securities; public API, paginated history. |
+| `/api/v1/economic/us_treasury` | Treasury Fiscal Data | Monthly average interest rates on marketable Treasury securities; public API, historical series pages with explicit provider cadence. |
 | `/api/v1/economic/ecb` | ECB SDMX 2.1 | Daily USD/EUR reference series `D.USD.EUR.SP00.A`; public endpoint. |
 | `POST /api/v1/ingest` | Worker ingestion orchestrator | Protected by `INGEST_TOKEN`; starts provider ingestion and records persistence outcomes.
 | `/api/v1/prediction/polymarket` | Polymarket Gamma | Active event metadata, outcome prices, volume and liquidity fields; read-only. |
