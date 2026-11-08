@@ -108,7 +108,7 @@ if dist.exists():
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
     ok('P3 builds 76 enhanced standalone lessons',len(p3_lessons)==76 and all('KNOWLEDGE CHECK' in p.read_text(errors='ignore') and 'PRACTICAL EXERCISE' in p.read_text(errors='ignore') for p in p3_lessons))
     ok('P3 builds nine guided tutorials plus their index',len(p3_tutorials)==10 and (dist/'ict-futures/academy/tutorials/index.html').exists())
-ok('P2 economic dashboard asset matches source',
+    ok('P2 economic dashboard asset matches source',
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
