@@ -196,4 +196,35 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
         self.assertNotIn('service_role',js.lower())
 
+
+    def test_p4_reproducible_strategy_backtest_engine(self):
+        engine=(ROOT/'assets/strategy-backtest-engine.mjs').read_text()
+        self.assertIn('ENGINE_VERSION = "p4.1.0"',engine)
+        self.assertIn('signalKnownAt: "source-bar-close"',engine)
+        self.assertIn('entry: "next-bar-open"',engine)
+        self.assertIn('stop-first-same-bar',engine)
+        self.assertIn('runFingerprint',engine)
+        self.assertIn('out-of-sample',engine)
+        self.assertIn('tickMisalignedPrices',engine)
+        result=subprocess.run(['node','--test',str(ROOT/'tests/test_strategy_backtest.mjs')],cwd=ROOT,capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stdout+'\n'+result.stderr)
+    def test_p4_strategy_lab_frontend_assets_and_build(self):
+        js=(ROOT/'assets/strategy-lab.js').read_text()
+        build=(ROOT/'scripts/build_site.py').read_text()
+        self.assertIn('runExperiment',js)
+        self.assertIn('/rest/v1/strategy_backtests',js)
+        self.assertIn('/rest/v1/strategy_backtest_trades',js)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
+        self.assertIn('backtest-input-template.csv',build)
+        self.assertIn('strategy-lab.css',build)
+        self.assertIn('strategy-backtest-engine.mjs',js)
+    def test_p4_private_backtest_schema_and_owner_rls(self):
+        sql=(ROOT/'supabase/migrations/20261108151112_add_strategy_backtest_runs_and_trades.sql').read_text()
+        self.assertIn('create table if not exists public.strategy_backtests',sql)
+        self.assertIn('create table if not exists public.strategy_backtest_trades',sql)
+        self.assertIn('enable row level security',sql)
+        self.assertIn('(select auth.uid()) = user_id',sql)
+        self.assertIn('foreign key (backtest_id, user_id)',sql)
+        self.assertIn('revoke all on public.strategy_backtests from anon',sql)
+
 if __name__=='__main__': unittest.main()

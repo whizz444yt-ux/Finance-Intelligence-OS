@@ -230,12 +230,93 @@ def build():
     body+='<section class="content-section"><h2>Performance evidence policy</h2><p>No model is labelled “best” until its rules are operationally defined and tested on timestamped historical data with commissions, slippage, contract rolls, survivorship controls and out-of-sample validation. The eight models have no audited win-rate, expectancy, profit-factor or drawdown ranking yet.</p></section>'
     write(DIST/'entry-models/index.html',shell('ICT Entry Models | Finance Intelligence OS','Eight ICT entry-model concepts with educational playbook links and no unsupported performance claims.',body,'/entry-models/'))
 
-    # Strategy Lab landing page: methodology and evidence readiness, not fabricated backtests.
-    body=page_intro('Research & validation','Strategy Lab','A reproducible research workspace for turning a written entry model into a testable rule set. Historical strategy statistics remain disabled until suitable, quality-controlled market data is available.')
-    body+='<section class="strategy-readiness"><div><span class="status-pill warn">BACKTEST ENGINE · NOT YET CONNECTED</span><h2>No audited strategy results are published</h2><p>The repository contains eight model descriptions, but no reproducible strategy-level performance dataset. We do not infer edge from lesson popularity, discretionary examples or a handful of screenshots.</p></div><div class="strategy-steps"><article><b>01 · Specify</b><span>Define setup, entry trigger, stop, target, session, timeframe and invalidation in machine-testable terms.</span></article><article><b>02 · Source</b><span>Obtain timestamped contract-level bars, correct expiry/roll history, session calendar and verified fees.</span></article><article><b>03 · Validate</b><span>Run in-sample, walk-forward and out-of-sample tests with slippage, costs and data-quality checks.</span></article></div></section>'
-    body+='<section class="content-section"><h2>Required reporting metrics</h2><div class="metric-definition-grid"><article><b>Expectancy</b><span>Average net result per trade after costs, in R and currency.</span></article><article><b>Profit factor</b><span>Gross profit divided by gross loss, with trade count and period.</span></article><article><b>Drawdown</b><span>Peak-to-trough equity decline, duration and recovery.</span></article><article><b>Robustness</b><span>Out-of-sample, walk-forward, parameter sensitivity and regime splits.</span></article></div></section>'
-    body+='<section class="content-section"><h2>Data readiness</h2><p>Daily and intraday futures bars, historical contract rolls, exchange calendars, commissions, slippage and point-in-time macro data are not yet unified in the platform. See <a href="/volume-open-interest/">Volume & Open Interest</a> and <a href="/data-health/">Sources & Data Health</a> for current feed coverage.</p></section>'
-    write(DIST/'strategy-lab/index.html',shell('Strategy Lab | Finance Intelligence OS','Methodology and readiness for reproducible futures strategy backtesting.',body,'/strategy-lab/'))
+    # P4 Strategy Lab: deterministic signal-driven futures backtesting.
+    body=page_intro('Research & validation','Strategy Lab','Run a reproducible, cost-aware backtest from timestamped futures OHLC bars and explicit candle-close signals. The engine does not fabricate ICT signals or publish strategy rankings.')
+    body+='''
+<section class="strategy-lab-wrap">
+  <section class="strategy-hero">
+    <div><span class="eyebrow">P4 · REPRODUCIBLE RESEARCH</span><h2>Test the rule set, not the story.</h2><p>Upload a historical OHLC CSV with LONG / SHORT / FLAT signals. Signals are evaluated at the source-bar close and entries occur at the next bar open. Commission, slippage, risk sizing, conservative stop handling and chronological holdout testing are explicit run inputs.</p></div>
+    <aside class="strategy-state"><span class="status-pill warn">USER-SUPPLIED DATA REQUIRED</span><strong>No preloaded strategy performance</strong><span>Existing ICT model pages are descriptions, not executable rule engines. No win rate, expectancy or model ranking is invented.</span></aside>
+  </section>
+  <div class="strategy-grid">
+    <section class="strategy-panel">
+      <h3>01 · Dataset &amp; model</h3><p>Use one futures expiry series per run. The uploaded file stays in this browser; only its hash, manifest and completed trade ledger can sync to your private account.</p>
+      <div class="strategy-file-zone">
+        <label>Historical signal CSV<br><input id="strategyCsv" type="file" accept=".csv,text/csv"></label>
+        <div id="strategyFileMeta" class="strategy-file-meta">No file selected. Minimum 30 timestamped bars; maximum 250,000 bars / 50 MB.</div>
+        <div id="strategyDataQuality" class="strategy-quality">Required columns: timestamp, open, high, low, close, signal. Timestamps need Z or an explicit UTC offset.</div>
+        <p><a class="text-link" href="/strategy-lab/backtest-input-template.csv" download>Download CSV header template →</a></p>
+      </div>
+      <div class="strategy-form-grid" style="margin-top:12px">
+        <label>Strategy name<input id="strategyName" type="text" value="My rule-based ICT setup" maxlength="120"></label>
+        <label>ICT model / research type<select id="modelId">
+          <option value="custom">Custom / other</option><option value="ict-2022-model">ICT 2022 Model</option><option value="liquidity-sweep-mss-model">Liquidity Sweep + MSS</option><option value="silver-bullet">Silver Bullet</option><option value="judas-mss">Judas + MSS</option><option value="unicorn">Unicorn</option><option value="fvg-continuation-model">FVG Continuation</option><option value="ifvg-reversal-model">IFVG</option><option value="fvg-ote-confluence-model">FVG + OTE</option>
+        </select></label>
+        <label>Market / contract symbol<input id="marketSymbol" type="text" placeholder="e.g. ESZ6, GCZ6" maxlength="80" required></label>
+        <label>Bar timeframe<input id="timeframe" type="text" placeholder="e.g. 1m, 5m, 15m" maxlength="30" required></label>
+        <label>Timestamp / session timezone<input id="timezone" type="text" value="America/Chicago" maxlength="80"></label>
+        <label>Series type<select id="seriesType"><option value="single-expiry">Single expiry contract</option><option value="back-adjusted-continuous">Back-adjusted continuous</option></select></label>
+        <label id="rollNoteWrap" class="strategy-wide strategy-hidden">Roll / adjustment method and source<input id="rollNote" type="text" placeholder="Describe roll dates, adjustment method and vendor source" maxlength="500"></label>
+        <label class="strategy-wide">Signal-generation rule / source note<textarea id="signalSourceNotes" rows="2" placeholder="Describe the causal rule and where signals were generated. Include Pine version, signal timestamp convention and any session filters."></textarea></label>
+      </div>
+    </section>
+    <section class="strategy-panel">
+      <h3>02 · Execution &amp; costs</h3><p>Tick size/value must match the uploaded contract and currency. The legacy contract catalogue is marked unverified; do not copy its figures without checking the current exchange specification.</p>
+      <div class="strategy-form-grid">
+        <label>Starting capital (USD)<input id="startingCapital" type="number" min="1" step="100" value="10000" required></label>
+        <label>Risk per trade (%)<input id="riskPercent" type="number" min="0.01" max="20" step="0.01" value="1" required></label>
+        <label>Maximum contracts<input id="maxContracts" type="number" min="1" step="1" value="5" required></label>
+        <label>Tick size<input id="tickSize" type="number" min="0.00000001" step="any" placeholder="Verify exchange spec" required></label>
+        <label>Tick value (USD / contract)<input id="tickValue" type="number" min="0.00000001" step="any" placeholder="Verify exchange spec" required></label>
+        <label>Commission / contract / side (USD)<input id="commissionPerSide" type="number" min="0" step="0.01" placeholder="Enter broker + exchange fees" required></label>
+        <label>Slippage (ticks / side)<input id="slippageTicks" type="number" min="0" step="1" value="1" required></label>
+        <label>Stop distance (ticks)<input id="stopTicks" type="number" min="1" step="1" value="12" required></label>
+        <label>Target reward / risk<input id="targetRR" type="number" min="0.1" step="0.1" value="2" required></label>
+        <label>Maximum bars in trade<input id="maxBarsInTrade" type="number" min="1" step="1" value="60" required></label>
+      </div>
+      <div class="strategy-disclosure" style="margin-top:12px">Costs are applied per contract. Entry and stop/time-exit slippage are embedded in fill prices; commission is charged on both sides. A limit target is filled at its target price without queue or partial-fill simulation. Position size rounds down to whole contracts.</div>
+    </section>
+    <section class="strategy-panel">
+      <h3>03 · Chronological holdout</h3><p>The data is split by time, not randomly. Each period starts flat with independent starting capital; no position is carried across period boundaries.</p>
+      <div class="strategy-form-grid">
+        <label>In-sample allocation (%)<input id="trainPercent" type="number" min="50" max="80" step="1" value="60" required></label>
+        <label>Validation allocation (%)<input id="validationPercent" type="number" min="10" max="30" step="1" value="20" required></label>
+      </div>
+      <div class="strategy-disclosure" style="margin-top:12px"><b>Out-of-sample = remainder.</b> Keep this final segment untouched until rules and parameters are frozen. The tool does not optimize settings; inspecting OOS and then changing rules turns it into another in-sample period.</div>
+      <div class="strategy-actions" style="margin-top:13px"><button id="runStrategy" class="strategy-run-button" type="button" disabled>Run reproducible backtest</button><span id="strategyRunMeta" class="strategy-help">Choose a valid CSV to enable the engine.</span></div>
+      <p id="strategySyncStatus" class="strategy-sync-status" aria-live="polite">Runs stay local unless you sign in. Signed-in runs and trade ledgers sync to your user-owned Supabase tables.</p>
+    </section>
+    <section class="strategy-panel">
+      <h3>04 · Method contract</h3>
+      <ul class="strategy-help">
+        <li>Signal is known only at its source candle close; entry is next-bar open.</li>
+        <li>One position at a time; no pyramiding; no simultaneous reverse entry.</li>
+        <li>If stop and target are both touched in one bar, stop is assumed first.</li>
+        <li>Gaps through stops fill at the worse opening price plus configured slippage.</li>
+        <li>Expectancy and net profit factor use P&amp;L after modeled costs.</li>
+        <li>Drawdown uses bar-close mark-to-market equity with estimated exit costs reserved.</li>
+        <li>Historical roll fills, margin, liquidity, market impact and broker-specific execution are not inferred.</li>
+      </ul>
+    </section>
+  </div>
+  <section id="strategyResults" class="strategy-results strategy-hidden">
+    <div class="strategy-result-header"><div><p class="eyebrow">REPRODUCIBLE RUN RESULT</p><h2 id="strategyResultTitle">Strategy results</h2><p id="strategyResultFingerprint" class="strategy-code"></p></div><div class="strategy-actions"><button id="downloadManifest" type="button" class="strategy-secondary-button" disabled>Download manifest</button><button id="downloadTrades" type="button" class="strategy-secondary-button" disabled>Download trade ledger</button></div></div>
+    <section class="strategy-panel"><div class="section-top"><div><h3>Out-of-sample holdout metrics</h3><p id="strategyOosNote" class="strategy-help">Final chronological segment.</p></div></div><div id="strategyOosMetrics" class="strategy-metric-grid"></div></section>
+    <div id="strategySplitCards" class="strategy-split-grid"></div>
+    <section class="strategy-panel"><h3>Full-sample context (descriptive only)</h3><div id="strategyOverallMetrics" class="strategy-metric-grid"></div><p class="strategy-help">Full sample includes all segments and must not replace the holdout result when judging generalisation.</p></section>
+    <div class="strategy-grid">
+      <section class="strategy-chart-panel"><h3>Full-sample equity curve · USD</h3><canvas id="strategyEquityChart" class="strategy-chart" role="img" aria-label="Backtest equity curve"></canvas><div class="strategy-chart-legend"><span><i style="background:#218d87"></i>Mark-to-market equity</span></div></section>
+      <section class="strategy-chart-panel"><h3>Full-sample drawdown · USD</h3><canvas id="strategyDrawdownChart" class="strategy-chart" role="img" aria-label="Backtest drawdown"></canvas><div class="strategy-chart-legend"><span><i style="background:#c27e43"></i>Peak-to-current drawdown</span></div></section>
+    </div>
+    <section class="strategy-panel"><h3>Split comparison</h3><div id="strategySplitTable"></div></section>
+    <section class="strategy-panel"><h3>Data, sample and execution warnings</h3><div id="strategyWarnings"></div></section>
+  </section>
+  <section class="strategy-panel"><h3>Recent runs on this device</h3><p>Local history stores fingerprints and summary metrics only. The original CSV remains with you; re-upload the identical file and match its SHA-256 to reproduce a run.</p><div id="strategyHistory" class="strategy-help">No local runs saved on this device yet.</div></section>
+  <section class="strategy-panel"><h3>Evidence rules</h3><p>Win rate alone is not a decision metric. Review trade count, net expectancy, average R, net profit factor, drawdown size/duration, costs and out-of-sample stability together. Small samples, externally generated signals with look-ahead, unadjusted contract rolls, inaccurate tick values and omitted costs can invalidate results. A backtest is not a forecast or a guarantee of future performance.</p></section>
+</section>
+'''
+    write(DIST/'strategy-lab/backtest-input-template.csv','timestamp,open,high,low,close,signal,stop_ticks,contract,volume\n')
+    write(DIST/'strategy-lab/index.html',shell('Strategy Lab | Finance Intelligence OS','Reproducible futures signal backtesting with cost-aware expectancy, drawdown and chronological out-of-sample testing.',body,'/strategy-lab/', '<link rel="stylesheet" href="/assets/strategy-lab.css"><script type="module" defer src="/assets/strategy-lab.js"></script>'))
 
     # Independent provider and snapshot health dashboard.
     body=page_intro('Operational transparency','Sources & Data Health','Test the edge gateway and inspect each provider response independently. A successful cached API response is not necessarily a fresh upstream collection, and a configured credential is not proof of a healthy data feed.')
@@ -256,7 +337,7 @@ def build():
     write(DIST/'account/index.html',shell('Account & Private Workspace | Finance Intelligence OS','Sign in to sync private journal, watchlists and ICT lesson progress.',body,'/account/', '<script defer src="/assets/account.js"></script>'))
 
     # Status / docs pages
-    status_rows=[('GitHub','Source repository and CI','Main repository connected; current quality workflow enabled'),('Vercel','Frontend hosting','Production project exists; Git-linked builds triggered on main; latest release status is shown in Vercel'),('Supabase','Postgres and Auth','Active Mumbai project; 18 public tables have RLS enabled. Economic observations are browser read-only; ingestion run logs are private and service-role only.'),('Builder.io','Editorial CMS','Allow-listed proxy code exists; public API key and Admin PAT not configured'),('Cloudflare','Edge API and cache','P2 Worker source includes BEA, EIA, FRED, Treasury and ECB adapters plus protected ingestion. Confirm remote deployment and Worker secrets before calling these feeds connected')]
+    status_rows=[('GitHub','Source repository and CI','Main repository connected; current quality workflow enabled'),('Vercel','Frontend hosting','Production project exists; Git-linked builds triggered on main; latest release status is shown in Vercel'),('Supabase','Postgres and Auth','Active Mumbai project; 20 public tables have RLS enabled. Economic observations are browser read-only; ingestion run logs are private; backtest runs and trade ledgers are user-owned under RLS.'),('Builder.io','Editorial CMS','Allow-listed proxy code exists; public API key and Admin PAT not configured'),('Cloudflare','Edge API and cache','P2 Worker source includes BEA, EIA, FRED, Treasury and ECB adapters plus protected ingestion. Confirm remote deployment and Worker secrets before calling these feeds connected')]
     rows=''.join(f'<tr><td><b>{escape(a)}</b><small>{escape(b)}</small></td><td>{escape(c)}</td></tr>' for a,b,c in status_rows)
     body=page_intro('Platform operations','System status & integrations','This page deliberately reports verified account and runtime state. Configuration files in the repository are not evidence that a remote service has been provisioned or deployed.')
     body+=f'<section class="content-section"><table class="status-table"><thead><tr><th>Service</th><th>Verified state</th></tr></thead><tbody>{rows}</tbody></table></section>'
