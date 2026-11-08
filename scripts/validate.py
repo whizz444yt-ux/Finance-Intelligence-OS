@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js','assets/futures-intelligence.js']:
+for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -43,6 +43,14 @@ ok('News page requests controlled refresh','?refresh=1' in news_page and 'Refres
 ok('Prediction volume metrics remain nullable','volume24hr:asNumberOrNull(event.volume24hr)' in worker and 'volume24h:asNumberOrNull(m.volume_24h_fp??m.volume_24h)' in worker)
 ok('Static assets no longer receive a one-year immutable cache','max-age=300, stale-while-revalidate=86400' in (ROOT/'vercel.json').read_text() and 'immutable' not in (ROOT/'vercel.json').read_text())
 
+nav_source=(ROOT/'scripts/build_site.py').read_text()
+ok('12-area navigation is defined centrally',all("('"+label+"'," in nav_source for label in ['Overview','Futures Markets','Volume & OI','News Intelligence','Macro Calendar','COT & Positioning','Prediction Markets','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources & Data Health']))
+ok('Weekly open-interest endpoint is distinct from exchange volume','/api/v1/volume-open-interest' in worker and 'cadence:"weekly"' in worker and 'metric:"open_interest"' in worker and 'status:"not-connected"' in worker)
+ok('P1 health checker tests provider endpoints independently','Promise.allSettled' in (ROOT/'assets/data-health.js').read_text() and '/api/v1/providers' in (ROOT/'assets/data-health.js').read_text())
+ok('Prediction page uses read-only venue endpoints','/api/v1/prediction/polymarket' in (ROOT/'assets/prediction-markets.js').read_text() and '/api/v1/prediction/kalshi' in (ROOT/'assets/prediction-markets.js').read_text())
+ok('Entry Models page does not claim an audited ranking',"no audited win-rate" in nav_source.lower() and 'Strategy Lab' in nav_source)
+
+
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
 ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
@@ -51,7 +59,7 @@ ok('No service role in browser assets','SUPABASE_SERVICE_ROLE_KEY' not in ''.joi
 # Run generated route build and test final output if it exists.
 dist=ROOT/'dist'
 if dist.exists():
-    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html']
+    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html','volume-open-interest/index.html','prediction-markets/index.html','entry-models/index.html','strategy-lab/index.html','data-health/index.html']
     ok('All primary route entry points generated',all((dist/p).exists() for p in expected),', '.join(p for p in expected if not (dist/p).exists()))
     html=list(dist.rglob('*.html'))
     ok('Legacy ICT SEO route set preserved',len(list((dist/'ict-futures/academy').glob('*.html')))==76 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
@@ -63,6 +71,9 @@ if dist.exists():
     ok('No stale nested robots/sitemap hostname',not bad_seo,', '.join(bad_seo[:4]))
     ok('Only one authoritative root robots and sitemap',len(list(dist.rglob('robots.txt')))==1 and len(list(dist.rglob('sitemap.xml')))==1)
     ok('No archived nested source ZIPs exposed in static output',not list(dist.rglob('*.zip')))
+    ok('P1 module assets match source files',
+        all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
+            for name in ['volume-open-interest.js','data-health.js','prediction-markets.js','site-shell.css']))
     ok('Built Futures Desk assets match source files',
         (dist/'assets/futures-intelligence.js').exists() and (dist/'assets/futures-intelligence.css').exists() and
         (dist/'assets/futures-intelligence.js').read_bytes()==(ROOT/'assets/futures-intelligence.js').read_bytes() and

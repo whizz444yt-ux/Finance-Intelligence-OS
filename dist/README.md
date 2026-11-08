@@ -15,6 +15,11 @@ A consolidated global financial research workspace with the preserved Global Res
 - `/` — preserved Global Research cockpit.
 - `/markets/` — futures families and global instruments.
 - `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.
+- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.
+- `/prediction-markets/` — separate read-only Polymarket and Kalshi event-market context.
+- `/entry-models/` — eight preserved ICT entry-model concepts, with no unaudited performance ranking.
+- `/strategy-lab/` — backtest methodology and data-readiness status; strategy statistics are not published until reproducible tests exist.
+- `/data-health/` — independently checked gateway/provider snapshots, retrieval times and configuration states.
 - `/news/` — GDELT news-discovery snapshots.
 - `/macro/` — five historical US BLS series (CPI, core CPI, unemployment, nonfarm payrolls, PPI).
 - `/research/positioning/` — CFTC TFF and Disaggregated COT dashboard.
@@ -24,6 +29,10 @@ A consolidated global financial research workspace with the preserved Global Res
 - `/account/` — Supabase sign-in and private workspace (journal, watchlists, lesson progress).
 - `/ict-futures/` — original ICT Futures Intelligence OS 3.0.
 - `/status/`, `/docs/`, `/legacy/` — system status, developer documentation and original research archive.
+
+## Product navigation
+
+The primary navigation is organized into 12 areas: Overview, Futures Markets, Volume & OI, News Intelligence, Macro Calendar, COT & Positioning, Prediction Markets, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, and Sources & Data Health. The older `/markets/`, `/status/`, and `/ict-futures/` routes remain available as supporting catalogues and preserved experiences.
 
 ## Build and local preview
 
@@ -63,7 +72,7 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
 - RLS is enabled on all 16 project public tables; user-owned rows are scoped to `auth.uid()`.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
-- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
+- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
 - Real-time CME/ICE quotes, DOM/depth, licensed intraday history and redistribution rights are outside the free integration baseline.
 - Polymarket/Kalshi event-market odds are venue probabilities, not futures prices, order flow or guaranteed forecasts; no wallet or order-placement endpoints are connected.
