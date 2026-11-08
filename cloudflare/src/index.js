@@ -176,8 +176,8 @@ const COT_POSITION_FIELDS={
  ],
  disaggregated:[
   {label:"Producer / Merchant / Processor / User",long:"prod_merc_positions_long",short:"prod_merc_positions_short",spread:"prod_merc_positions_spread"},
-  {label:"Swap Dealers",long:"swap_positions_long_all",short:"swap_positions_short_all",spread:"swap_positions_spread_all"},
-  {label:"Managed Money",long:"m_money_positions_long",short:"m_money_positions_short",spread:"m_money_positions_spread"},
+  {label:"Swap Dealers",long:"swap_positions_long_all",short:"swap__positions_short_all",spread:"swap__positions_spread_all"},
+  {label:"Managed Money",long:"m_money_positions_long_all",short:"m_money_positions_short_all",spread:"m_money_positions_spread"},
   {label:"Other Reportables",long:"other_rept_positions_long",short:"other_rept_positions_short",spread:"other_rept_positions_spread"},
   {label:"Non-Reportables",long:"nonrept_positions_long_all",short:"nonrept_positions_short_all"}
  ]
