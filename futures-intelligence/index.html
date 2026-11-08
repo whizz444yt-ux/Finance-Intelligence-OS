@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Futures Intelligence Desk | Finance Intelligence OS</title>
+<meta name="description" content="Contract-aware futures research desk with macro data, CFTC positioning, global futures news and public prediction-market context.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/futures-intelligence.css">
+<script defer src="/assets/runtime-config.js"></script>
+<script defer src="/assets/futures-intelligence.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-head"><div class="head-inner">
+<a class="brand" href="/"><span class="brand-mark">FI</span><span>FINANCE INTELLIGENCE OS<small>Global research · futures · ICT</small></span></a>
+<nav class="topnav" aria-label="Main navigation"><a href="/markets/">Markets</a><a href="/futures-intelligence/" aria-current="page">Futures Desk</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/positioning/">COT</a><a href="/academy/">Academy</a><a href="/ict-futures/">ICT Futures</a><a href="/account/">Account</a></nav>
+<a class="fi-ict-link" href="/ict-futures/#learning">ICT Learning ↗</a><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+</div><nav class="mobile-nav" id="mobileNav"><a href="/markets/">Markets</a><a href="/futures-intelligence/">Futures Desk</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/positioning/">COT</a><a href="/academy/">Academy</a><a href="/ict-futures/">ICT Futures</a><a href="/account/">Account</a></nav></header>
+<main id="content" class="fi-main">
+<section class="fi-hero">
+<div class="fi-hero-copy"><p class="fi-kicker">MULTI-ASSET · CONTRACT-AWARE · SOURCE-TRACEABLE</p><div class="fi-title-row"><h1>Futures Intelligence</h1><span class="fi-live-indicator"><i></i> PUBLIC DATA MODE</span></div>
+<p class="fi-subtitle">A research control room for futures markets. Combine contract context, macro releases, CFTC positioning, market-moving headlines and prediction-market expectations — without confusing public snapshots for licensed real-time prices.</p>
+<div class="fi-hero-actions"><a href="#universe" class="fi-btn primary">Explore futures universe <span>↓</span></a><a href="/ict-futures/" class="fi-btn ghost">Open ICT Futures Terminal ↗</a></div></div>
+<div class="fi-hero-aside"><div class="fi-clock-label">LOCAL RESEARCH CLOCK</div><div id="fiClock" class="fi-clock">--:--:--</div><div id="fiDate" class="fi-date">Loading local time…</div><div class="fi-clock-divider"></div><div class="fi-data-state"><span>Market quotes</span><b class="state-neutral">Not licensed</b></div><div class="fi-data-state"><span>Research feeds</span><b id="fiOverallStatus">Connecting…</b></div><div class="fi-data-state"><span>API checked</span><b id="fiLastChecked">—</b></div></div>
+</section>
+<section class="fi-stat-grid" aria-label="Platform coverage">
+<div class="fi-stat-card"><span>Futures families</span><strong id="fiCountContracts">15</strong><small>Equity · rates · FX · metals · energy</small></div>
+<div class="fi-stat-card"><span>Public data channels</span><strong>5+</strong><small>News, macro, COT, event markets</small></div>
+<div class="fi-stat-card"><span>News categories</span><strong>8</strong><small>Contract-linked discovery topics</small></div>
+<div class="fi-stat-card"><span>Execution access</span><strong>OFF</strong><small>Research only · no broker connection</small></div>
+</section>
+<section class="fi-section" id="universe"><div class="fi-section-head"><div><p class="fi-eyebrow">01 / MARKET UNIVERSE</p><h2>Choose a contract family</h2><p>Market drivers and contract profiles load from the preserved futures universe. Values are reference metadata, not a live quote.</p></div><label class="fi-search-wrap"><span>SEARCH</span><input id="fiContractSearch" type="search" placeholder="Search NQ, Gold, crude oil…"></label></div>
+<div class="fi-filter-row" id="fiTierFilters"><button class="fi-filter active" data-tier="ALL">All markets</button><button class="fi-filter" data-tier="T1">Tier 1 · Primary</button><button class="fi-filter" data-tier="T2">Tier 2 · Context</button><button class="fi-filter" data-tier="T3">Tier 3 · Optional</button></div>
+<div class="fi-contract-grid" id="fiContractGrid"><div class="fi-loading">Loading contract universe…</div></div>
+</section>
+<section class="fi-selected-market" id="fiSelectedMarket"><div class="fi-selected-head"><div><p class="fi-eyebrow">SELECTED CONTRACT</p><h2 id="fiSelectedTitle">Nasdaq-100 E-mini · NQ / MNQ</h2><p id="fiSelectedRole">Select a market family to inspect contract context.</p></div><a id="fiSelectedSpecs" class="fi-source-link" href="https://www.cmegroup.com/" target="_blank" rel="noopener">Official exchange source ↗</a></div>
+<div class="fi-market-detail-grid">
+<div class="fi-detail-box"><span>CONTRACT REFERENCE</span><strong id="fiSpecLine">Tick and multiplier details loading</strong><small id="fiMicroLine">Verify current contract month and specification.</small></div>
+<div class="fi-detail-box"><span>KEY DRIVERS</span><div id="fiDrivers" class="fi-chip-list"></div></div>
+<div class="fi-detail-box"><span>RELATED MARKETS</span><div id="fiRelated" class="fi-chip-list"></div></div>
+<div class="fi-detail-box"><span>ICT / EXECUTION CONTEXT</span><p id="fiProfile">Contract-specific context loads with the selected market.</p><a id="fiTerminalLink" href="/ict-futures/" class="fi-inline-link">Open full ICT contract profile ↗</a></div>
+</div>
+<p class="fi-footnote">Contract specifications, active expiry, first notice, last trade, tick values and broker margin must be verified against the current exchange and broker before any calculation. Dataset profiles may be marked unverified.</p></section>
+<section class="fi-two-col">
+<div class="fi-panel"><div class="fi-panel-head"><div><p class="fi-eyebrow">02 / NEWS INTELLIGENCE</p><h2>Contract-linked newsflow</h2><p>GDELT global discovery feed · 48-hour search window</p></div><button id="fiRefreshNews" class="fi-small-btn">Refresh ↻</button></div>
+<div class="fi-news-tools"><span id="fiNewsStatus" class="fi-status-pill">WAITING FOR FEED</span><span id="fiNewsCount" class="fi-muted">— items</span></div><div id="fiNewsList" class="fi-news-list"><div class="fi-loading">Loading futures and macro headlines…</div></div><p class="fi-footnote">GDELT is a discovery index, not a complete licensed newswire. Its indexed timestamp may differ from publisher publication time. Verify material facts at the original source.</p></div>
+<div class="fi-panel"><div class="fi-panel-head"><div><p class="fi-eyebrow">03 / MACRO BACKDROP</p><h2>US macro indicators</h2><p>BLS official historical series · not live market data</p></div><a href="/macro/" class="fi-small-btn">Macro desk ↗</a></div>
+<div id="fiMacroGrid" class="fi-macro-grid"><div class="fi-loading">Loading official series…</div></div><div class="fi-source-row"><a href="https://www.bls.gov/developers/" target="_blank" rel="noopener">BLS API docs ↗</a><a href="https://www.federalreserve.gov/monetarypolicy.htm" target="_blank" rel="noopener">Federal Reserve ↗</a><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">EIA Open Data ↗</a></div></div>
+</section>
+<section class="fi-section"><div class="fi-section-head"><div><p class="fi-eyebrow">04 / POSITIONING</p><h2>CFTC Commitments of Traders</h2><p>Weekly positioning context by report family. COT is not an intraday entry signal and publication is delayed.</p></div><div class="fi-tab-row"><button class="fi-tab active" data-cot="tff">Traders in Financial Futures</button><button class="fi-tab" data-cot="disaggregated">Disaggregated</button></div></div>
+<div class="fi-cot-meta"><span id="fiCotProvider">CFTC Public Reporting Environment</span><span id="fiCotAsOf">Report date —</span><span id="fiCotStatus" class="fi-status-pill">LOADING</span></div>
+<div class="fi-table-wrap"><table class="fi-table"><thead><tr><th>Contract</th><th>Trader category</th><th>Long</th><th>Short</th><th>Net position</th><th>Open interest</th></tr></thead><tbody id="fiCotRows"><tr><td colspan="6">Loading CFTC positioning report…</td></tr></tbody></table></div>
+<div class="fi-source-row"><a href="https://publicreporting.cftc.gov/" target="_blank" rel="noopener">CFTC PRE official source ↗</a><a href="/research/positioning/">Open full COT dashboard ↗</a></div></section>
+<section class="fi-section"><div class="fi-section-head"><div><p class="fi-eyebrow">05 / PREDICTION MARKETS</p><h2>What event markets are pricing</h2><p>Public Polymarket and Kalshi event markets can add expectation context — they are not futures order flow or objective forecasts.</p></div><button id="fiRefreshPredictions" class="fi-small-btn">Refresh markets ↻</button></div>
+<div class="fi-prediction-grid"><div class="fi-panel nested"><div class="fi-panel-head"><div><h3>Polymarket</h3><p>Gamma event metadata · indicative outcome probabilities</p></div><span class="fi-venue-mark">POLY</span></div><div id="fiPolymarket" class="fi-event-list"><div class="fi-loading">Loading public event markets…</div></div><div class="fi-source-row"><a href="https://polymarket.com/" target="_blank" rel="noopener">Open Polymarket ↗</a><a href="https://docs.polymarket.com/" target="_blank" rel="noopener">API docs ↗</a></div></div>
+<div class="fi-panel nested"><div class="fi-panel-head"><div><h3>Kalshi</h3><p>Public event contracts · YES bid/ask context</p></div><span class="fi-venue-mark kalshi">KALSHI</span></div><div id="fiKalshi" class="fi-event-list"><div class="fi-loading">Loading public event markets…</div></div><div class="fi-source-row"><a href="https://kalshi.com/" target="_blank" rel="noopener">Open Kalshi ↗</a><a href="https://docs.kalshi.com/" target="_blank" rel="noopener">API docs ↗</a></div></div></div>
+<p class="fi-footnote">Market probabilities, bid/ask and volume are venue-specific and may be illiquid or stale. No wallet, trading, order-placement or execution functionality is connected. Availability and access depend on each provider's terms and local jurisdiction.</p></section>
+<section class="fi-disclaimer"><div><b>Research integrity</b><p>Every displayed feed should retain its provider, retrieval time, data-as-of timestamp, and freshness state. Public APIs are used where available. CME/ICE real-time quotes, full-depth order books, redistribution rights, professional newswires and licensed intraday datasets require separate commercial permissions and are not presented as free.</p></div><a href="/status/">Provider status & system documentation ↗</a></section>
+</main>
+<footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, exchange feed, investment adviser or execution terminal.</p></div><div class="footer-links"><a href="/status/">System status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures</a><a href="/account/">Private workspace</a></div><small>Source timestamps, provenance and licensing limits apply to all external data.</small></footer>
+</body></html>
