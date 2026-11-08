@@ -95,7 +95,7 @@ async function fetchEia(env) {
   if (!env.EIA_API_KEY) return notConfigured("EIA", "EIA_API_KEY", sourceUrl, ["EIA API v2 requires a registered API key."]);
   const url = new URL(sourceUrl);
   url.searchParams.set("api_key", env.EIA_API_KEY);
-  url.searchParams.set("length", "1000");
+  url.searchParams.set("length", "5000");
   url.searchParams.set("sort[0][column]", "period");
   url.searchParams.set("sort[0][direction]", "desc");
   const body = await getJson(url, "EIA");
@@ -120,7 +120,7 @@ const FRED_SERIES = [
   { id: "DGS10", name: "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity", frequency: "daily", unit: "percent" },
   { id: "CPIAUCSL", name: "Consumer Price Index for All Urban Consumers: All Items", frequency: "monthly", unit: "index 1982-84=100" },
   { id: "UNRATE", name: "Unemployment Rate", frequency: "monthly", unit: "percent" },
-  { id: "PCEPI", name: "Personal Consumption Expenditures: Chain-type Price Index", frequency: "monthly", unit: "index; see FRED series metadata" }
+  { id: "PCEPI", name: "Personal Consumption Expenditures: Chain-type Price Index", frequency: "monthly", unit: "index 2017=100, seasonally adjusted" }
 ];
 
 async function fetchFred(env) {
