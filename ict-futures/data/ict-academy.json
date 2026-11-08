@@ -10781,6 +10781,24 @@
         "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CustomerAdvisory_SocialMedia_Metals.html",
         "type": "Regulatory education",
         "scope": "Independent due diligence and risk education; not a source for ICT setup definitions."
+      },
+      {
+        "name": "CFTC — Futures Market Basics",
+        "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/FuturesMarketBasics/index.htm",
+        "type": "US regulator education",
+        "scope": "Futures contract mechanics, participants, margin and customer risks."
+      },
+      {
+        "name": "CFTC — Learn & Protect",
+        "url": "https://www.cftc.gov/LearnAndProtect",
+        "type": "US regulator education",
+        "scope": "Customer protection and independent due-diligence education."
+      },
+      {
+        "name": "CFTC — Checklist Before You Trade",
+        "url": "https://www.cftc.gov/LearnAndProtect/educationcenter/checklistbeforeyoutrade",
+        "type": "US regulator education",
+        "scope": "Risk capacity, disclosure documents, fees and checking adviser registration."
       }
     ],
     "completionPolicy": "A lesson can be marked complete after reviewing the walkthrough, completing the replay assignment and attempting the knowledge check. Scores are study checks, not measures of trading skill or profitability."
