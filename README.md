@@ -80,7 +80,7 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 ## Data and safety boundaries
 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
-- RLS is enabled on all 16 project public tables; user-owned rows are scoped to `auth.uid()`.
+- RLS is enabled on all 18 project public tables; user-owned rows are scoped to `auth.uid()`. Historical economic observations are read-only to browser roles; the ingestion-run ledger is private and server-role only.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
 - CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS, BEA, EIA, FRED, Treasury and ECB series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
