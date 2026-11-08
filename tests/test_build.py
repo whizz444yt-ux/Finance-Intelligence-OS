@@ -138,8 +138,9 @@ class BuildTests(unittest.TestCase):
         ui=(ROOT/'assets/economic-data.js').read_text()
         env=(ROOT/'.env.example').read_text()
         build=(ROOT/'scripts/build_site.py').read_text()
-        for provider in ['bea','eia','fred','us_treasury','ecb']:
-            self.assertIn('/api/v1/economic/'+provider,ui)
+        for provider in ['id:"bea"','id:"eia"','id:"fred"','id:"us_treasury"','id:"ecb"']:
+            self.assertIn(provider,ui)
+        self.assertIn('request("/api/v1/economic/"+p.id)',ui)
         for key in ['BEA_API_KEY','EIA_API_KEY','FRED_API_KEY']:
             self.assertIn(key,env)
         self.assertIn('economic-data.js',build)
