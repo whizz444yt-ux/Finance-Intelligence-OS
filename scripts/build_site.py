@@ -11,7 +11,7 @@ SITE_URL = os.getenv('SITE_URL', '').rstrip('/')
 
 NAV_ITEMS = [
     ('Overview', '/'),
-    ('Futures Markets', '/markets/'),
+    ('Futures Markets', '/futures-intelligence/'),
     ('Volume & OI', '/volume-open-interest/'),
     ('News Intelligence', '/news/'),
     ('Macro Calendar', '/macro/'),
@@ -139,6 +139,7 @@ def build():
     # Macro indicators: official BLS historical observations via the edge gateway.
     body=page_intro('Official macro data','US inflation & labour indicators','Five series from the US Bureau of Labor Statistics Public Data API v1. Values are published historical observations with their own index bases and units; they are not live market quotes or a complete economic calendar.')
     body += """<section class="content-section"><div class="section-top"><div><h2>BLS macro dashboard</h2><p>API cache refreshes on demand and expires after six hours.</p></div><button class="primary-button" id="macroRefresh">Load / update BLS snapshot</button></div><div id="macroState" class="muted">Loading provider data…</div><div id="macroSeries" class="macro-grid"></div></section><section class="content-section"><h2>Method and limitations</h2><p>Version 1 of the BLS API is public without registration, with a documented limit of 25 series per request and up to 10 years of observations. It returns historical observations and can lag the original release; release time/calendar data are separate. Do not combine different index base units or infer market direction from a single series.</p><div class="source-notes"><a href="https://www.bls.gov/developers/api_signature.htm" target="_blank" rel="noopener noreferrer">BLS API signatures ↗</a><a href="https://www.bls.gov/bls/news-release/home.htm" target="_blank" rel="noopener noreferrer">BLS release calendar ↗</a><a href="https://www.bls.gov/developers/api_faqs.htm" target="_blank" rel="noopener noreferrer">BLS API FAQ ↗</a></div></section>"""
+    body+='<section class="content-section"><h2>Economic release calendar</h2><p><span class="status-pill warn">CALENDAR AGGREGATION · NOT CONNECTED</span></p><p>The current macro adapter provides published historical BLS observations, not a consolidated upcoming-release calendar or consensus/actual feed. Until official release schedules and additional source adapters are integrated, use the primary agency calendars below and verify all release times in the publisher timezone.</p><div class="source-notes"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener noreferrer">BLS release schedule ↗</a><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener noreferrer">BEA release schedule ↗</a><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener noreferrer">EIA weekly petroleum status ↗</a></div></section>'
     write(DIST/'macro/index.html',shell('US Macro Indicators | Finance Intelligence OS','Official BLS inflation and labour-market historical series, with source labels, units and retrieval times.',body,'/macro/', '<script defer src="/assets/macro-page.js"></script>'))
 
     # COT / institutional positioning.
