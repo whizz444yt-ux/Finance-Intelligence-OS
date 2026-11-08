@@ -249,6 +249,11 @@ class BuildTests(unittest.TestCase):
         self.assertIn('foreign key (alert_id, user_id)',notes)
         self.assertIn('add column if not exists legacy_id text',legacy)
         self.assertIn('unique (user_id, legacy_id)',legacy)
+    def test_p5_composite_foreign_key_indexes_are_present(self):
+        sql=(ROOT/'supabase/migrations/20261108163000_add_workspace_composite_fk_indexes.sql').read_text()
+        self.assertIn('on public.alert_events(alert_id, user_id)',sql)
+        self.assertIn('on public.strategy_backtest_trades(backtest_id, user_id)',sql)
+
     def test_p5_account_assets_are_in_the_static_build(self):
         build=(ROOT/'scripts/build_site.py').read_text()
         self.assertIn('account.js',build)

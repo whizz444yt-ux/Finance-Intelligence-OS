@@ -110,6 +110,11 @@ ok('P5 alert behavior is explicitly user-triggered rather than a claimed live fe
    'manual-browser-check' in p5_ui and 'No unattended exchange quote stream is configured' in p5_ui)
 ok('P5 notes and alert event migrations enforce owner RLS and linked alert ownership',
    p5_notes.exists() and p5_legacy.exists() and 'enable row level security' in p5_notes.read_text() and '(select auth.uid()) = user_id' in p5_notes.read_text() and 'foreign key (alert_id, user_id)' in p5_notes.read_text() and 'unique (user_id, legacy_id)' in p5_legacy.read_text())
+p5_fk_indexes=ROOT/'supabase/migrations/20261108163000_add_workspace_composite_fk_indexes.sql'
+ok('P5 alert and backtest composite foreign keys have covering indexes',
+   p5_fk_indexes.exists() and 'on public.alert_events(alert_id, user_id)' in p5_fk_indexes.read_text() and
+   'on public.strategy_backtest_trades(backtest_id, user_id)' in p5_fk_indexes.read_text())
+
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
 ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
