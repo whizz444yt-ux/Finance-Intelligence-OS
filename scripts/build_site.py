@@ -278,7 +278,8 @@ def build():
         urls=['/','/markets/','/futures-intelligence/','/volume-open-interest/','/data-health/','/prediction-markets/','/entry-models/','/strategy-lab/','/academy/','/research/','/research/positioning/','/news/','/macro/','/tools/','/account/','/status/','/docs/','/legacy/','/ict-futures/']
         urls += [f'/ict-futures/markets/{p.name}' for p in (DIST/'ict-futures/markets').glob('*.html')]
         urls += [f'/ict-futures/academy/{p.name}' for p in (DIST/'ict-futures/academy').glob('*.html')]
-        urls += [f'/ict-futures/academy/tutorials/{p.name}' for p in (DIST/'ict-futures/academy/tutorials').glob('*.html')]
+        urls.append('/ict-futures/academy/tutorials/')
+        urls += [f'/ict-futures/academy/tutorials/{p.name}' for p in (DIST/'ict-futures/academy/tutorials').glob('*.html') if p.name != 'index.html']
         xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{escape(SITE_URL+u)}</loc></url>' for u in urls)+'</urlset>'
         write(DIST/'sitemap.xml',xml)
         write(DIST/'robots.txt',f'User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n')
