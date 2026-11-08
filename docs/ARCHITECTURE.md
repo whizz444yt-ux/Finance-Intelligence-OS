@@ -24,7 +24,7 @@ Browser
 ## Runtime and provider responsibilities
 
 - **Vercel** serves the static application, generated routes, and published sitemap.
-- **Cloudflare Worker** is the single public-data gateway. It owns upstream calls, per-provider timeouts, cache and freshness labels. The GDELT scheduled refresh uses the existing 30-minute Cron trigger. BLS, CFTC and prediction-market feeds are refreshed on request with KV fallback.
+- **Cloudflare Worker** is the single public-data gateway. It owns upstream calls, per-provider timeouts, cache and freshness labels. The GDELT scheduled refresh uses the existing 30-minute Cron trigger. A manual `/api/v1/news?refresh=1` request queues a Worker-side refresh under a five-minute cooldown/lock; the API immediately returns the prior snapshot with refresh state, so the browser does not make upstream GDELT calls. BLS, CFTC and prediction-market feeds are refreshed on request with KV fallback.
 - **Supabase** stores the normalized data model and user-owned journal/watchlists/progress. All 16 public tables currently have RLS enabled. The Worker currently has no Supabase service-role/secret key configured, so its optional server-side ingestion writes remain disabled; do not put privileged keys in browser code.
 - **Builder.io** remains optional editorial CMS. Its public Content API key and Admin PAT are not configured, so existing static lessons and JSON remain the fallback.
 - **GitHub Actions** runs build, unit, validation and internal-link checks on pushes and pull requests.
@@ -43,7 +43,7 @@ Browser
 | `/api/v1/providers` | Gateway registry | Provider configuration and last-known state. |
 | `/api/v1/health` | Gateway | Worker health and secret/configuration presence flags, never secret values. |
 
-The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
+The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
 
 ## Security and access boundaries
 

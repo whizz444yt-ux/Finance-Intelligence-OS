@@ -30,6 +30,19 @@ ok('Worker contains NY Fed public reference rates','/api/v1/macro/funding' in wo
 ok('Worker contains read-only Polymarket and Kalshi endpoints','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker and 'gamma-api.polymarket.com/events' in worker and 'external-api.kalshi.com/trade-api/v2/markets' in worker)
 ok('Worker has production-origin allow-list without wildcard','finance-intelligence-os-whizz444yt-7353.vercel.app' in worker and 'includes("*")' in worker and 'return json' in worker)
 
+worker=(ROOT/'cloudflare/src/index.js').read_text()
+dashboard=(ROOT/'assets/futures-intelligence.js').read_text()
+risk=(ROOT/'assets/risk-calculator.js').read_text()
+news_page=(ROOT/'assets/news-page.js').read_text()
+ok('Manual GDELT refresh is supported with a lock and cooldown','url.searchParams.get("refresh")==="1"' in worker and 'NEWS_REFRESH_LOCK_KEY' in worker and 'ctx.waitUntil(refreshNews(env)' in worker)
+ok('COT response exposes normalized report categories','normalizeCotRows(rows,report)' in worker and 'normalizedRows' in worker and 'swap__positions_short_all' in worker and 'm_money_positions_long_all' in worker)
+ok('COT query is scoped to the selected market','fetchCot(report,market)' in worker and 'upper(contract_market_name)' in worker and 'marketKey' in worker)
+ok('Dashboard preserves missing numeric values','v===null||v===undefined' in dashboard and 'Object.values(state.providers)' in dashboard)
+ok('Risk calculator supports verified micro profile fields','market.microSpec' in risk and 'contractMode' in risk and 'Number.isFinite(tickValue)' in risk)
+ok('News page requests controlled refresh','?refresh=1' in news_page and 'Refresh news snapshot' in news_page)
+ok('Prediction volume metrics remain nullable','volume24hr:asNumberOrNull(event.volume24hr)' in worker and 'volume24h:asNumberOrNull(m.volume_24h_fp??m.volume_24h)' in worker)
+ok('Static assets no longer receive a one-year immutable cache','max-age=300, stale-while-revalidate=86400' in (ROOT/'vercel.json').read_text() and 'immutable' not in (ROOT/'vercel.json').read_text())
+
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
 ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
@@ -50,6 +63,10 @@ if dist.exists():
     ok('No stale nested robots/sitemap hostname',not bad_seo,', '.join(bad_seo[:4]))
     ok('Only one authoritative root robots and sitemap',len(list(dist.rglob('robots.txt')))==1 and len(list(dist.rglob('sitemap.xml')))==1)
     ok('No archived nested source ZIPs exposed in static output',not list(dist.rglob('*.zip')))
+    ok('Built Futures Desk assets match source files',
+        (dist/'assets/futures-intelligence.js').exists() and (dist/'assets/futures-intelligence.css').exists() and
+        (dist/'assets/futures-intelligence.js').read_bytes()==(ROOT/'assets/futures-intelligence.js').read_bytes() and
+        (dist/'assets/futures-intelligence.css').read_bytes()==(ROOT/'assets/futures-intelligence.css').read_bytes())
     ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
     # Validate inline scripts in the two preserved monolithic applications.
     for page in [dist/'index.html', dist/'ict-futures/index.html']:
