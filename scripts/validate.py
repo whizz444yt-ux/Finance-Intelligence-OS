@@ -59,6 +59,11 @@ ok('Economic providers use cadence-aware scheduled ingestion','scheduledEconomic
 ok('Supabase migration keeps ingestion runs private', (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').exists() and 'revoke all on public.ingestion_runs from anon, authenticated' in (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').read_text())
 ok('P2 economic dashboard loads all five providers',all('/api/v1/economic/'+x in (ROOT/'assets/economic-data.js').read_text() for x in ['bea','eia','fred','us_treasury','ecb']))
 
+ok('P2 exposes bounded read-only Supabase history API','url.pathname==="/api/v1/economic/history"' in worker and 'query.set("and"' in worker and 'Math.min(5000' in worker)
+ok('P2 records provider skips and fetch failures when persistence is configured','recordIngestionRun(env,provider,"skipped"' in worker and 'recordIngestionRun(env,provider,"failed"' in worker)
+ok('Ingestion ledger has explicit browser-deny migration','using (false)' in (ROOT/'supabase/migrations/20261108140821_deny_browser_access_to_ingestion_runs.sql').read_text() and 'with check (false)' in (ROOT/'supabase/migrations/20261108140821_deny_browser_access_to_ingestion_runs.sql').read_text())
+
+
 
 
 sql=(ROOT/'supabase/setup.sql').read_text()
