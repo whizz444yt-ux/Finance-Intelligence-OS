@@ -27,7 +27,7 @@
  }
  async function syncWrite(slug,record,s,uid){
   if(!uid||!record)return;
-  const payload={user_id:uid,lesson_slug:slug,status:record.status||"in-progress",score:record.score??null,completed_at:record.completedAt||null,updated_at:new Date().toISOString()};
+  const payload={user_id:uid,lesson_slug:slug,status:record.status||"in-progress",score:record.score??null,completed_at:record.completedAt||null,progress_data:{exerciseDone:record.exerciseDone||[],quizAnswered:typeof record.score==="number",lessonVersion:"p3-v1"},lesson_version:"p3-v1",updated_at:new Date().toISOString()};
   const r=await fetch(apiBase+"/rest/v1/lesson_progress?on_conflict=user_id,lesson_slug",{
    method:"POST",headers:headers(s,{"Content-Type":"application/json","Prefer":"resolution=merge-duplicates,return=minimal"}),body:JSON.stringify(payload)
   });
@@ -50,13 +50,13 @@
   const s=session();if(!apiBase||!publishable||!s?.access_token)return;
   try{
    const uid=await userId(s);if(!uid)return;
-   const q="?select=lesson_slug,status,score,completed_at,updated_at&lesson_slug=eq."+encodeURIComponent(slug)+"&limit=1";
+   const q="?select=lesson_slug,status,score,completed_at,updated_at,progress_data,lesson_version&lesson_slug=eq."+encodeURIComponent(slug)+"&limit=1";
    const r=await fetch(apiBase+"/rest/v1/lesson_progress"+q,{headers:headers(s)});if(!r.ok)return;
    const rows=await r.json(),remote=rows[0];if(!remote)return;
    const map=progressMap(),local=map[slug];
    const rt=Date.parse(remote.updated_at||remote.completed_at||"")||0,lt=Date.parse(local?.updatedAt||local?.completedAt||"")||0;
    if(!local||rt>lt){
-    map[slug]={status:quiz&&remote.status==="completed"&&Number(remote.score)<100?"in-progress":remote.status,score:remote.score,completedAt:remote.completed_at,updatedAt:remote.updated_at,exerciseDone:local?.exerciseDone||[]};write(PROGRESS_KEY,map);
+    map[slug]={status:quiz&&remote.status==="completed"&&Number(remote.score)<100?"in-progress":remote.status,score:remote.score,completedAt:remote.completed_at,updatedAt:remote.updated_at,exerciseDone:local?.exerciseDone||remote.progress_data?.exerciseDone||[],lessonVersion:remote.lesson_version||"legacy"};write(PROGRESS_KEY,map);
     if(!slug.startsWith("tutorial-")){let done=legacyDone().filter(x=>x!==slug);if(remote.status==="completed")done.push(slug);write(LEGACY_KEY,done);}
    }else if(local){await syncWrite(slug,local,s,uid);}
   }catch{const el=$(root,"[data-progress-sync]");if(el)el.textContent="Local progress active · cloud sync needs attention.";}
