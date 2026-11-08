@@ -1,5 +1,7 @@
 const USER_AGENT = "FinanceIntelligenceOS/2.0 public economic research";
 
+function canonicalSource(value) { const u = new URL(value); u.searchParams.delete("api_key"); u.searchParams.delete("UserID"); return u.origin + u.pathname; }
+
 function finiteNumber(value) {
   if (value === null || value === undefined) return null;
   const text = String(value).trim();
@@ -68,7 +70,7 @@ async function fetchBea(env) {
   const url = new URL(sourceUrl);
   for (const [key, value] of Object.entries({
     UserID: env.BEA_API_KEY, method: "GetData", datasetname: "NIPA",
-    TableName: "T10101", Frequency: "Q", Year: "X", ResultFormat: "JSON"
+    TableName: "T10101", Frequency: "Q", Year: Array.from({ length: new Date().getUTCFullYear() - 2009 }, (_, i) => String(2010 + i)).join(","), ResultFormat: "JSON"
   })) url.searchParams.set(key, value);
   const body = await getJson(url, "BEA");
   const api = body.BEAAPI;
@@ -78,10 +80,10 @@ async function fetchBea(env) {
   const records = rows.map(row => record(
     "bea", "NIPA:T10101", "T10101:" + (row.SeriesCode || row.LineNumber || row.LineDescription),
     row.LineDescription || "NIPA T10101 series", "quarterly", row.TimePeriod,
-    row.DataValue, row.CL_UNIT || null, url.toString(),
+    row.DataValue, row.CL_UNIT || null, canonicalSource(url.toString()),
     { ...row, unitMultiplier: row.UNIT_MULT || null }
   )).filter(Boolean);
-  return snapshot("BEA", "NIPA:T10101", records, url.toString(), 1, [
+  return snapshot("BEA", "NIPA:T10101", records, canonicalSource(url.toString()), 1, [
     "NIPA Table T10101 is requested at quarterly frequency.",
     "Values are stored as published by BEA; UNIT_MULT and CL_UNIT are retained in raw_payload and values are not rescaled.",
     "GDP national-accounts figures are subject to revisions and are not live market prices."
@@ -104,9 +106,9 @@ async function fetchEia(env) {
     "eia", "PET.WCESTUS1.W", "PET.WCESTUS1.W",
     "US ending stocks of crude oil including the Strategic Petroleum Reserve",
     "weekly", row.period, row.value, row.units || row.unit || "provider-reported units",
-    url.toString(), row
+    canonicalSource(url.toString()), row
   )).filter(Boolean);
-  return snapshot("EIA", "PET.WCESTUS1.W", records, url.toString(), 1, [
+  return snapshot("EIA", "PET.WCESTUS1.W", records, canonicalSource(url.toString()), 1, [
     "Series PET.WCESTUS1.W is the selected US weekly crude-oil stocks series.",
     "The value and units are taken from the EIA response; no conversion is applied.",
     "Weekly inventory releases are not intraday futures volume or order-book data."
@@ -132,11 +134,17 @@ async function fetchFred(env) {
     url.searchParams.set("observation_start", "2010-01-01");
     url.searchParams.set("limit", "1000");
     url.searchParams.set("sort_order", "desc");
-    const body = await getJson(url, "FRED");
-    const rows = Array.isArray(body.observations) ? body.observations : [];
+    const rows = [];
+    for (let offset = 0; offset < 5000; offset += 1000) {
+      url.searchParams.set("offset", String(offset));
+      const body = await getJson(url, "FRED");
+      const page = Array.isArray(body.observations) ? body.observations : [];
+      rows.push(...page);
+      if (page.length < 1000 || (body.count !== undefined && offset + page.length >= Number(body.count))) break;
+    }
     return rows.map(row => record(
       "fred", "fred:series_observations", meta.id, meta.name, meta.frequency,
-      row.date, row.value, meta.unit, url.toString(), row
+      row.date, row.value, meta.unit, canonicalSource(url.toString()), row
     )).filter(Boolean);
   }));
   const successful = results.filter(x => x.status === "fulfilled");
@@ -161,6 +169,7 @@ async function fetchTreasury() {
   url.searchParams.set("filter", "security_type_desc:eq:Marketable");
   url.searchParams.set("sort", "-record_date");
   url.searchParams.set("page[size]", "1000");
+  url.searchParams.set("page[number]", "1");
   const body = await getJson(url, "US Treasury Fiscal Data");
   const rows = Array.isArray(body.data) ? body.data : [];
   if (!rows.length) throw new Error("Treasury Fiscal Data returned no average-interest-rate rows");
@@ -168,7 +177,7 @@ async function fetchTreasury() {
     "us_treasury", "avg_interest_rates", "avg_interest_rates:" + (row.security_desc || "unknown"),
     "Average interest rate on " + (row.security_desc || "US Treasury securities"),
     "monthly", row.record_date, row.avg_interest_rate_amt, "percent",
-    url.toString(), row
+    canonicalSource(url.toString()), row
   )).filter(Boolean);
   return snapshot("US Treasury Fiscal Data", "avg_interest_rates", records, url.toString(), 1, [
     "This dataset reports monthly average interest rates paid on outstanding Treasury securities by security description.",
@@ -206,7 +215,7 @@ async function fetchEcb() {
   url.searchParams.set("format", "jsondata");
   url.searchParams.set("detail", "dataonly");
   const body = await getJson(url, "ECB Data Portal");
-  const records = parseEcb(body, url.toString());
+  const records = parseEcb(body, canonicalSource(url.toString()));
   if (!records.length) throw new Error("ECB SDMX JSON contained no observation rows in the expected dimensions");
   return snapshot("ECB", "EXR", records, url.toString(), 1, [
     "The ECB Data Portal SDMX series key D.USD.EUR.SP00.A is used.",
