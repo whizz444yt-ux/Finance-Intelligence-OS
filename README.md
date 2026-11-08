@@ -14,7 +14,8 @@ A consolidated global financial research workspace with the preserved Global Res
 
 - `/` — preserved Global Research cockpit.
 - `/markets/` — futures families and global instruments.
-- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.\n- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.
+- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.
+- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.
 - `/prediction-markets/` — separate read-only Polymarket and Kalshi event-market context.
 - `/entry-models/` — eight preserved ICT entry-model concepts, with no unaudited performance ranking.
 - `/strategy-lab/` — backtest methodology and data-readiness status; strategy statistics are not published until reproducible tests exist.
@@ -29,7 +30,11 @@ A consolidated global financial research workspace with the preserved Global Res
 - `/ict-futures/` — original ICT Futures Intelligence OS 3.0.
 - `/status/`, `/docs/`, `/legacy/` — system status, developer documentation and original research archive.
 
-## Product navigation\n\nThe primary navigation is organized into 12 areas: Overview, Futures Markets, Volume & OI, News Intelligence, Macro Calendar, COT & Positioning, Prediction Markets, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, and Sources & Data Health. The older `/markets/`, `/status/`, and `/ict-futures/` routes remain available as supporting catalogues and preserved experiences.\n\n## Build and local preview
+## Product navigation
+
+The primary navigation is organized into 12 areas: Overview, Futures Markets, Volume & OI, News Intelligence, Macro Calendar, COT & Positioning, Prediction Markets, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, and Sources & Data Health. The older `/markets/`, `/status/`, and `/ict-futures/` routes remain available as supporting catalogues and preserved experiences.
+
+## Build and local preview
 
 ```bash
 python3 scripts/build_site.py
