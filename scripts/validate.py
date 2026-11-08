@@ -17,7 +17,7 @@ try:
     fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -50,6 +50,16 @@ ok('P1 health checker tests provider endpoints independently','Promise.allSettle
 ok('Prediction page uses read-only venue endpoints','/api/v1/prediction/polymarket' in (ROOT/'assets/prediction-markets.js').read_text() and '/api/v1/prediction/kalshi' in (ROOT/'assets/prediction-markets.js').read_text())
 ok('Entry Models page does not claim an audited ranking',"no audited win-rate" in nav_source.lower() and 'Strategy Lab' in nav_source)
 
+economic=(ROOT/'cloudflare/src/economic-providers.js').read_text()
+ok('P2 supports BEA, EIA, FRED, Treasury and ECB adapters',all(x in economic for x in ['case "bea"','case "eia"','case "fred"','case "us_treasury"','case "ecb"']))
+ok('Provider API keys are removed before source URLs are stored','searchParams.delete("api_key")' in economic and 'searchParams.delete("UserID")' in economic)
+ok('Worker protects manual ingestion with a bearer token','url.pathname==="/api/v1/ingest"' in worker and 'Authorization' in worker and 'env.INGEST_TOKEN' in worker)
+ok('Economic history is persisted with idempotent upserts','economic_observations' in worker and 'on_conflict=provider,dataset_id,series_id,frequency,observation_date' in worker and 'ingestion_runs' in worker)
+ok('Economic providers use cadence-aware scheduled ingestion','scheduledEconomicIngestion(env)' in worker and 'cfg.ttlSeconds*1000' in worker)
+ok('Supabase migration keeps ingestion runs private', (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').exists() and 'revoke all on public.ingestion_runs from anon, authenticated' in (ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').read_text())
+ok('P2 economic dashboard loads all five providers',all('/api/v1/economic/'+x in (ROOT/'assets/economic-data.js').read_text() for x in ['bea','eia','fred','us_treasury','ecb']))
+
+
 
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
@@ -71,6 +81,8 @@ if dist.exists():
     ok('No stale nested robots/sitemap hostname',not bad_seo,', '.join(bad_seo[:4]))
     ok('Only one authoritative root robots and sitemap',len(list(dist.rglob('robots.txt')))==1 and len(list(dist.rglob('sitemap.xml')))==1)
     ok('No archived nested source ZIPs exposed in static output',not list(dist.rglob('*.zip')))
+    ok('P2 economic dashboard asset matches source',
+        (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
             for name in ['volume-open-interest.js','data-health.js','prediction-markets.js','site-shell.css']))
