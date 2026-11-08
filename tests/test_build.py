@@ -227,4 +227,39 @@ class BuildTests(unittest.TestCase):
         self.assertIn('foreign key (backtest_id, user_id)',sql)
         self.assertIn('revoke all on public.strategy_backtests from anon',sql)
 
+
+    def test_p5_account_cloud_workspace_auth_and_crud(self):
+        js=(ROOT/'assets/account.js').read_text()
+        build=(ROOT/'scripts/build_site.py').read_text()
+        for token in ['grant_type=refresh_token','localStorage.setItem(SESSION_KEY','/rest/v1/journal_trades','/rest/v1/watchlists','/rest/v1/watchlist_items','/rest/v1/research_notes','/rest/v1/alert_rules','/rest/v1/alert_events','/rest/v1/user_preferences','exportBackup','fios.v2.watchlist','fios.v2.journal','ictfos.journal.v1']:
+            self.assertIn(token,js)
+        self.assertIn('refresh_token',js)
+        self.assertIn('last_condition_met',js)
+        self.assertIn('manual-browser-check',js)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
+        self.assertNotIn('service_role',js.lower())
+        self.assertIn('Account & sync',build)
+    def test_p5_private_notes_alert_events_and_legacy_trade_import_migrations(self):
+        notes=(ROOT/'supabase/migrations/20261108161355_add_cloud_workspace_notes_and_alert_events.sql').read_text()
+        legacy=(ROOT/'supabase/migrations/20261108161450_add_idempotent_legacy_trade_import.sql').read_text()
+        self.assertIn('create table if not exists public.research_notes',notes)
+        self.assertIn('create table if not exists public.alert_events',notes)
+        self.assertIn('enable row level security',notes)
+        self.assertIn('(select auth.uid()) = user_id',notes)
+        self.assertIn('foreign key (alert_id, user_id)',notes)
+        self.assertIn('add column if not exists legacy_id text',legacy)
+        self.assertIn('unique (user_id, legacy_id)',legacy)
+    def test_p5_composite_foreign_key_indexes_are_present(self):
+        sql=(ROOT/'supabase/migrations/20261108163000_add_workspace_composite_fk_indexes.sql').read_text()
+        self.assertIn('on public.alert_events(alert_id, user_id)',sql)
+        self.assertIn('on public.strategy_backtest_trades(backtest_id, user_id)',sql)
+
+    def test_p5_account_assets_are_in_the_static_build(self):
+        build=(ROOT/'scripts/build_site.py').read_text()
+        self.assertIn('account.js',build)
+        self.assertIn('Account & sync',build)
+        css=(ROOT/'assets/site-shell.css').read_text()
+        self.assertIn('.workspace-tabs',css)
+        self.assertIn('.workspace-metrics',css)
+
 if __name__=='__main__': unittest.main()

@@ -16,7 +16,7 @@
   if(bar)bar.style.width=(total?Math.round(doneCount/total*100):0)+"%";
   if(copy)copy.textContent=doneCount+" of "+total+" practice steps checked";
  }
- function session(){try{return JSON.parse(sessionStorage.getItem(SESSION_KEY)||"null");}catch{return null;}}
+ function session(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||sessionStorage.getItem(SESSION_KEY)||"null");}catch{try{return JSON.parse(sessionStorage.getItem(SESSION_KEY)||"null");}catch{return null;}}}
  function headers(s,extra={}){return {apikey:publishable,Authorization:"Bearer "+s.access_token,...extra};}
  async function userId(s){
   if(s?.user?.id)return s.user.id;

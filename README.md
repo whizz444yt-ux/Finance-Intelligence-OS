@@ -58,7 +58,7 @@ python3 scripts/audit_internal_links.py
 |---|---|---|
 | GitHub | Public repo `whizz444yt-ux/Finance-Intelligence-OS` on `main`; CI quality workflow is enabled. | Continue using the linked repository and protect production releases with CI status checks. |
 | Vercel | `finance-intelligence-os` project exists; Git-linked production deploys are triggered for commits on `main`; canonical `SITE_URL` is set. | Verify the latest deployment after build completion; add custom domain only when DNS is ready. |
-| Supabase | Active Mumbai (`ap-south-1`) project; 20 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
+| Supabase | Active Mumbai (`ap-south-1`) project; 22 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
 | Cloudflare | `finance-intelligence-os-edge` Worker deployed with KV binding and a 30-minute GDELT scheduled job. CORS is restricted to configured production origins. | No Worker secrets are currently bound, so Builder Admin and automated Supabase writes remain disabled. |
 | Builder.io | Allow-listed content proxy code remains available. | A Builder Space public API key and read-only Admin PAT have not been configured. |
 
@@ -81,7 +81,7 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 ## Data and safety boundaries
 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
-- RLS is enabled on all 20 project public tables; user-owned rows are scoped to `auth.uid()`. Historical economic observations are read-only to browser roles; the ingestion-run ledger is private and server-role only.
+- RLS is enabled on all 22 project public tables; user-owned rows are scoped to `auth.uid()`. Historical economic observations are read-only to browser roles; the ingestion-run ledger is private and server-role only.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
 - CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS, BEA, EIA, FRED, Treasury and ECB series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
@@ -111,3 +111,16 @@ See `docs/BUILD-REPORT.md`, `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION.md`, `d
 - Download a JSON manifest and CSV trade ledger. The raw uploaded CSV stays in the browser. Local history stores summary/fingerprint; signed-in users can sync manifests/metrics and trade rows to private RLS-protected Supabase tables.
 - Migration 20261108151112_add_strategy_backtest_runs_and_trades creates strategy_backtests and strategy_backtest_trades; both use user ownership policies and no browser service-role credential.
 - The eight preserved ICT models remain playbook descriptions; they are not yet automatically converted into machine-testable setup detectors. No preloaded historical bars or performance ranking is fabricated. Tick values, commissions, expiry/roll methodology and market-data licensing must be supplied/verified for each dataset.
+
+## P5 — Cloud personal workspace
+
+- The /account/ page is now a private cloud workspace with trade journal CRUD, multiple named watchlists, research-note CRUD, alert rules and event history, account preferences, analytics, JSON backup export and cross-device refresh/sync.
+- Auth sessions are persisted in browser local storage using the shared finance-os-supabase-session-v1 key and mirrored to session storage for the existing Academy and Strategy Lab clients. Expiring Supabase tokens are refreshed with the rotating refresh token; failed 401 requests get one refresh/retry.
+- Cloud journal CRUD uses journal_trades. Analytics use closed records with user-entered net P&L and R-multiples; no broker statement or contract conversion is inferred. Net P&L defaults to gross P&L minus recorded fees only when the user leaves net P&L blank.
+- Watchlists use watchlists and watchlist_items. Profiles store display name/timezone; user_preferences store theme/preferences. New research_notes store scenario/evidence/invalidation notes. alert_rules stores threshold rules; alert_events stores user-triggered event history.
+- The explicit import action reads the older Global Research watchlist and scenario-note keys plus the ICT Futures browser trade journal. Research-note, watchlist-item and legacy-trade imports use stable identifiers/upsert constraints for retry safety. Local originals are not deleted.
+- Migration 20261108161355_add_cloud_workspace_notes_and_alert_events adds owner-protected research_notes and alert_events. Migration 20261108161450_add_idempotent_legacy_trade_import adds journal_trades.legacy_id and a per-user unique constraint for retry-safe legacy trade import.
+- Alerts sync rules and event history across devices. In this release, price rules are evaluated against a user-entered observed value; an optional browser notification can show while the site is open. Automated quote polling, unattended email/SMS and scheduled delivery are not connected because no verified licensed futures quote feed and background delivery service is configured.
+- Analytics include closed-trade count, net realised P&L, win rate, net profit factor, average recorded R, a daily realised P&L chart and counts for watchlists, notes and alerts. These are manual-journal metrics, not broker-linked portfolio analytics.
+- Cloud tables use owner-scoped RLS. Browser requests use the authenticated JWT and publishable key only; no service-role secret is sent to the page.
+- Migration `20261108163000_add_workspace_composite_fk_indexes` adds covering indexes for alert-event and backtest-trade composite foreign keys.
