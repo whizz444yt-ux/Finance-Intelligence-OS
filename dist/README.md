@@ -71,7 +71,8 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 ## Historical ingestion and Supabase persistence
 
 - Economic provider observations are normalized into `economic_observations` with provider, dataset, series, frequency, observation date, unit, source URL, retrieved time, data-as-of time and raw provider attributes. Unique keys make historical upserts idempotent.
-- `ingestion_runs` stores request count, rows received/upserted, timing and failure details. It is private: RLS is enabled without anon/authenticated policies, and only the server-side service role may write/read run diagnostics.
+- `ingestion_runs` stores request count, rows received/upserted, timing, skipped/missing-credential events and failure details. It is private: RLS is enabled with an explicit deny policy for anon/authenticated roles and only the server-side service role may write/read run diagnostics.
+- `GET /api/v1/economic/history` provides bounded historical reads from the persisted observation table, with optional series/date filters; the ingestion-run ledger remains private.
 - `economic_observations` is browser-readable under a SELECT-only RLS policy. Browser roles cannot insert, update or delete; all ingestion writes run through the Worker.
 - `POST /api/v1/ingest` accepts a provider or `all` and requires `Authorization: Bearer <INGEST_TOKEN>`. Never use a query-string token.
 - BEA, EIA and FRED require `BEA_API_KEY`, `EIA_API_KEY` and `FRED_API_KEY` Worker secrets respectively. Treasury Fiscal Data and ECB SDMX use public endpoints. Supabase writes additionally require `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as Worker environment/secret values.
