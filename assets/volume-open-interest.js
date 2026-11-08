@@ -22,12 +22,12 @@
   {id:"si",name:"Silver",report:"disaggregated",query:"SILVER",exchange:"COMEX"},
   {id:"btc",name:"CME Bitcoin",report:"tff",query:"BITCOIN",exchange:"CME"}
  ];
- let rawRows=[],selectedContract=contracts[0],selectedName="",history=[];
+ let observations=[],selectedContract=contracts[0],selectedName="",history=[];
  function message(text,kind="neutral"){$("voiState").textContent=text;$("voiState").className="data-message "+kind;}
  function api(path){if(!API)throw new Error("Finance OS API gateway is not configured.");return fetch(API+path,{headers:{Accept:"application/json"},signal:AbortSignal.timeout(18000),cache:"no-store"}).then(async r=>{if(!r.ok)throw new Error("CFTC gateway returned HTTP "+r.status);return r.json();});}
  function marketSelect(){const s=$("voiMarket");s.innerHTML=contracts.map(c=>'<option value="'+c.id+'">'+esc(c.name)+' · '+c.exchange+'</option>').join("");}
  function contractRows(){
-  const key=$("voiInstrument"), names=[...new Set(rawRows.map(r=>r.contract_market_name||r.market_and_exchange_names||r.contract_name).filter(Boolean))];
+  const key=$("voiInstrument"), names=[...new Set(observations.map(r=>r.marketName).filter(Boolean))];
   key.innerHTML=names.map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join("");
   selectedName=names[0]||"";
   $("voiMarketName").textContent=selectedName||"No matching CFTC market label";
@@ -35,11 +35,7 @@
  function toRows(){
   const name=selectedName;
   const seen=new Set();
-  return rawRows.filter(r=>(r.contract_market_name||r.market_and_exchange_names||r.contract_name)===name).map(r=>{
-   const date=r.report_date_as_yyyy_mm_dd||r.report_date||r.as_of_date_in_form_YYYY_MM_DD||null;
-   const oi=number(r.open_interest_all??r.open_interest);
-   return {date,oi,raw:r};
-  }).filter(r=>r.date&&r.oi!==null).filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;}).sort((a,b)=>a.date.localeCompare(b.date));
+  return observations.filter(r=>r.marketName===name).map(r=>({date:r.reportDate,oi:number(r.openInterest)})).filter(r=>r.date&&r.oi!==null).filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;}).sort((a,b)=>a.date.localeCompare(b.date));
  }
  function renderChart(){
   history=toRows().slice(-26);
@@ -69,19 +65,19 @@
   $("voiChart").innerHTML='<div class="loading-state">Loading weekly open-interest history…</div>';
   message("Requesting the latest public CFTC report for "+selectedContract.name+"…");
   try{
-   const d=await api("/api/v1/cot?report="+selectedContract.report+"&q="+encodeURIComponent(selectedContract.query));
-   rawRows=Array.isArray(d.rows)?d.rows:[];
+   const d=await api("/api/v1/volume-open-interest?report="+selectedContract.report+"&q="+encodeURIComponent(selectedContract.query));
+   observations=Array.isArray(d.observations)?d.observations:[];
    contractRows();
-   $("voiInstrument").disabled=!rawRows.length;
+   $("voiInstrument").disabled=!observations.length;
    $("voiStatus").textContent=(d.status||"unknown").toUpperCase();
    $("voiStatus").className="status-pill "+(d.status==="fresh"?"good":d.status==="stale"?"warn":"bad");
    $("voiRetrieved").textContent="Retrieved "+(d.retrievedAt||"timestamp unavailable")+" · data as of "+(d.dataAsOf||"unknown");
-   $("voiCount").textContent=rawRows.length+" matching report row(s)";
-   if(!rawRows.length){message("The CFTC query returned no matching rows. No values have been substituted. Check the contract spelling in the official dataset.","warn");}
+   $("voiCount").textContent=observations.length+" weekly observations";
+   if(!observations.length){message("The CFTC query returned no weekly open-interest observations. No values have been substituted. Check the official dataset and selected market label.","warn");}
    else {message("CFTC weekly open interest loaded. Volume is not present in this COT response and remains unavailable until a separately licensed or official volume adapter is connected.","good");}
    renderChart();
   }catch(e){
-   rawRows=[];$("voiInstrument").innerHTML='<option>No data</option>';$("voiStatus").textContent="UNAVAILABLE";$("voiStatus").className="status-pill bad";
+   observations=[];$("voiInstrument").innerHTML='<option>No data</option>';$("voiStatus").textContent="UNAVAILABLE";$("voiStatus").className="status-pill bad";
    $("voiChart").innerHTML='<div class="empty-state">CFTC data could not be retrieved. Use the official report link to inspect the dataset.</div>';
    $("voiLatest").textContent="—";$("voiChange").textContent="—";$("voiRange").textContent="—";
    message(e.message,"bad");
