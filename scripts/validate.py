@@ -102,7 +102,7 @@ if dist.exists():
     ok('No stale nested robots/sitemap hostname',not bad_seo,', '.join(bad_seo[:4]))
     ok('Only one authoritative root robots and sitemap',len(list(dist.rglob('robots.txt')))==1 and len(list(dist.rglob('sitemap.xml')))==1)
     ok('No archived nested source ZIPs exposed in static output',not list(dist.rglob('*.zip')))
-        ok('P3 Academy learning assets match source',
+    ok('P3 Academy learning assets match source',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['academy-learning.css','academy-learning.js','academy-catalog.js']))
     p3_lessons=list((dist/'ict-futures/academy').glob('*.html'))
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
