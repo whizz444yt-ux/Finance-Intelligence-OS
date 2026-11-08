@@ -23,3 +23,5 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Structural and security validation
         run: python3 scripts/validate.py
+      - name: Internal link and anchor audit
+        run: python3 scripts/audit_internal_links.py
