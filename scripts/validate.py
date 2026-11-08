@@ -26,6 +26,7 @@ ok('Worker limits Builder models to allow-list','ALLOWED_BUILDER_MODELS' in work
 ok('Worker has GDELT scheduled collection','async scheduled' in worker and 'refreshNews(env)' in worker)
 ok('Worker contains health/news/provider endpoints','/api/v1/health' in worker and '/api/v1/news' in worker and '/api/v1/providers' in worker)
 ok('Worker contains BLS and CFTC endpoints','/api/v1/macro' in worker and '/api/v1/cot' in worker and 'api.bls.gov/publicAPI/v1' in worker and 'publicreporting.cftc.gov/resource/' in worker)
+ok('Worker contains NY Fed public reference rates','/api/v1/macro/funding' in worker and 'markets.newyorkfed.org/api/rates/all/latest.json' in worker)
 ok('Worker contains read-only Polymarket and Kalshi endpoints','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker and 'gamma-api.polymarket.com/events' in worker and 'external-api.kalshi.com/trade-api/v2/markets' in worker)
 ok('Worker has production-origin allow-list without wildcard','finance-intelligence-os-whizz444yt-7353.vercel.app' in worker and 'includes("*")' in worker and 'return json' in worker)
 
