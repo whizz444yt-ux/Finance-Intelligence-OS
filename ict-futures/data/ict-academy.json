@@ -2431,7 +2431,7 @@
       "title": "2022 ICT Mentorship Episode 3",
       "summary": "Internal Range Liquidity & Market Structure Shifts.",
       "url": "https://www.youtube.com/watch?v=nQfHZ2DEJ8c",
-      "published": "2022-01-25",
+      "published": "2022-01-26",
       "publisher": "The Inner Circle Trader",
       "verifiedOfficial": true,
       "conceptIds": [
@@ -2452,10 +2452,10 @@
     },
     {
       "id": "ict-market-efficiency-fvg-mss",
-      "title": "Market Efficiency Paradigm & Institutional Order Flow",
-      "summary": "The official upload description identifies a deep dive into Fair Value Gaps and Market Structure Shifts.",
+      "title": "2022 ICT Mentorship Episode 6 — Market Efficiency Paradigm & Institutional Order Flow",
+      "summary": "Official ICT mentorship episode covering institutional order flow, Fair Value Gaps and Market Structure Shifts.",
       "url": "https://www.youtube.com/watch?v=Bkt8B3kLATQ",
-      "published": "2022-02-03",
+      "published": "2022-02-04",
       "publisher": "The Inner Circle Trader",
       "verifiedOfficial": true,
       "conceptIds": [
@@ -2472,7 +2472,7 @@
         "6E",
         "6B"
       ],
-      "sourceNote": "Official ICT channel upload; topic mapping is based on the video description."
+      "sourceNote": "Official Inner Circle Trader upload; title and description explicitly identify FVG and MSS as deep-dive topics."
     },
     {
       "id": "ict-2022-ep14",
