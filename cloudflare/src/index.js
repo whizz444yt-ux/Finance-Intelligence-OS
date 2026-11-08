@@ -219,7 +219,7 @@ function normalizeCotRows(rows,report){
 async function fetchCot(report,market=""){
  const dataset=COT_DATASETS[report];
  const u=new URL("https://publicreporting.cftc.gov/resource/"+dataset.id+".json");
- u.searchParams.set("$limit",market?"1000":"5000");
+ u.searchParams.set("$limit",market?"2000":"5000");
  u.searchParams.set("$order","report_date_as_yyyy_mm_dd DESC");
  if(market){
   const safeMarket=market.toUpperCase().replace(/[^A-Z0-9 &.-]/g,"").trim();
