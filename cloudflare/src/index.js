@@ -74,6 +74,31 @@ export default {
    return json({...base,refresh:{status:refreshStatus,cooldownSeconds:300}},200,{...cors,"Cache-Control":url.searchParams.get("refresh")==="1"?"no-store":"public, max-age=30, s-maxage=60"});
   }
 
+  if(url.pathname==="/api/v1/volume-open-interest"){
+   const report=url.searchParams.get("report")==="disaggregated"?"disaggregated":"tff";
+   const market=String(url.searchParams.get("q")||"").slice(0,80).trim();
+   if(market.length<3)return json({status:"invalid-query",observations:[],error:"Supply a CFTC contract-market search term of at least three characters."},400,cors);
+   const marketKey=market.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"market";
+   const cacheKey="voi:"+report+":v1:"+marketKey;
+   let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(cacheKey,"json"):null;
+   if(!snapshot||!snapshot.retrievedAt||Date.now()-Date.parse(snapshot.retrievedAt)>6*60*60*1000){
+    try{
+     const cot=await fetchCot(report,market);
+     const observations=(cot.rows||[]).map(row=>({
+      marketName:row.contract_market_name||row.market_and_exchange_names||row.contract_name||"Contract",
+      reportDate:row.report_date_as_yyyy_mm_dd||row.report_date||null,
+      openInterest:asNumberOrNull(row.open_interest_all??row.open_interest)
+     })).filter(row=>row.reportDate&&row.openInterest!==null).sort((a,b)=>String(a.reportDate).localeCompare(String(b.reportDate)));
+     snapshot={schemaVersion:1,status:cot.status,provider:cot.provider,report,reportName:cot.reportName,query:market,dataAsOf:cot.dataAsOf,retrievedAt:cot.retrievedAt,sourceUrl:cot.sourceUrl,cadence:"weekly",metric:"open_interest",unit:"contracts",observations,volume:{status:"not-connected",metric:"exchange_traded_volume",reason:"CFTC COT does not provide the daily/intraday exchange volume series required by this module."}};
+     if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});
+    }catch(error){
+     if(!snapshot)return json({status:"unavailable",provider:"CFTC Public Reporting Environment",report,query:market,observations:[],volume:{status:"not-connected"},error:"CFTC open-interest request failed"},502,cors);
+     snapshot={...snapshot,status:"stale",lastError:"CFTC refresh failed; showing last successful open-interest snapshot."};
+    }
+   }
+   return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
+  }
+
   if(url.pathname==="/api/v1/cot"){
    const report=url.searchParams.get("report")==="disaggregated"?"disaggregated":"tff";
    const market=String(url.searchParams.get("q")||"").slice(0,80).toLowerCase();
@@ -135,7 +160,7 @@ export default {
     return json({status:result.ok?"connected":"provider-error",model,results:Array.isArray(data.results)?data.results:[],error:result.ok?undefined:"Builder API returned "+result.status},result.ok?200:502,{...cors,"Cache-Control":"public, max-age=60, s-maxage=120"});
    }catch{return json({status:"unavailable",model,results:[]},502,cors);}
   }
-  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/macro/funding","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
+  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/volume-open-interest?report=tff|disaggregated","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/macro/funding","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
  },
  async scheduled(controller,env,ctx){ctx.waitUntil(refreshNews(env));}
 };
