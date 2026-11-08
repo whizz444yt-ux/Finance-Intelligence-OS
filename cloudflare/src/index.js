@@ -228,7 +228,7 @@ async function upsertProviderStatus(env,provider,status,details,lastError=null,l
 }
 async function persistEconomicSnapshot(env,snapshot){
  if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured",rowsUpserted:0};
- const started=Date.now(),provider=String(snapshot.provider||"unknown").toLowerCase().replace(/[^a-z0-9]+/g,"_");
+ const started=Date.now(),provider=snapshot.providerId||"unknown";
  const runRows=await supabaseRequest(env,"ingestion_runs","POST","",{
   provider,dataset_id:snapshot.datasetId,status:"running",request_count:snapshot.requestCount||1,
   details:{dataAsOf:snapshot.dataAsOf||null,sourceUrl:snapshot.sourceUrl||null}
@@ -266,6 +266,7 @@ async function ingestEconomicProvider(provider,env,force=false){
  const cfg=ECONOMIC_PROVIDER_CONFIG[provider],started=Date.now();
  try{
   const snapshot=await fetchEconomicProvider(provider,env);
+  snapshot.providerId=provider;
   if(snapshot.status==="not-configured"){
    const state={status:"not-configured",credentialRequired:snapshot.credentialRequired,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:null,persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",note:snapshot.notes?.at(-1)};
    if(env.SNAPSHOTS){await env.SNAPSHOTS.put(economicCacheKey(provider),JSON.stringify(snapshot),{expirationTtl:Math.max(cfg.ttlSeconds,3600)});await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});}
