@@ -48,7 +48,7 @@ ok('12-area navigation is defined centrally',all("('"+label+"'," in nav_source f
 ok('Weekly open-interest endpoint is distinct from exchange volume','/api/v1/volume-open-interest' in worker and 'cadence:"weekly"' in worker and 'metric:"open_interest"' in worker and 'status:"not-connected"' in worker)
 ok('P1 health checker tests provider endpoints independently','Promise.allSettled' in (ROOT/'assets/data-health.js').read_text() and '/api/v1/providers' in (ROOT/'assets/data-health.js').read_text())
 ok('Prediction page uses read-only venue endpoints','/api/v1/prediction/polymarket' in (ROOT/'assets/prediction-markets.js').read_text() and '/api/v1/prediction/kalshi' in (ROOT/'assets/prediction-markets.js').read_text())
-ok('Entry Models page does not claim an audited ranking',"No audited win-rate" in nav_source and 'Strategy Lab' in nav_source)
+ok('Entry Models page does not claim an audited ranking',"no audited win-rate" in nav_source.lower() and 'Strategy Lab' in nav_source)
 
 
 sql=(ROOT/'supabase/setup.sql').read_text()
