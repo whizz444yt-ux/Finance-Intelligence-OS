@@ -110,7 +110,7 @@ class BuildTests(unittest.TestCase):
             self.assertIn(provider,js)
         self.assertIn('searchParams.delete("api_key")',js)
         self.assertIn('searchParams.delete("UserID")',js)
-        self.assertIn('offset < 5000',js)
+        self.assertIn('url.searchParams.set("limit", "100000")',js)
     def test_p2_ingestion_is_protected_and_persistent(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('url.pathname==="/api/v1/ingest"',js)
