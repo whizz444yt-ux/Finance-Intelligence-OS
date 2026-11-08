@@ -86,7 +86,7 @@ export default {
     try{snapshot=await fetchNyFedFunding();if(env.SNAPSHOTS)await env.SNAPSHOTS.put(key,JSON.stringify(snapshot),{expirationTtl:60*60*4});}
     catch(error){if(!snapshot)return json({status:"unavailable",provider:"Federal Reserve Bank of New York Markets Data API",rates:[],error:"NY Fed reference-rate request failed"},502,cors);snapshot={...snapshot,status:"stale"};}
    }
-   return json(snapshot,200,{...cors,"Cache-Control":"public, max-age":900, "s-maxage":1800});
+   return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
   }
   if(url.pathname.startsWith("/api/v1/prediction/")){
    const provider=url.pathname.split("/").pop();
