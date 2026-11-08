@@ -1,4 +1,5 @@
 const NEWS_KEY = "snapshot:gdelt:news:v1";
+const NEWS_REFRESH_LOCK_KEY = "lock:gdelt:manual-refresh:v1";
 const PROVIDER_STATE_KEY = "provider:gdelt:state:v1";
 const ALLOWED_BUILDER_MODELS = new Set(["page", "ict-lesson", "research-article", "glossary"]);
 const GDELT_QUERIES = [
@@ -54,8 +55,23 @@ export default {
   }
 
   if(url.pathname==="/api/v1/news"){
-   const snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(NEWS_KEY,"json"):null;
-   return json(snapshot||{status:"not-yet-fetched",provider:"GDELT DOC API",lastCheckedAt:null,articles:[],notes:["No edge snapshot exists yet. The configured Cron trigger populates this KV cache after its first successful run."]},200,{...cors,"Cache-Control":"public, max-age=30, s-maxage=60"});
+   let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(NEWS_KEY,"json"):null;
+   let refreshStatus="not-requested";
+   if(url.searchParams.get("refresh")==="1"){
+    if(!env.SNAPSHOTS)return json({status:"not-configured",provider:"GDELT DOC API",articles:[],refresh:{status:"storage-unavailable"}},503,cors);
+    const lastChecked=Date.parse(snapshot?.lastCheckedAt||"");
+    const coolingDown=Number.isFinite(lastChecked)&&Date.now()-lastChecked<5*60*1000;
+    const running=await env.SNAPSHOTS.get(NEWS_REFRESH_LOCK_KEY);
+    if(coolingDown)refreshStatus="cooldown";
+    else if(running)refreshStatus="in-progress";
+    else{
+     await env.SNAPSHOTS.put(NEWS_REFRESH_LOCK_KEY,new Date().toISOString(),{expirationTtl:300});
+     ctx.waitUntil(refreshNews(env).finally(()=>env.SNAPSHOTS.delete(NEWS_REFRESH_LOCK_KEY)));
+     refreshStatus="queued";
+    }
+   }
+   const base=snapshot||{status:"not-yet-fetched",provider:"GDELT DOC API",lastCheckedAt:null,articles:[],notes:["No edge snapshot exists yet. The configured Cron trigger populates this KV cache after its first successful run."]};
+   return json({...base,refresh:{status:refreshStatus,cooldownSeconds:300}},200,{...cors,"Cache-Control":url.searchParams.get("refresh")==="1"?"no-store":"public, max-age=30, s-maxage=60"});
   }
 
   if(url.pathname==="/api/v1/cot"){
@@ -68,7 +84,8 @@ export default {
     catch(error){if(!snapshot)return json({status:"unavailable",report,rows:[],sourceUrl:cotSource(report),error:"CFTC PRE request failed"},502,cors);snapshot.status="stale";snapshot.lastError="CFTC PRE refresh failed; showing last successful cache";}
    }
    const rows=market?snapshot.rows.filter(row=>JSON.stringify(row).toLowerCase().includes(market)):snapshot.rows;
-   return json({...snapshot,rows,filtered:Boolean(market),query:market||null},200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
+   const normalizedRows=(snapshot.normalizedRows||normalizeCotRows(snapshot.rows||[],report)).filter(row=>!market||String(row.contractName+" "+row.traderCategory).toLowerCase().includes(market));
+   return json({...snapshot,rows,normalizedRows,filtered:Boolean(market),query:market||null},200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
   }
   if(url.pathname==="/api/v1/macro"){
    const cacheKey="macro:bls:v1";
@@ -145,6 +162,34 @@ const COT_DATASETS={
  disaggregated:{id:"72hh-3qpy",name:"Disaggregated Futures Only",source:"https://publicreporting.cftc.gov/w/72hh-3qpy/default"}
 };
 function cotSource(report){return COT_DATASETS[report].source;}
+function asNumberOrNull(value){
+ if(value===null||value===undefined||String(value).trim()==="")return null;
+ const n=Number(value);return Number.isFinite(n)?n:null;
+}
+const COT_POSITION_FIELDS={
+ tff:[
+  {label:"Dealer / Intermediary",long:"dealer_positions_long_all",short:"dealer_positions_short_all",spread:"dealer_positions_spread_all"},
+  {label:"Asset Manager / Institutional",long:"asset_mgr_positions_long",short:"asset_mgr_positions_short",spread:"asset_mgr_positions_spread"},
+  {label:"Leveraged Funds",long:"lev_money_positions_long",short:"lev_money_positions_short",spread:"lev_money_positions_spread"},
+  {label:"Other Reportables",long:"other_rept_positions_long",short:"other_rept_positions_short",spread:"other_rept_positions_spread"},
+  {label:"Non-Reportables",long:"nonrept_positions_long_all",short:"nonrept_positions_short_all"}
+ ],
+ disaggregated:[
+  {label:"Producer / Merchant / Processor / User",long:"prod_merc_positions_long",short:"prod_merc_positions_short",spread:"prod_merc_positions_spread"},
+  {label:"Swap Dealers",long:"swap_positions_long_all",short:"swap_positions_short_all",spread:"swap_positions_spread_all"},
+  {label:"Managed Money",long:"m_money_positions_long",short:"m_money_positions_short",spread:"m_money_positions_spread"},
+  {label:"Other Reportables",long:"other_rept_positions_long",short:"other_rept_positions_short",spread:"other_rept_positions_spread"},
+  {label:"Non-Reportables",long:"nonrept_positions_long_all",short:"nonrept_positions_short_all"}
+ ]
+};
+function normalizeCotRows(rows,report){
+ const fields=COT_POSITION_FIELDS[report]||[];
+ return rows.flatMap(raw=>fields.map(category=>{
+  const long=asNumberOrNull(raw[category.long]),short=asNumberOrNull(raw[category.short]),spread=category.spread?asNumberOrNull(raw[category.spread]):null;
+  if(long===null&&short===null&&spread===null)return null;
+  return{contractName:raw.contract_market_name||raw.market_and_exchange_names||raw.contract_name||"Contract",reportDate:raw.report_date_as_yyyy_mm_dd||raw.report_date||null,traderCategory:category.label,long,short,spread,net:long!==null&&short!==null?long-short:null,openInterest:asNumberOrNull(raw.open_interest_all??raw.open_interest)};
+ }).filter(Boolean));
+}
 async function fetchCot(report){
  const dataset=COT_DATASETS[report];
  const u=new URL("https://publicreporting.cftc.gov/resource/"+dataset.id+".json");
@@ -153,7 +198,7 @@ async function fetchCot(report){
  if(!response.ok)throw new Error("CFTC PRE "+response.status);
  const rows=await response.json();if(!Array.isArray(rows))throw new Error("CFTC PRE response was not an array");
  const dates=rows.map(r=>r.report_date_as_yyyy_mm_dd).filter(Boolean).sort();
- return{schemaVersion:1,status:"fresh",provider:"CFTC Public Reporting Environment",report,reportName:dataset.name,dataAsOf:dates.at(-1)||null,retrievedAt:new Date().toISOString(),sourceUrl:dataset.source,access:"public API; respect moderate request use",rows};
+ return{schemaVersion:1,status:"fresh",provider:"CFTC Public Reporting Environment",report,reportName:dataset.name,dataAsOf:dates.at(-1)||null,retrievedAt:new Date().toISOString(),sourceUrl:dataset.source,access:"public API; respect moderate request use",rows,normalizedRows:normalizeCotRows(rows,report)};
 }
 const BLS_SERIES=[
  {id:"CUUR0000SA0",label:"CPI-U · All items",unit:"Index (1982-84=100)",marketContext:"Inflation context; not a tradable price."},
@@ -218,7 +263,7 @@ async function fetchPolymarket(){
  const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.1 public research"},signal:AbortSignal.timeout(14000)});
  if(!response.ok)throw new Error("Polymarket Gamma "+response.status);
  const data=await response.json();if(!Array.isArray(data))throw new Error("Polymarket Gamma response was not an array");
- const items=data.map(event=>({title:String(event.title||event.question||"Untitled event"),slug:String(event.slug||""),url:event.slug?"https://polymarket.com/event/"+event.slug:"https://polymarket.com",volume:Number(event.volume24hr||event.volume||0),volume24hr:Number(event.volume24hr||0),liquidity:Number(event.liquidity||0),endDate:event.endDate||event.endDateIso||null,markets:parseArray(event.markets).slice(0,8).map(m=>({question:String(m.question||m.groupItemTitle||""),slug:String(m.slug||""),outcomes:parseArray(m.outcomes),outcomePrices:parseArray(m.outcomePrices).map(Number),volume:Number(m.volume||0),liquidity:Number(m.liquidity||0),active:m.active!==false,closed:Boolean(m.closed),clobTokenIds:parseArray(m.clobTokenIds)}))})).filter(item=>item.title);
+ const items=data.map(event=>({title:String(event.title||event.question||"Untitled event"),slug:String(event.slug||""),url:event.slug?"https://polymarket.com/event/"+event.slug:"https://polymarket.com",volume:asNumberOrNull(event.volume),volume24hr:asNumberOrNull(event.volume24hr),liquidity:asNumberOrNull(event.liquidity),endDate:event.endDate||event.endDateIso||null,markets:parseArray(event.markets).slice(0,8).map(m=>({question:String(m.question||m.groupItemTitle||""),slug:String(m.slug||""),outcomes:parseArray(m.outcomes),outcomePrices:parseArray(m.outcomePrices).map(Number),volume:Number(m.volume||0),liquidity:Number(m.liquidity||0),active:m.active!==false,closed:Boolean(m.closed),clobTokenIds:parseArray(m.clobTokenIds)}))})).filter(item=>item.title);
  return{schemaVersion:1,provider:"Polymarket Gamma API",status:"fresh",retrievedAt:new Date().toISOString(),dataAsOf:null,access:"public read-only API; no key required",items,notes:["Gamma event volume/liquidity and outcomePrices are venue-reported metadata, not CME/ICE futures prices.","Outcome prices are indicative probabilities and may be stale or thinly traded.","No wallet, order-entry or execution endpoints are connected."]};
 }
 async function fetchKalshi(){
@@ -226,7 +271,7 @@ async function fetchKalshi(){
  const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.1 public research"},signal:AbortSignal.timeout(14000)});
  if(!response.ok)throw new Error("Kalshi public markets "+response.status);
  const data=await response.json();if(!Array.isArray(data.markets))throw new Error("Kalshi response did not include markets");
- const items=data.markets.map(m=>({title:String(m.title||m.subtitle||m.ticker||"Untitled market"),ticker:String(m.ticker||""),eventTicker:String(m.event_ticker||""),yesBid:Number(m.yes_bid_dollars??m.yes_bid??NaN),yesAsk:Number(m.yes_ask_dollars??m.yes_ask??NaN),lastPrice:Number(m.last_price_dollars??m.last_price??NaN),volume24h:Number(m.volume_24h_fp??m.volume_24h??0),volume:Number(m.volume_fp??m.volume??0),liquidity:Number(m.liquidity_dollars??0),closeTime:m.close_time||m.expected_expiration_time||null,updatedAt:m.updated_time||null,url:"https://kalshi.com/markets"})).filter(item=>item.ticker&&item.title);
+ const items=data.markets.map(m=>({title:String(m.title||m.subtitle||m.ticker||"Untitled market"),ticker:String(m.ticker||""),eventTicker:String(m.event_ticker||""),yesBid:Number(m.yes_bid_dollars??m.yes_bid??NaN),yesAsk:Number(m.yes_ask_dollars??m.yes_ask??NaN),lastPrice:Number(m.last_price_dollars??m.last_price??NaN),volume24h:asNumberOrNull(m.volume_24h_fp??m.volume_24h),volume:asNumberOrNull(m.volume_fp??m.volume),liquidity:asNumberOrNull(m.liquidity_dollars),closeTime:m.close_time||m.expected_expiration_time||null,updatedAt:m.updated_time||null,url:"https://kalshi.com/markets"})).filter(item=>item.ticker&&item.title);
  return{schemaVersion:1,provider:"Kalshi public Trade API v2",status:"fresh",retrievedAt:new Date().toISOString(),dataAsOf:null,access:"public read-only market-data endpoint; no key required",items,notes:["YES bid/ask and volume are Kalshi event-contract data, not exchange futures prices.","Displayed market probabilities are venue-specific and may be thinly traded.","No portfolio, wallet or order-entry endpoints are connected."]};
 }
 
