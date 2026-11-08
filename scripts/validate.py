@@ -125,14 +125,14 @@ if dist.exists():
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
     ok('P3 builds 76 enhanced standalone lessons',len(p3_lessons)==76 and all('KNOWLEDGE CHECK' in p.read_text(errors='ignore') and 'PRACTICAL EXERCISE' in p.read_text(errors='ignore') for p in p3_lessons))
     ok('P3 builds nine guided tutorials plus their index',len(p3_tutorials)==10 and (dist/'ict-futures/academy/tutorials/index.html').exists())
-        ok('P4 Strategy Lab assets match source',
+    ok('P4 Strategy Lab assets match source',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['strategy-lab.css','strategy-lab.js','strategy-backtest-engine.mjs']))
     p4_page=(dist/'strategy-lab/index.html').read_text(errors='ignore') if (dist/'strategy-lab/index.html').exists() else ''
     ok('P4 Strategy Lab is built with CSV input, chronological OOS and run downloads',
         'strategyCsv' in p4_page and 'out-of-sample' in p4_page and 'downloadManifest' in p4_page and 'downloadTrades' in p4_page)
     ok('P4 CSV input template is generated',
         (dist/'strategy-lab/backtest-input-template.csv').exists() and 'timestamp,open,high,low,close,signal' in (dist/'strategy-lab/backtest-input-template.csv').read_text())
-ok('P2 economic dashboard asset matches source',
+    ok('P2 economic dashboard asset matches source',
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
