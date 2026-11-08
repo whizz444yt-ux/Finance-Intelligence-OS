@@ -134,24 +134,26 @@ async function fetchFred(env) {
     url.searchParams.set("observation_start", "2010-01-01");
     url.searchParams.set("limit", "1000");
     url.searchParams.set("sort_order", "desc");
-    const rows = [];
+    const rows = []; let requestCount = 0;
     for (let offset = 0; offset < 5000; offset += 1000) {
+      requestCount += 1;
       url.searchParams.set("offset", String(offset));
       const body = await getJson(url, "FRED");
       const page = Array.isArray(body.observations) ? body.observations : [];
       rows.push(...page);
       if (page.length < 1000 || (body.count !== undefined && offset + page.length >= Number(body.count))) break;
     }
-    return rows.map(row => record(
+    return { rows: rows.map(row => record(
       "fred", "fred:series_observations", meta.id, meta.name, meta.frequency,
       row.date, row.value, meta.unit, canonicalSource(url.toString()), row
-    )).filter(Boolean);
+    )).filter(Boolean), requestCount };
   }));
   const successful = results.filter(x => x.status === "fulfilled");
-  const records = successful.flatMap(x => x.value);
+  const records = successful.flatMap(x => x.value.rows);
+  const requestCount = successful.reduce((sum, x) => sum + x.value.requestCount, 0);
   if (!records.length) throw new Error("FRED returned no usable observations for the configured series set");
   return {
-    ...snapshot("FRED", "fred:series_observations", records, sourceUrl, FRED_SERIES.length, [
+    ...snapshot("FRED", "fred:series_observations", records, sourceUrl, requestCount, [
       "Five explicitly listed FRED series are requested independently.",
       "Unsuccessful individual series are reported in provider notes; missing values are not converted to zero.",
       "FRED observation histories can be revised. Vintage-aware backtesting requires explicit realtime/vintage parameters."
@@ -169,9 +171,14 @@ async function fetchTreasury() {
   url.searchParams.set("filter", "security_type_desc:eq:Marketable");
   url.searchParams.set("sort", "-record_date");
   url.searchParams.set("page[size]", "1000");
-  url.searchParams.set("page[number]", "1");
-  const body = await getJson(url, "US Treasury Fiscal Data");
-  const rows = Array.isArray(body.data) ? body.data : [];
+  const rows = []; let requestCount = 0;
+  for (let page = 1; page <= 5; page += 1) {
+    url.searchParams.set("page[number]", String(page));
+    const body = await getJson(url, "US Treasury Fiscal Data");
+    const data = Array.isArray(body.data) ? body.data : [];
+    requestCount += 1; rows.push(...data);
+    if (data.length < 1000) break;
+  }
   if (!rows.length) throw new Error("Treasury Fiscal Data returned no average-interest-rate rows");
   const records = rows.map(row => record(
     "us_treasury", "avg_interest_rates", "avg_interest_rates:" + (row.security_desc || "unknown"),
@@ -179,7 +186,7 @@ async function fetchTreasury() {
     "monthly", row.record_date, row.avg_interest_rate_amt, "percent",
     canonicalSource(url.toString()), row
   )).filter(Boolean);
-  return snapshot("US Treasury Fiscal Data", "avg_interest_rates", records, url.toString(), 1, [
+  return snapshot("US Treasury Fiscal Data", "avg_interest_rates", records, canonicalSource(url.toString()), requestCount, [
     "This dataset reports monthly average interest rates paid on outstanding Treasury securities by security description.",
     "It is not the daily Treasury par yield curve or a real-time traded yield."
   ]);
