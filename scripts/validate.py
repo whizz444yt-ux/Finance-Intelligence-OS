@@ -99,6 +99,17 @@ ok('P4 database migration enforces owner RLS and user-linked trade rows',
    'foreign key (backtest_id, user_id)' in p4_migration.read_text() and
    '(select auth.uid()) = user_id' in p4_migration.read_text())
 
+p5_ui=(ROOT/'assets/account.js').read_text()
+p5_notes=ROOT/'supabase/migrations/20261108161355_add_cloud_workspace_notes_and_alert_events.sql'
+p5_legacy=ROOT/'supabase/migrations/20261108161450_add_idempotent_legacy_trade_import.sql'
+ok('P5 account supports refresh-token persistence, private CRUD, analytics and legacy imports',
+   'grant_type=refresh_token' in p5_ui and all(x in p5_ui for x in ['/rest/v1/journal_trades','/rest/v1/watchlists','/rest/v1/watchlist_items','/rest/v1/research_notes','/rest/v1/alert_rules','/rest/v1/alert_events','/rest/v1/user_preferences']) and 'ictfos.journal.v1' in p5_ui and 'fios.v2.journal' in p5_ui and 'fios.v2.watchlist' in p5_ui)
+ok('P5 browser code does not expose privileged Supabase credentials',
+   'SUPABASE_SERVICE_ROLE_KEY' not in p5_ui and 'service_role' not in p5_ui.lower())
+ok('P5 alert behavior is explicitly user-triggered rather than a claimed live feed',
+   'manual-browser-check' in p5_ui and 'No unattended exchange quote stream is configured' in p5_ui)
+ok('P5 notes and alert event migrations enforce owner RLS and linked alert ownership',
+   p5_notes.exists() and p5_legacy.exists() and 'enable row level security' in p5_notes.read_text() and '(select auth.uid()) = user_id' in p5_notes.read_text() and 'foreign key (alert_id, user_id)' in p5_notes.read_text() and 'unique (user_id, legacy_id)' in p5_legacy.read_text())
 sql=(ROOT/'supabase/setup.sql').read_text()
 ok('Supabase schema includes RLS enablement','enable row level security' in sql)
 ok('User RLS checks ownership with auth.uid()','(select auth.uid())' in sql and 'with check' in sql)
@@ -132,6 +143,10 @@ if dist.exists():
         'strategyCsv' in p4_page and 'out-of-sample' in p4_page and 'downloadManifest' in p4_page and 'downloadTrades' in p4_page)
     ok('P4 CSV input template is generated',
         (dist/'strategy-lab/backtest-input-template.csv').exists() and 'timestamp,open,high,low,close,signal' in (dist/'strategy-lab/backtest-input-template.csv').read_text())
+    p5_page=(dist/'account/index.html').read_text(errors='ignore') if (dist/'account/index.html').exists() else ''
+    ok('P5 cloud account route and refreshed account asset are generated',
+        'Your private cloud workspace' in p5_page and 'account.js' in p5_page and
+        (dist/'assets/account.js').exists() and (dist/'assets/account.js').read_bytes()==(ROOT/'assets/account.js').read_bytes())
     ok('P2 economic dashboard asset matches source',
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',

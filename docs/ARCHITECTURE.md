@@ -25,7 +25,7 @@ Browser
 
 - **Vercel** serves the static application, generated routes, and published sitemap.
 - **Cloudflare Worker** is the single public-data gateway. It owns upstream calls, per-provider timeouts, cache and freshness labels. The GDELT scheduled refresh uses the existing 30-minute Cron trigger. A manual `/api/v1/news?refresh=1` request queues a Worker-side refresh under a five-minute cooldown/lock; the API immediately returns the prior snapshot with refresh state, so the browser does not make upstream GDELT calls. BLS, CFTC and prediction-market feeds are refreshed on request with KV fallback.
-- **Supabase** stores the normalized data model and user-owned journal/watchlists/progress. All 20 public tables currently have RLS enabled. The Worker currently has no Supabase service-role/secret key configured, so its optional server-side ingestion writes remain disabled; do not put privileged keys in browser code.
+- **Supabase** stores the normalized data model and user-owned journal/watchlists/progress. All 22 public tables currently have RLS enabled. The Worker currently has no Supabase service-role/secret key configured, so its optional server-side ingestion writes remain disabled; do not put privileged keys in browser code.
 - **Builder.io** remains optional editorial CMS. Its public Content API key and Admin PAT are not configured, so existing static lessons and JSON remain the fallback.
 - **GitHub Actions** runs build, unit, validation and internal-link checks on pushes and pull requests.
 
@@ -102,3 +102,15 @@ Metrics include gross P&L, net P&L after modeled costs, net expectancy per trade
 The run manifest stores the CSV SHA-256, canonical run fingerprint, engine version, all parameters, split percentages, data-quality summary and execution policy. SHA-256 is computed in the browser; the source CSV is not uploaded. The authenticated browser may store the manifest, metrics and completed trades in strategy_backtests and strategy_backtest_trades, both RLS-protected by auth.uid() = user_id. No service-role key is present in browser assets. Local-only runs remain available when signed out or cloud sync fails.
 
 The eight ICT entry models are still playbook descriptions. Until each model has a deterministic causal signal definition, P4 tests supplied signal columns rather than claiming to backtest the ICT concepts automatically. Exchange point/tick values, active contract expiry, roll mechanics, holidays, margin, market impact, broker fills and licensing are user/data-source assumptions that must be verified; unverified contract catalogue values are not automatically injected.
+
+## P5 Cloud personal workspace
+
+The /account/ route now loads a private workspace with Supabase Auth, refresh-token rotation, trade journal/watchlist/research-note/alert CRUD, analytics and cross-device synchronization. The browser uses the project publishable key and authenticated user JWT only. The session is persisted in localStorage under the shared finance-os-supabase-session-v1 key and mirrored to sessionStorage for compatibility with the ICT Academy and Strategy Lab clients. Expiring sessions are refreshed before database requests; an HTTP 401 triggers one refresh/retry.
+
+Data model: journal_trades remains the user's trade-record source; watchlists/watchlist_items are the multi-list instrument shortcut model; profiles stores display name/timezone; user_preferences stores theme and JSON preferences. Migration 20261108161355 adds research_notes and alert_events. Migration 20261108161450 adds journal_trades.legacy_id plus a unique user/legacy identifier to make import of existing ICT browser journal entries idempotent. Alert events link to an alert/user pair through a composite foreign key. Private tables use owner RLS.
+
+The explicit Import action reads the old Global Research local watchlist and scenario-note keys and the ICT Futures ictfos.journal.v1 trade journal. It upserts stable legacy identifiers and does not delete local values. It must be run separately in each browser containing unique historical local data. Partial import failures can be retried without duplicate legacy rows.
+
+Account analytics summarize saved closed trades using entered net P&L and R values. They are not connected to a broker or live account. Price alert rules are persisted in alert_rules and triggered event history in alert_events; the user enters a current observed price to run a manual threshold evaluation. Browser notifications require an open site and permission. No unattended market monitoring, exchange quote polling, email/SMS alerts or scheduled server delivery is claimed. Those capabilities require a verified appropriately licensed market-data source and a scheduled background service.
+
+Users can export a JSON backup of the workspace. Profiles, trades, lists, notes, alerts and event history load on sign-in or via Sync now. No privileged service-role key is shipped to the browser.

@@ -24,7 +24,7 @@ import {
     ? "—" : Number(value).toFixed(2) + "%";
   const formatR = value => value === null || value === undefined || !Number.isFinite(Number(value))
     ? "—" : Number(value).toFixed(2) + "R";
-  const parseSession = () => { try { return JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"); } catch { return null; } };
+  const parseSession = () => { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY) || "null"); } catch { try { return JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"); } catch { return null; } } };
   const setStatus = (message, bad=false) => {
     const el=$("strategySyncStatus");
     if(el){el.textContent=message;el.className="strategy-sync-status"+(bad?" bad":"");}
