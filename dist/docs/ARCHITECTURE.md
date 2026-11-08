@@ -39,12 +39,25 @@ Browser
 | `/api/v1/cot?report=tff` | CFTC PRE | Weekly Traders in Financial Futures report. |
 | `/api/v1/cot?report=disaggregated` | CFTC PRE | Weekly Disaggregated report. |
 | `/api/v1/macro/funding` | New York Fed Markets API | Latest published SOFR, EFFR and supported overnight reference rates; daily business-day observations. |
+| `/api/v1/economic/providers` | Worker provider registry | Credential configuration, cadence, last attempt/success, persistence state and freshness per provider. |
+| `/api/v1/economic/bea` | BEA NIPA | Quarterly NIPA Table T10101; requires `BEA_API_KEY`. |
+| `/api/v1/economic/eia` | EIA API v2 series ID route | Weekly US crude-oil ending stocks `PET.WCESTUS1.W`; requires `EIA_API_KEY`. |
+| `/api/v1/economic/fred` | FRED observations API | DFF, DGS10, CPIAUCSL, UNRATE and PCEPI histories; requires `FRED_API_KEY` and paginated series queries. |
+| `/api/v1/economic/us_treasury` | Treasury Fiscal Data | Monthly average interest rates on marketable Treasury securities; public API, historical series pages with explicit provider cadence. |
+| `/api/v1/economic/ecb` | ECB SDMX 2.1 | Daily USD/EUR reference series `D.USD.EUR.SP00.A`; public endpoint. |
+| `POST /api/v1/ingest` | Worker ingestion orchestrator | Protected by `INGEST_TOKEN`; starts provider ingestion and records persistence outcomes.
 | `/api/v1/prediction/polymarket` | Polymarket Gamma | Active event metadata, outcome prices, volume and liquidity fields; read-only. |
 | `/api/v1/prediction/kalshi` | Kalshi public Trade API v2 | Open event markets, YES bid/ask and volume fields; read-only. |
 | `/api/v1/providers` | Gateway registry | Provider configuration and last-known state. |
 | `/api/v1/health` | Gateway | Worker health and secret/configuration presence flags, never secret values. |
 
 The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Data Health page runs each public gateway endpoint independently and distinguishes an available-on-demand route from a fresh upstream snapshot. Prediction-market data remains a separate venue context. The Entry Models page is descriptive and does not rank models without reproducible results; Strategy Lab publishes no backtest statistics until timestamped historical inputs, costs and validation methodology are available. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
+
+## Historical persistence and schedules
+
+The economic provider adapters live in `cloudflare/src/economic-providers.js`. They normalize provider-specific observations and preserve units, source URLs, retrieval timestamps, frequency and raw provider attributes. `economic_observations` uses a unique key `(provider, dataset_id, series_id, frequency, observation_date)` so scheduled refreshes can safely upsert without duplicating history. `ingestion_runs` records each run and is deliberately inaccessible to browser roles; a second migration adds an explicit `USING (false)` / `WITH CHECK (false)` policy for anon/authenticated roles in addition to revoking their privileges. `economic_observations` is public read-only; all writes use `SUPABASE_SERVICE_ROLE_KEY` in the Cloudflare Worker only.
+
+The Worker Cron remains every 30 minutes, but provider TTL/cadence checks control actual upstream requests. The five selected FRED series use one request per series with the documented 100,000-observation cap; EIA requests up to 5,000 weekly observations; Treasury history is paginated in bounded 1,000-row pages; ECB requests the latest 1,000 observations. BEA/EIA/FRED credentials are Worker secrets; Treasury Fiscal Data and ECB SDMX do not require registered API keys. `POST /api/v1/ingest` is protected by the `INGEST_TOKEN` bearer header. If credentials or database secrets are absent, provider fetch status and persistence status are reported independently; no secret value is included in logs or source URLs.
 
 ## Security and access boundaries
 

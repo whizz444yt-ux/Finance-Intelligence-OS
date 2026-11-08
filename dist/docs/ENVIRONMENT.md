@@ -3,13 +3,19 @@
 | Variable | Where | Purpose |
 |---|---|---|
 | `SITE_URL` | build environment | Absolute production origin for canonical tags, OG URLs, robots and sitemap. Leave unset for local/noindex build. |
-| `ALLOWED_ORIGINS` | Cloudflare Worker variable | Exact allowed browser origins. |
-| `BUILDER_PUBLIC_API_KEY` | Cloudflare Worker secret | Builder Content API read key; only used server-side by the CMS proxy. |
-| `SUPABASE_URL` | Cloudflare Worker variable/secret | Supabase project URL for server-side ingestion. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Cloudflare Worker secret | Server-only elevated key; never use in browser or repository. |
-| `INGEST_TOKEN` | Cloudflare Worker secret | Optional authorization for protected ingestion endpoints when implemented. |
+| `ALLOWED_ORIGINS` | Cloudflare Worker variable | Comma-separated exact browser origins allowed by CORS. |
+| `BUILDER_PUBLIC_API_KEY` | Cloudflare Worker secret | Builder Content API read key; used by the CMS proxy. |
+| `BUILDER_PAT` | Cloudflare Worker secret | Read-only Builder.io Personal Access Token for the Admin API model-list endpoint. Do not reuse an exposed token. |
+| `SUPABASE_URL` | Cloudflare Worker variable | Supabase project URL for server-side ingestion. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Cloudflare Worker secret | Server-only elevated key used by the ingestion worker for protected database writes; never use in browser or repository. |
+| `BEA_API_KEY` | Cloudflare Worker secret | Registered BEA 36-character UserID for BEA NIPA API requests. |
+| `EIA_API_KEY` | Cloudflare Worker secret | Registered EIA API key for weekly petroleum series. |
+| `FRED_API_KEY` | Cloudflare Worker secret | Registered FRED API key for historical macro series. |
+| `INGEST_TOKEN` | Cloudflare Worker secret | Required bearer token for `POST /api/v1/ingest`; never place it in a URL or browser bundle. |
 | `PUBLIC_SUPABASE_URL` | browser build config | Project URL only (public identifier). |
 | `PUBLIC_SUPABASE_ANON_KEY` | browser build config | Publishable/anon key only; relies on RLS. |
 | `PUBLIC_FINANCE_OS_API_BASE` | browser build config | Worker public endpoint base URL (`https://finance-intelligence-os-edge.finance-intelligence-os.workers.dev`). |
 
-Do not commit real values to `.env`, JSON, static HTML, Builder content or Git. `.env.example` contains only variable names.
+Never commit real values to `.env`, JSON, static HTML, Builder content or Git. `.env.example` contains placeholders only.
+
+Set Worker secrets through Cloudflare Workers & Pages → finance-intelligence-os-edge → Settings → Variables and Secrets, or with `wrangler secret put SECRET_NAME`. Configure `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `INGEST_TOKEN`, and the provider keys for BEA/EIA/FRED. Treasury Fiscal Data and ECB public SDMX do not require API keys. Do not put any provider or service-role key in `[vars]`, the browser runtime, a URL query string that is logged, or Git. The Worker removes BEA/EIA/FRED keys from stored `source_url` values.

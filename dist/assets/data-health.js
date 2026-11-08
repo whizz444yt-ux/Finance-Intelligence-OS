@@ -9,7 +9,12 @@
   {id:"cftc",name:"CFTC COT · TFF",path:"/api/v1/cot?report=tff&q=NASDAQ",detail:"Weekly financial-futures positioning and reported open interest."},
   {id:"nyfed",name:"Federal Reserve Bank of New York",path:"/api/v1/macro/funding",detail:"Published overnight reference rates; daily/business-day cadence."},
   {id:"polymarket",name:"Polymarket public events",path:"/api/v1/prediction/polymarket",detail:"Read-only prediction-market outcomes, volume and liquidity metadata."},
-  {id:"kalshi",name:"Kalshi public market data",path:"/api/v1/prediction/kalshi",detail:"Read-only event-market prices and venue volume metadata."}
+  {id:"kalshi",name:"Kalshi public market data",path:"/api/v1/prediction/kalshi",detail:"Read-only event-market prices and venue volume metadata."},
+  {id:"bea",name:"BEA National Accounts",path:"/api/v1/economic/bea",detail:"Quarterly national-accounts data; requires BEA_API_KEY."},
+  {id:"eia",name:"EIA Weekly Petroleum",path:"/api/v1/economic/eia",detail:"Weekly crude-oil inventory history; requires EIA_API_KEY."},
+  {id:"fred",name:"FRED Economic Series",path:"/api/v1/economic/fred",detail:"Historical rate and macro series; requires FRED_API_KEY."},
+  {id:"treasury",name:"US Treasury Fiscal Data",path:"/api/v1/economic/us_treasury",detail:"Monthly average interest rates on marketable securities."},
+  {id:"ecb",name:"ECB USD/EUR Reference Series",path:"/api/v1/economic/ecb",detail:"Daily ECB reference rate; not a live FX quote."}
  ];
  const stateLabel=s=>({fresh:"Fresh",partial:"Partial",stale:"Stale snapshot",unavailable:"Unavailable","not-yet-fetched":"Not fetched","not-configured":"Not configured","available-on-demand":"Available on request","official-source-link":"Official source link","needs-worker-secret":"Worker secret needed","needs-public-space-key":"Public key needed"}[String(s||"").toLowerCase()]||String(s||"Unknown").replaceAll("-"," "));
  const tone=s=>["fresh","partial"].includes(String(s||"").toLowerCase())?"good":["stale","not-yet-fetched","available-on-demand","not-configured","official-source-link","needs-worker-secret","needs-public-space-key"].includes(String(s||"").toLowerCase())?"warn":"bad";
