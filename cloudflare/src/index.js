@@ -158,14 +158,16 @@ export default {
    const startDate=String(url.searchParams.get("start_date")||"");
    const endDate=String(url.searchParams.get("end_date")||"");
    const datePattern=/^\d{4}-\d{2}-\d{2}$/;
-   if((startDate&&!datePattern.test(startDate))||(endDate&&!datePattern.test(endDate)))return json({error:"Dates must use YYYY-MM-DD."},400,cors);
+   const validDate=value=>{if(!datePattern.test(value))return false;const parsed=new Date(value+"T00:00:00Z");return Number.isFinite(parsed.getTime())&&parsed.toISOString().slice(0,10)===value;};
+   if((startDate&&!validDate(startDate))||(endDate&&!validDate(endDate))||(startDate&&endDate&&startDate>endDate))return json({error:"Dates must be valid YYYY-MM-DD values and start_date must not follow end_date."},400,cors);
    const parsedLimit=Number(url.searchParams.get("limit")||1000),limit=Number.isInteger(parsedLimit)?Math.min(5000,Math.max(1,parsedLimit)):1000;
    const parsedOffset=Number(url.searchParams.get("offset")||0),offset=Number.isInteger(parsedOffset)?Math.min(1000000,Math.max(0,parsedOffset)):0;
    const query=new URLSearchParams({select:"provider,dataset_id,series_id,series_name,country_code,frequency,observation_date,value,unit,data_as_of,published_at,retrieved_at,source_url,freshness_status"});
    query.set("provider","eq."+provider);
    if(seriesId)query.set("series_id","eq."+seriesId);
-   if(startDate)query.set("observation_date","gte."+startDate);
-   if(endDate)query.append("observation_date","lte."+endDate);
+   if(startDate&&endDate)query.set("and","(observation_date.gte."+startDate+",observation_date.lte."+endDate+")");
+   else if(startDate)query.set("observation_date","gte."+startDate);
+   else if(endDate)query.set("observation_date","lte."+endDate);
    query.set("order","series_id.asc,observation_date.asc");
    query.set("limit",String(limit));query.set("offset",String(offset));
    try{
@@ -214,7 +216,7 @@ export default {
     return json({status:result.ok?"connected":"provider-error",model,results:Array.isArray(data.results)?data.results:[],error:result.ok?undefined:"Builder API returned "+result.status},result.ok?200:502,{...cors,"Cache-Control":"public, max-age=60, s-maxage=120"});
    }catch{return json({status:"unavailable",model,results:[]},502,cors);}
   }
-  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/volume-open-interest?report=tff|disaggregated","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/macro/funding","/api/v1/economic/providers","/api/v1/economic/{bea|eia|fred|us_treasury|ecb}","POST /api/v1/ingest","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
+  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/volume-open-interest?report=tff|disaggregated","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/macro/funding","/api/v1/economic/providers","/api/v1/economic/{bea|eia|fred|us_treasury|ecb}","POST /api/v1/ingest","/api/v1/economic/history?provider=...&series_id=...","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
  },
  async scheduled(controller,env,ctx){ctx.waitUntil(Promise.allSettled([refreshNews(env),scheduledEconomicIngestion(env)]));}
 };
