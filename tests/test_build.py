@@ -147,4 +147,53 @@ class BuildTests(unittest.TestCase):
         self.assertIn('Refresh economic providers',build)
 
 
+
+    def test_p3_all_76_concepts_have_full_learning_content(self):
+        data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        lessons=data['concepts']
+        self.assertEqual(len(lessons),76)
+        for lesson in lessons:
+            content=lesson['learning']
+            self.assertGreaterEqual(len(content['learningObjectives']),3)
+            self.assertGreaterEqual(len(content['guidedWalkthrough']),3)
+            self.assertTrue(content['workedExample']['body'])
+            self.assertTrue(content['practicalExercise']['task'])
+            self.assertTrue(content['practicalExercise']['deliverable'])
+            self.assertEqual(len(content['knowledgeCheck']['options']),3)
+            self.assertIn(content['knowledgeCheck']['correctIndex'],[0,1,2])
+            self.assertEqual(content['knowledgeCheck']['correctAnswer'],content['knowledgeCheck']['options'][content['knowledgeCheck']['correctIndex']])
+    def test_p3_nine_guided_tutorials_have_workflows_and_reviews(self):
+        data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        tutorials=data['learningProgram']['tutorials']
+        self.assertEqual(len(tutorials),9)
+        for tutorial in tutorials:
+            self.assertGreaterEqual(len(tutorial['steps']),4)
+            self.assertTrue(tutorial['deliverable'])
+            self.assertGreaterEqual(len(tutorial['review']),3)
+    def test_p3_academy_build_generates_pages_and_tutorials(self):
+        lessons=list((ROOT/'dist/ict-futures/academy').glob('*.html'))
+        tutorials=list((ROOT/'dist/ict-futures/academy/tutorials').glob('*.html'))
+        self.assertEqual(len(lessons),76)
+        self.assertEqual(len(tutorials),10)
+        for page in lessons:
+            content=page.read_text()
+            self.assertIn('PRACTICAL EXERCISE',content)
+            self.assertIn('KNOWLEDGE CHECK',content)
+            self.assertIn('REFERENCES & FURTHER STUDY',content)
+        self.assertTrue((ROOT/'dist/academy/index.html').exists())
+    def test_p3_progress_sync_is_user_authenticated_and_scoped(self):
+        js=(ROOT/'assets/academy-learning.js').read_text()
+        self.assertIn('finance-os-supabase-session-v1',js)
+        self.assertIn('/auth/v1/user',js)
+        self.assertIn('/rest/v1/lesson_progress',js)
+        self.assertIn('on_conflict=user_id,lesson_slug',js)
+        self.assertIn('progress_data',js)
+        self.assertIn('lesson_version',js)
+        self.assertIn('ictfos.academy.progress.v2',js)
+        migration=(ROOT/'supabase/migrations/20261108144106_add_lesson_progress_data.sql').read_text()
+        self.assertIn('add column if not exists progress_data jsonb',migration)
+        self.assertIn('add column if not exists lesson_version text',migration)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
+        self.assertNotIn('service_role',js.lower())
+
 if __name__=='__main__': unittest.main()

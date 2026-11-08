@@ -74,3 +74,16 @@ Normalized records should retain `provider`, `source_url`, `published_at`, `even
 ## Degradation
 
 If a provider is rate-limited, blocked, unavailable or not configured, the UI shows an unavailable/not-configured state or a clearly identified last-known snapshot. It must not synthesize values, describe a search destination as an API, or imply that an indicative event-market probability is a futures price.
+
+
+## P3 ICT Academy curriculum
+
+The ICT Academy dataset retains the existing 76 concept IDs, categories, levels and seven learning tracks. Each concept now carries a structured learning object: objectives, prerequisites, guided steps, a labelled hypothetical example, chart-replay exercise, deliverable/review criteria, three-choice knowledge check and source references. The content preserves evidence/provenance labels and does not upgrade community terminology into canonical ICT rules.
+
+Nine guided tutorials provide multi-concept workbooks for structure, liquidity, sweep versus acceptance, imbalances, dealing ranges, timezone-aware sessions, cross-market comparisons, entry-model replay and supplemental source auditing.
+
+The static build's `scripts/build_academy.py` creates the enhanced standalone lesson pages at existing `/ict-futures/academy/{id}.html` URLs and nine tutorial pages plus an index under `/ict-futures/academy/tutorials/`. The root `/academy/` route provides a searchable 76-lesson catalogue, seven track entry points and tutorial cards.
+
+Lesson progress uses local storage for immediate, offline progress and attempts cloud sync only when a Supabase session is present. It sends the learner's authenticated JWT and publishable key to the existing `public.lesson_progress` Data API table; RLS checks `auth.uid() = user_id`. It uses the unique `(user_id, lesson_slug)` key for an upsert. Migration `20261108144106_add_lesson_progress_data` adds `progress_data` JSONB for practice checklist state and `lesson_version` for curriculum versioning. The browser uses only a publishable key and the learner JWT; no service-role key is exposed. Lesson completion requires the practice checklist and correct knowledge-check response; tutorial completion requires its review checklist. A synced score is a learning check, not a trading-skill metric.
+
+Verified original ICT uploads are only embedded where the source catalogue explicitly marks them as verified. Official channel/playlist and topic-search links are distinguished. CME Institute/CFTC links provide general exchange/regulatory education and are not presented as sources for ICT setup definitions or profitability.

@@ -4,6 +4,7 @@ from __future__ import annotations
 import json, os, shutil, re
 from pathlib import Path
 from html import escape
+from build_academy import build_academy
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
@@ -117,7 +118,9 @@ def build():
     # Generate app routes from source datasets.
     resources = load(ROOT/'resources.json',{}).get('resources',[])
     mdata = load(ROOT/'ict-futures/data/market-universe.json',{}).get('markets',[])
-    academy = load(ROOT/'ict-futures/data/ict-academy.json',{}).get('concepts',[])
+    academy_data = load(ROOT/'ict-futures/data/ict-academy.json',{})
+    academy = academy_data.get('concepts',[])
+    build_academy(DIST, academy_data, SITE_URL)
     news = load(ROOT/'data/news-snapshot.json',{})
     fin_markets = load(ROOT/'data/market-universe.json',{}).get('markets',[])
 
@@ -129,12 +132,53 @@ def build():
     body+=f'<section class="content-section"><h2>Contract data quality rules</h2><p>Tick size, tick value, multiplier, expiry, first notice and session hours are reference values only until independently reconciled with the official exchange specification and date-stamped. No broker margin is inferred.</p></section>'
     write(DIST/'markets/index.html',shell('Global Markets & Futures | Finance Intelligence OS','Explore global instruments and the retained 15-contract ICT futures universe.',body,'/markets/'))
 
-    # Academy listing
-    lesson_cards=''.join(card(c.get('name','Lesson'),c.get('definition',''),f"/ict-futures/academy/{c.get('id','')}.html",c.get('category','ICT Academy'),c.get('level','')) for c in academy)
-    body=page_intro('Education library','ICT Academy','76 concept records across seven learning tracks from the supplied ICT Futures playbook. Concepts include evidence/provenance notes; an educator search link is not represented as a verified lesson video.',f'<div class="stats-row"><b>{len(academy)}</b><span>Concept records</span><b>7</b><span>Learning tracks</span></div>')
-    body+='<div class="filter-row"><input id="academySearch" class="search-input" type="search" placeholder="Search concepts, definitions or categories"><span id="academyCount" class="muted"></span></div>'
-    body+=f'<section class="card-grid" id="academyCards">{lesson_cards}</section>'
-    write(DIST/'academy/index.html',shell('ICT Academy | Finance Intelligence OS','Browse ICT concepts, models, market structure, liquidity, sessions and futures education.',body,'/academy/', '<script defer src="/assets/academy-search.js"></script>'))
+    # P3 Academy dashboard: all 76 lessons, learning tracks, tutorials and progress.
+    program=academy_data.get('learningProgram',{})
+    tutorials=program.get('tutorials',[])
+    tracks=academy_data.get('tracks',[])
+    concept_by_name={c.get('name'):c for c in academy}
+    track_cards=[]
+    for i,t in enumerate(tracks):
+        ids=[concept_by_name[n]['id'] for n in t.get('sequence',[]) if n in concept_by_name]
+        first=ids[0] if ids else ''
+        track_cards.append(
+            f'<article class="academy-track-card"><span class="badge">PATH {i+1} · {escape(str(t.get("level","Study")))}</span>'
+            f'<h3>{escape(str(t.get("name","Learning track")))}</h3><p>{escape(str(t.get("description","")))}</p>'
+            f'<p>{len(ids)} sequenced lessons</p>'
+            f'<a href="/ict-futures/academy/{escape(first)}.html">Start path →</a></article>'
+        )
+    tutorial_cards=[]
+    for t in tutorials:
+        slug=str(t.get('id',''))
+        tutorial_cards.append(
+            f'<article class="academy-tutorial-card"><span class="badge">{escape(str(t.get("level","Tutorial")))} · {escape(str(t.get("duration","")))}'
+            f'</span><h3>{escape(str(t.get("title","Guided tutorial")))}</h3><p>{escape(str(t.get("objective","")))}</p>'
+            f'<a href="/ict-futures/academy/tutorials/{escape(slug)}.html">Open tutorial →</a></article>'
+        )
+    catalog_cards=[]
+    for c in academy:
+        slug=str(c.get('id',''))
+        searchable=' '.join([str(c.get('name','')),str(c.get('category','')),str(c.get('definition','')),str(c.get('evidence',''))]).lower()
+        catalog_cards.append(
+            f'<article class="academy-catalog-card" data-academy-card data-search="{escape(searchable,quote=True)}" '
+            f'data-category="{escape(str(c.get("category","")),quote=True)}" data-level="{escape(str(c.get("level","")),quote=True)}">'
+            f'<span class="badge">{escape(str(c.get("level","Study")))} · {escape(str(c.get("category","ICT")))}</span>'
+            f'<h3>{escape(str(c.get("name","Lesson")))}</h3><p>{escape(str(c.get("definition","")))}</p>'
+            f'<small class="muted">{escape(str(c.get("evidence","")))}</small><p><a href="/ict-futures/academy/{escape(slug)}.html">Study lesson →</a></p></article>'
+        )
+    categories=sorted({str(c.get('category','ICT')) for c in academy})
+    category_options=''.join(f'<option value="{escape(c,quote=True)}">{escape(c)}</option>' for c in categories)
+    body=page_intro('Education library','ICT Academy',
+        'A structured study program with 76 guided concept lessons, 9 practice tutorials, 7 learning tracks, worked examples, replay assignments, knowledge checks and source-labelled references.',
+        f'<div class="stats-row"><b>{len(academy)}</b><span>Guided lessons</span><b>{len(tutorials)}</b><span>Practice tutorials</span><b>{len(tracks)}</b><span>Learning tracks</span></div>')
+    body+='<section class="academy-progress-summary"><strong data-academy-global-progress>0 / 76 lessons completed</strong><span id="academyProgressMeta">Progress is saved on this device and syncs to your account when signed in.</span></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>Guided practice tutorials</h2><p>Step-by-step chart workbooks, deliverables and review criteria.</p></div><a class="text-link" href="/ict-futures/academy/tutorials/">Open all tutorials →</a></div><div class="academy-course-grid">'+''.join(tutorial_cards)+'</div></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>Seven learning tracks</h2><p>Follow the recommended lesson order from foundational chart reading to advanced research terms.</p></div></div><div class="academy-course-grid">'+''.join(track_cards)+'</div></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>76-concept lesson catalogue</h2><p>Each lesson has objectives, walkthrough, worked example, a chart-replay assignment, knowledge check and references.</p></div></div>'
+    body+='<div class="academy-filter"><input id="academySearch" type="search" placeholder="Search concepts, definitions, or evidence labels"><select id="academyCategory"><option value="">All categories</option>'+category_options+'</select><select id="academyLevel"><option value="">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><span class="muted" id="academyCount"></span></div>'
+    body+='<div class="academy-catalog-grid" id="academyCatalog">'+''.join(catalog_cards)+'</div></section>'
+    body+='<section class="content-section"><h2>Reference standards</h2><p>Official ICT uploads are linked directly only where the source catalogue already verifies the concept match. Other YouTube links are topic searches for discovery. CME and CFTC references provide general market mechanics and risk education; they are not ICT certification or proof of strategy edge.</p><div class="source-notes"><a href="https://www.youtube.com/@InnerCircleTrader" target="_blank" rel="noopener noreferrer">Official ICT channel ↗</a><a href="https://www.youtube.com/@InnerCircleTrader/playlists" target="_blank" rel="noopener noreferrer">Official ICT playlists ↗</a><a href="https://www.cmegroup.com/education/courses/trade-and-risk-management" target="_blank" rel="noopener noreferrer">CME risk education ↗</a><a href="https://www.cftc.gov/LearnAndProtect" target="_blank" rel="noopener noreferrer">CFTC customer education ↗</a></div></section>'
+    write(DIST/'academy/index.html',shell('ICT Academy | Finance Intelligence OS','76 complete concept lessons, guided ICT tutorials, chart exercises, knowledge checks, progress tracking and source references.',body,'/academy/', '<script defer src="/assets/academy-catalog.js"></script>'))
 
     # Macro indicators: official BLS historical observations via the edge gateway.
     body=page_intro('Official macro data','US inflation & labour indicators','Five series from the US Bureau of Labor Statistics Public Data API v1. Values are published historical observations with their own index bases and units; they are not live market quotes or a complete economic calendar.')
@@ -234,6 +278,8 @@ def build():
         urls=['/','/markets/','/futures-intelligence/','/volume-open-interest/','/data-health/','/prediction-markets/','/entry-models/','/strategy-lab/','/academy/','/research/','/research/positioning/','/news/','/macro/','/tools/','/account/','/status/','/docs/','/legacy/','/ict-futures/']
         urls += [f'/ict-futures/markets/{p.name}' for p in (DIST/'ict-futures/markets').glob('*.html')]
         urls += [f'/ict-futures/academy/{p.name}' for p in (DIST/'ict-futures/academy').glob('*.html')]
+        urls.append('/ict-futures/academy/tutorials/')
+        urls += [f'/ict-futures/academy/tutorials/{p.name}' for p in (DIST/'ict-futures/academy/tutorials').glob('*.html') if p.name != 'index.html']
         xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{escape(SITE_URL+u)}</loc></url>' for u in urls)+'</urlset>'
         write(DIST/'sitemap.xml',xml)
         write(DIST/'robots.txt',f'User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n')
