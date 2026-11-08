@@ -149,6 +149,32 @@ export default {
    }
    return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
   }
+  if(url.pathname==="/api/v1/economic/history"){
+   if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return json({status:"not-configured",observations:[],error:"Server-side Supabase credentials are not configured."},503,cors);
+   const provider=String(url.searchParams.get("provider")||"").toLowerCase();
+   if(!Object.prototype.hasOwnProperty.call(ECONOMIC_PROVIDER_CONFIG,provider))return json({error:"A supported provider is required."},400,cors);
+   const seriesId=String(url.searchParams.get("series_id")||"").trim();
+   if(seriesId.length>160)return json({error:"series_id is too long."},400,cors);
+   const startDate=String(url.searchParams.get("start_date")||"");
+   const endDate=String(url.searchParams.get("end_date")||"");
+   const datePattern=/^\d{4}-\d{2}-\d{2}$/;
+   if((startDate&&!datePattern.test(startDate))||(endDate&&!datePattern.test(endDate)))return json({error:"Dates must use YYYY-MM-DD."},400,cors);
+   const parsedLimit=Number(url.searchParams.get("limit")||1000),limit=Number.isInteger(parsedLimit)?Math.min(5000,Math.max(1,parsedLimit)):1000;
+   const parsedOffset=Number(url.searchParams.get("offset")||0),offset=Number.isInteger(parsedOffset)?Math.min(1000000,Math.max(0,parsedOffset)):0;
+   const query=new URLSearchParams({select:"provider,dataset_id,series_id,series_name,country_code,frequency,observation_date,value,unit,data_as_of,published_at,retrieved_at,source_url,freshness_status"});
+   query.set("provider","eq."+provider);
+   if(seriesId)query.set("series_id","eq."+seriesId);
+   if(startDate)query.set("observation_date","gte."+startDate);
+   if(endDate)query.append("observation_date","lte."+endDate);
+   query.set("order","series_id.asc,observation_date.asc");
+   query.set("limit",String(limit));query.set("offset",String(offset));
+   try{
+    const observations=await supabaseRequest(env,"economic_observations","GET",query.toString());
+    return json({schemaVersion:1,status:"fresh",provider,seriesId:seriesId||null,count:Array.isArray(observations)?observations.length:0,limit,offset,observations:Array.isArray(observations)?observations:[],source:"Supabase economic_observations",retrievedAt:new Date().toISOString()},200,{...cors,"Cache-Control":"public, max-age=60, s-maxage=120"});
+   }catch(error){
+    return json({status:"unavailable",provider,observations:[],error:"Historical Supabase query failed: "+String(error.message||error).slice(0,180)},502,cors);
+   }
+  }
   if(url.pathname==="/api/v1/economic/providers"){
    const providers=await Promise.all(Object.entries(ECONOMIC_PROVIDER_CONFIG).map(async([id,cfg])=>({id,label:cfg.label,credential:cfg.credential||null,credentialConfigured:!cfg.credential||Boolean(env[cfg.credential]),cadence:cfg.cadence,ttlSeconds:cfg.ttlSeconds,state:await getEconomicProviderState(env,id)})));
    return json({schemaVersion:1,providers,retrievedAt:new Date().toISOString(),persistenceConfigured:Boolean(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY)},200,cors);
