@@ -346,7 +346,7 @@
             "Change the definition after the outcome is known.",
             "Choose a pivot rule, such as a three-candle pivot or fixed left/right lookback."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "A research term should be defined, sourced and measured consistently. Avoid treating model language as proof of causation or edge."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -471,7 +471,7 @@
             "The reference swing or opening-price level and the wick/body close rule.",
             "The label should be chosen after seeing the whole move."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "The level and qualification rule must be chosen before the outcome is reviewed. MSS, BOS, CHoCH and CISD are not automatically interchangeable."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -760,7 +760,7 @@
             "Any one-tick fluctuation must count as a structural break.",
             "The reference swing or opening-price level and the wick/body close rule."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The level and qualification rule must be chosen before the outcome is reviewed. MSS, BOS, CHoCH and CISD are not automatically interchangeable."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -895,7 +895,7 @@
             "Look for directional candles with large bodies and limited overlap.",
             "Treat the label as a guaranteed market mechanism."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "A research term should be defined, sourced and measured consistently. Avoid treating model language as proof of causation or edge."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -1179,7 +1179,7 @@
             "Treat every plotted level as a guaranteed stop pool.",
             "Mark obvious highs and equal highs."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -1304,7 +1304,7 @@
             "Mark obvious lows and equal lows.",
             "Move the reference level after seeing where price turns."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -1553,7 +1553,7 @@
             "Treat every plotted level as a guaranteed stop pool.",
             "Choose a fixed tolerance."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -1677,7 +1677,7 @@
             "Use the correct product trading-day definition.",
             "Move the reference level after seeing where price turns."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -1925,7 +1925,7 @@
             "Treat every plotted level as a guaranteed stop pool.",
             "Define exact session timezone and start/end."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -2057,7 +2057,7 @@
             "Price trades beyond the premarked level and then reclaims/closes back inside under the chosen rule.",
             "Any wick through a level automatically confirms reversal."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "A reclaim/close-back-inside rule separates the sweep candidate from acceptance. A separate trigger is still required."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -2314,7 +2314,7 @@
             "Treat every plotted level as a guaranteed stop pool.",
             "Define dealing range from structural event."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -2453,7 +2453,7 @@
             "Set HTF context.",
             "Move the reference level after seeing where price turns."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "The concept is a premarked reference hypothesis. Record the source and rule, then assess what price actually does."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -2726,7 +2726,7 @@
             "Assume every gap must fill.",
             "Identify HTF gap using same candle rule."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Imbalance terminology depends on exact candles and boundaries. The zone alone is not evidence of a profitable edge."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -2852,7 +2852,7 @@
             "The arithmetic midpoint between the FVG's two boundaries.",
             "The prior session high."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "CE is the 50% midpoint of the chosen gap edges. Touching it does not guarantee a reaction."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -3115,7 +3115,7 @@
             "A session high overlapping a prior-day high.",
             "The overlap between a bullish FVG and a bearish FVG."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "BPR refers to the common price interval where bullish and bearish FVG zones overlap. Its direction is not guaranteed."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -3238,7 +3238,7 @@
             "Compare two consecutive candle bodies.",
             "Use any visually similar zone without recording the candle rule."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Imbalance terminology depends on exact candles and boundaries. The zone alone is not evidence of a profitable edge."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -3492,7 +3492,7 @@
             "Assume every gap must fill.",
             "Identify rapid displacement."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Imbalance terminology depends on exact candles and boundaries. The zone alone is not evidence of a profitable edge."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -3625,7 +3625,7 @@
             "Identify displacement and structural break.",
             "Choose the cleanest-looking candle after the move is complete."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -3886,7 +3886,7 @@
             "Assume every block has a fixed universal definition.",
             "Identify original OB."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -4010,7 +4010,7 @@
             "Use the chosen educator's exact definition.",
             "Choose the cleanest-looking candle after the move is complete."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -4265,7 +4265,7 @@
             "Add a new rule after seeing the outcome.",
             "Mark the case not qualified / no trade under the written model."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "A model is a sequence. Skipping a prerequisite converts it into a different discretionary setup and invalidates the review."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -4396,7 +4396,7 @@
             "Build dealing range first.",
             "Choose the cleanest-looking candle after the move is complete."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -4651,7 +4651,7 @@
             "A market-wide level independent of timeframe.",
             "A defined dealing range with fixed high and low anchors."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Equilibrium is 50% of a particular chosen range. Premium/discount only has meaning relative to those fixed anchors."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -4781,7 +4781,7 @@
             "A defined dealing range with fixed high and low anchors.",
             "A range redrawn to fit the latest candle."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Equilibrium is 50% of a particular chosen range. Premium/discount only has meaning relative to those fixed anchors."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -5036,7 +5036,7 @@
             "Any local candle range has the same structural meaning.",
             "Define impulse anchors before applying extensions."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Range and retracement tools are sensitive to anchor selection. Fix the range/impulse before observing outcomes."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -5167,7 +5167,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -5415,7 +5415,7 @@
             "Assume a time window alone provides direction.",
             "Record the exact America/New_York window, product session and DST-aware conversion before replay."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -5539,7 +5539,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -5787,7 +5787,7 @@
             "Assume a time window alone provides direction.",
             "Record the exact America/New_York window, product session and DST-aware conversion before replay."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -5917,7 +5917,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -6179,7 +6179,7 @@
             "Assume a time window alone provides direction.",
             "Record the exact America/New_York window, product session and DST-aware conversion before replay."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -6310,7 +6310,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -6572,7 +6572,7 @@
             "Treat divergence as a standalone entry signal.",
             "Choose valid related pair/group."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Cross-market comparisons need like-for-like data and a separate execution-market trigger."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -6702,7 +6702,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -6967,7 +6967,7 @@
             "Treat divergence as a standalone entry signal.",
             "Choose 6E/6B/DX or GC/SI."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Cross-market comparisons need like-for-like data and a separate execution-market trigger."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -7097,7 +7097,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -7350,7 +7350,7 @@
             "Assume a time window alone provides direction.",
             "Record the exact America/New_York window, product session and DST-aware conversion before replay."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -7480,7 +7480,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -7746,7 +7746,7 @@
             "Any one-tick fluctuation must count as a structural break.",
             "The reference swing or opening-price level and the wick/body close rule."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "The level and qualification rule must be chosen before the outcome is reviewed. MSS, BOS, CHoCH and CISD are not automatically interchangeable."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -7902,7 +7902,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -8214,7 +8214,7 @@
             "Assume every block has a fixed universal definition.",
             "First identify a valid order block created by displacement."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -8370,7 +8370,7 @@
             "Identify the exact imbalance boundaries using the source-specific definition.",
             "Use any visually similar zone without recording the candle rule."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Imbalance terminology depends on exact candles and boundaries. The zone alone is not evidence of a profitable edge."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -8664,7 +8664,7 @@
             "Assume every gap must fill.",
             "Identify the two opening-gap structures required by the selected source."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Imbalance terminology depends on exact candles and boundaries. The zone alone is not evidence of a profitable edge."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -8813,7 +8813,7 @@
             "Mark the original order block and record the rule used to declare it failed.",
             "Choose the cleanest-looking candle after the move is complete."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -9107,7 +9107,7 @@
             "Assume every block has a fixed universal definition.",
             "Find and verify the original source definition before operational use."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "Block definitions are boundary- and source-sensitive. Record the displacement condition and the chosen wick/body convention."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -9251,7 +9251,7 @@
             "Record the exact America/New_York window, product session and DST-aware conversion before replay.",
             "Use one fixed IST offset throughout the year."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "Time anchors and windows depend on timezone and instrument session. A killzone tells when to pay attention, not direction or entry."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -9557,7 +9557,7 @@
             "Add a new rule after seeing the outcome.",
             "Mark the case not qualified / no trade under the written model."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "A model is a sequence. Skipping a prerequisite converts it into a different discretionary setup and invalidates the review."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -9710,7 +9710,7 @@
             "Mark the case not qualified / no trade under the written model.",
             "Ignore the missing condition if price later moves in the expected direction."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "A model is a sequence. Skipping a prerequisite converts it into a different discretionary setup and invalidates the review."
         },
         "sourceCaution": "The playbook describes the concept, but terminology or discretionary thresholds may still vary. Record your chosen operational rule and do not imply audited performance.",
@@ -9993,7 +9993,7 @@
             "Add a new rule after seeing the outcome.",
             "Mark the case not qualified / no trade under the written model."
           ],
-          "correctIndex": 1,
+          "correctIndex": 2,
           "explanation": "A model is a sequence. Skipping a prerequisite converts it into a different discretionary setup and invalidates the review."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
@@ -10132,7 +10132,7 @@
             "Mark the case not qualified / no trade under the written model.",
             "Ignore the missing condition if price later moves in the expected direction."
           ],
-          "correctIndex": 2,
+          "correctIndex": 1,
           "explanation": "A model is a sequence. Skipping a prerequisite converts it into a different discretionary setup and invalidates the review."
         },
         "sourceCaution": "This term is supplemental or convention-sensitive in the supplied catalogue. Do not treat it as a universal/core ICT definition. Keep source variants separate and do not use it operationally until the exact definition is pinned to a primary source.",
