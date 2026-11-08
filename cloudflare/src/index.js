@@ -79,6 +79,15 @@ export default {
    return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=1800, s-maxage=3600"});
   }
 
+  if(url.pathname==="/api/v1/macro/funding"){
+   const key="macro:nyfed:funding:v1";
+   let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(key,"json"):null;
+   if(!snapshot||!snapshot.retrievedAt||Date.now()-Date.parse(snapshot.retrievedAt)>60*60*1000){
+    try{snapshot=await fetchNyFedFunding();if(env.SNAPSHOTS)await env.SNAPSHOTS.put(key,JSON.stringify(snapshot),{expirationTtl:60*60*4});}
+    catch(error){if(!snapshot)return json({status:"unavailable",provider:"Federal Reserve Bank of New York Markets Data API",rates:[],error:"NY Fed reference-rate request failed"},502,cors);snapshot={...snapshot,status:"stale"};}
+   }
+   return json(snapshot,200,{...cors,"Cache-Control":"public, max-age":900, "s-maxage":1800});
+  }
   if(url.pathname.startsWith("/api/v1/prediction/")){
    const provider=url.pathname.split("/").pop();
    if(!["polymarket","kalshi"].includes(provider))return json({error:"Unsupported prediction-market provider"},404,cors);
@@ -107,7 +116,7 @@ export default {
     return json({status:result.ok?"connected":"provider-error",model,results:Array.isArray(data.results)?data.results:[],error:result.ok?undefined:"Builder API returned "+result.status},result.ok?200:502,{...cors,"Cache-Control":"public, max-age=60, s-maxage=120"});
    }catch{return json({status:"unavailable",model,results:[]},502,cors);}
   }
-  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
+  return json({error:"Not found",routes:["/health","/api/v1/health","/api/v1/providers","/api/v1/news","/api/v1/cot?report=tff|disaggregated","/api/v1/macro","/api/v1/macro/funding","/api/v1/prediction/polymarket","/api/v1/prediction/kalshi","/api/v1/cms/{model}"]},404,cors);
  },
  async scheduled(controller,env,ctx){ctx.waitUntil(refreshNews(env));}
 };
@@ -194,6 +203,15 @@ const MARKET_KEYWORDS=[
 ];
 function matchMarketIds(text){const value=String(text||"").toLowerCase();return MARKET_KEYWORDS.filter(([,words])=>words.some(word=>value.includes(word))).map(([id])=>id);}
 function parseArray(value){if(Array.isArray(value))return value;if(typeof value==="string"){try{const v=JSON.parse(value);return Array.isArray(v)?v:[];}catch{return[];}}return[];}
+async function fetchNyFedFunding(){
+ const u="https://markets.newyorkfed.org/api/rates/all/latest.json";
+ const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.1 public research"},signal:AbortSignal.timeout(12000)});
+ if(!response.ok)throw new Error("NY Fed Markets API "+response.status);
+ const data=await response.json();const raw=Array.isArray(data.refRates)?data.refRates:[];
+ const rates=raw.filter(r=>["SOFR","EFFR","OBFR","TGCR","BGCR","SOFRAI"].includes(String(r.type||""))).map(r=>({type:String(r.type),effectiveDate:r.effectiveDate||null,percentRate:Number.isFinite(Number(r.percentRate))?Number(r.percentRate):null,average30day:Number.isFinite(Number(r.average30day))?Number(r.average30day):null,average90day:Number.isFinite(Number(r.average90day))?Number(r.average90day):null,average180day:Number.isFinite(Number(r.average180day))?Number(r.average180day):null,volumeInBillions:Number.isFinite(Number(r.volumeInBillions))?Number(r.volumeInBillions):null}));
+ return{schemaVersion:1,status:rates.length?"fresh":"unavailable",provider:"Federal Reserve Bank of New York Markets Data API",retrievedAt:new Date().toISOString(),dataAsOf:rates.map(r=>r.effectiveDate).filter(Boolean).sort().at(-1)||null,access:"public reference-rate API; no API key",rates,sourceUrl:u,notes:["Official NY Fed reference rates are published on US business days and are not exchange futures quotes.","The effective date is distinct from the retrieval timestamp; reference rates may reflect the prior business day.","Use of NY Fed reference rates is subject to the NY Fed terms and rate-specific disclaimers."]};
+}
+
 async function fetchPolymarket(){
  const u=new URL("https://gamma-api.polymarket.com/events");u.searchParams.set("active","true");u.searchParams.set("closed","false");u.searchParams.set("limit","100");u.searchParams.set("order","volume_24hr");u.searchParams.set("ascending","false");
  const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.1 public research"},signal:AbortSignal.timeout(14000)});
