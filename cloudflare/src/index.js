@@ -221,22 +221,35 @@ async function supabaseRequest(env,table,method,query,body,prefer){
 }
 async function upsertProviderStatus(env,provider,status,details,lastError=null,latencyMs=null){
  if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured"};
- const now=new Date().toISOString();
- const body={provider,status,last_attempt_at:now,last_success_at:["fresh","partial"].includes(status)?now:undefined,last_error:lastError,latency_ms:latencyMs,details:{...(details||{}),updatedAt:now}};
+ const now=new Date().toISOString(),cfg=ECONOMIC_PROVIDER_CONFIG[provider]||{};
+ const body={provider,status,last_attempt_at:now,last_success_at:["fresh","partial"].includes(status)?now:undefined,
+  last_error:lastError,latency_ms:latencyMs,updated_at:now,
+  details:{credentialRequired:cfg.credential||null,cadence:cfg.cadence||null,ttlSeconds:cfg.ttlSeconds||null,...(details||{}),updatedAt:now}};
  await supabaseRequest(env,"provider_status","POST","on_conflict=provider",body,"resolution=merge-duplicates,return=minimal");
  return{status:"stored"};
 }
+async function recordIngestionRun(env,provider,status,datasetId,requestCount,errorCode,errorMessage,details={}){
+ if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured"};
+ const completedAt=new Date().toISOString();
+ try{
+  await supabaseRequest(env,"ingestion_runs","POST","",{
+   provider,dataset_id:datasetId||null,status,started_at:details.startedAt||completedAt,completed_at:completedAt,
+   rows_received:0,rows_upserted:0,request_count:requestCount||0,error_code:errorCode||null,
+   error_message:errorMessage?String(errorMessage).slice(0,500):null,details
+  },"return=minimal");
+  return{status:"stored"};
+ }catch{return{status:"failed"};}
+}
 async function persistEconomicSnapshot(env,snapshot){
  if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured",rowsUpserted:0};
- const started=Date.now(),provider=snapshot.providerId||"unknown";
- const runRows=await supabaseRequest(env,"ingestion_runs","POST","",{
-  provider,dataset_id:snapshot.datasetId,status:"running",request_count:snapshot.requestCount||1,
-  details:{dataAsOf:snapshot.dataAsOf||null,sourceUrl:snapshot.sourceUrl||null}
- },"return=representation");
- const runId=Array.isArray(runRows)?runRows[0]?.id:null;
- let rowsUpserted=0;
+ const started=Date.now(),provider=snapshot.providerId||"unknown",records=Array.isArray(snapshot.records)?snapshot.records:[];
+ let runId=null,rowsUpserted=0;
  try{
-  const records=Array.isArray(snapshot.records)?snapshot.records:[];
+  const runRows=await supabaseRequest(env,"ingestion_runs","POST","",{
+   provider,dataset_id:snapshot.datasetId,status:"running",request_count:snapshot.requestCount||1,
+   details:{dataAsOf:snapshot.dataAsOf||null,sourceUrl:snapshot.sourceUrl||null}
+  },"return=representation");
+  runId=Array.isArray(runRows)?runRows[0]?.id:null;
   for(let i=0;i<records.length;i+=1000){
    const chunk=records.slice(i,i+1000);
    await supabaseRequest(env,"economic_observations","POST",
@@ -250,15 +263,19 @@ async function persistEconomicSnapshot(env,snapshot){
    rows_received:records.length,rows_upserted:rowsUpserted,request_count:snapshot.requestCount||1,
    details:{dataAsOf:snapshot.dataAsOf||null,series:snapshot.series||[],elapsedMs:Date.now()-started}
   },"return=minimal");
-  await upsertProviderStatus(env,provider,snapshot.status==="partial"?"partial":"fresh",{datasetId:snapshot.datasetId,dataAsOf:snapshot.dataAsOf,rows:rowsUpserted,sourceUrl:snapshot.sourceUrl,persistence:"stored"});
+  await upsertProviderStatus(env,provider,snapshot.status==="partial"?"partial":"fresh",{
+   datasetId:snapshot.datasetId,dataAsOf:snapshot.dataAsOf,rows:rowsUpserted,sourceUrl:snapshot.sourceUrl,persistence:"stored"
+  });
   return{status:snapshot.status==="partial"?"partial":"stored",rowsUpserted,runId};
  }catch(error){
   if(runId)try{await supabaseRequest(env,"ingestion_runs","PATCH","id=eq."+encodeURIComponent(runId),{
-   status:rowsUpserted?"partial":"failed",completed_at:new Date().toISOString(),rows_received:(snapshot.records||[]).length,
+   status:rowsUpserted?"partial":"failed",completed_at:new Date().toISOString(),rows_received:records.length,
    rows_upserted:rowsUpserted,error_message:String(error.message||error).slice(0,500),
    details:{dataAsOf:snapshot.dataAsOf||null,elapsedMs:Date.now()-started}
   },"return=minimal");}catch{}
-  await upsertProviderStatus(env,provider,rowsUpserted?"partial":"error",{datasetId:snapshot.datasetId,rowsUpserted},String(error.message||error).slice(0,500));
+  try{await upsertProviderStatus(env,provider,rowsUpserted?"partial":"error",{
+   datasetId:snapshot.datasetId,rowsUpserted,persistence:"failed"
+  },String(error.message||error).slice(0,500),Date.now()-started);}catch{}
   return{status:"failed",rowsUpserted,runId,error:String(error.message||error).slice(0,300)};
  }
 }
@@ -268,9 +285,14 @@ async function ingestEconomicProvider(provider,env,force=false){
   const snapshot=await fetchEconomicProvider(provider,env);
   snapshot.providerId=provider;
   if(snapshot.status==="not-configured"){
-   const state={status:"not-configured",credentialRequired:snapshot.credentialRequired,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:null,persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",note:snapshot.notes?.at(-1)};
-   if(env.SNAPSHOTS){await env.SNAPSHOTS.put(economicCacheKey(provider),JSON.stringify(snapshot),{expirationTtl:Math.max(cfg.ttlSeconds,3600)});await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});}
+   const state={status:"not-configured",credentialRequired:snapshot.credentialRequired,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:null,
+    persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",note:snapshot.notes?.at(-1)};
+   if(env.SNAPSHOTS){
+    await env.SNAPSHOTS.put(economicCacheKey(provider),JSON.stringify(snapshot),{expirationTtl:Math.max(cfg.ttlSeconds,3600)});
+    await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});
+   }
    await upsertProviderStatus(env,provider,"unavailable",{credentialRequired:cfg.credential,configured:false,note:state.note});
+   await recordIngestionRun(env,provider,"skipped",snapshot.datasetId,0,"missing_credential",state.note,{credentialRequired:cfg.credential});
    return snapshot;
   }
   let persistence={status:"not-configured",rowsUpserted:0};
@@ -278,8 +300,7 @@ async function ingestEconomicProvider(provider,env,force=false){
   snapshot.persistence=persistence;
   snapshot.elapsedMs=Date.now()-started;
   const state={status:snapshot.status,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:snapshot.retrievedAt,
-   dataAsOf:snapshot.dataAsOf,persistenceStatus:persistence.status,rowsStored:persistence.rowsUpserted||0,
-   datasetId:snapshot.datasetId};
+   dataAsOf:snapshot.dataAsOf,persistenceStatus:persistence.status,rowsStored:persistence.rowsUpserted||0,datasetId:snapshot.datasetId};
   if(env.SNAPSHOTS){
    await env.SNAPSHOTS.put(economicCacheKey(provider),JSON.stringify(snapshot),{expirationTtl:Math.max(cfg.ttlSeconds*2,3600)});
    await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});
@@ -287,11 +308,13 @@ async function ingestEconomicProvider(provider,env,force=false){
   return snapshot;
  }catch(error){
   const previous=env.SNAPSHOTS?await env.SNAPSHOTS.get(economicCacheKey(provider),"json"):null;
+  const lastError=String(error.message||error).slice(0,300);
   const state={status:previous?"stale":"unavailable",lastAttemptAt:new Date().toISOString(),lastSuccessAt:previous?.retrievedAt||null,
-   persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",lastError:String(error.message||error).slice(0,300)};
-  if(env.SNAPSHOTS){await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});}
-  await upsertProviderStatus(env,provider,previous?"stale":"error",{datasetId:previous?.datasetId||null},state.lastError,Date.now()-started);
-  return previous?{...previous,status:"stale",lastError:state.lastError}:{
+   persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",lastError};
+  if(env.SNAPSHOTS)await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});
+  try{await upsertProviderStatus(env,provider,previous?"stale":"error",{datasetId:previous?.datasetId||null},lastError,Date.now()-started);}catch{}
+  await recordIngestionRun(env,provider,"failed",previous?.datasetId||null,1,"provider_request_failed",lastError,{elapsedMs:Date.now()-started});
+  return previous?{...previous,status:"stale",lastError}:{
    schemaVersion:1,provider,status:"unavailable",retrievedAt:new Date().toISOString(),dataAsOf:null,records:[],series:[],sourceUrl:null,
    error:"Economic data provider request failed",details:state
   };
