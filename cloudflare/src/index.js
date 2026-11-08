@@ -15,6 +15,14 @@ const GDELT_QUERIES = [
   { label: "CFTC positioning & exchange notices", query: '(CFTC OR "Commitments of Traders" OR "CME Group" OR "ICE Futures" OR "exchange notice" OR "clearing advisory")' }
 ];
 const CORS_HEADERS = { "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization", "Vary": "Origin" };
+function supabaseAdminKey(env){
+ return env.SUPABASE_SECRET_KEY||env.SUPABASE_SERVICE_ROLE_KEY||"";
+}
+function supabaseApiHeaders(env){
+ const key=supabaseAdminKey(env);
+ return{apikey:key,...(key.startsWith("sb_secret_")?{}:{Authorization:"Bearer "+key})};
+}
+
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url);const origin=request.headers.get("Origin")||"";
@@ -32,7 +40,7 @@ export default {
    const results=await Promise.all(requested.map(async provider=>({provider,...await ingestEconomicProvider(provider,env,true)})));
    return json({status:results.every(x=>x.status==="fresh")?"fresh":results.some(x=>["fresh","partial"].includes(x.status))?"partial":"unavailable",results},200,cors);
   }
-  if(url.pathname==="/health"||url.pathname==="/api/v1/health")return json({ok:true,service:"finance-intelligence-os-edge",version:"2.0.0",time:new Date().toISOString(),storageConfigured:Boolean(env.SNAPSHOTS),cmsConfigured:Boolean(env.BUILDER_PUBLIC_API_KEY),databaseConfigured:Boolean(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY),economicProviders:Object.keys(ECONOMIC_PROVIDER_CONFIG).length,ingestionTokenConfigured:Boolean(env.INGEST_TOKEN)},200,cors);
+  if(url.pathname==="/health"||url.pathname==="/api/v1/health")return json({ok:true,service:"finance-intelligence-os-edge",version:"2.0.0",time:new Date().toISOString(),storageConfigured:Boolean(env.SNAPSHOTS),cmsConfigured:Boolean(env.BUILDER_PUBLIC_API_KEY),databaseConfigured:Boolean(env.SUPABASE_URL&&supabaseAdminKey(env)),economicProviders:Object.keys(ECONOMIC_PROVIDER_CONFIG).length,ingestionTokenConfigured:Boolean(env.INGEST_TOKEN)},200,cors);
   if(url.pathname==="/api/v1/providers"){
    const state=env.SNAPSHOTS?await env.SNAPSHOTS.get(PROVIDER_STATE_KEY,"json"):null;
    const macroState=env.SNAPSHOTS?await env.SNAPSHOTS.get("macro:bls:v1","json"):null;
@@ -52,7 +60,7 @@ export default {
     {id:"fred",label:"Federal Reserve Economic Data",access:"registered-api-key",state:await getEconomicProviderState(env,"fred"),notes:"Daily and monthly macro histories; FRED_API_KEY required."},
     {id:"us-treasury",label:"US Treasury Fiscal Data",access:"public-api-no-key",state:await getEconomicProviderState(env,"us_treasury"),notes:"Monthly average interest rates on marketable Treasury securities; not the daily par yield curve."},
     {id:"ecb",label:"European Central Bank Data Portal",access:"public-sdmx-api-no-key",state:await getEconomicProviderState(env,"ecb"),notes:"Daily USD/EUR reference exchange-rate series; not a live FX quote."},
-    {id:"supabase",label:"Supabase Postgres",access:"server-side-only",state:{status:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"configured":"not-configured"},notes:"Server-side ingestion writes only; browser roles cannot write economic observations or ingestion logs."}
+    {id:"supabase",label:"Supabase Postgres",access:"server-side-only",state:{status:env.SUPABASE_URL&&supabaseAdminKey(env)?"configured":"not-configured"},notes:"Server-side ingestion writes only; browser roles cannot write economic observations or ingestion logs."}
    ]},200,cors);
   }
 
@@ -150,7 +158,7 @@ export default {
    return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=900, s-maxage=1800"});
   }
   if(url.pathname==="/api/v1/economic/history"){
-   if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return json({status:"not-configured",observations:[],error:"Server-side Supabase credentials are not configured."},503,cors);
+   if(!env.SUPABASE_URL||!supabaseAdminKey(env))return json({status:"not-configured",observations:[],error:"Server-side Supabase credentials are not configured."},503,cors);
    const provider=String(url.searchParams.get("provider")||"").toLowerCase();
    if(!Object.prototype.hasOwnProperty.call(ECONOMIC_PROVIDER_CONFIG,provider))return json({error:"A supported provider is required."},400,cors);
    const seriesId=String(url.searchParams.get("series_id")||"").trim();
@@ -179,7 +187,7 @@ export default {
   }
   if(url.pathname==="/api/v1/economic/providers"){
    const providers=await Promise.all(Object.entries(ECONOMIC_PROVIDER_CONFIG).map(async([id,cfg])=>({id,label:cfg.label,credential:cfg.credential||null,credentialConfigured:!cfg.credential||Boolean(env[cfg.credential]),cadence:cfg.cadence,ttlSeconds:cfg.ttlSeconds,state:await getEconomicProviderState(env,id)})));
-   return json({schemaVersion:1,providers,retrievedAt:new Date().toISOString(),persistenceConfigured:Boolean(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY)},200,cors);
+   return json({schemaVersion:1,providers,retrievedAt:new Date().toISOString(),persistenceConfigured:Boolean(env.SUPABASE_URL&&supabaseAdminKey(env))},200,cors);
   }
   if(url.pathname.startsWith("/api/v1/economic/")){
    const provider=url.pathname.split("/").pop();
@@ -225,7 +233,7 @@ function economicCacheKey(provider){return "economic:"+provider+":v1";}
 async function getEconomicProviderState(env,provider){
  if(env.SNAPSHOTS){const state=await env.SNAPSHOTS.get("economic-provider:"+provider,"json");if(state)return state;}
  const cfg=ECONOMIC_PROVIDER_CONFIG[provider];
- return{status:cfg?.credential&&!env[cfg.credential]?"not-configured":"not-yet-fetched",credentialRequired:cfg?.credential||null,lastAttemptAt:null,lastSuccessAt:null,persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured"};
+ return{status:cfg?.credential&&!env[cfg.credential]?"not-configured":"not-yet-fetched",credentialRequired:cfg?.credential||null,lastAttemptAt:null,lastSuccessAt:null,persistenceStatus:env.SUPABASE_URL&&supabaseAdminKey(env)?"ready":"not-configured"};
 }
 async function getEconomicData(provider,env,force){
  const cfg=ECONOMIC_PROVIDER_CONFIG[provider],key=economicCacheKey(provider);
@@ -236,10 +244,10 @@ async function getEconomicData(provider,env,force){
  return snapshot;
 }
 async function supabaseRequest(env,table,method,query,body,prefer){
- if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)throw new Error("Supabase server credentials are not configured");
+ if(!env.SUPABASE_URL||!supabaseAdminKey(env))throw new Error("Supabase server credentials are not configured");
  const base=String(env.SUPABASE_URL).replace(/\/+$/,"");
  const response=await fetch(base+"/rest/v1/"+table+(query?"?"+query:""),{
-  method,headers:{"apikey":env.SUPABASE_SERVICE_ROLE_KEY,"Authorization":"Bearer "+env.SUPABASE_SERVICE_ROLE_KEY,"Content-Type":"application/json","Accept":"application/json",...(prefer?{"Prefer":prefer}:{})},
+  method,headers:{...supabaseApiHeaders(env),"Content-Type":"application/json","Accept":"application/json",...(prefer?{"Prefer":prefer}:{})},
   body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(20000)
  });
  const text=await response.text();
@@ -248,7 +256,7 @@ async function supabaseRequest(env,table,method,query,body,prefer){
  try{return JSON.parse(text);}catch{return null;}
 }
 async function upsertProviderStatus(env,provider,status,details,lastError=null,latencyMs=null){
- if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured"};
+ if(!env.SUPABASE_URL||!supabaseAdminKey(env))return{status:"not-configured"};
  const now=new Date().toISOString(),cfg=ECONOMIC_PROVIDER_CONFIG[provider]||{};
  const body={provider,status,last_attempt_at:now,last_success_at:["fresh","partial"].includes(status)?now:undefined,
   last_error:lastError,latency_ms:latencyMs,updated_at:now,
@@ -257,7 +265,7 @@ async function upsertProviderStatus(env,provider,status,details,lastError=null,l
  return{status:"stored"};
 }
 async function recordIngestionRun(env,provider,status,datasetId,requestCount,errorCode,errorMessage,details={}){
- if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured"};
+ if(!env.SUPABASE_URL||!supabaseAdminKey(env))return{status:"not-configured"};
  const completedAt=new Date().toISOString();
  try{
   await supabaseRequest(env,"ingestion_runs","POST","",{
@@ -269,7 +277,7 @@ async function recordIngestionRun(env,provider,status,datasetId,requestCount,err
  }catch{return{status:"failed"};}
 }
 async function persistEconomicSnapshot(env,snapshot){
- if(!env.SUPABASE_URL||!env.SUPABASE_SERVICE_ROLE_KEY)return{status:"not-configured",rowsUpserted:0};
+ if(!env.SUPABASE_URL||!supabaseAdminKey(env))return{status:"not-configured",rowsUpserted:0};
  const started=Date.now(),provider=snapshot.providerId||"unknown",records=Array.isArray(snapshot.records)?snapshot.records:[];
  let runId=null,rowsUpserted=0;
  try{
@@ -314,7 +322,7 @@ async function ingestEconomicProvider(provider,env,force=false){
   snapshot.providerId=provider;
   if(snapshot.status==="not-configured"){
    const state={status:"not-configured",credentialRequired:snapshot.credentialRequired,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:null,
-    persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",note:snapshot.notes?.at(-1)};
+    persistenceStatus:env.SUPABASE_URL&&supabaseAdminKey(env)?"ready":"not-configured",note:snapshot.notes?.at(-1)};
    if(env.SNAPSHOTS){
     await env.SNAPSHOTS.put(economicCacheKey(provider),JSON.stringify(snapshot),{expirationTtl:Math.max(cfg.ttlSeconds,3600)});
     await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});
@@ -324,7 +332,7 @@ async function ingestEconomicProvider(provider,env,force=false){
    return snapshot;
   }
   let persistence={status:"not-configured",rowsUpserted:0};
-  if(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY)persistence=await persistEconomicSnapshot(env,snapshot);
+  if(env.SUPABASE_URL&&supabaseAdminKey(env))persistence=await persistEconomicSnapshot(env,snapshot);
   snapshot.persistence=persistence;
   snapshot.elapsedMs=Date.now()-started;
   const state={status:snapshot.status,lastAttemptAt:snapshot.retrievedAt,lastSuccessAt:snapshot.retrievedAt,
@@ -338,7 +346,7 @@ async function ingestEconomicProvider(provider,env,force=false){
   const previous=env.SNAPSHOTS?await env.SNAPSHOTS.get(economicCacheKey(provider),"json"):null;
   const lastError=String(error.message||error).slice(0,300);
   const state={status:previous?"stale":"unavailable",lastAttemptAt:new Date().toISOString(),lastSuccessAt:previous?.retrievedAt||null,
-   persistenceStatus:env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY?"ready":"not-configured",lastError};
+   persistenceStatus:env.SUPABASE_URL&&supabaseAdminKey(env)?"ready":"not-configured",lastError};
   if(env.SNAPSHOTS)await env.SNAPSHOTS.put("economic-provider:"+provider,JSON.stringify(state),{expirationTtl:60*60*24*7});
   try{await upsertProviderStatus(env,provider,previous?"stale":"error",{datasetId:previous?.datasetId||null},lastError,Date.now()-started);}catch{}
   await recordIngestionRun(env,provider,"failed",previous?.datasetId||null,1,"provider_request_failed",lastError,{elapsedMs:Date.now()-started});
@@ -370,10 +378,10 @@ async function refreshNews(env){
  const next={schemaVersion:1,provider:"GDELT DOC API",status,generatedAt:articles.length?checkedAt:previous.generatedAt||null,lastCheckedAt:checkedAt,queryCount:GDELT_QUERIES.length,successfulQueries:good.length,articles:articles.length?articles:(previous.articles||[]),notes:["GDELT is a broad news-discovery index, not a complete newswire.","seendate is GDELT indexing/seen time and may differ from publisher publication time.","Headlines are leads for verification, not trading signals."]};
  await env.SNAPSHOTS.put(NEWS_KEY,JSON.stringify(next),{expirationTtl:60*60*24*3});
  await env.SNAPSHOTS.put(PROVIDER_STATE_KEY,JSON.stringify({status,lastCheckedAt:checkedAt,successfulQueries:good.length,queryCount:GDELT_QUERIES.length,articleCount:next.articles.length}),{expirationTtl:60*60*24*7});
- if(env.SUPABASE_URL&&env.SUPABASE_SERVICE_ROLE_KEY&&next.articles.length){
+ if(env.SUPABASE_URL&&supabaseAdminKey(env)&&next.articles.length){
   const rows=next.articles.map(a=>({provider:"GDELT DOC API",title:a.title,url:a.url,domain:a.domain,topic:a.topic,retrieved_at:checkedAt,data_as_of:checkedAt,freshness_status:status,payload:a}));
   const endpoint=env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/news_items?on_conflict=provider,url";
-  const write=await fetch(endpoint,{method:"POST",headers:{"apikey":env.SUPABASE_SERVICE_ROLE_KEY,"Authorization":"Bearer "+env.SUPABASE_SERVICE_ROLE_KEY,"Content-Type":"application/json","Prefer":"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(rows)});
+  const write=await fetch(endpoint,{method:"POST",headers:{...supabaseApiHeaders(env),"Content-Type":"application/json","Prefer":"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(rows)});
   if(!write.ok)console.error("Supabase news upsert failed",write.status);
  }
 }
