@@ -14,7 +14,11 @@ A consolidated global financial research workspace with the preserved Global Res
 
 - `/` — preserved Global Research cockpit.
 - `/markets/` — futures families and global instruments.
-- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.\n- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.\n- `/prediction-markets/` — separate read-only Polymarket and Kalshi event-market context.\n- `/entry-models/` — eight preserved ICT entry-model concepts, with no unaudited performance ranking.\n- `/strategy-lab/` — backtest methodology and data-readiness status; strategy statistics are not published until reproducible tests exist.\n- `/data-health/` — independently checked gateway/provider snapshots, retrieval times and configuration states.
+- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.\n- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.
+- `/prediction-markets/` — separate read-only Polymarket and Kalshi event-market context.
+- `/entry-models/` — eight preserved ICT entry-model concepts, with no unaudited performance ranking.
+- `/strategy-lab/` — backtest methodology and data-readiness status; strategy statistics are not published until reproducible tests exist.
+- `/data-health/` — independently checked gateway/provider snapshots, retrieval times and configuration states.
 - `/news/` — GDELT news-discovery snapshots.
 - `/macro/` — five historical US BLS series (CPI, core CPI, unemployment, nonfarm payrolls, PPI).
 - `/research/positioning/` — CFTC TFF and Disaggregated COT dashboard.
