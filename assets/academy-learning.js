@@ -56,7 +56,8 @@
    const map=progressMap(),local=map[slug];
    const rt=Date.parse(remote.updated_at||remote.completed_at||"")||0,lt=Date.parse(local?.updatedAt||local?.completedAt||"")||0;
    if(!local||rt>lt){
-    map[slug]={status:quiz&&remote.status==="completed"&&Number(remote.score)<100?"in-progress":remote.status,score:remote.score,completedAt:remote.completed_at,updatedAt:remote.updated_at,exerciseDone:local?.exerciseDone||remote.progress_data?.exerciseDone||[],lessonVersion:remote.lesson_version||"legacy"};write(PROGRESS_KEY,map);
+    const remoteDone=remote.progress_data?.exerciseDone||[],requirementsMet=remoteDone.length===checks.length&&(!quiz||Number(remote.score)>=100);
+    map[slug]={status:remote.status==="completed"&&!requirementsMet?"in-progress":remote.status,score:remote.score,completedAt:remote.completed_at,updatedAt:remote.updated_at,exerciseDone:local?.exerciseDone||remoteDone,lessonVersion:remote.lesson_version||"legacy"};write(PROGRESS_KEY,map);
     if(!slug.startsWith("tutorial-")){let done=legacyDone().filter(x=>x!==slug);if(remote.status==="completed")done.push(slug);write(LEGACY_KEY,done);}
    }else if(local){await syncWrite(slug,local,s,uid);}
   }catch{const el=$(root,"[data-progress-sync]");if(el)el.textContent="Local progress active · cloud sync needs attention.";}
@@ -68,7 +69,9 @@
   const feedback=root.querySelector("[data-quiz-feedback]"),syncEl=root.querySelector("[data-progress-sync]"),message=root.querySelector("[data-progress-message]");
   let quizData={correctIndex:0,explanation:""};try{quizData=JSON.parse(root.querySelector("#academyQuizData")?.textContent||"{}");}catch{}
   const saved=progressMap()[slug]||{status:"not-started",exerciseDone:[]};
-  const initial=quiz&&saved.status==="completed"&&Number(saved.score)<100?{...saved,status:"in-progress"}:saved;
+  const requiredDone=(saved.exerciseDone||[]).length===checks.length;
+  const quizWasCorrect=!quiz||Number(saved.score)>=100;
+  const initial=saved.status==="completed"&&!(requiredDone&&quizWasCorrect)?{...saved,status:"in-progress"}:saved;
   let quizCorrect=!!quiz&&Number(initial.score)>=100,score=initial.score??null;
   checks.forEach((check,i)=>{check.checked=(initial.exerciseDone||[]).includes(i);check.addEventListener("change",update);});
   function update(){
