@@ -71,4 +71,36 @@ class BuildTests(unittest.TestCase):
         for name in ['futures-intelligence.js','futures-intelligence.css','news-page.js','risk-calculator.js']:
             self.assertEqual((ROOT/'dist/assets'/name).read_bytes(),(ROOT/'assets'/name).read_bytes())
 
+
+    def test_twelve_area_navigation_is_centralized(self):
+        js=(ROOT/'scripts/build_site.py').read_text()
+        labels=['Overview','Futures Markets','Volume & OI','News Intelligence','Macro Calendar','COT & Positioning','Prediction Markets','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources & Data Health']
+        for label in labels:self.assertIn("('"+label+"',",js)
+        self.assertEqual(js.count("('Overview', '/'),"),1)
+    def test_p1_module_assets_and_routes_exist_after_build(self):
+        for name in ['volume-open-interest.js','data-health.js','prediction-markets.js']:
+            self.assertTrue((ROOT/'assets'/name).exists(),name)
+            self.assertTrue((ROOT/'dist/assets'/name).exists(),name)
+        for route in ['volume-open-interest','prediction-markets','entry-models','strategy-lab','data-health']:
+            self.assertTrue((ROOT/'dist'/route/'index.html').exists(),route)
+    def test_weekly_open_interest_is_separate_from_exchange_volume(self):
+        worker=(ROOT/'cloudflare/src/index.js').read_text()
+        voi=(ROOT/'assets/volume-open-interest.js').read_text()
+        self.assertIn('/api/v1/volume-open-interest',worker)
+        self.assertIn('cadence:"weekly"',worker)
+        self.assertIn('metric:"open_interest"',worker)
+        self.assertIn('status:"not-connected"',worker)
+        self.assertIn('/api/v1/volume-open-interest?',voi)
+        self.assertIn('Daily / intraday volume', (ROOT/'scripts/build_site.py').read_text())
+    def test_provider_health_checks_are_independent(self):
+        js=(ROOT/'assets/data-health.js').read_text()
+        self.assertIn('Promise.allSettled',js)
+        for endpoint in ['/api/v1/news','/api/v1/macro','/api/v1/cot?report=tff','/api/v1/macro/funding','/api/v1/prediction/polymarket','/api/v1/prediction/kalshi']:
+            self.assertIn(endpoint,js)
+    def test_prediction_markets_are_separate_read_only_context(self):
+        js=(ROOT/'assets/prediction-markets.js').read_text()
+        self.assertIn('/api/v1/prediction/polymarket',js)
+        self.assertIn('/api/v1/prediction/kalshi',js)
+        self.assertIn('24h unavailable',js)
+
 if __name__=='__main__': unittest.main()
