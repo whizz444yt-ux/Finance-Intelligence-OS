@@ -13,6 +13,7 @@ Browser
        │      ├── GDELT futures-focused discovery → KV snapshot (scheduled every 30 minutes)
        │      ├── US BLS Public Data API v1 → KV (historical macro series)
        │      ├── CFTC Public Reporting Environment → KV (TFF / Disaggregated weekly COT)
+       │      ├── New York Fed Markets API (SOFR / EFFR / OBFR / repo reference rates)
        │      ├── Polymarket Gamma public events → KV (read-only venue odds/volume)
        │      ├── Kalshi public Trade API v2 → KV (read-only event markets/bid-ask metadata)
        │      ├── Builder Content API allow-listed proxy (not configured)
@@ -36,6 +37,7 @@ Browser
 | `/api/v1/macro` | US BLS v1 | Historical CPI, core CPI, unemployment, payroll and PPI observations. Not live market data. |
 | `/api/v1/cot?report=tff` | CFTC PRE | Weekly Traders in Financial Futures report. |
 | `/api/v1/cot?report=disaggregated` | CFTC PRE | Weekly Disaggregated report. |
+| `/api/v1/macro/funding` | New York Fed Markets API | Latest published SOFR, EFFR and supported overnight reference rates; daily business-day observations. |
 | `/api/v1/prediction/polymarket` | Polymarket Gamma | Active event metadata, outcome prices, volume and liquidity fields; read-only. |
 | `/api/v1/prediction/kalshi` | Kalshi public Trade API v2 | Open event markets, YES bid/ask and volume fields; read-only. |
 | `/api/v1/providers` | Gateway registry | Provider configuration and last-known state. |
