@@ -140,7 +140,12 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Market%20Structure%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep3",
+        "ict-market-efficiency-fvg-mss",
+        "ict-2022-ep22"
+      ]
     },
     {
       "id": "swing-high-low",
@@ -167,7 +172,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Swing%20High%20%26%20Swing%20Low%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "bos",
@@ -194,7 +200,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Break%20of%20Structure%20%28BOS%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "mss",
@@ -222,7 +229,13 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Market%20Structure%20Shift%20%28MSS%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep3",
+        "ict-market-efficiency-fvg-mss",
+        "ict-2022-ep14",
+        "ict-2022-ep22"
+      ]
     },
     {
       "id": "choch",
@@ -248,7 +261,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20CHoCH%20terminology%20comparison%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "displacement",
@@ -276,7 +290,12 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Displacement%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep3",
+        "ict-market-efficiency-fvg-mss",
+        "ict-2022-ep22"
+      ]
     },
     {
       "id": "liquidity",
@@ -305,7 +324,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep3"
+      ]
     },
     {
       "id": "bsl",
@@ -332,7 +354,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Buy-Side%20Liquidity%20%28BSL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ssl",
@@ -359,7 +382,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Sell-Side%20Liquidity%20%28SSL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "eqh",
@@ -386,7 +410,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equal%20Highs%20%28EQH%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "eql",
@@ -412,7 +437,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equal%20Lows%20%28EQL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "pdh-pdl",
@@ -438,7 +464,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Prior%20Day%20High%20/%20Low%20%28PDH%20/%20PDL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "pwh-pwl",
@@ -464,7 +491,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Prior%20Week%20High%20/%20Low%20%28PWH%20/%20PWL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "session-high-low",
@@ -490,7 +518,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Session%20High%20/%20Low%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "liquidity-sweep",
@@ -519,7 +548,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Sweep%20/%20Raid%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "liquidity-run",
@@ -545,7 +575,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Run%20/%20Breakout%20Acceptance%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "irl-erl",
@@ -573,7 +604,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Internal%20%26%20External%20Range%20Liquidity%20%28IRL%20/%20ERL%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep3"
+      ]
     },
     {
       "id": "opposing-liquidity",
@@ -601,7 +635,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Opposing%20Liquidity%20/%20Draw%20on%20Liquidity%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "fvg",
@@ -631,7 +666,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Fair%20Value%20Gap%20%28FVG%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-market-efficiency-fvg-mss"
+      ]
     },
     {
       "id": "htf-fvg",
@@ -658,7 +696,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Higher-Timeframe%20FVG%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ce",
@@ -684,7 +723,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Consequent%20Encroachment%20%28CE%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-market-efficiency-fvg-mss"
+      ]
     },
     {
       "id": "ifvg",
@@ -712,7 +754,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Inversion%20Fair%20Value%20Gap%20%28IFVG%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "bpr",
@@ -738,7 +781,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Balanced%20Price%20Range%20%28BPR%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "volume-imbalance",
@@ -763,7 +807,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Volume%20Imbalance%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "fpfvg",
@@ -790,7 +835,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20First%20Presented%20FVG%20%28FPFVG%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "liquidity-void",
@@ -816,7 +862,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Liquidity%20Void%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "order-block",
@@ -844,7 +891,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Order%20Block%20%28OB%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep22"
+      ]
     },
     {
       "id": "mean-threshold",
@@ -869,7 +919,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Mean%20Threshold%20%28MT%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "breaker-block",
@@ -896,7 +947,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Breaker%20Block%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "mitigation-block",
@@ -922,7 +974,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Mitigation%20Block%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "rejection-block",
@@ -948,7 +1001,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Rejection%20Block%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "unicorn",
@@ -976,7 +1030,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Unicorn%20Model%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "pd-arrays",
@@ -1004,7 +1059,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20PD%20Arrays%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "premium-discount",
@@ -1032,7 +1088,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Premium%20%26%20Discount%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "equilibrium",
@@ -1058,7 +1115,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Equilibrium%20%28EQ%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "dealing-range",
@@ -1085,7 +1143,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Dealing%20Range%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ote",
@@ -1113,7 +1172,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Optimal%20Trade%20Entry%20%28OTE%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "fib-extensions",
@@ -1139,7 +1199,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Fibonacci%20/%20Range%20Extensions%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "time-anchors",
@@ -1167,7 +1228,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Time%20Anchors%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "midnight-open",
@@ -1193,7 +1255,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Midnight%20/%20True%20Day%20Open%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ndog",
@@ -1219,7 +1282,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20New%20Day%20Opening%20Gap%20%28NDOG%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "nwog",
@@ -1245,7 +1309,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20New%20Week%20Opening%20Gap%20%28NWOG%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "weekly-open",
@@ -1270,7 +1335,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Weekly%20Open%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "killzones",
@@ -1297,7 +1363,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Killzones%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "asian-range",
@@ -1324,7 +1391,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Asian%20Range%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "silver-bullet",
@@ -1352,7 +1420,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Silver%20Bullet%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "amd-po3",
@@ -1380,7 +1449,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20AMD%20/%20Power%20of%20Three%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "judas-swing",
@@ -1408,7 +1478,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Judas%20Swing%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ipda",
@@ -1435,7 +1506,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20IPDA%2020/40/60%20Lookback%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "smt",
@@ -1464,7 +1536,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20SMT%20Divergence%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "weekly-profiles",
@@ -1491,7 +1564,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Weekly%20Profiles%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "smt-index",
@@ -1520,7 +1594,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Index%20SMT%3A%20NQ%20/%20ES%20/%20YM%20/%20RTY%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "smt-fx-metals",
@@ -1550,7 +1625,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20FX%20%26%20Metals%20SMT%20Pairs%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "cbdr",
@@ -1577,7 +1653,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Central%20Bank%20Dealers%20Range%20%28CBDR%29%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "flout",
@@ -1602,7 +1679,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Flout%20Range%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "sd-projections",
@@ -1629,7 +1707,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Standard-Deviation%20Projections%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "ict-macros",
@@ -1656,7 +1735,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20ICT%20Macros%20%E2%80%94%20Research%20Note%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "midnight-open-vs-day-open",
@@ -1682,7 +1762,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=Inner%20Circle%20Trader%20official%20Midnight%20Open%20vs%20Exchange%20Trading-Day%20Open%20ICT%20futures",
       "sourceNote": "The supplied PDF is the source for playbook framing where explicitly marked. Supplemental clarifications are identified as such. These are discovery links, not verified video-to-concept mappings.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "cisd",
@@ -1721,7 +1802,8 @@
           "url": "https://www.theinnercircletraders.com/ict-trading-tools/ict-glossary/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "mmxm",
@@ -1761,7 +1843,8 @@
           "url": "https://www.theinnercircletraders.com/ict-trading-tools/ict-glossary/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "turtle-soup",
@@ -1802,7 +1885,8 @@
           "url": "https://ictflow.com/glossary",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "propulsion-block",
@@ -1841,7 +1925,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "breakaway-gap",
@@ -1881,7 +1966,8 @@
           "url": "https://ictflow.com/glossary",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "opening-range-gap",
@@ -1915,7 +2001,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "event-horizon",
@@ -1949,7 +2036,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "reclaimed-order-block",
@@ -1988,7 +2076,8 @@
           "url": "https://ictflow.com/glossary",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "suspension-block",
@@ -2022,7 +2111,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "vacuum-block",
@@ -2056,7 +2146,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "ny-lunch-reversal",
@@ -2090,7 +2181,8 @@
           "url": "https://x10hop.com/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "market-maker-buy-model",
@@ -2130,7 +2222,8 @@
           "url": "https://hadalinstruments.com/glossary/market-maker-model/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "market-maker-sell-model",
@@ -2170,7 +2263,8 @@
           "url": "https://hadalinstruments.com/glossary/market-maker-model/",
           "type": "Secondary reference"
         }
-      ]
+      ],
+      "verifiedVideoIds": []
     },
     {
       "id": "ict-2022-model",
@@ -2200,7 +2294,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=ICT%202022%20mentorship%20model%20raid%20MSS%20FVG%20lesson",
       "sourceNote": "Source-derived from the supplied playbook’s Entry Models section. The playbook states that audited public statistics for the model were not found.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep14"
+      ]
     },
     {
       "id": "liquidity-sweep-mss-model",
@@ -2229,7 +2326,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=ICT%20futures%20liquidity%20sweep%20MSS%20reversal%20model",
       "sourceNote": "Source-derived synthesis of the supplied playbook’s common entry skeleton. Sweep and MSS criteria must be fixed before testing.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep14"
+      ]
     },
     {
       "id": "fvg-continuation-model",
@@ -2257,7 +2357,10 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=ICT%20Fair%20Value%20Gap%20continuation%20model%20lesson",
       "sourceNote": "A structured supplemental model assembled from common FVG usage. The supplied playbook says an FVG is an entry zone, not a signal, and does not prove that every gap fills.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": [
+        "ict-2022-ep14"
+      ]
     },
     {
       "id": "ifvg-reversal-model",
@@ -2285,7 +2388,8 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=ICT%20IFVG%20inversion%20fair%20value%20gap%20model%20lesson",
       "sourceNote": "Partly source-derived: the PDF defines IFVG by a body close through the far FVG boundary. The retest entry sequence is a supplemental convention.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     },
     {
       "id": "fvg-ote-confluence-model",
@@ -2315,9 +2419,118 @@
       "officialPlaylists": "https://www.youtube.com/@InnerCircleTrader/playlists",
       "videoSearch": "https://www.youtube.com/results?search_query=ICT%20OTE%20FVG%20confluence%2070.5%20percent%20lesson",
       "sourceNote": "Source-derived combination of the playbook’s FVG and OTE guidance. No audited independent edge is claimed.",
-      "referenceLinks": []
+      "referenceLinks": [],
+      "verifiedVideoIds": []
     }
   ],
   "learningPolicy": "Official ICT channel/playlist links are provided as learning destinations. Search-result links are discovery links, not a verified video-to-concept mapping. Third-party educators are not labelled as ICT official content.",
-  "conceptCount": 76
+  "conceptCount": 76,
+  "featuredVideos": [
+    {
+      "id": "ict-2022-ep3",
+      "title": "2022 ICT Mentorship Episode 3",
+      "summary": "Internal Range Liquidity & Market Structure Shifts.",
+      "url": "https://www.youtube.com/watch?v=nQfHZ2DEJ8c",
+      "published": "2022-01-25",
+      "publisher": "The Inner Circle Trader",
+      "verifiedOfficial": true,
+      "conceptIds": [
+        "irl-erl",
+        "mss",
+        "market-structure",
+        "liquidity",
+        "displacement"
+      ],
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B"
+      ],
+      "sourceNote": "Official ICT channel upload; title and description verified."
+    },
+    {
+      "id": "ict-market-efficiency-fvg-mss",
+      "title": "Market Efficiency Paradigm & Institutional Order Flow",
+      "summary": "The official upload description identifies a deep dive into Fair Value Gaps and Market Structure Shifts.",
+      "url": "https://www.youtube.com/watch?v=Bkt8B3kLATQ",
+      "published": "2022-02-03",
+      "publisher": "The Inner Circle Trader",
+      "verifiedOfficial": true,
+      "conceptIds": [
+        "fvg",
+        "mss",
+        "market-structure",
+        "displacement",
+        "ce"
+      ],
+      "markets": [
+        "NQ",
+        "ES",
+        "GC",
+        "6E",
+        "6B"
+      ],
+      "sourceNote": "Official ICT channel upload; topic mapping is based on the video description."
+    },
+    {
+      "id": "ict-2022-ep14",
+      "title": "2022 ICT Mentorship Episode 14",
+      "summary": "The official description says the episode records execution of the mentorship model in Nasdaq.",
+      "url": "https://www.youtube.com/watch?v=NUdu1n-ML98",
+      "published": "2022-02-28",
+      "publisher": "The Inner Circle Trader",
+      "verifiedOfficial": true,
+      "conceptIds": [
+        "ict-2022-model",
+        "mss",
+        "liquidity-sweep-mss-model",
+        "fvg-continuation-model"
+      ],
+      "markets": [
+        "NQ",
+        "MNQ"
+      ],
+      "sourceNote": "Official ICT channel upload; Nasdaq execution context is stated in the video description."
+    },
+    {
+      "id": "ict-2022-ep22",
+      "title": "2022 ICT Mentorship Episode 22",
+      "summary": "Tape-reading example covering Market Structure and Order Block.",
+      "url": "https://www.youtube.com/watch?v=QKc_i90chVg",
+      "published": "2022-04-29",
+      "publisher": "The Inner Circle Trader",
+      "verifiedOfficial": true,
+      "conceptIds": [
+        "market-structure",
+        "order-block",
+        "mss",
+        "displacement"
+      ],
+      "markets": [
+        "NQ",
+        "ES"
+      ],
+      "sourceNote": "Official ICT channel upload; the video description identifies tape reading, market structure and order block."
+    }
+  ],
+  "playlistLinks": [
+    {
+      "name": "Official ICT Channel",
+      "url": "https://www.youtube.com/@InnerCircleTrader",
+      "description": "Original ICT uploads and lessons."
+    },
+    {
+      "name": "Official ICT Playlists",
+      "url": "https://www.youtube.com/@InnerCircleTrader/playlists",
+      "description": "Browse the channel's organised learning series."
+    },
+    {
+      "name": "Official ICT Courses",
+      "url": "https://www.youtube.com/@InnerCircleTrader/courses",
+      "description": "Course listings when available on the channel."
+    }
+  ],
+  "learningNote": "Direct video links are included only where the official ICT upload and topic mapping were checked. Other concepts retain clearly labelled YouTube discovery searches; a search result is not represented as a verified original lecture."
 }
