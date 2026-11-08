@@ -22,6 +22,7 @@ A consolidated global financial research workspace with the preserved Global Res
 - `/data-health/` — independently checked gateway/provider snapshots, retrieval times and configuration states.
 - `/news/` — GDELT news-discovery snapshots.
 - `/macro/` — five historical US BLS series (CPI, core CPI, unemployment, nonfarm payrolls, PPI).
+- `/macro/` also exposes BEA quarterly national-accounts data, EIA weekly crude-oil stocks, FRED macro histories, US Treasury monthly average-interest-rate observations and ECB daily USD/EUR reference rates through separate provider cards.
 - `/research/positioning/` — CFTC TFF and Disaggregated COT dashboard.
 - `/research/` — searchable 585-resource directory.
 - `/academy/` — searchable ICT Academy index and retained lesson pages.
@@ -65,14 +66,23 @@ python3 scripts/audit_internal_links.py
 
 `https://finance-intelligence-os-edge.finance-intelligence-os.workers.dev`
 
-Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro/funding` (New York Fed SOFR/EFFR/overnight rates), `/api/v1/prediction/polymarket`, `/api/v1/prediction/kalshi`, and `/api/v1/cms/{model}`. Polymarket and Kalshi are read-only public event-market endpoints, cached at the edge. News refresh remains scheduled every 30 minutes; the frontend reload button fetches the latest cached snapshot rather than bypassing the provider cache. GDELT collection is scheduled every 30 minutes; BLS and CFTC snapshots are fetched on demand and cached. This is not an exchange real-time price or order-book feed.
+Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro/funding` (New York Fed SOFR/EFFR/overnight rates), `/api/v1/prediction/polymarket`, `/api/v1/prediction/kalshi`, and `/api/v1/cms/{model}`. Polymarket and Kalshi are read-only public event-market endpoints, cached at the edge. News refresh remains scheduled every 30 minutes; the frontend reload button fetches the latest cached snapshot rather than bypassing the provider cache. GDELT collection is scheduled every 30 minutes; BLS, CFTC and NY Fed snapshots are fetched on demand and cached. BEA, EIA, FRED, Treasury and ECB use dedicated provider adapters with provider-specific TTLs. A 30-minute Cron checks whether each provider is due and performs historical ingestion no more frequently than its configured freshness interval. This is not an exchange real-time price or order-book feed.
+
+## Historical ingestion and Supabase persistence
+
+- Economic provider observations are normalized into `economic_observations` with provider, dataset, series, frequency, observation date, unit, source URL, retrieved time, data-as-of time and raw provider attributes. Unique keys make historical upserts idempotent.
+- `ingestion_runs` stores request count, rows received/upserted, timing and failure details. It is private: RLS is enabled without anon/authenticated policies, and only the server-side service role may write/read run diagnostics.
+- `economic_observations` is browser-readable under a SELECT-only RLS policy. Browser roles cannot insert, update or delete; all ingestion writes run through the Worker.
+- `POST /api/v1/ingest` accepts a provider or `all` and requires `Authorization: Bearer <INGEST_TOKEN>`. Never use a query-string token.
+- BEA, EIA and FRED require `BEA_API_KEY`, `EIA_API_KEY` and `FRED_API_KEY` Worker secrets respectively. Treasury Fiscal Data and ECB SDMX use public endpoints. Supabase writes additionally require `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as Worker environment/secret values.
+- When a credential is absent or persistence is unavailable, provider and persistence statuses remain separate. Missing observations are never written as zero, and provider API keys are stripped from stored source URLs.
 
 ## Data and safety boundaries
 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
 - RLS is enabled on all 16 project public tables; user-owned rows are scoped to `auth.uid()`.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
-- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
+- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS, BEA, EIA, FRED, Treasury and ECB series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
 - Real-time CME/ICE quotes, DOM/depth, licensed intraday history and redistribution rights are outside the free integration baseline.
 - Polymarket/Kalshi event-market odds are venue probabilities, not futures prices, order flow or guaranteed forecasts; no wallet or order-placement endpoints are connected.
