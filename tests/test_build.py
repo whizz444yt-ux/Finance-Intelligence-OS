@@ -103,4 +103,38 @@ class BuildTests(unittest.TestCase):
         self.assertIn('/api/v1/prediction/kalshi',js)
         self.assertIn('24h unavailable',js)
 
+
+    def test_p2_economic_provider_adapters(self):
+        js=(ROOT/'cloudflare/src/economic-providers.js').read_text()
+        for provider in ['case "bea"','case "eia"','case "fred"','case "us_treasury"','case "ecb"']:
+            self.assertIn(provider,js)
+        self.assertIn('searchParams.delete("api_key")',js)
+        self.assertIn('searchParams.delete("UserID")',js)
+        self.assertIn('offset < 5000',js)
+    def test_p2_ingestion_is_protected_and_persistent(self):
+        js=(ROOT/'cloudflare/src/index.js').read_text()
+        self.assertIn('url.pathname==="/api/v1/ingest"',js)
+        self.assertIn('env.INGEST_TOKEN',js)
+        self.assertIn('economic_observations',js)
+        self.assertIn('ingestion_runs',js)
+        self.assertIn('on_conflict=provider,dataset_id,series_id,frequency,observation_date',js)
+        self.assertIn('scheduledEconomicIngestion(env)',js)
+    def test_p2_supabase_migration_security(self):
+        sql=(ROOT/'supabase/migrations/20261108134935_add_economic_observations_and_ingestion_runs.sql').read_text()
+        self.assertIn('create table if not exists public.economic_observations',sql)
+        self.assertIn('create table if not exists public.ingestion_runs',sql)
+        self.assertIn('enable row level security',sql)
+        self.assertIn('revoke all on public.ingestion_runs from anon, authenticated',sql)
+        self.assertIn('unique(provider, dataset_id, series_id, frequency, observation_date)',sql)
+    def test_p2_macro_ui_and_secret_configuration(self):
+        ui=(ROOT/'assets/economic-data.js').read_text()
+        env=(ROOT/'.env.example').read_text()
+        build=(ROOT/'scripts/build_site.py').read_text()
+        for provider in ['bea','eia','fred','us_treasury','ecb']:
+            self.assertIn('/api/v1/economic/'+provider,ui)
+        for key in ['BEA_API_KEY','EIA_API_KEY','FRED_API_KEY']:
+            self.assertIn(key,env)
+        self.assertIn('economic-data.js',build)
+        self.assertIn('Refresh economic providers',build)
+
 if __name__=='__main__': unittest.main()
