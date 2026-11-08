@@ -90,3 +90,12 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 - The new Futures Desk is a research interface; it deliberately does not label delayed/snapshot public data as live exchange quotes.
 
 See `docs/BUILD-REPORT.md`, `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION.md`, `docs/ENVIRONMENT.md` and `SECURITY.md`.
+
+## P3 — ICT Academy learning program
+
+- The Academy retains all 76 original concept IDs and seven original learning tracks. Every lesson now includes learning objectives, prerequisites, a guided walkthrough, hypothetical worked example, chart-replay assignment, completion checklist, review criteria and a three-option knowledge check.
+- Nine guided tutorials cover market structure, liquidity mapping, sweep-versus-acceptance, FVG/imbalance measurement, dealing ranges/PD arrays, timezone/session planning, cross-market SMT, entry-model replay and supplemental-source audits.
+- Standalone lessons are generated at the existing `/ict-futures/academy/{concept-id}.html` routes. Tutorial workbooks live at `/ict-futures/academy/tutorials/`.
+- Progress saves locally and syncs to the signed-in user's existing Supabase `lesson_progress` row using the authenticated session and its user-owned RLS policy. No schema migration or privileged client key is required.
+- Direct original ICT video links are used only where the catalogue already marks the exact upload as verified. Other YouTube links remain labelled topic-discovery links; supplemental/community terminology remains source-cautioned.
+- CME and CFTC material is linked for general futures mechanics and risk education, not represented as ICT certification or evidence of strategy performance.
