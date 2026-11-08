@@ -1,6 +1,6 @@
 # Finance Intelligence OS
 
-A consolidated global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a 585-resource source directory, macro/COT data adapters, risk tools, news discovery, learning catalogue and account-backed workspace foundation.
+A consolidated global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a contract-aware Futures Intelligence Desk, 585-resource source directory, macro/COT data adapters, read-only prediction-market discovery, risk tools, news research, ICT learning catalogue and Supabase-backed private workspace foundation.
 
 ## Preserved source work
 
@@ -14,6 +14,7 @@ A consolidated global financial research workspace with the preserved Global Res
 
 - `/` — preserved Global Research cockpit.
 - `/markets/` — futures families and global instruments.
+- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.
 - `/news/` — GDELT news-discovery snapshots.
 - `/macro/` — five historical US BLS series (CPI, core CPI, unemployment, nonfarm payrolls, PPI).
 - `/research/positioning/` — CFTC TFF and Disaggregated COT dashboard.
@@ -41,29 +42,31 @@ python3 scripts/validate.py
 python3 scripts/audit_internal_links.py
 ```
 
-## Five-platform state at build time
+## Platform state (verified 8 November 2026)
 
-| Platform | What is configured | What remains |
+| Platform | Verified state | Remaining setup |
 |---|---|---|
-| GitHub | Existing linked account inspected; workflows and source included | A new repository has not been created. The connected GitHub action set did not expose repository creation; the existing empty `whizz444yt-ux/new.w` was left untouched. |
-| Vercel | Account/team inspected; static project settings prepared | Project creation is waiting for one-time team-access approval. After approval, link the new GitHub repository and use `dist` as output. |
-| Supabase | Free-quoted project created in Mumbai (`ap-south-1`), schema/migrations applied, 16 public tables with RLS enabled, 32 owner policies verified | Browser sign-in requires a real user test, final auth redirect origins and mail settings. Existing local journal data remains separate until an import flow is chosen. |
-| Builder.io | Content model specs and allow-listed Worker proxy prepared | A Builder Content Space and its public Content API key have not been connected. Configure `BUILDER_PUBLIC_API_KEY` as a Cloudflare Worker secret after selecting the Space. |
-| Cloudflare | `finance-intelligence-os-edge` Worker deployed; `finance-intelligence-os` workers.dev subdomain enabled; KV namespace bound; 30-minute Cron configured | External HTTP response testing was blocked by this execution environment's outbound network policy. Restrict CORS to final site origins once the public website URL exists. |
+| GitHub | Public repo `whizz444yt-ux/Finance-Intelligence-OS` on `main`; CI quality workflow is enabled. | Continue using the linked repository and protect production releases with CI status checks. |
+| Vercel | `finance-intelligence-os` project exists; Git-linked production deploys are triggered for commits on `main`; canonical `SITE_URL` is set. | Verify the latest deployment after build completion; add custom domain only when DNS is ready. |
+| Supabase | Active Mumbai (`ap-south-1`) project; 16 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
+| Cloudflare | `finance-intelligence-os-edge` Worker deployed with KV binding and a 30-minute GDELT scheduled job. CORS is restricted to configured production origins. | No Worker secrets are currently bound, so Builder Admin and automated Supabase writes remain disabled. |
+| Builder.io | Allow-listed content proxy code remains available. | A Builder Space public API key and read-only Admin PAT have not been configured. |
 
 ### Deployed Cloudflare API
 
 `https://finance-intelligence-os-edge.finance-intelligence-os.workers.dev`
 
-Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, and `/api/v1/cms/{model}`. GDELT collection is scheduled every 30 minutes; BLS and CFTC snapshots are fetched on demand and cached. This is not an exchange real-time price or order-book feed.
+Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro/funding` (New York Fed SOFR/EFFR/overnight rates), `/api/v1/prediction/polymarket`, `/api/v1/prediction/kalshi`, and `/api/v1/cms/{model}`. Polymarket and Kalshi are read-only public event-market endpoints, cached at the edge. News refresh remains scheduled every 30 minutes; the frontend reload button fetches the latest cached snapshot rather than bypassing the provider cache. GDELT collection is scheduled every 30 minutes; BLS and CFTC snapshots are fetched on demand and cached. This is not an exchange real-time price or order-book feed.
 
 ## Data and safety boundaries
 
 - Supabase browser configuration uses only the public publishable key; no service-role key is in this repository.
 - RLS is enabled on all 16 project public tables; user-owned rows are scoped to `auth.uid()`.
 - Fifteen imported contract specification rows are explicitly `unverified`; they must be reconciled with exchange documents before being treated as current.
-- CFTC COT is a weekly trader-category report; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
+- CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields; BLS series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
 - Real-time CME/ICE quotes, DOM/depth, licensed intraday history and redistribution rights are outside the free integration baseline.
+- Polymarket/Kalshi event-market odds are venue probabilities, not futures prices, order flow or guaranteed forecasts; no wallet or order-placement endpoints are connected.
+- The new Futures Desk is a research interface; it deliberately does not label delayed/snapshot public data as live exchange quotes.
 
 See `docs/BUILD-REPORT.md`, `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION.md`, `docs/ENVIRONMENT.md` and `SECURITY.md`.
