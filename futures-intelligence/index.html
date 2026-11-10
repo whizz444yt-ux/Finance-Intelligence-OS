@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Futures Intelligence Desk | Finance Intelligence OS</title>
-<meta name="description" content="Contract-aware futures research desk with macro data, CFTC positioning, global futures news and public prediction-market context.">
+<title>Futures Intelligence Desk | Futures Intelligence OS</title>
+<meta name="description" content="Contract-aware futures research desk with macro data, CFTC positioning and futures news.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site-shell.css">
 <link rel="stylesheet" href="/assets/futures-intelligence.css">
@@ -13,20 +13,20 @@
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="site-head"><div class="head-inner">
-<a class="brand" href="/"><span class="brand-mark">FI</span><span>FINANCE INTELLIGENCE OS<small>Global research · futures · ICT</small></span></a>
-<nav class="topnav" aria-label="Finance Intelligence OS areas"><a href="/">Overview</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News Intelligence</a><a href="/macro/">Macro Calendar</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/prediction-markets/">Prediction Markets</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/data-health/">Sources &amp; Data Health</a></nav>
+<a class="brand" href="/"><span class="brand-mark">FI</span><span>FUTURES INTELLIGENCE OS<small>Listed futures · ICT research</small></span></a>
+<nav class="topnav" aria-label="Futures Intelligence OS areas"><a href="/">Overview</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News Intelligence</a><a href="/macro/">Macro Calendar</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/data-health/">Sources &amp; Data Health</a></nav>
 <a class="fi-ict-link" href="/ict-futures/#learning">ICT Learning ↗</a><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
-</div><nav class="mobile-nav" id="mobileNav"><a href="/">Overview</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News Intelligence</a><a href="/macro/">Macro Calendar</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/prediction-markets/">Prediction Markets</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/data-health/">Sources &amp; Data Health</a></nav></header>
+</div><nav class="mobile-nav" id="mobileNav"><a href="/">Overview</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News Intelligence</a><a href="/macro/">Macro Calendar</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/data-health/">Sources &amp; Data Health</a></nav></header>
 <main id="content" class="fi-main">
 <section class="fi-hero">
-<div class="fi-hero-copy"><p class="fi-kicker">MULTI-ASSET · CONTRACT-AWARE · SOURCE-TRACEABLE</p><div class="fi-title-row"><h1>Futures Intelligence</h1><span class="fi-live-indicator"><i></i> PUBLIC DATA MODE</span></div>
-<p class="fi-subtitle">A research control room for futures markets. Combine contract context, macro releases, CFTC positioning, market-moving headlines and prediction-market expectations — without confusing public snapshots for licensed real-time prices.</p>
+<div class="fi-hero-copy"><p class="fi-kicker">FUTURES-ONLY · CONTRACT-AWARE · SOURCE-TRACEABLE</p><div class="fi-title-row"><h1>Futures Intelligence</h1><span class="fi-live-indicator"><i></i> PUBLIC DATA MODE</span></div>
+<p class="fi-subtitle">A research control room for futures markets. Combine contract context, macro releases, CFTC positioning and market-moving headlines — without confusing public snapshots for licensed real-time prices.</p>
 <div class="fi-hero-actions"><a href="#universe" class="fi-btn primary">Explore futures universe <span>↓</span></a><a href="/ict-futures/" class="fi-btn ghost">Open ICT Futures Terminal ↗</a></div></div>
 <div class="fi-hero-aside"><div class="fi-clock-label">LOCAL RESEARCH CLOCK</div><div id="fiClock" class="fi-clock">--:--:--</div><div id="fiDate" class="fi-date">Loading local time…</div><div class="fi-clock-divider"></div><div class="fi-data-state"><span>Market quotes</span><b class="state-neutral">Not licensed</b></div><div class="fi-data-state"><span>Research feeds</span><b id="fiOverallStatus">Connecting…</b></div><div class="fi-data-state"><span>API checked</span><b id="fiLastChecked">—</b></div></div>
 </section>
 <section class="fi-stat-grid" aria-label="Platform coverage">
 <div class="fi-stat-card"><span>Futures families</span><strong id="fiCountContracts">15</strong><small>Equity · rates · FX · metals · energy</small></div>
-<div class="fi-stat-card"><span>Public data channels</span><strong>5+</strong><small>News, macro, COT, event markets</small></div>
+<div class="fi-stat-card"><span>Public data channels</span><strong>5+</strong><small>News, macro, COT and rates</small></div>
 <div class="fi-stat-card"><span>News categories</span><strong>8</strong><small>Contract-linked discovery topics</small></div>
 <div class="fi-stat-card"><span>Execution access</span><strong>OFF</strong><small>Research only · no broker connection</small></div>
 </section>
@@ -52,11 +52,7 @@
 <div class="fi-cot-meta"><span id="fiCotProvider">CFTC Public Reporting Environment</span><span id="fiCotAsOf">Report date —</span><span id="fiCotStatus" class="fi-status-pill">LOADING</span></div>
 <div class="fi-table-wrap"><table class="fi-table"><thead><tr><th>Contract</th><th>Trader category</th><th>Long</th><th>Short</th><th>Net position</th><th>Open interest</th></tr></thead><tbody id="fiCotRows"><tr><td colspan="6">Loading CFTC positioning report…</td></tr></tbody></table></div>
 <div class="fi-source-row"><a href="https://publicreporting.cftc.gov/" target="_blank" rel="noopener">CFTC PRE official source ↗</a><a href="/research/positioning/">Open full COT dashboard ↗</a></div></section>
-<section class="fi-section"><div class="fi-section-head"><div><p class="fi-eyebrow">05 / PREDICTION MARKETS</p><h2>What event markets are pricing</h2><p>Public Polymarket and Kalshi event markets can add expectation context — they are not futures order flow or objective forecasts.</p></div><button id="fiRefreshPredictions" class="fi-small-btn">Refresh markets ↻</button></div>
-<div class="fi-prediction-grid"><div class="fi-panel nested"><div class="fi-panel-head"><div><h3>Polymarket</h3><p>Gamma event metadata · indicative outcome probabilities</p></div><span class="fi-venue-mark">POLY</span></div><div id="fiPolymarket" class="fi-event-list"><div class="fi-loading">Loading public event markets…</div></div><div class="fi-source-row"><a href="https://polymarket.com/" target="_blank" rel="noopener">Open Polymarket ↗</a><a href="https://docs.polymarket.com/" target="_blank" rel="noopener">API docs ↗</a></div></div>
-<div class="fi-panel nested"><div class="fi-panel-head"><div><h3>Kalshi</h3><p>Public event contracts · YES bid/ask context</p></div><span class="fi-venue-mark kalshi">KALSHI</span></div><div id="fiKalshi" class="fi-event-list"><div class="fi-loading">Loading public event markets…</div></div><div class="fi-source-row"><a href="https://kalshi.com/" target="_blank" rel="noopener">Open Kalshi ↗</a><a href="https://docs.kalshi.com/" target="_blank" rel="noopener">API docs ↗</a></div></div></div>
-<p class="fi-footnote">Market probabilities, bid/ask and volume are venue-specific and may be illiquid or stale. No wallet, trading, order-placement or execution functionality is connected. Availability and access depend on each provider's terms and local jurisdiction.</p></section>
 <section class="fi-disclaimer"><div><b>Research integrity</b><p>Every displayed feed should retain its provider, retrieval time, data-as-of timestamp, and freshness state. Public APIs are used where available. CME/ICE real-time quotes, full-depth order books, redistribution rights, professional newswires and licensed intraday datasets require separate commercial permissions and are not presented as free.</p></div><a href="/status/">Provider status & system documentation ↗</a></section>
 </main>
-<footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, exchange feed, investment adviser or execution terminal.</p></div><div class="footer-links"><a href="/status/">System status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures</a><a href="/account/">Private workspace</a></div><small>Source timestamps, provenance and licensing limits apply to all external data.</small></footer>
+<footer class="site-footer"><div><b>Futures Intelligence OS</b><p>Research and education workspace. Not a broker, exchange feed, investment adviser or execution terminal.</p></div><div class="footer-links"><a href="/status/">System status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures</a><a href="/account/">Private workspace</a></div><small>Source timestamps, provenance and licensing limits apply to all external data.</small></footer>
 </body></html>

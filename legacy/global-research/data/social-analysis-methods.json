@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "description": "Search-provider and chart-analysis methodology registry. Results are external searches; this is not a live social-media scrape.",
+  "methods": [
+    {
+      "id": "technical",
+      "label": "Technical / price action",
+      "evidenceTier": "testable chart hypothesis",
+      "searchTerms": "support resistance breakout trend structure"
+    },
+    {
+      "id": "ict",
+      "label": "ICT / SMC",
+      "evidenceTier": "rule-dependent technical hypothesis",
+      "searchTerms": "liquidity sweep FVG order block BOS MSS"
+    },
+    {
+      "id": "wyckoff",
+      "label": "Wyckoff",
+      "evidenceTier": "rule-dependent chart hypothesis",
+      "searchTerms": "accumulation distribution spring upthrust"
+    },
+    {
+      "id": "elliott",
+      "label": "Elliott Wave",
+      "evidenceTier": "subjective count; require invalidation",
+      "searchTerms": "wave count alternate count invalidation"
+    },
+    {
+      "id": "quant",
+      "label": "Quant / mathematical",
+      "evidenceTier": "measurable if preregistered and out-of-sample tested",
+      "searchTerms": "statistics z-score regression volatility backtest"
+    },
+    {
+      "id": "orderflow",
+      "label": "Order flow / volume profile",
+      "evidenceTier": "venue/feed-dependent",
+      "searchTerms": "footprint delta volume profile order book"
+    },
+    {
+      "id": "options",
+      "label": "Options / derivatives",
+      "evidenceTier": "data/contract-dependent",
+      "searchTerms": "options flow open interest IV skew gamma"
+    },
+    {
+      "id": "macro",
+      "label": "Macro / fundamental",
+      "evidenceTier": "source-verifiable; market impact conditional",
+      "searchTerms": "rates inflation earnings supply demand"
+    },
+    {
+      "id": "onchain",
+      "label": "Crypto on-chain",
+      "evidenceTier": "chain/public-data; entity attribution uncertain",
+      "searchTerms": "exchange flows wallet labels token unlock"
+    },
+    {
+      "id": "sentiment",
+      "label": "Social sentiment",
+      "evidenceTier": "attention is not direction; manipulation possible",
+      "searchTerms": "mention growth sentiment positioning"
+    },
+    {
+      "id": "gann",
+      "label": "Gann / cycles",
+      "evidenceTier": "test as hypothesis; preserve ex-ante rules",
+      "searchTerms": "Gann time price cycle"
+    },
+    {
+      "id": "astrology",
+      "label": "Financial astrology",
+      "evidenceTier": "speculative/non-validated; keep separate from empirical signals",
+      "searchTerms": "financial astrology planetary cycle market timing"
+    },
+    {
+      "id": "ai",
+      "label": "AI / machine learning",
+      "evidenceTier": "requires leakage controls, calibration and holdout tests",
+      "searchTerms": "machine learning financial forecast"
+    }
+  ],
+  "platforms": [
+    "X search",
+    "TradingView community ideas",
+    "YouTube search",
+    "Google News",
+    "Reddit search",
+    "Stocktwits",
+    "Bluesky search",
+    "Google search for public Telegram pages"
+  ],
+  "viewSchema": [
+    "createdAt",
+    "publishedAt",
+    "market",
+    "author",
+    "sourceUrl",
+    "method",
+    "horizon",
+    "bias",
+    "confidence",
+    "entry",
+    "support",
+    "resistance",
+    "stop",
+    "target",
+    "thesis",
+    "invalidation",
+    "outcome",
+    "scoredAt"
+  ],
+  "evaluation": "Forecasts are scored manually after the stated horizon. A scored sample is subject to selection bias and is not evidence of future profitability."
+}

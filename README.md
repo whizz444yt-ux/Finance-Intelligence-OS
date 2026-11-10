@@ -1,41 +1,46 @@
 # Finance Intelligence OS
 
-A premium global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a contract-aware Futures Intelligence Desk, 585-resource source directory, macro/COT data adapters, read-only prediction-market discovery, risk tools, news research, ICT learning catalogue and Supabase-backed private workspace foundation.
+A futures-only research and education workspace for exchange-listed futures and ICT Futures. It includes a 15-family futures catalogue, the preserved 76-concept ICT Academy and nine guided tutorials, futures news and official macro adapters, CFTC positioning, deterministic backtesting, risk tools and a Supabase-backed private workspace.
 
 **Current release:** `v1.1.0` · **Production branch:** `main` · **Deployment:** Live on Vercel · **Release date:** 10 November 2026. The tagged GitHub release remains a separate release-management step.
 
-## Preserved source work
+## Product scope and preserved baselines
 
-- The previous Finance Intelligence OS Global Research Edition remains the homepage and primary cockpit.
-- The previous 585-resource research directory and 73 instrument profiles are retained.
-- ICT Futures Intelligence OS 3.0 is preserved at `/ict-futures/`, including 15 contract-family pages, 76 Academy lesson pages, the original terminal UI, datasets, session/calendar tools, journal, checklist and risk modules.
-- Previous Finance OS Markdown documents, notes and source ZIP baselines remain in `legacy/`.
-- The complete five-platform requirements document remains in `docs/FINANCE_INTELLIGENCE_OS_COMPLETE_MASTER_REQUIREMENTS.md`.
+- The active homepage and primary navigation are Futures Intelligence OS, focused on listed futures markets and ICT Futures education.
+- The active futures universe is `ict-futures/data/market-universe.json` with 15 families, including listed currency futures and CME Bitcoin/MBT futures.
+- ICT Futures retains 76 concept IDs and nine guided tutorials at their existing lesson/tutorial routes.
+- The active `resources.json` is a reviewed futures-only allowlist. The former 585-entry general catalogue, 73-record generic instrument universe, previous homepage and unfiltered source lists are preserved unchanged under `legacy/global-research/`.
+- Supabase schema, Auth, RLS and existing private user data are not altered by the scope cleanup. Existing local-first import paths remain available.
 
-## Routes
+## Active routes
 
-- `/` — preserved Global Research cockpit.
-- `/markets/` — futures families and global instruments.
-- `/futures-intelligence/` — premium futures control room with contract selection, GDELT headlines, BLS indicators, CFTC COT, and read-only Polymarket/Kalshi event markets.
-- `/volume-open-interest/` — contract-scoped weekly CFTC open-interest observations; exchange daily/intraday volume remains explicitly unavailable until a verified volume feed is connected.
-- `/prediction-markets/` — separate read-only Polymarket and Kalshi event-market context.
-- `/entry-models/` — eight preserved ICT entry-model concepts, with no unaudited performance ranking.
-- `/strategy-lab/` — backtest methodology and data-readiness status; strategy statistics are not published until reproducible tests exist.
-- `/data-health/` — independently checked gateway/provider snapshots, retrieval times and configuration states.
-- `/news/` — GDELT news-discovery snapshots.
-- `/macro/` — five historical US BLS series (CPI, core CPI, unemployment, nonfarm payrolls, PPI).
-- `/macro/` also exposes BEA quarterly national-accounts data, EIA weekly crude-oil stocks, FRED macro histories, US Treasury monthly average-interest-rate observations and ECB daily USD/EUR reference rates through separate provider cards.
-- `/research/positioning/` — CFTC TFF and Disaggregated COT dashboard.
-- `/research/` — searchable 585-resource directory.
-- `/academy/` — searchable ICT Academy index and retained lesson pages.
-- `/tools/` — futures risk calculator and links to the preserved journal/checklist.
-- `/account/` — Supabase sign-in and private workspace (journal, watchlists, lesson progress).
-- `/ict-futures/` — original ICT Futures Intelligence OS 3.0.
-- `/status/`, `/docs/`, `/legacy/` — system status, developer documentation and original research archive.
+- `/` — Futures Command Center homepage.
+- `/futures-intelligence/` — Futures Desk with contract context, news, macro observations and CFTC positioning.
+- `/markets/` — exactly 15 futures family profiles; no generic cross-asset catalogue.
+- `/ict-futures/` — ICT Futures terminal, sessions, calendar, charts, risk and journal tools.
+- `/ict-futures/markets/{id}.html` — 15 individual family pages.
+- `/academy/` and `/ict-futures/academy/{concept-id}.html` — searchable Academy and 76 retained concept lessons.
+- `/ict-futures/academy/tutorials/` — nine guided tutorials.
+- `/entry-models/` — eight educational model concepts, without unsupported performance rankings.
+- `/news/` — futures-focused GDELT discovery snapshots.
+- `/macro/` — BLS, BEA, EIA, FRED, Treasury and ECB observations with provider-specific freshness and credentials.
+- `/research/positioning/` — CFTC TFF and Disaggregated weekly futures positioning.
+- `/volume-open-interest/` — CFTC weekly open interest; daily/intraday exchange volume remains explicitly unavailable until a verified licensed feed is connected.
+- `/strategy-lab/` — deterministic signal-driven futures backtesting.
+- `/tools/` and `/account/` — futures risk tools and authenticated private journal/watchlists/notes/alerts/progress.
+- `/sources/` — reviewed futures exchange, regulator, macro, news and ICT education source directory.
+- `/data-health/`, `/status/`, `/docs/` — provider health, system status and operator documentation.
+
+## Retired public routes
+
+- `/research/` redirects to `/sources/`.
+- `/prediction-markets/` redirects to the Futures Command Center.
+- `/legacy/` redirects to documentation; archived source files remain repository-only and are not copied to `dist/`.
+- Polymarket/Kalshi Worker endpoints remain dormant compatibility code for this Part. No active frontend, navigation, search or Data Health check calls them.
 
 ## Product navigation
 
-The primary navigation is organized into 12 areas: Overview, Futures Markets, Volume & OI, News Intelligence, Macro Calendar, COT & Positioning, Prediction Markets, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, and Sources & Data Health. The older `/markets/`, `/status/`, and `/ict-futures/` routes remain available as supporting catalogues and preserved experiences.
+Primary navigation includes Overview, Futures Desk, Futures Markets, Volume & OI, News, Macro, COT & Positioning, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, Sources and Data Health.
 
 ## v1.1.0 — Premium interface and release engineering
 
@@ -76,7 +81,7 @@ python3 scripts/audit_internal_links.py
 
 `https://finance-intelligence-os-edge.finance-intelligence-os.workers.dev`
 
-Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro/funding` (New York Fed SOFR/EFFR/overnight rates), `/api/v1/prediction/polymarket`, `/api/v1/prediction/kalshi`, and `/api/v1/cms/{model}`. Polymarket and Kalshi are read-only public event-market endpoints, cached at the edge. News refresh remains scheduled every 30 minutes; the frontend reload button fetches the latest cached snapshot rather than bypassing the provider cache. GDELT collection is scheduled every 30 minutes; BLS, CFTC and NY Fed snapshots are fetched on demand and cached. BEA, EIA, FRED, Treasury and ECB use dedicated provider adapters with provider-specific TTLs. A 30-minute Cron checks whether each provider is due and performs historical ingestion no more frequently than its configured freshness interval. This is not an exchange real-time price or order-book feed.
+Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro/funding` (New York Fed SOFR/EFFR/overnight rates), and `/api/v1/cms/{model}`. Legacy `/api/v1/prediction/polymarket` and `/api/v1/prediction/kalshi` handlers remain dormant for compatibility only; they are not linked to or consumed by the active product. News refresh remains scheduled every 30 minutes; the frontend reload button fetches the latest cached snapshot rather than bypassing the provider cache. GDELT collection is scheduled every 30 minutes; BLS, CFTC and NY Fed snapshots are fetched on demand and cached. BEA, EIA, FRED, Treasury and ECB use dedicated provider adapters with provider-specific TTLs. A 30-minute Cron checks whether each provider is due and performs historical ingestion no more frequently than its configured freshness interval. This is not an exchange real-time price or order-book feed.
 
 ## Historical ingestion and Supabase persistence
 
@@ -97,7 +102,6 @@ Routes include `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/macro`, 
 - CFTC COT is a weekly trader-category report with distinct TFF and Disaggregated classifications; the desk normalizes these categories using the provider's report-specific fields. The Volume & OI module uses CFTC weekly open interest only; it does not label this as daily exchange volume; BLS, BEA, EIA, FRED, Treasury and ECB series are official historical macro observations; GDELT is a discovery index, not a complete licensed newswire.
 - Builder CMS content is editorial content, not a source for market prices or issuer release facts.
 - Real-time CME/ICE quotes, DOM/depth, licensed intraday history and redistribution rights are outside the free integration baseline.
-- Polymarket/Kalshi event-market odds are venue probabilities, not futures prices, order flow or guaranteed forecasts; no wallet or order-placement endpoints are connected.
 - The new Futures Desk is a research interface; it deliberately does not label delayed/snapshot public data as live exchange quotes.
 
 See `docs/BUILD-REPORT.md`, `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION.md`, `docs/ENVIRONMENT.md` and `SECURITY.md`.

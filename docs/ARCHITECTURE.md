@@ -4,9 +4,9 @@
 
 ```text
 Browser
-  ├─ Finance Intelligence OS Global Research cockpit
-  ├─ Static modules: Markets / Futures Desk / News / Macro / COT / Research / Academy / Tools / Account
-  └─ ICT Futures terminal: 15 futures families + 76 ICT concepts + dedicated lesson pages
+  ├─ Futures Command Center homepage and futures-only navigation
+  ├─ Static modules: 15 Futures Families / Futures Desk / Futures News / Macro / COT / Volume & OI
+  └─ ICT Futures terminal: 15 futures families + 76 ICT concepts + 9 guided tutorials
        │
        ├── Vercel static hosting (Git-linked from main)
        ├── Cloudflare Worker API gateway
@@ -24,7 +24,7 @@ Browser
 ## Runtime and provider responsibilities
 
 - **Vercel** serves the static application, generated routes, and published sitemap.
-- **Cloudflare Worker** is the single public-data gateway. It owns upstream calls, per-provider timeouts, cache and freshness labels. The GDELT scheduled refresh uses the existing 30-minute Cron trigger. A manual `/api/v1/news?refresh=1` request queues a Worker-side refresh under a five-minute cooldown/lock; the API immediately returns the prior snapshot with refresh state, so the browser does not make upstream GDELT calls. BLS, CFTC and prediction-market feeds are refreshed on request with KV fallback.
+- **Cloudflare Worker** is the single public-data gateway. It owns upstream calls, per-provider timeouts, cache and freshness labels. The GDELT scheduled refresh uses the existing 30-minute Cron trigger. A manual `/api/v1/news?refresh=1` request queues a Worker-side refresh under a five-minute cooldown/lock; the API immediately returns the prior snapshot with refresh state, so the browser does not make upstream GDELT calls. BLS and CFTC feeds are refreshed on request with KV fallback. The former event-market handlers are retained as dormant compatibility code; the active frontend no longer requests them.
 - **Supabase** stores the normalized data model and user-owned journal/watchlists/progress. All 22 public tables currently have RLS enabled. The Worker currently has no Supabase service-role/secret key configured, so its optional server-side ingestion writes remain disabled; do not put privileged keys in browser code.
 - **Builder.io** remains optional editorial CMS. Its public Content API key and Admin PAT are not configured, so existing static lessons and JSON remain the fallback.
 - **GitHub Actions** runs build, unit, validation and internal-link checks on pushes and pull requests.
@@ -46,12 +46,12 @@ Browser
 | `/api/v1/economic/us_treasury` | Treasury Fiscal Data | Monthly average interest rates on marketable Treasury securities; public API, historical series pages with explicit provider cadence. |
 | `/api/v1/economic/ecb` | ECB SDMX 2.1 | Daily USD/EUR reference series `D.USD.EUR.SP00.A`; public endpoint. |
 | `POST /api/v1/ingest` | Worker ingestion orchestrator | Protected by `INGEST_TOKEN`; starts provider ingestion and records persistence outcomes.
-| `/api/v1/prediction/polymarket` | Polymarket Gamma | Active event metadata, outcome prices, volume and liquidity fields; read-only. |
-| `/api/v1/prediction/kalshi` | Kalshi public Trade API v2 | Open event markets, YES bid/ask and volume fields; read-only. |
+| `/api/v1/prediction/polymarket` | Polymarket Gamma | Dormant compatibility handler only; not linked to or called by the active frontend. |
+| `/api/v1/prediction/kalshi` | Kalshi public Trade API v2 | Dormant compatibility handler only; not linked to or called by the active frontend. |
 | `/api/v1/providers` | Gateway registry | Provider configuration and last-known state. |
 | `/api/v1/health` | Gateway | Worker health and secret/configuration presence flags, never secret values. |
 
-The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Data Health page runs each public gateway endpoint independently and distinguishes an available-on-demand route from a fresh upstream snapshot. Prediction-market data remains a separate venue context. The Entry Models page is descriptive and does not rank models without reproducible results; Strategy Lab publishes no backtest statistics until timestamped historical inputs, costs and validation methodology are available. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
+The UI should display provider, source URL, publisher/event timestamp, retrieval timestamp, data-as-of time and freshness status separately wherever the provider supports them. The Data Health page runs each active futures-relevant gateway endpoint independently and distinguishes an available-on-demand route from a fresh upstream snapshot. The Entry Models page is descriptive and does not rank models without reproducible results; Strategy Lab publishes no backtest statistics until timestamped historical inputs, costs and validation methodology are available. The Futures Desk tracks each research feed independently; one successful provider must not label the whole dashboard healthy. COT category rows are normalized according to the selected CFTC report type rather than using a generic position-field fallback. Event-market probabilities are not exchange quotes, and COT is not an intraday signal.
 
 ## Historical persistence and schedules
 
@@ -63,7 +63,7 @@ The Worker Cron remains every 30 minutes, but provider TTL/cadence checks contro
 
 - Browser runtime configuration may include only public Supabase publishable/anon values and the Worker URL. Supabase service-role keys, Builder PATs, ingestion tokens and other privileged credentials must remain Worker secrets.
 - Worker CORS must be restricted to explicit deployed site origins; do not use wildcard CORS with credentialed or private data.
-- Prediction-market routes are read-only. No wallet, order-placement, account-trading or execution routes are implemented.
+- Legacy event-market handlers remain dormant and unlinked. No active event-market UI, page route, provider health check or client API call remains.
 - Public data is not necessarily licensed for redistribution or commercial use. Upstream terms and market-data exchange licenses still apply.
 - Contract reference values in the retained 15-profile dataset must be verified against the relevant current exchange specification. Contract expiry, first notice, last trade and broker margin must not be inferred from a continuous chart.
 

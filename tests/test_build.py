@@ -2,10 +2,30 @@ import json, os, subprocess, sys, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class BuildTests(unittest.TestCase):
-    def test_sources_exist_and_counts(self):
-        self.assertEqual(len(json.loads((ROOT/'resources.json').read_text())['resources']),585)
+    def test_futures_sources_and_archived_baselines(self):
+        active=json.loads((ROOT/'resources.json').read_text())
+        ict_sources=json.loads((ROOT/'ict-futures/data/source-directory.json').read_text())
+        self.assertEqual(active['scope'],'futures-only')
+        self.assertEqual(active['count'],len(active['resources']))
+        self.assertGreaterEqual(len(active['resources']),40)
+        self.assertEqual(active['resources'],ict_sources['sources'])
+        forbidden=('polymarket','kalshi','stocktwits','sec.gov','sec edgar')
+        for item in active['resources']:
+            hay=' '.join(str(item.get(k,'')) for k in ('category','name','description','url')).lower()
+            self.assertFalse(any(term in hay for term in forbidden),hay)
+        archived=json.loads((ROOT/'legacy/global-research/resources.json').read_text())
+        archived_markets=json.loads((ROOT/'legacy/global-research/data/market-universe.json').read_text())
+        self.assertEqual(len(archived['resources']),585)
+        self.assertGreaterEqual(len(archived_markets['markets']),70)
         self.assertEqual(len(json.loads((ROOT/'ict-futures/data/market-universe.json').read_text())['markets']),15)
-        self.assertEqual(len(json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())['concepts']),76)
+        academy=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        self.assertEqual(len(academy['concepts']),76)
+        self.assertEqual(len(academy['learningProgram']['tutorials']),9)
+        for path in ['legacy/global-research/index.html','legacy/global-research/assets/prediction-markets.js',
+                     'legacy/global-research/assets/research-directory.js',
+                     'legacy/global-research/ict-source-directory-unfiltered.json',
+                     'legacy/global-research/ict-resources-unfiltered.json']:
+            self.assertTrue((ROOT/path).exists(),path)
     def test_builder_models_allowlist(self):
         models=json.loads((ROOT/'integrations/builder/models.json').read_text())['models']
         self.assertEqual({x['name'] for x in models},{'page','ict-lesson','research-article','glossary'})
@@ -78,12 +98,14 @@ class BuildTests(unittest.TestCase):
         js=(ROOT/'assets/news-page.js').read_text()
         self.assertIn("force?'?refresh=1':''",js)
         self.assertIn('Refresh news snapshot',js)
-    def test_prediction_volume_fields_keep_null(self):
+    def test_dormant_event_market_handlers_preserve_unknown_volume_as_null(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('volume24hr:asNumberOrNull(event.volume24hr)',js)
         self.assertIn('volume24h:asNumberOrNull(m.volume_24h_fp??m.volume_24h)',js)
+        # These server handlers remain only as dormant compatibility code; no frontend consumes them.
         desk=(ROOT/'assets/futures-intelligence.js').read_text()
-        self.assertIn('24h unavailable',desk)
+        self.assertNotIn('/api/v1/prediction/polymarket',desk)
+        self.assertNotIn('/api/v1/prediction/kalshi',desk)
 
     def test_cot_fetch_is_scoped_to_selected_contract(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
@@ -96,17 +118,23 @@ class BuildTests(unittest.TestCase):
             self.assertEqual((ROOT/'dist/assets'/name).read_bytes(),(ROOT/'assets'/name).read_bytes())
 
 
-    def test_twelve_area_navigation_is_centralized(self):
+    def test_futures_only_navigation_is_centralized(self):
         js=(ROOT/'scripts/build_site.py').read_text()
-        labels=['Overview','Futures Markets','Volume & OI','News Intelligence','Macro Calendar','COT & Positioning','Prediction Markets','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources & Data Health']
+        labels=['Overview','Futures Desk','Futures Markets','Volume & OI','News','Macro','COT & Positioning','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources','Data Health']
         for label in labels:self.assertIn("('"+label+"',",js)
+        self.assertNotIn("('Prediction Markets',",js)
+        self.assertNotIn("('Equities',",js)
         self.assertEqual(js.count("('Overview', '/'),"),1)
-    def test_p1_module_assets_and_routes_exist_after_build(self):
-        for name in ['volume-open-interest.js','data-health.js','prediction-markets.js']:
+    def test_futures_module_assets_and_retired_route_redirects(self):
+        for name in ['volume-open-interest.js','data-health.js']:
             self.assertTrue((ROOT/'assets'/name).exists(),name)
             self.assertTrue((ROOT/'dist/assets'/name).exists(),name)
-        for route in ['volume-open-interest','prediction-markets','entry-models','strategy-lab','data-health']:
+        self.assertTrue((ROOT/'assets/prediction-markets.js').exists())
+        self.assertFalse((ROOT/'dist/assets/prediction-markets.js').exists())
+        for route in ['volume-open-interest','sources','research','prediction-markets','legacy','entry-models','strategy-lab','data-health']:
             self.assertTrue((ROOT/'dist'/route/'index.html').exists(),route)
+        self.assertIn('/sources/',(ROOT/'dist/research/index.html').read_text())
+        self.assertIn('noindex',(ROOT/'dist/prediction-markets/index.html').read_text())
     def test_weekly_open_interest_is_separate_from_exchange_volume(self):
         worker=(ROOT/'cloudflare/src/index.js').read_text()
         voi=(ROOT/'assets/volume-open-interest.js').read_text()
@@ -119,13 +147,20 @@ class BuildTests(unittest.TestCase):
     def test_provider_health_checks_are_independent(self):
         js=(ROOT/'assets/data-health.js').read_text()
         self.assertIn('Promise.allSettled',js)
-        for endpoint in ['/api/v1/news','/api/v1/macro','/api/v1/cot?report=tff','/api/v1/macro/funding','/api/v1/prediction/polymarket','/api/v1/prediction/kalshi']:
+        for endpoint in ['/api/v1/news','/api/v1/macro','/api/v1/cot?report=tff','/api/v1/macro/funding']:
             self.assertIn(endpoint,js)
-    def test_prediction_markets_are_separate_read_only_context(self):
-        js=(ROOT/'assets/prediction-markets.js').read_text()
-        self.assertIn('/api/v1/prediction/polymarket',js)
-        self.assertIn('/api/v1/prediction/kalshi',js)
-        self.assertIn('24h unavailable',js)
+    def test_retired_event_market_ui_has_no_active_frontend_consumers(self):
+        desk=(ROOT/'assets/futures-intelligence.js').read_text()
+        health=(ROOT/'assets/data-health.js').read_text()
+        ict=(ROOT/'ict-futures/index.html').read_text()
+        worker=(ROOT/'cloudflare/src/index.js').read_text()
+        for frontend in [desk,health,ict]:
+            for token in ['/api/v1/prediction/polymarket','/api/v1/prediction/kalshi','gamma-api.polymarket.com','api.elections.kalshi.com']:
+                self.assertNotIn(token,frontend)
+        self.assertNotIn('id="predictions"',ict)
+        self.assertNotIn('href="#predictions"',ict)
+        self.assertIn('/api/v1/prediction/polymarket',worker)
+        self.assertIn('/api/v1/prediction/kalshi',worker)
 
 
     def test_p2_economic_provider_adapters(self):

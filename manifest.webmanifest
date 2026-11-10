@@ -1,7 +1,7 @@
 {
-  "name": "Finance Intelligence OS — Global Research & Futures Intelligence",
-  "short_name": "Finance OS",
-  "description": "Premium financial research cockpit for futures, macro, positioning, ICT education, reproducible strategy testing and a private research workspace.",
+  "name": "Futures Intelligence OS — Futures Research & ICT Education",
+  "short_name": "Futures OS",
+  "description": "Futures-only research workspace for listed futures markets, ICT Futures education, macro, CFTC positioning, reproducible testing and private trader tools.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
