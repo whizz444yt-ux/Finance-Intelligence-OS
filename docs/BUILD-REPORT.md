@@ -55,7 +55,7 @@ Local builds remain `noindex` when `SITE_URL` is absent. The Vercel Production e
 - Cron: `*/30 * * * *` for GDELT news-discovery snapshots.
 - Worker routes: `/health`, `/api/v1/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro`, `/api/v1/cms/{model}`. Provider status also reports GDELT, BLS, CFTC, Builder.io and Supabase configuration state.
 - BLS and CFTC endpoints fetch on demand and cache successful snapshots for six hours; GDELT discovery is scheduled every 30 minutes.
-- Worker script source, schedule, KV binding and deployment versions were read back from Cloudflare. Current Worker deployed version is 13 and Cron is `*/30 * * * *`. No Worker secrets are bound, so protected Supabase writes and BEA/EIA/FRED credential-backed historical ingestion remain inactive. Public health/provider endpoint checks should be re-run after secret configuration.
+- Worker script source, schedule, KV binding and deployment versions were read back from Cloudflare. Current Worker deployed version is 14 and Cron is `*/30 * * * *`. No Worker secrets are bound, so protected Supabase writes and BEA/EIA/FRED credential-backed historical ingestion remain inactive. Public health/provider endpoint checks should be re-run after secret configuration.
 - `ALLOWED_ORIGINS` is restricted to the configured production Vercel origins. The public gateway remains read-only except for the bearer-token-protected ingestion route.
 - The optional Supabase server-write path is dormant until a service-role secret is configured server-side. No service-role key is present in this project package.
 

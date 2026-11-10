@@ -42,7 +42,7 @@ export default {
    const cotState=env.SNAPSHOTS&&cotKeys.keys?.length?await env.SNAPSHOTS.get(cotKeys.keys[0].name,"json"):null;
    return json({providers:[
     {id:"gdelt-doc",label:"GDELT DOC API",access:"public-api",state:state||{status:"not-yet-fetched",lastCheckedAt:null},notes:"Discovery coverage is not comprehensive and not a licensed newswire."},
-    {id:"bls-v1",label:"US BLS Public Data API v1",access:"public-api-no-registration",state:macroState?{status:macroState.status,dataAsOf:macroState.dataAsOf,retrievedAt:macroState.retrievedAt}:{status:"available-on-demand"}},
+    {id:"bls-v1",label:env.BLS_API_KEY?"US BLS Public Data API v2":"US BLS Public Data API v1",access:env.BLS_API_KEY?"registered-api-key":"public-api-no-registration",state:macroState?{status:macroState.status,dataAsOf:macroState.dataAsOf,retrievedAt:macroState.retrievedAt,lastError:macroState.lastError||macroState.error||null,retryAt:macroState.retryAt||null}:{status:"available-on-demand"},notes:env.BLS_API_KEY?"Registered API v2 (up to 500 daily queries).":"Unregistered API v1 is limited to 25 daily queries; add BLS_API_KEY as a Cloudflare Worker secret to use registered API v2."},
     {id:"cftc-pre",label:"CFTC Public Reporting Environment",access:"public-api",state:cotState?{status:cotState.status,dataAsOf:cotState.dataAsOf,retrievedAt:cotState.retrievedAt}:{status:"available-on-demand"}},
     {id:"nyfed-markets",label:"Federal Reserve Bank of New York Markets Data API",access:"public-api-no-key",state:env.SNAPSHOTS?{status:"available-on-demand"}:{status:"not-configured"},notes:"SOFR, EFFR, OBFR and related published reference rates; not live futures prices."},
     {id:"builder-content",label:"Builder.io Content API",access:"public-content-api",state:{status:env.BUILDER_PUBLIC_API_KEY?"configured":"needs-public-space-key"}},
@@ -134,10 +134,35 @@ export default {
   }
   if(url.pathname==="/api/v1/macro"){
    const cacheKey="macro:bls:v1";
+   const forced=url.searchParams.get("refresh")==="1";
    let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(cacheKey,"json"):null;
+   if(snapshot?.status==="rate-limited"&&!forced){
+    const retrySeconds=Math.max(60,Math.ceil((Date.parse(snapshot.retryAt||"")-Date.now())/1000)||3600);
+    return json(snapshot,429,{...cors,"Cache-Control":"no-store","Retry-After":String(retrySeconds)});
+   }
+   if(forced&&env.SNAPSHOTS)await env.SNAPSHOTS.delete(cacheKey);
+   if(forced)snapshot=null;
    if(!snapshot||!snapshot.retrievedAt||Date.now()-Date.parse(snapshot.retrievedAt)>6*60*60*1000){
-    try{snapshot=await fetchBls();if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});}
-    catch(error){if(!snapshot)return json({status:"unavailable",provider:"BLS Public Data API v1",series:[],error:"BLS request failed: "+String(error.message||error).slice(0,180)},502,cors);snapshot={...snapshot,status:"stale",lastError:"BLS refresh failed; serving the last successful snapshot."};}
+    try{
+     snapshot=await fetchBls(env);
+     if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});
+    }catch(error){
+     const message=String(error.message||error).slice(0,220);
+     if(error.rateLimited){
+      const now=Date.now(),nextMidnight=Date.UTC(new Date(now).getUTCFullYear(),new Date(now).getUTCMonth(),new Date(now).getUTCDate()+1);
+      const retryAt=new Date(nextMidnight).toISOString();
+      if(snapshot){
+       snapshot={...snapshot,status:"stale",lastError:message,retryAt};
+       if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:Math.max(60,Math.ceil((nextMidnight-now)/1000))});
+       return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=1800, s-maxage=3600"});
+      }
+      snapshot={schemaVersion:1,status:"rate-limited",provider:env.BLS_API_KEY?"US Bureau of Labor Statistics Public Data API v2":"US Bureau of Labor Statistics Public Data API v1",retrievedAt:new Date().toISOString(),dataAsOf:null,series:[],error:message,retryAt,notes:[env.BLS_API_KEY?"BLS registered daily query quota has been reached; retry after UTC midnight.":"BLS anonymous daily query quota has been reached. Register a free BLS API v2 key and add it as BLS_API_KEY in Cloudflare Worker secrets."]};
+      if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:Math.max(60,Math.ceil((nextMidnight-now)/1000))});
+      return json(snapshot,429,{...cors,"Cache-Control":"no-store","Retry-After":String(Math.max(60,Math.ceil((nextMidnight-now)/1000)))});
+     }
+     if(!snapshot)return json({status:"unavailable",provider:"US Bureau of Labor Statistics Public Data API",series:[],error:"BLS request failed: "+message},502,cors);
+     snapshot={...snapshot,status:"stale",lastError:"BLS refresh failed; serving the last successful snapshot: "+message};
+    }
    }
    return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=1800, s-maxage=3600"});
   }
@@ -438,19 +463,32 @@ const BLS_SERIES=[
  {id:"CES0000000001",label:"Total nonfarm payroll employment",unit:"Thousands of jobs",marketContext:"US employment context; seasonally adjusted series."},
  {id:"WPUFD4",label:"PPI · Final demand",unit:"Index (Nov 2009=100)",marketContext:"Producer-price inflation context."}
 ];
-async function fetchBls(){
+async function fetchBls(env){
  const year=new Date().getUTCFullYear();
+ const registered=Boolean(env.BLS_API_KEY);
  const body={seriesid:BLS_SERIES.map(s=>s.id),startyear:String(year-4),endyear:String(year)};
+ if(registered)body.registrationkey=env.BLS_API_KEY;
+ const endpoint=registered?"https://api.bls.gov/publicAPI/v2/timeseries/data/":"https://api.bls.gov/publicAPI/v1/timeseries/data/";
  let data=null,lastError=null;
  for(let attempt=0;attempt<2;attempt++){
   try{
-   const response=await fetch("https://api.bls.gov/publicAPI/v1/timeseries/data/",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(18000)});
-   if(!response.ok)throw new Error("BLS HTTP "+response.status);
+   const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(18000)});
+   if(!response.ok){
+    const error=new Error("BLS HTTP "+response.status);
+    if(response.status===429)error.rateLimited=true;
+    throw error;
+   }
    data=await response.json();
-   if(data.status!=="REQUEST_SUCCEEDED")throw new Error("BLS request failed: "+String(data.message?.[0]||data.status).slice(0,160));
+   if(data.status!=="REQUEST_SUCCEEDED"){
+    const message=String(data.message?.[0]||data.status).slice(0,180);
+    const error=new Error("BLS request failed: "+message);
+    if(/daily threshold|too many requests|query limit|requests allocated/i.test(message))error.rateLimited=true;
+    throw error;
+   }
    lastError=null;break;
   }catch(error){
    lastError=error;
+   if(error.rateLimited)break;
    if(attempt===0)await new Promise(resolve=>setTimeout(resolve,700));
   }
  }
@@ -458,7 +496,7 @@ async function fetchBls(){
  const byId=new Map((data.Results?.series||[]).map(s=>[s.seriesID,s.data||[]]));
  const series=BLS_SERIES.map(meta=>({...meta,observations:(byId.get(meta.id)||[]).filter(o=>/^M\d{2}$/.test(o.period||"")).slice(0,36).map(o=>({year:o.year,period:o.period,periodName:o.periodName,value:Number(o.value),footnotes:o.footnotes||[]}))}));
  const periods=series.flatMap(s=>s.observations.slice(0,1).map(o=>String(o.year)+"-"+o.period)).sort();
- return{schemaVersion:1,status:"fresh",provider:"US Bureau of Labor Statistics Public Data API v1",retrievedAt:new Date().toISOString(),dataAsOf:periods.at(-1)||null,access:"public, no registration; Version 1.0 limits apply",series,notes:["BLS API v1 returns published historical series, not a live market-price feed.","Series definitions and units are distinct; do not compare different index bases.","BLS data do not replace the issuer release calendar or timestamps."]};
+ return{schemaVersion:1,status:"fresh",provider:"US Bureau of Labor Statistics Public Data API "+(registered?"v2":"v1"),retrievedAt:new Date().toISOString(),dataAsOf:periods.at(-1)||null,access:registered?"registered API v2; up to 500 daily queries":"unregistered API v1; up to 25 daily queries",series,notes:["BLS returns published historical series, not live market prices.","Series definitions and units are distinct; do not compare different index bases.","BLS data do not replace the issuer release calendar or timestamps.",registered?"Registered API v2 is authenticated by a server-side Worker secret.":"Configure BLS_API_KEY in Cloudflare Worker secrets to use registered API v2 and its higher daily query limit."]};
 }
 
 async function fetchGdelt(spec){

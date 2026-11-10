@@ -18,6 +18,19 @@ class BuildTests(unittest.TestCase):
         js=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('ALLOWED_BUILDER_MODELS',js)
         self.assertNotIn('url.searchParams.get("target")',js)
+    def test_bls_registered_v2_key_and_daily_limit_cache(self):
+        worker=(ROOT/'cloudflare/src/index.js').read_text()
+        self.assertIn('env.BLS_API_KEY',worker)
+        self.assertIn('publicAPI/v2/timeseries/data/',worker)
+        self.assertIn('registrationkey',worker)
+        self.assertIn('status:\"rate-limited\"',worker)
+        self.assertIn('nextMidnight',worker)
+        self.assertIn('snapshot?.status===\"rate-limited\"&&!forced',worker)
+    def test_macro_page_manual_refresh_bypasses_limit_cache(self):
+        js=(ROOT/'assets/macro-page.js').read_text()
+        self.assertIn('load(force=false)',js)
+        self.assertIn('?refresh=1',js)
+        self.assertIn('load(true)',js)
     def test_worker_has_public_bls_and_cftc_data_adapters(self):
         worker=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('/api/v1/macro',worker)
