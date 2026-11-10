@@ -138,13 +138,26 @@
       const data = await api("/api/v1/news" + (force ? "?refresh=1" : ""));
       latestArticles = Array.isArray(data.articles) ? data.articles : [];
       const matches = marketNews(latestArticles).slice(0, 5);
-      if (list) list.innerHTML = matches.map(displayArticle).filter(Boolean).join("") ||
-        '<div class="os-empty-state">No articles matched this selected contract in the currently available snapshot. Try another contract or open the full news research page.</div>';
       const state = data.status || "unknown";
+      if (list) {
+        if (state === "unavailable" && !latestArticles.length) {
+          list.innerHTML = '<div class="os-error-state">Futures news is unavailable: ' +
+            esc(data.lastError || data.error || "No usable GDELT snapshot was returned.") + '</div>';
+        } else if (state === "not-yet-fetched" && !latestArticles.length) {
+          list.innerHTML = '<div class="os-empty-state">No futures news snapshot has been collected yet.</div>';
+        } else if (!latestArticles.length) {
+          list.innerHTML = '<div class="os-empty-state">The current futures news snapshot contains no articles. Check its freshness state above or open the full news research page.</div>';
+        } else {
+          list.innerHTML = matches.map(displayArticle).filter(Boolean).join("") ||
+            '<div class="os-empty-state">The snapshot contains ' + latestArticles.length +
+            ' articles, but none matched this contract. Try another contract or open the full news research page.</div>';
+        }
+      }
       setChip("overviewNewsBadge", state);
       setText("overviewNewsState", stateText(state));
       setText("overviewNewsStateDetail", "Retrieved: " + stamp(data.lastCheckedAt || data.retrievedAt) +
-        " · articles in snapshot: " + latestArticles.length);
+        " · articles in snapshot: " + latestArticles.length +
+        (data.lastError ? " · " + data.lastError : ""));
       setText("overviewNewsAttribution", "GDELT discovery index · " +
         (data.provider || "provider not supplied") + " · retrieved " +
         stamp(data.lastCheckedAt || data.retrievedAt) +

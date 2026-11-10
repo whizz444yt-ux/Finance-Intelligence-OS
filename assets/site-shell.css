@@ -334,7 +334,7 @@ body.os-futures-desk{background:var(--os-bg);color:var(--os-text)}
 body.os-ict-terminal{background:var(--bg);color:var(--ink)}
 body.os-ict-terminal.dark{color-scheme:dark;--bg:#0a1420;--surface:#111e2c;--surface2:#142437;--surface3:#1b2d40;--ink:#e3edf5;--muted:#91a5b8;--line:#2a3b4e;--navy:#091827;--navy2:#142d43;--blue:#75a9d2;--teal:#5ab9b0;--green:#54b58d;--amber:#d9ad69;--red:#d67c83;--violet:#b6a9ed;--shadow:0 12px 32px rgba(0,0,0,.18);--focus:#78d0c2;background:var(--bg);color:var(--ink)}
 body.os-ict-terminal:not(.dark){color-scheme:light}
-body.os-ict-terminal .topbar{background:rgba(9,22,35,.97);border-color:#2a3b4e}
+body.os-ict-terminal .topbar{z-index:var(--os-z-topbar);background:rgba(9,22,35,.97);border-color:#2a3b4e}
 body.os-ict-terminal .main{width:min(1700px,calc(100% - 38px));margin:18px auto 55px}
 body.os-ict-terminal .topbar-inner{max-width:100%;gap:10px}
 body.os-ict-terminal .nav{scrollbar-width:thin;max-width:min(48vw,650px);overflow-x:auto;white-space:nowrap}

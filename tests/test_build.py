@@ -142,6 +142,12 @@ class BuildTests(unittest.TestCase):
             self.assertIn(token,dashboard)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',dashboard)
         self.assertNotIn('service_role',dashboard.lower())
+        self.assertIn('Futures news is unavailable:',dashboard)
+        self.assertIn('state === "not-yet-fetched"',dashboard)
+        self.assertIn('articles, but none matched this contract',dashboard)
+        source_loader=(ROOT/'assets/research-directory.js').read_text()
+        self.assertIn('The futures source directory is temporarily unavailable',source_loader)
+        self.assertNotIn('main Finance OS research workspace',source_loader)
         for token in ['overviewCalendarTitle','NOT CONNECTED','QUOTE NOT CONNECTED']:
             self.assertIn(token,home)
         self.assertIn('calendar is not available',home.lower())
@@ -159,6 +165,13 @@ class BuildTests(unittest.TestCase):
         self.assertIn('UNVERIFIED IMPORTED REFERENCE',builder)
         self.assertIn('NOT SUPPLIED IN REGISTRY',builder)
         self.assertIn('NOT CONFIGURED',builder)
+        sitemap_urls=next(line for line in builder.splitlines() if 'urls=[' in line)
+        self.assertNotIn("'/sessions/',",sitemap_urls)
+        shell_css=(ROOT/'assets/site-shell.css').read_text()
+        self.assertIn('body.os-ict-terminal .topbar{z-index:var(--os-z-topbar)',shell_css)
+        self.assertIn("html = html.replace('<body>', '<body class=\"dark os-ict-terminal\">', 1)",builder)
+        self.assertIn('--os-z-sidebar:30',shell_css)
+        self.assertIn('--os-z-topbar:20',shell_css)
     def test_futures_module_assets_and_retired_route_redirects(self):
         for name in ['volume-open-interest.js','data-health.js']:
             self.assertTrue((ROOT/'assets'/name).exists(),name)

@@ -9,7 +9,7 @@
     const res=await fetch('/resources.json',{cache:'force-cache'});
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const payload=await res.json(); resources=Array.isArray(payload.resources)?payload.resources:[];
-  } catch(e) { root.innerHTML='<p class="muted">Resource directory could not be loaded. Open the main Finance OS research workspace as a fallback.</p>'; return; }
+  } catch(e) { root.innerHTML='<p class="muted">The futures source directory is temporarily unavailable. Check Data Health or reload this page.</p>'; return; }
   [...new Set(resources.map(x=>x.category).filter(Boolean))].sort().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;category.appendChild(o);});
   const render=()=>{
     const q=(search.value||'').trim().toLowerCase(), c=category.value;
