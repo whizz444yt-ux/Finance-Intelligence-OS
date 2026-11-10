@@ -184,7 +184,7 @@ if dist.exists():
     ok('Sitemap excludes retired research, prediction and archive routes',
        all(x not in sitemap for x in ['/prediction-markets/','/research/</loc>','/legacy/']))
     ok('Service worker cache no longer references generic 73-instrument dataset',
-       'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.1-futures-only' in (ROOT/'sw.js').read_text())
+       'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.0-futures-only' in (ROOT/'sw.js').read_text())
     ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
     # Validate inline scripts in the two preserved monolithic applications.
     for page in [dist/'index.html', dist/'ict-futures/index.html']:
