@@ -21,7 +21,7 @@ try:
     academy=readj(Path('ict-futures/data/ict-academy.json')); ok('ICT Academy retains 76 concepts and nine tutorials',len(academy.get('concepts',[]))==76 and len(academy.get('learningProgram',{}).get('tutorials',[]))==9,f"lessons={len(academy.get('concepts',[]))}, tutorials={len(academy.get('learningProgram',{}).get('tutorials',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/overview-dashboard.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -48,7 +48,11 @@ ok('Prediction volume metrics remain nullable','volume24hr:asNumberOrNull(event.
 ok('Static assets no longer receive a one-year immutable cache','max-age=300, stale-while-revalidate=86400' in (ROOT/'vercel.json').read_text() and 'immutable' not in (ROOT/'vercel.json').read_text())
 
 nav_source=(ROOT/'scripts/build_site.py').read_text()
-ok('Futures-only navigation is defined centrally',all("('"+label+"'," in nav_source for label in ['Overview','Futures Desk','Futures Markets','Volume & OI','News','Macro','COT & Positioning','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources','Data Health']) and "('Prediction Markets'," not in nav_source)
+p1_labels=['Overview','Futures Markets','ICT Academy','Entry Models','Sessions & Calendar','Futures News','Volume & Open Interest','COT & Positioning','Contract Specs & Expiry','Strategy Lab','Risk & Prop Firms','Journal & Watchlists','Data Health & Sources']
+ok('Part 1 has exactly 13 futures-only areas',all("('"+label+"'," in nav_source for label in p1_labels) and "('Prediction Markets'," not in nav_source)
+ok('Part 1 groups navigation in a shared accessible app shell','NAV_GROUPS' in nav_source and 'aria-label="13 futures product areas"' in nav_source and 'class="os-sidebar"' in nav_source)
+ok('Part 1 has compatibility redirects for sessions, risk and old tools',all(x in nav_source for x in ["DIST/'sessions/index.html'","DIST/'risk/index.html'","DIST/'tools/index.html',redirect_page"]))
+ok('Part 1 clearly marks imported contract references and missing expiry data','UNVERIFIED IMPORTED REFERENCE' in nav_source and 'NOT SUPPLIED IN REGISTRY' in nav_source and 'NOT CONFIGURED' in nav_source)
 ok('Weekly open-interest endpoint is distinct from exchange volume','/api/v1/volume-open-interest' in worker and 'cadence:"weekly"' in worker and 'metric:"open_interest"' in worker and 'status:"not-connected"' in worker)
 ok('P1 health checker tests provider endpoints independently','Promise.allSettled' in (ROOT/'assets/data-health.js').read_text() and '/api/v1/providers' in (ROOT/'assets/data-health.js').read_text())
 active_frontends=[(ROOT/'assets/futures-intelligence.js').read_text(),(ROOT/'assets/data-health.js').read_text(),(ROOT/'ict-futures/index.html').read_text()]
@@ -130,10 +134,21 @@ ok('No service role in browser assets','SUPABASE_SERVICE_ROLE_KEY' not in ''.joi
 # Run generated route build and test final output if it exists.
 dist=ROOT/'dist'
 if dist.exists():
-    expected=['index.html','markets/index.html','academy/index.html','sources/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html','volume-open-interest/index.html','prediction-markets/index.html','entry-models/index.html','strategy-lab/index.html','data-health/index.html']
+    expected=['index.html','markets/index.html','futures-intelligence/index.html','academy/index.html','sessions/index.html','contract-specs/index.html','risk/index.html','tools/index.html','sources/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','volume-open-interest/index.html','prediction-markets/index.html','entry-models/index.html','strategy-lab/index.html','data-health/index.html']
     ok('All primary route entry points generated',all((dist/p).exists() for p in expected),', '.join(p for p in expected if not (dist/p).exists()))
     html=list(dist.rglob('*.html'))
     ok('Futures-only homepage and generated product boundaries are present','Futures Command Center' in (dist/'index.html').read_text() and len(list((dist/'markets').glob('*.html')))==1 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
+    overview=(dist/'index.html').read_text(errors='ignore')
+    desk_page=(dist/'futures-intelligence/index.html').read_text(errors='ignore')
+    ict_page=(dist/'ict-futures/index.html').read_text(errors='ignore')
+    ok('Part 1 overview renders the 13-area shell and core widget containers',overview.count('class="os-nav-link')==13 and all(x in overview for x in ['overviewContract','overviewNewsList','overviewCotSummary','overviewClockET','overviewCalendarTitle','overviewPrivateMetrics','overviewHealthBadge']))
+    ok('Part 1 wraps both standalone terminals in the shared shell',all('data-os-shell' in x and 'id="appSidebar"' in x and 'id="sidebarToggle"' in x for x in [desk_page,ict_page]))
+    ok('Part 1 loads dashboard and shared shell assets once',overview.count('overview-dashboard.js')==1 and (dist/'assets/overview-dashboard.js').exists() and (dist/'assets/site-shell.js').exists())
+    ok('Part 1 overview avoids fabricated quotes and economic release events','QUOTE NOT CONNECTED' in overview and 'NOT CONNECTED' in overview and 'calendar is not available' in overview.lower())
+    contract_page=(dist/'contract-specs/index.html').read_text(errors='ignore')
+    ok('Part 1 contract specs preserve all 15 families with unverified values',contract_page.count('class="os-contract-spec-card"')==15 and 'UNVERIFIED IMPORTED REFERENCE' in contract_page and 'NOT SUPPLIED IN REGISTRY' in contract_page)
+    ok('Part 1 sessions route preserves the existing timezone-aware ICT tools','#sessions' in (dist/'sessions/index.html').read_text(errors='ignore') and 'renderSessions' in ict_page)
+    ok('Part 1 risk route labels unsupported prop-firm data not configured','NOT CONFIGURED' in (dist/'risk/index.html').read_text(errors='ignore') and 'risk-calculator.js' in (dist/'risk/index.html').read_text(errors='ignore'))
     active_resources=readj(Path('dist/resources.json'))
     ok('Generated resource directory contains only reviewed futures sources',active_resources.get('scope')=='futures-only' and len(active_resources.get('resources',[]))>=40)
     ok('Retired event markets and legacy data are not active assets',not (dist/'assets/prediction-markets.js').exists() and not (dist/'data/market-universe.json').exists())
@@ -168,7 +183,7 @@ if dist.exists():
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
-            for name in ['volume-open-interest.js','data-health.js','site-shell.css']))
+            for name in ['volume-open-interest.js','data-health.js','overview-dashboard.js','site-shell.js','site-shell.css']))
     ok('Built Futures Desk assets match source files',
         (dist/'assets/futures-intelligence.js').exists() and (dist/'assets/futures-intelligence.css').exists() and
         (dist/'assets/futures-intelligence.js').read_bytes()==(ROOT/'assets/futures-intelligence.js').read_bytes() and
@@ -183,8 +198,10 @@ if dist.exists():
     sitemap=(dist/'sitemap.xml').read_text(errors='ignore')
     ok('Sitemap excludes retired research, prediction and archive routes',
        all(x not in sitemap for x in ['/prediction-markets/','/research/</loc>','/legacy/']))
+    ok('Part 1 primary routes are discoverable in the sitemap',
+       all(x in sitemap for x in ['/sessions/','/contract-specs/','/risk/','/futures-intelligence/','/academy/']))
     ok('Service worker cache no longer references generic 73-instrument dataset',
-       'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.0-futures-only' in (ROOT/'sw.js').read_text())
+       'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.0-futures-only-p1' in (ROOT/'sw.js').read_text())
     ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
     # Validate inline scripts in the two preserved monolithic applications.
     for page in [dist/'index.html', dist/'ict-futures/index.html']:

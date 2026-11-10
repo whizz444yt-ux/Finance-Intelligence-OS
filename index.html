@@ -1,47 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102339">
-<meta name="description" content="Futures Intelligence OS: exchange-listed futures research, ICT Futures education, CFTC positioning, macro context, risk tools and private trader workspace.">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1420">
+<meta name="description" content="Futures Intelligence OS: contract-aware futures research, ICT Futures education, CFTC positioning, macro context, risk tools and a private trader workspace.">
 <meta name="keywords" content="futures research, ICT futures, CME futures, NQ, ES, Gold futures, crude oil futures, currency futures, Bitcoin futures, CFTC COT">
 <meta property="og:type" content="website"><meta property="og:title" content="Futures Intelligence OS"><meta property="og:description" content="Contract-aware futures research and ICT Futures learning."><meta name="twitter:card" content="summary">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/site-shell.css">
+<script defer src="/assets/runtime-config.js"></script><script defer src="/assets/overview-dashboard.js"></script>
 <title>Futures Intelligence OS — Futures Command Center</title>
 </head>
-<body>
+<body class="os-dark">
 <a class="skip" href="#content">Skip to content</a>
-<header class="site-head"><div class="head-inner">
-<a class="brand" href="/"><span class="brand-mark">FI</span><span>FUTURES INTELLIGENCE OS<small>Listed futures · ICT research</small></span></a>
-<nav class="topnav" aria-label="Futures Intelligence OS areas">
-<a href="/" aria-current="page">Overview</a><a href="/futures-intelligence/">Futures Desk</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/sources/">Sources</a><a href="/data-health/">Data Health</a>
-</nav><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Areas ☰</button>
-</div><nav class="mobile-nav" id="mobileNav" aria-label="Mobile futures navigation">
-<a href="/">Overview</a><a href="/futures-intelligence/">Futures Desk</a><a href="/markets/">Futures Markets</a><a href="/volume-open-interest/">Volume &amp; OI</a><a href="/news/">News</a><a href="/macro/">Macro</a><a href="/research/positioning/">COT &amp; Positioning</a><a href="/academy/">ICT Academy</a><a href="/entry-models/">Entry Models</a><a href="/strategy-lab/">Strategy Lab</a><a href="/tools/">Risk &amp; Journal</a><a href="/sources/">Sources</a><a href="/data-health/">Data Health</a>
-</nav></header>
-<main id="content">
-<section class="page-hero"><p class="kicker">FUTURES-ONLY RESEARCH WORKSPACE · v1.1.0</p><h1>Futures Command Center</h1>
-<p>One workspace for listed futures markets, contract-aware research, ICT Futures education, macro and positioning context, reproducible strategy testing, risk preparation and a private trader journal.</p>
-<div class="stats-row"><b>15</b><span>Futures families</span><b>76</b><span>ICT concepts</span><b>9</b><span>Guided tutorials</span></div>
+<div class="os-app-shell" data-os-shell>
+<aside class="os-sidebar" id="appSidebar" aria-label="Primary navigation">
+<a class="os-sidebar-brand" href="/" aria-label="Futures Intelligence OS overview"><span class="brand-mark">FI</span><span class="os-brand-copy"><b>FUTURES INTELLIGENCE OS</b><small>RESEARCH WORKSPACE</small></span></a>
+<nav class="os-sidebar-nav" aria-label="13 futures product areas"><div class="os-nav-group"><span class="os-nav-group-label">WORKSPACE</span><a class="os-nav-link is-active" href="/" aria-current="page" title="Overview"><span class="os-nav-symbol" aria-hidden="true">OV</span><span class="os-nav-label">Overview</span></a><a class="os-nav-link " href="/futures-intelligence/"  title="Futures Markets"><span class="os-nav-symbol" aria-hidden="true">MK</span><span class="os-nav-label">Futures Markets</span></a></div><div class="os-nav-group"><span class="os-nav-group-label">LEARN</span><a class="os-nav-link " href="/academy/"  title="ICT Academy"><span class="os-nav-symbol" aria-hidden="true">AC</span><span class="os-nav-label">ICT Academy</span></a><a class="os-nav-link " href="/entry-models/"  title="Entry Models"><span class="os-nav-symbol" aria-hidden="true">EM</span><span class="os-nav-label">Entry Models</span></a></div><div class="os-nav-group"><span class="os-nav-group-label">MARKET INTELLIGENCE</span><a class="os-nav-link " href="/sessions/"  title="Sessions & Calendar"><span class="os-nav-symbol" aria-hidden="true">SC</span><span class="os-nav-label">Sessions & Calendar</span></a><a class="os-nav-link " href="/news/"  title="Futures News"><span class="os-nav-symbol" aria-hidden="true">NW</span><span class="os-nav-label">Futures News</span></a><a class="os-nav-link " href="/volume-open-interest/"  title="Volume & Open Interest"><span class="os-nav-symbol" aria-hidden="true">OI</span><span class="os-nav-label">Volume & Open Interest</span></a><a class="os-nav-link " href="/research/positioning/"  title="COT & Positioning"><span class="os-nav-symbol" aria-hidden="true">CT</span><span class="os-nav-label">COT & Positioning</span></a><a class="os-nav-link " href="/contract-specs/"  title="Contract Specs & Expiry"><span class="os-nav-symbol" aria-hidden="true">SP</span><span class="os-nav-label">Contract Specs & Expiry</span></a></div><div class="os-nav-group"><span class="os-nav-group-label">RESEARCH & RISK</span><a class="os-nav-link " href="/strategy-lab/"  title="Strategy Lab"><span class="os-nav-symbol" aria-hidden="true">SL</span><span class="os-nav-label">Strategy Lab</span></a><a class="os-nav-link " href="/risk/"  title="Risk & Prop Firms"><span class="os-nav-symbol" aria-hidden="true">RK</span><span class="os-nav-label">Risk & Prop Firms</span></a></div><div class="os-nav-group"><span class="os-nav-group-label">PERSONAL</span><a class="os-nav-link " href="/account/"  title="Journal & Watchlists"><span class="os-nav-symbol" aria-hidden="true">JW</span><span class="os-nav-label">Journal & Watchlists</span></a><a class="os-nav-link " href="/data-health/"  title="Data Health & Sources"><span class="os-nav-symbol" aria-hidden="true">DH</span><span class="os-nav-label">Data Health & Sources</span></a></div></nav>
+<div class="os-sidebar-foot"><span class="os-foot-dot"></span><span class="os-foot-copy">RESEARCH MODE · NO BROKER EXECUTION</span></div>
+</aside>
+<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div>
+<div class="os-main-column">
+<header class="os-topbar"><div class="os-topbar-start"><button class="os-sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="appSidebar" aria-label="Collapse navigation"><span aria-hidden="true">☰</span></button><div class="os-topbar-heading"><span>FUTURES INTELLIGENCE OS</span><b>Overview</b></div></div><div class="os-topbar-actions"><span class="os-mode-chip"><i></i> RESEARCH ONLY</span><button class="os-theme-toggle" id="osThemeToggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☼</button><a class="os-workspace-link" href="/account/">Private workspace ↗</a></div></header>
+<main id="content" class="os-content">
+<div class="os-overview-header"><div><p class="os-eyebrow">FUTURES-ONLY · CONTRACT-AWARE · SOURCE-TRACEABLE</p><h1>Futures Command Center</h1><p>One workspace for listed futures markets, ICT Futures study, macro and positioning context, reproducible testing and private trade preparation.</p></div><div class="os-overview-updated" id="overviewUpdated">Data checks have not run yet.</div></div>
+<div class="os-overview-grid">
+<div class="os-overview-main">
+<section class="os-widget" aria-labelledby="overviewWatchlistTitle">
+<div class="os-widget-head"><div><h2 id="overviewWatchlistTitle">Market watchlist</h2><p>Select a listed futures family. Reference metadata is not a quote.</p></div><span class="os-state-chip neutral">NO LIVE QUOTES</span></div>
+<div class="os-contract-focus"><div><label for="overviewContract">FUTURES FAMILY<select id="overviewContract"><option value="">Loading futures families…</option></select></label><strong id="overviewContractName">Futures universe is loading</strong><p id="overviewContractMeta">15-family registry · exchange and tier metadata only</p><p id="overviewContractRole">No price or order-book data is supplied by this selector.</p><div class="os-widget-actions"><a id="overviewContractSpecs" href="/contract-specs/">Contract specs &amp; expiry ↗</a><a id="overviewContractProfile" href="/markets/">All family profiles ↗</a></div></div><div class="os-quote-placeholder"><strong>QUOTE NOT CONNECTED</strong><small id="overviewQuoteDetail">No licensed real-time or delayed quote feed is active here.</small></div></div>
+<div class="os-source-attribution">Registry: <a href="/contract-specs/">ICT Futures market universe</a> · Imported tick references remain unverified · Expiry is not supplied.</div>
 </section>
-<section class="content-section"><div class="section-top"><div><h2>Research workspaces</h2><p>Start with a contract, then move through its market context and learning tools.</p></div><a class="text-link" href="/futures-intelligence/">Open Futures Desk →</a></div>
-<div class="card-grid">
-<a class="module-card" href="/futures-intelligence/"><span class="card-eyebrow">CORE WORKSPACE</span><h3>Futures Intelligence Desk</h3><p>Contract family selector, CFTC positioning, macro observations, futures news and provider status.</p><span class="card-cta">Open desk →</span></a>
-<a class="module-card" href="/markets/"><span class="card-eyebrow">15 CONTRACT FAMILIES</span><h3>Futures Markets</h3><p>Equity-index, rates, currency, metals, energy and CME Bitcoin futures profiles.</p><span class="card-cta">Explore contracts →</span></a>
-<a class="module-card" href="/ict-futures/"><span class="card-eyebrow">ICT TERMINAL</span><h3>ICT Futures Terminal</h3><p>Liquidity, market structure, sessions, economic events, chart workspace and risk preparation.</p><span class="card-cta">Open terminal →</span></a>
-<a class="module-card" href="/academy/"><span class="card-eyebrow">76 LESSONS · 9 TUTORIALS</span><h3>ICT Academy</h3><p>Concept library, structured learning tracks, guided chart replay and progress tracking.</p><span class="card-cta">Study concepts →</span></a>
-<a class="module-card" href="/strategy-lab/"><span class="card-eyebrow">REPRODUCIBLE TESTING</span><h3>Strategy Lab</h3><p>Deterministic OHLC-signal backtesting with costs, expectancy, drawdown and out-of-sample splits.</p><span class="card-cta">Open Strategy Lab →</span></a>
-<a class="module-card" href="/volume-open-interest/"><span class="card-eyebrow">CFTC · WEEKLY</span><h3>Volume &amp; Open Interest</h3><p>Weekly reported futures open interest with explicit separation from daily exchange volume.</p><span class="card-cta">Review positioning →</span></a>
-<a class="module-card" href="/macro/"><span class="card-eyebrow">OFFICIAL SOURCES</span><h3>Macro &amp; Rates</h3><p>Historical observations and source calendars from official agencies and central banks.</p><span class="card-cta">Review macro →</span></a>
-<a class="module-card" href="/research/positioning/"><span class="card-eyebrow">CFTC</span><h3>Commitments of Traders</h3><p>Futures-only TFF and Disaggregated positioning, with weekly reporting context.</p><span class="card-cta">Open COT →</span></a>
-<a class="module-card" href="/tools/"><span class="card-eyebrow">RISK TOOLS</span><h3>Futures Risk Calculator</h3><p>Tick-based risk sizing and execution-cost assumptions. Verify contract specs before use.</p><span class="card-cta">Calculate risk →</span></a>
-<a class="module-card" href="/account/"><span class="card-eyebrow">PRIVATE WORKSPACE</span><h3>Journal &amp; Watchlists</h3><p>Authenticated journal, watchlists, notes, alerts and lesson progress.</p><span class="card-cta">Open workspace →</span></a>
-<a class="module-card" href="/sources/"><span class="card-eyebrow">REFERENCE LIBRARY</span><h3>Futures Sources</h3><p>Reviewed exchange, regulator, macro, news and ICT education source links.</p><span class="card-cta">Browse sources →</span></a>
-<a class="module-card" href="/data-health/"><span class="card-eyebrow">PROVENANCE</span><h3>Data Health</h3><p>Independent provider status, retrieved timestamps and known configuration limits.</p><span class="card-cta">Check data health →</span></a>
+<section class="os-widget" aria-labelledby="overviewFeedsTitle">
+<div class="os-widget-head"><div><h2 id="overviewFeedsTitle">Feed &amp; data status</h2><p>Each source is checked independently. Gateway availability is not exchange-feed availability.</p></div><button class="primary-button" id="overviewRefresh" type="button">Check sources</button></div>
+<div class="os-status-list">
+<div class="os-status-row"><div><b>Cloudflare API gateway</b><small id="overviewGatewayDetail">Health check not run.</small></div><span id="overviewGatewayState" class="os-state-chip neutral">NOT CHECKED</span></div>
+<div class="os-status-row"><div><b>Futures news · GDELT</b><small id="overviewNewsStateDetail">News snapshot not checked.</small></div><span id="overviewNewsState" class="os-state-chip neutral">NOT CHECKED</span></div>
+<div class="os-status-row"><div><b>CFTC positioning</b><small id="overviewCotStateDetail">Weekly futures report not checked.</small></div><span id="overviewCotState" class="os-state-chip neutral">NOT CHECKED</span></div>
+<div class="os-status-row"><div><b>Exchange quotes / depth</b><small>Licensed CME / ICE quote and order-book feed not connected in this build.</small></div><span class="os-state-chip warn">NOT CONNECTED</span></div>
 </div>
 </section>
-<section class="content-section"><h2>Data and research boundaries</h2><p>Public macro and CFTC reports have provider-specific publication cadence. COT positioning is weekly, not intraday exchange volume. CME/ICE real-time quotes, full-depth order books and redistribution rights require separately verified market-data access. No broker order execution is connected, and unverified contract reference values are not trading instructions.</p></section>
+<div class="os-widget-grid-2">
+<section class="os-widget" aria-labelledby="overviewClockTitle">
+<div class="os-widget-head"><div><h2 id="overviewClockTitle">Session clock</h2><p>New York ET and your selected timezone, converted with DST-aware rules.</p></div><span class="os-state-chip neutral">CLOCK ONLY</span></div>
+<div class="os-session-clock-grid">
+<div class="os-clock-tile"><span>NEW YORK · ET</span><strong id="overviewClockET">--:--:--</strong><small id="overviewDateET">Waiting for local clock</small></div>
+<div class="os-clock-tile"><span id="overviewLocalZoneLabel">YOUR TIMEZONE</span><strong id="overviewClockLocal">--:--:--</strong><small id="overviewDateLocal">Browser timezone</small></div>
+</div>
+<div class="os-filter-line"><label class="os-field-compact" for="overviewTimezone">Display timezone<select class="os-timezone-select" id="overviewTimezone"></select></label></div>
+<div class="os-source-attribution">Session high / low and range: <span class="os-state-chip warn">INTRADAY DATA NOT CONNECTED</span></div>
+</section>
+<section class="os-widget" aria-labelledby="overviewCalendarTitle">
+<div class="os-widget-head"><div><h2 id="overviewCalendarTitle">Economic releases</h2><p>Upcoming events require a dated calendar feed and publisher timezone.</p></div><span class="os-state-chip warn">NOT CONNECTED</span></div>
+<div class="os-calendar-note"><b>Consolidated release calendar is not available</b><p>No event times or consensus values are shown until a source-backed calendar is connected. Verify the latest schedule at the publisher.</p></div>
+<div class="os-context-links"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener noreferrer">BLS official release schedule ↗</a><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener noreferrer">BEA official release schedule ↗</a><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener noreferrer">EIA weekly petroleum status ↗</a></div>
+</section>
+</div>
+<section class="os-widget" aria-labelledby="overviewNewsTitle">
+<div class="os-widget-head"><div><h2 id="overviewNewsTitle">Futures news</h2><p>Contract/topic-matched articles from the available discovery snapshot.</p></div><span id="overviewNewsBadge" class="os-state-chip neutral">NOT CHECKED</span></div>
+<div id="overviewNewsList" class="os-news-list"><div class="os-loading-state">News snapshot has not been requested.</div></div>
+<div class="os-source-attribution" id="overviewNewsAttribution">Source: GDELT discovery index · Not a complete or licensed newswire.</div>
+<div class="os-widget-actions"><a href="/news/">Open Futures News →</a><button id="overviewNewsRefresh" type="button">Refresh snapshot</button></div>
+</section>
+<section class="os-widget" aria-labelledby="overviewCotTitle">
+<div class="os-widget-head"><div><h2 id="overviewCotTitle">COT positioning summary</h2><p>Futures-only CFTC report, with its weekly publication cadence.</p></div><span id="overviewCotBadge" class="os-state-chip neutral">NOT CHECKED</span></div>
+<div id="overviewCotSummary" class="os-cot-summary"><div><span>Report date</span><b>—</b></div><div><span>Report type</span><b>TFF</b></div><div><span>Rows returned</span><b>—</b></div></div>
+<div id="overviewCotAttribution" class="os-source-attribution">Source: CFTC Public Reporting Environment · Weekly report, not intraday positioning or volume.</div>
+<div class="os-widget-actions"><a href="/research/positioning/">Open COT &amp; Positioning →</a><a href="/volume-open-interest/">Weekly open interest →</a></div>
+</section>
+</div>
+<aside class="os-overview-rail" aria-label="Research and personal workspace">
+<section class="os-widget"><div class="os-widget-head"><div><h2>Quick study</h2><p>Move from market context to structured ICT study.</p></div></div><div class="os-context-links"><a href="/academy/">ICT Academy · 76 concepts / 9 tutorials ↗</a><a href="/entry-models/">Entry Models · educational library ↗</a><a href="/ict-futures/#sessions">ICT session and calendar tools ↗</a><a href="/strategy-lab/">Reproducible Strategy Lab ↗</a></div></section>
+<section class="os-widget"><div class="os-widget-head"><div><h2>My watchlists &amp; journal</h2><p>Private records are visible only in your authenticated session.</p></div><span id="overviewPrivateBadge" class="os-state-chip neutral">SIGNED OUT</span></div><div id="overviewPrivateState" class="os-empty-state">Sign in to load your personal watchlists, journal summary and alert history.</div><div id="overviewPrivateMetrics" class="os-private-summary" hidden></div><div class="os-widget-actions"><a href="/account/">Open private workspace →</a></div></section>
+<section class="os-widget"><div class="os-widget-head"><div><h2>Data Health &amp; Sources</h2><p>Inspect provider freshness and source conditions.</p></div><span id="overviewHealthBadge" class="os-state-chip neutral">NOT CHECKED</span></div><p id="overviewHealthDetail" class="os-source-attribution">A gateway response does not certify live exchange access.</p><div class="os-context-links"><a href="/data-health/">Open independent provider checks ↗</a><a href="/sources/">Browse reviewed futures sources ↗</a></div></section>
+<section class="os-widget"><div class="os-widget-head"><div><h2>Market-data boundary</h2><p>No fabricated price movement or feed status.</p></div></div><p class="os-source-attribution">Public macro and CFTC data have provider-specific publication cadence. COT is weekly. Exchange real-time quotes, full-depth order books, licensed intraday history and redistribution rights require separately verified access.</p></section>
+</aside>
+</div>
 </main>
-<footer class="site-footer"><div><b>Futures Intelligence OS</b><p>Futures research and education workspace. Not a broker, exchange feed, investment adviser or execution terminal.</p></div><div class="footer-links"><a href="/account/">Private workspace</a><a href="/sources/">Futures sources</a><a href="/data-health/">Data health</a><a href="/docs/">Documentation</a></div><small>Provider, frequency, timestamp and licensing limitations apply to external data.</small></footer>
+<footer class="os-footer"><div><b>Futures Intelligence OS</b><span>Exchange-listed futures research · ICT Futures education · v1.1.0</span></div><div class="os-footer-links"><a href="/data-health/">Data Health &amp; Sources</a><a href="/status/">Platform status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a></div><small>Research and education workspace only. No broker orders, margin calculations, licensed exchange quotes or personal investment advice are provided.</small></footer>
+</div></div>
 <script src="/assets/site-shell.js" defer></script>
 <script>if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
 </body></html>

@@ -12,26 +12,82 @@ SITE_URL = os.getenv('SITE_URL', '').rstrip('/')
 
 NAV_ITEMS = [
     ('Overview', '/'),
-    ('Futures Desk', '/futures-intelligence/'),
-    ('Futures Markets', '/markets/'),
-    ('Volume & OI', '/volume-open-interest/'),
-    ('News', '/news/'),
-    ('Macro', '/macro/'),
-    ('COT & Positioning', '/research/positioning/'),
+    ('Futures Markets', '/futures-intelligence/'),
     ('ICT Academy', '/academy/'),
     ('Entry Models', '/entry-models/'),
+    ('Sessions & Calendar', '/sessions/'),
+    ('Futures News', '/news/'),
+    ('Volume & Open Interest', '/volume-open-interest/'),
+    ('COT & Positioning', '/research/positioning/'),
+    ('Contract Specs & Expiry', '/contract-specs/'),
     ('Strategy Lab', '/strategy-lab/'),
-    ('Risk & Journal', '/tools/'),
-    ('Sources', '/sources/'),
-    ('Data Health', '/data-health/'),
+    ('Risk & Prop Firms', '/risk/'),
+    ('Journal & Watchlists', '/account/'),
+    ('Data Health & Sources', '/data-health/'),
 ]
 
-def nav_markup(current='/', css_class='topnav'):
-    links = []
+NAV_GROUPS = [
+    ('WORKSPACE', ['Overview', 'Futures Markets']),
+    ('LEARN', ['ICT Academy', 'Entry Models']),
+    ('MARKET INTELLIGENCE', ['Sessions & Calendar', 'Futures News', 'Volume & Open Interest', 'COT & Positioning', 'Contract Specs & Expiry']),
+    ('RESEARCH & RISK', ['Strategy Lab', 'Risk & Prop Firms']),
+    ('PERSONAL', ['Journal & Watchlists', 'Data Health & Sources']),
+]
+
+AREA_ALIASES = {
+    '/markets/': '/futures-intelligence/',
+    '/macro/': '/sessions/',
+    '/tools/': '/risk/',
+    '/sources/': '/data-health/',
+}
+
+AREA_LABELS = {
+    '/markets/': 'Futures Markets',
+    '/macro/': 'Sessions & Calendar',
+    '/tools/': 'Risk & Prop Firms',
+    '/sources/': 'Data Health & Sources',
+    '/research/positioning/': 'COT & Positioning',
+    '/status/': 'Platform Status',
+    '/docs/': 'Documentation',
+}
+
+def current_area(path):
+    active = AREA_ALIASES.get(path, path)
     for label, href in NAV_ITEMS:
-        active = ' aria-current="page"' if current == href else ''
-        links.append(f'<a href="{href}"{active}>{escape(label)}</a>')
-    return f'<nav class="{css_class}" aria-label="Futures Intelligence OS areas">{"".join(links)}</nav>'
+        if href == active:
+            return label
+    return AREA_LABELS.get(path, 'Futures Research')
+
+def nav_markup(current='/'):
+    active = AREA_ALIASES.get(current, current)
+    links = {label: href for label, href in NAV_ITEMS}
+    groups = []
+    for group, labels in NAV_GROUPS:
+        items = []
+        for label in labels:
+            href = links[label]
+            is_active = active == href
+            symbol = {
+                'Overview':'OV','Futures Markets':'MK','ICT Academy':'AC','Entry Models':'EM',
+                'Sessions & Calendar':'SC','Futures News':'NW','Volume & Open Interest':'OI',
+                'COT & Positioning':'CT','Contract Specs & Expiry':'SP','Strategy Lab':'SL',
+                'Risk & Prop Firms':'RK','Journal & Watchlists':'JW','Data Health & Sources':'DH'
+            }[label]
+            current_attr = ' aria-current="page"' if is_active else ''
+            items.append(
+                f'<a class="os-nav-link{" is-active" if is_active else ""}" href="{href}"{current_attr} title="{escape(label)}">'
+                f'<span class="os-nav-symbol" aria-hidden="true">{symbol}</span>'
+                f'<span class="os-nav-label">{escape(label)}</span></a>'
+            )
+        groups.append(f'<div class="os-nav-group"><span class="os-nav-group-label">{group}</span>{"".join(items)}</div>')
+    return (
+        '<aside class="os-sidebar" id="appSidebar" aria-label="Primary navigation">'
+        '<a class="os-sidebar-brand" href="/" aria-label="Futures Intelligence OS overview">'
+        '<span class="brand-mark">FI</span><span class="os-brand-copy"><b>FUTURES INTELLIGENCE OS</b><small>RESEARCH WORKSPACE</small></span></a>'
+        f'<nav class="os-sidebar-nav" aria-label="13 futures product areas">{"".join(groups)}</nav>'
+        '<div class="os-sidebar-foot"><span class="os-foot-dot"></span><span class="os-foot-copy">RESEARCH MODE · NO BROKER EXECUTION</span></div>'
+        '</aside>'
+    )
 
 
 def load(path, default=None):
@@ -46,18 +102,27 @@ def json_script(value):
     return json.dumps(value, ensure_ascii=False).replace('</', '<\\/')
 
 
-def shell(title, description, body, canonical_path='/', extra_head=''):
+def shell(title, description, body, canonical_path='/', extra_head='', right_panel=''):
     canonical = f'<link rel="canonical" href="{escape(SITE_URL + canonical_path)}">' if SITE_URL else '<meta name="robots" content="noindex,follow">'
     og_url = escape(SITE_URL + canonical_path) if SITE_URL else ''
     speed_insights = '<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script><script defer src="/_vercel/speed-insights/script.js"></script>'
+    area = escape(current_area(canonical_path))
+    right_class = ' has-context-panel' if right_panel else ''
+    content = f'<div class="os-content-grid{right_class}"><div class="os-page-body">{body}</div>{right_panel}</div>'
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)}</title><meta name="description" content="{escape(description)}">{canonical}
 <meta property="og:type" content="website"><meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta property="og:image" content="{escape((SITE_URL + '/assets/social-card.png') if SITE_URL else '/assets/social-card.png')}"><meta property="og:url" content="{og_url}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="/assets/social-card.png">
 <link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/assets/site-shell.css"><script defer src="/assets/runtime-config.js"></script>{speed_insights}{extra_head}</head>
-<body><a class="skip" href="#content">Skip to content</a><header class="site-head"><div class="head-inner"><a class="brand" href="/"><span class="brand-mark">FI</span><span>FUTURES INTELLIGENCE OS<small>Exchange-listed futures · ICT education · v1.1.0</small></span></a>{nav_markup(canonical_path)}<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Areas ☰</button></div>{nav_markup(canonical_path, 'mobile-nav')} </header>
-<main id="content">{body}</main><footer class="site-footer"><div><b>Finance Intelligence OS</b><p>Research and education workspace. Not a broker, investment adviser, exchange data terminal or trade execution service.</p></div><div class="footer-links"><a href="/sources/">Futures sources</a><a href="/data-health/">Data health</a><a href="/account/">Private workspace</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a></div><small>Source labels, provider timestamps and data licensing limitations should remain visible wherever market information is shown.</small></footer><script src="/assets/site-shell.js" defer></script></body></html>'''
-
+<body class="os-dark"><a class="skip" href="#content">Skip to content</a>
+<div class="os-app-shell" data-os-shell>
+{nav_markup(canonical_path)}<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div>
+<div class="os-main-column"><header class="os-topbar">
+<div class="os-topbar-start"><button class="os-sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="appSidebar" aria-label="Collapse navigation"><span aria-hidden="true">☰</span></button><div class="os-topbar-heading"><span>FUTURES INTELLIGENCE OS</span><b>{area}</b></div></div>
+<div class="os-topbar-actions"><span class="os-mode-chip"><i></i> RESEARCH ONLY</span><button class="os-theme-toggle" id="osThemeToggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☼</button><a class="os-workspace-link" href="/account/">Private workspace <span aria-hidden="true">↗</span></a></div>
+</header><main id="content" class="os-content">{content}</main>
+<footer class="os-footer"><div><b>Futures Intelligence OS</b><span>Exchange-listed futures research · ICT Futures education</span></div><div class="os-footer-links"><a href="/data-health/">Data Health &amp; Sources</a><a href="/status/">Platform status</a><a href="/docs/">Documentation</a><a href="/ict-futures/">ICT Futures terminal</a></div><small>Public-source frequency, freshness, contract verification and licensing boundaries apply. No broker execution is connected.</small></footer>
+</div></div><script src="/assets/site-shell.js" defer></script></body></html>'''
 
 def page_intro(kicker, title, desc, stats=''):
     return f'<section class="page-hero"><p class="kicker">{escape(kicker)}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{stats}</section>'
@@ -73,6 +138,46 @@ def redirect_page(title, target):
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>{escape(title)}</title><link rel="canonical" href="{safe}"><meta http-equiv="refresh" content="0;url={safe}"></head><body><p>{escape(title)}. <a href="{safe}">Continue</a>.</p><script>location.replace({json_script(absolute)});</script></body></html>'''
 
 
+def contract_value(value):
+    if value is None or value == '':
+        return '<span class="os-unverified-value">Not in source registry</span>'
+    if isinstance(value, (int, float)):
+        rendered = f'{value:.8g}'
+    else:
+        rendered = str(value)
+    return f'<strong>{escape(rendered)}</strong><span class="os-unverified-value">UNVERIFIED IMPORTED REFERENCE</span>'
+
+
+
+def wrap_standalone_shell(path, current_path, kind):
+    if not path.exists(): return
+    html = path.read_text(encoding='utf-8', errors='replace')
+    if 'data-os-shell' in html: return
+    sidebar = nav_markup(current_path)
+    css_link = '<link rel="stylesheet" href="/assets/site-shell.css">'
+    js_link = '<script defer src="/assets/site-shell.js"></script>'
+    if '</head>' in html and css_link not in html:
+        html = html.replace('</head>', css_link + '</head>', 1)
+    if kind == 'ict':
+        html = html.replace('<body>', '<body class="os-ict-terminal">', 1)
+        html = html.replace('<body class="os-ict-terminal">', '<body class="os-ict-terminal"><div class="os-app-shell os-ict-shell" data-os-shell>' + sidebar + '<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div><div class="os-main-column">', 1)
+        html = html.replace("if(localStorage.getItem('ictfos.theme')==='dark')document.body.classList.add('dark');", "if(localStorage.getItem('ictfos.theme')==='light')document.body.classList.remove('dark');else document.body.classList.add('dark');")
+        html = html.replace('<div class="wrap topbar-inner">', '<div class="wrap topbar-inner"><button class="os-sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="appSidebar" aria-label="Collapse navigation">☰</button>', 1)
+        # Retain the terminal's own theme preference/toggle and its anchor-based secondary navigation.
+        html = html.replace('</body>', '</div></div>' + js_link + '</body>', 1)
+    elif kind == 'desk':
+        html = html.replace('<body>', '<body class="os-dark os-futures-desk">', 1)
+        html = html.replace('<body class="os-dark os-futures-desk">', '<body class="os-dark os-futures-desk"><div class="os-app-shell os-desk-shell" data-os-shell>' + sidebar + '<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div><div class="os-main-column">', 1)
+        html = html.replace('<div class="head-inner">', '<div class="head-inner"><button class="os-sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="appSidebar" aria-label="Collapse navigation">☰</button>', 1)
+        html = re.sub(r'<nav class="topnav"[^>]*>.*?</nav>', '', html, count=1, flags=re.S)
+        html = re.sub(r'<nav class="mobile-nav"[^>]*>.*?</nav>', '', html, count=1, flags=re.S)
+        html = html.replace('<a class="fi-ict-link"', '<button class="os-theme-toggle" id="osThemeToggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☼</button><a class="fi-ict-link"', 1)
+        html = re.sub(r'<button class="menu-toggle" id="menuToggle"[^>]*>.*?</button>', '', html, count=1, flags=re.S)
+        html = html.replace('</body>', '</div></div>' + js_link + '</body>', 1)
+    path.write_text(html, encoding='utf-8')
+
+
+
 def build():
     if DIST.exists(): shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
@@ -85,7 +190,10 @@ def build():
         else: shutil.copy2(src,dst)
     obsolete_prediction_client = DIST/'assets/prediction-markets.js'
     if obsolete_prediction_client.exists(): obsolete_prediction_client.unlink()
-    # Route SEO metadata and old hardcoded host cleanup in copied ICT child pages.
+    # Apply the shared app shell to the two standalone terminal applications after copying their sources.
+    wrap_standalone_shell(DIST/'futures-intelligence/index.html', '/futures-intelligence/', 'desk')
+    wrap_standalone_shell(DIST/'ict-futures/index.html', '/academy/', 'ict')
+        # Route SEO metadata and old hardcoded host cleanup in copied ICT child pages.
     for html in DIST.rglob('*.html'):
         if html == DIST/'index.html': continue
         s=html.read_text(encoding='utf-8', errors='replace')
@@ -127,6 +235,31 @@ def build():
     academy = academy_data.get('concepts',[])
     build_academy(DIST, academy_data, SITE_URL)
     news = load(ROOT/'data/news-snapshot.json',{})
+
+    # Contract specification and expiry reference. Imported values stay explicitly unverified.
+    contract_cards=[]
+    for m in mdata:
+        official=str(m.get('specsUrl') or '')
+        official_link=f'<a class="os-source-link" href="{escape(official, quote=True)}" target="_blank" rel="noopener noreferrer">Official exchange specification ↗</a>' if official.startswith(('https://','http://')) else '<span class="muted">Official specification link not supplied</span>'
+        specs=[
+            ('Tick size',contract_value(m.get('tickSize'))),
+            ('Tick value',contract_value(m.get('tickValue'))),
+            ('Point value',contract_value(m.get('pointValue'))),
+            ('Expiry / first notice','<span class="os-unverified-value">NOT SUPPLIED IN REGISTRY</span>'),
+        ]
+        spec_rows=''.join(f'<div class="os-spec-field"><span>{label}</span>{value}</div>' for label,value in specs)
+        contract_cards.append(
+            f'<article id="{escape(str(m.get("id","")))}" class="os-contract-spec-card"><div class="os-contract-spec-head"><div><span class="os-eyebrow">{escape(str(m.get("exchange","Exchange")))} · {escape(str(m.get("tier","")))}</span><h3>{escape(str(m.get("label","Futures family")))}</h3></div><span class="os-state-chip warn">UNVERIFIED</span></div>'
+            f'<div class="os-spec-grid">{spec_rows}</div><div class="os-contract-spec-source">{official_link}</div></article>'
+        )
+    body=page_intro('Contract reference registry','Contract Specs & Expiry','Imported contract reference values are shown for traceability only. They have not been independently reconciled against the current exchange rulebook in this UI phase. Expiry, first-notice and roll dates are not present in the current registry.')
+    body+='<section class="content-section os-contract-warning"><h2>Verification required before trading</h2><p>Tick size, tick value and point value below are unverified imported references. Contract months, first notice, last trade date and roll schedule are not supplied. Confirm the active contract and current exchange specification before calculating risk or placing any trade.</p></section>'
+    body+='<section class="os-contract-spec-grid">'+''.join(contract_cards)+'</section>'
+    body+='<section class="content-section"><h2>Contract lifecycle coverage</h2><p><span class="os-state-chip warn">NOT CONFIGURED</span> No verified expiry calendar, first-notice-date table or automated roll alert is connected. The page does not infer a front month from a continuous chart symbol.</p><a class="text-link" href="/data-health/">Review data and source status →</a></section>'
+    write(DIST/'contract-specs/index.html',shell('Contract Specs & Expiry | Futures Intelligence OS','Futures contract reference registry with explicit verification status and expiry-data coverage.',body,'/contract-specs/'))
+
+    # Existing session and calendar tools are reused from the ICT Futures terminal.
+    write(DIST/'sessions/index.html',redirect_page('Sessions & Calendar tools are available in the ICT Futures terminal','/ict-futures/#sessions'))
 
     # Markets
     cards=''.join(card(m.get('label',m.get('name',m.get('id','Market'))),m.get('role',m.get('note','Market context and research links.')),f"/ict-futures/markets/{m.get('id','')}.html",m.get('exchange','Market profile'),m.get('tier','')) for m in mdata)
@@ -181,19 +314,19 @@ def build():
     body+='<div class="academy-filter"><input id="academySearch" type="search" placeholder="Search concepts, definitions, or evidence labels"><select id="academyCategory"><option value="">All categories</option>'+category_options+'</select><select id="academyLevel"><option value="">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><span class="muted" id="academyCount"></span></div>'
     body+='<div class="academy-catalog-grid" id="academyCatalog">'+''.join(catalog_cards)+'</div></section>'
     body+='<section class="content-section"><h2>Reference standards</h2><p>Official ICT uploads are linked directly only where the source catalogue already verifies the concept match. Other YouTube links are topic searches for discovery. CME and CFTC references provide general market mechanics and risk education; they are not ICT certification or proof of strategy edge.</p><div class="source-notes"><a href="https://www.youtube.com/@InnerCircleTrader" target="_blank" rel="noopener noreferrer">Official ICT channel ↗</a><a href="https://www.youtube.com/@InnerCircleTrader/playlists" target="_blank" rel="noopener noreferrer">Official ICT playlists ↗</a><a href="https://www.cmegroup.com/education/courses/trade-and-risk-management" target="_blank" rel="noopener noreferrer">CME risk education ↗</a><a href="https://www.cftc.gov/LearnAndProtect" target="_blank" rel="noopener noreferrer">CFTC customer education ↗</a></div></section>'
-    write(DIST/'academy/index.html',shell('ICT Academy | Finance Intelligence OS','76 complete concept lessons, guided ICT tutorials, chart exercises, knowledge checks, progress tracking and source references.',body,'/academy/', '<script defer src="/assets/academy-catalog.js"></script>'))
+    write(DIST/'academy/index.html',shell('ICT Academy | Futures Intelligence OS','76 complete concept lessons, guided ICT tutorials, chart exercises, knowledge checks, progress tracking and source references.',body,'/academy/', '<script defer src="/assets/academy-catalog.js"></script>'))
 
     # Macro indicators: official BLS historical observations via the edge gateway.
     body=page_intro('Official macro data','US inflation & labour indicators','Five series from the US Bureau of Labor Statistics Public Data API v1. Values are published historical observations with their own index bases and units; they are not live market quotes or a complete economic calendar.')
     body += """<section class="content-section"><div class="section-top"><div><h2>BLS macro dashboard</h2><p>API cache refreshes on demand and expires after six hours.</p></div><button class="primary-button" id="macroRefresh">Load / update BLS snapshot</button></div><div id="macroState" class="muted">Loading provider data…</div><div id="macroSeries" class="macro-grid"></div></section><section class="content-section"><h2>Method and limitations</h2><p>Version 1 of the BLS API is public without registration, with a documented limit of 25 series per request and up to 10 years of observations. It returns historical observations and can lag the original release; release time/calendar data are separate. Do not combine different index base units or infer market direction from a single series.</p><div class="source-notes"><a href="https://www.bls.gov/developers/api_signature.htm" target="_blank" rel="noopener noreferrer">BLS API signatures ↗</a><a href="https://www.bls.gov/bls/news-release/home.htm" target="_blank" rel="noopener noreferrer">BLS release calendar ↗</a><a href="https://www.bls.gov/developers/api_faqs.htm" target="_blank" rel="noopener noreferrer">BLS API FAQ ↗</a></div></section>"""
     body+='<section class="content-section"><div class="section-top"><div><h2>Additional official macro &amp; rates providers</h2><p>BEA, EIA, FRED, US Treasury and ECB historical observations with provider-specific units, retrieval times and database persistence state.</p></div><button id="economicRefresh" class="primary-button">Refresh economic providers</button></div><p id="economicState" class="muted">Checking provider availability…</p><div id="economicProviders" class="economic-provider-grid"><div class="loading-state">Loading historical provider snapshots…</div></div></section>'
     body+='<section class="content-section"><h2>Economic release calendar</h2><p><span class="status-pill warn">CALENDAR AGGREGATION · NOT CONNECTED</span></p><p>The current macro adapter provides published historical BLS observations, not a consolidated upcoming-release calendar or consensus/actual feed. Until official release schedules and additional source adapters are integrated, use the primary agency calendars below and verify all release times in the publisher timezone.</p><div class="source-notes"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener noreferrer">BLS release schedule ↗</a><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener noreferrer">BEA release schedule ↗</a><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener noreferrer">EIA weekly petroleum status ↗</a></div></section>'
-    write(DIST/'macro/index.html',shell('US Macro Indicators | Finance Intelligence OS','Official BLS, BEA, EIA, FRED, Treasury and ECB historical observations with source labels, units and retrieval times.',body,'/macro/', '<script defer src="/assets/macro-page.js"></script><script defer src="/assets/economic-data.js"></script>'))
+    write(DIST/'macro/index.html',shell('US Macro Indicators | Futures Intelligence OS','Official BLS, BEA, EIA, FRED, Treasury and ECB historical observations with source labels, units and retrieval times.',body,'/macro/', '<script defer src="/assets/macro-page.js"></script><script defer src="/assets/economic-data.js"></script>'))
 
     # COT / institutional positioning.
     body=page_intro('Institutional positioning','CFTC Commitments of Traders','Query CFTC Public Reporting Environment datasets: TFF Futures Only for financial futures or Disaggregated Futures Only for covered commodity markets. COT is a weekly report with Tuesday positions published on Friday; it is not intraday positioning.')
     body += """<section class="content-section"><div class="section-top"><div><h2>Latest COT records</h2><p>Cached public CFTC API response. Search a contract name such as Nasdaq, S&P, Gold, Crude Oil or Euro FX.</p></div><button class="primary-button" id="cotRefresh">Load latest CFTC snapshot</button></div><div class="cot-controls"><button class="cot-toggle active" data-cot-report="tff" type="button">TFF · Financial futures</button><button class="cot-toggle" data-cot-report="disaggregated" type="button">Disaggregated · Commodities</button><input class="search-input" id="cotSearch" type="search" placeholder="Filter by market or code"><span class="muted" id="cotCount"></span></div><p class="muted" id="cotState">Loading CFTC data…</p><div class="table-wrap"><table class="cot-table"><thead><tr><th>Contract market</th><th>Report date</th><th>Open interest</th><th>Long</th><th>Short</th><th>Net</th></tr></thead><tbody id="cotRows"><tr><td colspan="6">Loading CFTC snapshot…</td></tr></tbody></table></div></section><section class="content-section"><h2>Interpretation and data caveats</h2><p>For TFF, the default net calculation uses the Leveraged Money category. For the Disaggregated report, it uses Managed Money. These are report categories, not a complete view of all market participants. Check the underlying row fields and report type before interpretation. Positions are aggregated and reported with a time lag.</p><div class="source-notes"><a href="https://publicreporting.cftc.gov/Commitments-of-Traders/TFF-Futures-Only/gpe5-46if" target="_blank" rel="noopener noreferrer">Official TFF futures-only dataset ↗</a><a href="https://publicreporting.cftc.gov/w/72hh-3qpy/default" target="_blank" rel="noopener noreferrer">Official Disaggregated dataset ↗</a><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener noreferrer">CFTC COT reports ↗</a><a href="https://publicreporting.cftc.gov/stories/s/Public-Reporting-FAQ/inwp-fmhz/" target="_blank" rel="noopener noreferrer">CFTC PRE FAQ ↗</a></div></section>"""
-    write(DIST/'research/positioning/index.html',shell('CFTC COT Positioning | Finance Intelligence OS','Fetch official CFTC Public Reporting Environment futures-only TFF and Disaggregated positioning datasets.',body,'/research/positioning/', '<script defer src="/assets/cot-page.js"></script>'))
+    write(DIST/'research/positioning/index.html',shell('CFTC COT Positioning | Futures Intelligence OS','Fetch official CFTC Public Reporting Environment futures-only TFF and Disaggregated positioning datasets.',body,'/research/positioning/', '<script defer src="/assets/cot-page.js"></script>'))
 
     # Futures-only source directory. Root resources.json is the reviewed public allowlist.
     source_categories = load(ROOT/'resources.json',{}).get('categories',[])
@@ -218,7 +351,7 @@ def build():
     body+='<section class="content-section"><div class="section-top"><div><h2>Weekly open-interest history</h2><p id="voiMarketName">Select a market to load the CFTC series.</p></div><span class="data-pill">WEEKLY · CFTC REPORT</span></div><div id="voiState" class="data-message">Waiting for data…</div><div id="voiChart" class="oi-chart"><div class="loading-state">Loading open-interest history…</div></div><div class="fine-print">Each bar represents a reported weekly open-interest observation for one specific CFTC market label. It is not daily trading volume, open contracts on a broker, or order-book depth.</div></section>'
     body+='<section class="content-section"><div class="section-top"><div><h2>Reported weekly observations</h2><p>Newest report first. No synthetic values or interpolation are used.</p></div><span id="voiCount" class="muted">— rows</span></div><div class="table-wrap"><table class="cot-table"><thead><tr><th>Report date</th><th>Open interest</th><th>Week change</th><th>Source market label</th></tr></thead><tbody id="voiTable"><tr><td colspan="4">No data loaded.</td></tr></tbody></table></div></section>'
     body+='<section class="content-section"><h2>Coverage and licensing boundary</h2><p>CFTC COT is a weekly positioning report and can provide reported open interest for covered futures-only markets. It does not provide the exchange daily volume series required for intraday volume profiles, volume delta, or session volume. Those require a separate official exchange feed or a licensed market-data provider. The UI will not substitute prediction-market volume, spot volume or a generic chart-widget value.</p><div class="source-notes"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener noreferrer">CFTC Commitments of Traders ↗</a><a href="https://www.cmegroup.com/market-data.html" target="_blank" rel="noopener noreferrer">CME market data ↗</a><a href="https://www.ice.com/market-data" target="_blank" rel="noopener noreferrer">ICE market data ↗</a></div></section>'
-    write(DIST/'volume-open-interest/index.html',shell('Futures Volume & Open Interest | Finance Intelligence OS','Contract-aware weekly open-interest history with explicit source and daily volume availability.',body,'/volume-open-interest/', '<script defer src="/assets/volume-open-interest.js"></script>'))
+    write(DIST/'volume-open-interest/index.html',shell('Futures Volume & Open Interest | Futures Intelligence OS','Contract-aware weekly open-interest history with explicit source and daily volume availability.',body,'/volume-open-interest/', '<script defer src="/assets/volume-open-interest.js"></script>'))
 
     # Retire the former event-market route without exposing its UI or endpoint consumers.
     write(DIST/'prediction-markets/index.html',redirect_page('This product area has been retired','/'))
@@ -229,7 +362,7 @@ def build():
     body=page_intro('ICT playbook library','Entry Models','Eight preserved entry-model concepts from the ICT Academy source catalogue. These are educational playbooks, not a ranked signal service or evidence of a profitable edge.',f'<div class="stats-row"><b>{len(entry_models)}</b><span>Model concepts</span><b>0</b><span>Verified model performance rankings</span></div>')
     body+='<section class="content-section"><div class="section-top"><div><h2>Model catalogue</h2><p>Open each lesson for its definition, conditions, use cases, invalidation and common mistakes.</p></div><a class="text-link" href="/academy/">Browse all Academy concepts ↗</a></div><div class="card-grid">'+model_cards+'</div></section>'
     body+='<section class="content-section"><h2>Performance evidence policy</h2><p>No model is labelled “best” until its rules are operationally defined and tested on timestamped historical data with commissions, slippage, contract rolls, survivorship controls and out-of-sample validation. The eight models have no audited win-rate, expectancy, profit-factor or drawdown ranking yet.</p></section>'
-    write(DIST/'entry-models/index.html',shell('ICT Entry Models | Finance Intelligence OS','Eight ICT entry-model concepts with educational playbook links and no unsupported performance claims.',body,'/entry-models/'))
+    write(DIST/'entry-models/index.html',shell('ICT Entry Models | Futures Intelligence OS','Eight ICT entry-model concepts with educational playbook links and no unsupported performance claims.',body,'/entry-models/'))
 
     # P4 Strategy Lab: deterministic signal-driven futures backtesting.
     body=page_intro('Research & validation','Strategy Lab','Run a reproducible, cost-aware backtest from timestamped futures OHLC bars and explicit candle-close signals. The engine does not fabricate ICT signals or publish strategy rankings.')
@@ -317,7 +450,7 @@ def build():
 </section>
 '''
     write(DIST/'strategy-lab/backtest-input-template.csv','timestamp,open,high,low,close,signal,stop_ticks,contract,volume\n')
-    write(DIST/'strategy-lab/index.html',shell('Strategy Lab | Finance Intelligence OS','Reproducible futures signal backtesting with cost-aware expectancy, drawdown and chronological out-of-sample testing.',body,'/strategy-lab/', '<link rel="stylesheet" href="/assets/strategy-lab.css"><script type="module" defer src="/assets/strategy-lab.js"></script>'))
+    write(DIST/'strategy-lab/index.html',shell('Strategy Lab | Futures Intelligence OS','Reproducible futures signal backtesting with cost-aware expectancy, drawdown and chronological out-of-sample testing.',body,'/strategy-lab/', '<link rel="stylesheet" href="/assets/strategy-lab.css"><script type="module" defer src="/assets/strategy-lab.js"></script>'))
 
     # Independent provider and snapshot health dashboard.
     body=page_intro('Operational transparency','Sources & Data Health','Test the edge gateway and inspect each provider response independently. A successful cached API response is not necessarily a fresh upstream collection, and a configured credential is not proof of a healthy data feed.')
@@ -325,13 +458,15 @@ def build():
     body+='<p id="healthUpdated" class="muted">Provider states are loading.</p><section id="healthGrid" class="health-grid"><div class="loading-state">Checking independent provider endpoints…</div></section>'
     body+='<section class="content-section"><h2>How to read the status</h2><div class="health-legend"><span><i class="legend-dot good"></i> Fresh / partial response</span><span><i class="legend-dot warn"></i> Cached, not yet fetched or not configured</span><span><i class="legend-dot bad"></i> Unavailable / failed request</span></div><p>“Fresh” describes the gateway snapshot status reported by that API response. It does not mean exchange-real-time data. “Available on request” indicates a route or public provider capability, not a completed provider fetch. Supabase ingestion and Builder administration remain disabled unless the required server-side secrets are configured.</p></section>'
     body+='<section class="content-section"><h2>Source registry</h2><p>Prefer primary exchange, regulator, statistical agency and central-bank sources. Contract specification and market-data redistribution terms must be verified separately.</p><div class="source-notes"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener noreferrer">CFTC ↗</a><a href="https://www.bls.gov/developers/" target="_blank" rel="noopener noreferrer">BLS ↗</a><a href="https://fred.stlouisfed.org/docs/api/fred/" target="_blank" rel="noopener noreferrer">FRED ↗</a><a href="https://www.bea.gov/developers" target="_blank" rel="noopener noreferrer">BEA ↗</a><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener noreferrer">EIA ↗</a><a href="https://www.cmegroup.com/market-data.html" target="_blank" rel="noopener noreferrer">CME market data ↗</a><a href="https://www.ice.com/market-data" target="_blank" rel="noopener noreferrer">ICE market data ↗</a></div></section>'
-    write(DIST/'data-health/index.html',shell('Sources & Data Health | Finance Intelligence OS','Independent gateway and provider snapshot health checks with provenance and freshness limitations.',body,'/data-health/', '<script defer src="/assets/data-health.js"></script>'))
+    write(DIST/'data-health/index.html',shell('Sources & Data Health | Futures Intelligence OS','Independent gateway and provider snapshot health checks with provenance and freshness limitations.',body,'/data-health/', '<script defer src="/assets/data-health.js"></script>'))
 
-    # Tools
-    body=page_intro('Trading tools','Risk & research tools','Standalone contract-aware sizing helper, journal link, pre-session checklist and research tools. Calculations are estimates; verify current contract specs and broker costs before use.')
+    # Risk & Prop Firms. Keep /tools/ as a compatibility redirect.
+    body=page_intro('Risk preparation','Risk & Prop Firms','Contract-aware position sizing and risk preparation. Imported tick references are unverified, broker margin is not estimated, and no prop-firm rulebook registry is currently connected.')
     body+='''<section class="content-section"><div class="section-top"><div><h2>Futures position size calculator</h2><p>Tick-based estimate; choose standard or micro size where the catalogue supplies a micro profile, then set account risk in USD.</p></div><span class="data-pill">ESTIMATE · NOT EXECUTION</span></div><div class="calc-grid"><label>Contract<select id="contract"></select></label><label>Account balance<input id="balance" type="number" min="0" value="10000"></label><label>Risk %<input id="riskPct" type="number" min="0.01" max="100" step="0.01" value="1"></label><label>Stop distance (ticks)<input id="stopTicks" type="number" min="1" value="20"></label><label>Target distance (ticks)<input id="targetTicks" type="number" min="1" value="60"></label><label>Round-turn commission / contract<input id="commission" type="number" min="0" step="0.01" value="4"></label><label>Entry + exit slippage (ticks)<input id="slippage" type="number" min="0" step="1" value="2"></label><button id="calculateRisk" class="primary-button">Calculate size</button></div><div id="riskResult" class="result-panel" aria-live="polite">Enter assumptions and calculate position size.</div><p class="fine-print">Tick values are copied from the supplied ICT dataset and remain unverified against current official exchange specifications. The calculator rounds contracts down and shows estimated gross/net outcomes; margin and liquidation risk are not estimated.</p></section>'''
-    body+='<section class="content-section"><h2>Personal workspace</h2><div class="card-grid">'+card('Journal & watchlists','Open the existing local-first trade journal and research workspace.','/account/','Private workspace')+card('Pre-session checklist','Prepare a repeatable market plan and evidence checklist.','/ict-futures/#checklist','ICT Futures')+card('Trade review & statistics','Use private workspace analytics and backup/export.','/account/','Research tools')+'</div></section>'
-    write(DIST/'tools/index.html',shell('Futures Risk Tools | Futures Intelligence OS','Futures risk calculator, journal and checklist.',body,'/tools/', '<script defer src="/assets/risk-calculator.js"></script>'))
+    body+='<section class="content-section os-prop-firm-panel"><div class="section-top"><div><h2>Prop-firm rulebooks</h2><p>Firm eligibility, fees, drawdown calculation, payout rules and prohibited strategies need current, firm-specific source evidence.</p></div><span class="os-state-chip warn">NOT CONFIGURED</span></div><p>No verified firm rulebook, pricing feed or payout history is connected to this product area yet. Do not treat cached third-party summaries or older challenge rules as current terms.</p><div class="os-data-footnote">Coverage status: no firm records loaded · verification required before purchase or account sizing.</div></section>'
+    body+='<section class="content-section"><h2>Personal risk workflow</h2><div class="card-grid">'+card('Journal & watchlists','Review planned and completed trades in your private workspace.','/account/','Private workspace')+card('Pre-session checklist','Prepare a repeatable market plan and evidence checklist.','/ict-futures/#checklist','ICT Futures')+card('Contract verification','Check imported tick references and missing expiry fields.','/contract-specs/','Reference registry')+'</div></section>'
+    write(DIST/'risk/index.html',shell('Risk & Prop Firms | Futures Intelligence OS','Futures position sizing and prop-firm rulebook verification status.',body,'/risk/', '<script defer src="/assets/risk-calculator.js"></script>'))
+    write(DIST/'tools/index.html',redirect_page('Risk tools moved','/risk/'))
 
     # Supabase account sign-in and private workspace sync.
     body=page_intro('Account & sync','Your private cloud workspace','Manage your cloud trade journal, multi-list watchlists, research notes, price-alert rules, performance analytics and account preferences. Every private record is scoped to your authenticated account.')+'<div id="accountApp"><section class="content-section"><p>Loading your secure cloud workspace…</p></section></div>'
@@ -355,7 +490,7 @@ def build():
 
     # Sitemap only when canonical base exists, else create relative noindex sitemap not intended for submission.
     if SITE_URL:
-        urls=['/','/markets/','/futures-intelligence/','/volume-open-interest/','/data-health/','/entry-models/','/strategy-lab/','/academy/','/research/positioning/','/news/','/macro/','/tools/','/account/','/status/','/docs/','/sources/','/ict-futures/']
+        urls=['/','/futures-intelligence/','/markets/','/academy/','/entry-models/','/sessions/','/news/','/volume-open-interest/','/research/positioning/','/contract-specs/','/strategy-lab/','/risk/','/account/','/data-health/','/macro/','/status/','/docs/','/sources/','/ict-futures/']
         urls += [f'/ict-futures/markets/{p.name}' for p in (DIST/'ict-futures/markets').glob('*.html')]
         urls += [f'/ict-futures/academy/{p.name}' for p in (DIST/'ict-futures/academy').glob('*.html')]
         urls.append('/ict-futures/academy/tutorials/')

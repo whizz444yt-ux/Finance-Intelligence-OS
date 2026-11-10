@@ -118,23 +118,63 @@ class BuildTests(unittest.TestCase):
             self.assertEqual((ROOT/'dist/assets'/name).read_bytes(),(ROOT/'assets'/name).read_bytes())
 
 
-    def test_futures_only_navigation_is_centralized(self):
+    def test_part1_thirteen_area_navigation_is_centralized(self):
         js=(ROOT/'scripts/build_site.py').read_text()
-        labels=['Overview','Futures Desk','Futures Markets','Volume & OI','News','Macro','COT & Positioning','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources','Data Health']
+        labels=['Overview','Futures Markets','ICT Academy','Entry Models','Sessions & Calendar','Futures News','Volume & Open Interest','COT & Positioning','Contract Specs & Expiry','Strategy Lab','Risk & Prop Firms','Journal & Watchlists','Data Health & Sources']
         for label in labels:self.assertIn("('"+label+"',",js)
+        self.assertIn('NAV_GROUPS',js)
+        self.assertIn('class="os-sidebar"',js)
         self.assertNotIn("('Prediction Markets',",js)
         self.assertNotIn("('Equities',",js)
         self.assertEqual(js.count("('Overview', '/'),"),1)
+
+    def test_part1_shared_shell_dashboard_and_accessibility_contract(self):
+        shell=(ROOT/'assets/site-shell.js').read_text()
+        css=(ROOT/'assets/site-shell.css').read_text()
+        dashboard=(ROOT/'assets/overview-dashboard.js').read_text()
+        home=(ROOT/'index.html').read_text()
+        builder=(ROOT/'scripts/build_site.py').read_text()
+        for token in ['sidebarToggle','sidebarScrim','Escape','fios.app-sidebar.collapsed.v1','osThemeToggle','fios.theme.preference.v1','aria-expanded']:
+            self.assertIn(token,shell)
+        for token in ['prefers-reduced-motion','os-app-shell','os-sidebar','os-contract-spec-card','os-state-chip','os-loading-state','os-error-state','--os-focus']:
+            self.assertIn(token,css)
+        for token in ['overviewContract','overviewClockET','overviewClockLocal','overviewTimezone','overviewCalendarTitle','NOT CONNECTED','overviewNewsList','overviewCotSummary','overviewPrivateMetrics','Promise.allSettled','/api/v1/news','/api/v1/cot?report=tff','/auth/v1/user','/rest/v1/watchlists','/rest/v1/journal_trades','America/New_York']:
+            self.assertIn(token,dashboard)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',dashboard)
+        self.assertNotIn('service_role',dashboard.lower())
+        self.assertIn('QUOTE NOT CONNECTED',home)
+        self.assertIn('calendar is not available',home.lower())
+        self.assertIn('wrap_standalone_shell',builder)
+        self.assertIn('os-ict-terminal',builder)
+        self.assertIn('os-futures-desk',builder)
+
+    def test_part1_contract_session_and_risk_route_compatibility(self):
+        builder=(ROOT/'scripts/build_site.py').read_text()
+        self.assertIn("DIST/'contract-specs/index.html'",builder)
+        self.assertIn("DIST/'sessions/index.html'",builder)
+        self.assertIn("DIST/'risk/index.html'",builder)
+        self.assertIn("DIST/'tools/index.html',redirect_page",builder)
+        self.assertIn("'/ict-futures/#sessions'",builder)
+        self.assertIn('UNVERIFIED IMPORTED REFERENCE',builder)
+        self.assertIn('NOT SUPPLIED IN REGISTRY',builder)
+        self.assertIn('NOT CONFIGURED',builder)
     def test_futures_module_assets_and_retired_route_redirects(self):
         for name in ['volume-open-interest.js','data-health.js']:
             self.assertTrue((ROOT/'assets'/name).exists(),name)
             self.assertTrue((ROOT/'dist/assets'/name).exists(),name)
         self.assertTrue((ROOT/'assets/prediction-markets.js').exists())
         self.assertFalse((ROOT/'dist/assets/prediction-markets.js').exists())
-        for route in ['volume-open-interest','sources','research','prediction-markets','legacy','entry-models','strategy-lab','data-health']:
+        for route in ['volume-open-interest','sources','research','prediction-markets','legacy','entry-models','strategy-lab','data-health','sessions','contract-specs','risk','tools']:
             self.assertTrue((ROOT/'dist'/route/'index.html').exists(),route)
         self.assertIn('/sources/',(ROOT/'dist/research/index.html').read_text())
         self.assertIn('noindex',(ROOT/'dist/prediction-markets/index.html').read_text())
+        self.assertIn('#sessions',(ROOT/'dist/sessions/index.html').read_text())
+        self.assertIn('/risk/',(ROOT/'dist/tools/index.html').read_text())
+        self.assertTrue((ROOT/'dist/contract-specs/index.html').exists())
+        contract=(ROOT/'dist/contract-specs/index.html').read_text()
+        self.assertEqual(contract.count('class="os-contract-spec-card"'),15)
+        self.assertIn('UNVERIFIED IMPORTED REFERENCE',contract)
+        self.assertIn('NOT SUPPLIED IN REGISTRY',contract)
     def test_weekly_open_interest_is_separate_from_exchange_volume(self):
         worker=(ROOT/'cloudflare/src/index.js').read_text()
         voi=(ROOT/'assets/volume-open-interest.js').read_text()
