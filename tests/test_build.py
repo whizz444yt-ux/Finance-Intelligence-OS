@@ -159,6 +159,12 @@ class BuildTests(unittest.TestCase):
         self.assertIn('UNVERIFIED IMPORTED REFERENCE',builder)
         self.assertIn('NOT SUPPLIED IN REGISTRY',builder)
         self.assertIn('NOT CONFIGURED',builder)
+        sitemap_urls=next(line for line in builder.splitlines() if 'urls=[' in line)
+        self.assertNotIn("'/sessions/',",sitemap_urls)
+        shell_css=(ROOT/'assets/site-shell.css').read_text()
+        self.assertIn('body.os-ict-terminal .topbar{z-index:var(--os-z-topbar)',shell_css)
+        self.assertIn('--os-z-sidebar:30',shell_css)
+        self.assertIn('--os-z-topbar:20',shell_css)
     def test_futures_module_assets_and_retired_route_redirects(self):
         for name in ['volume-open-interest.js','data-health.js']:
             self.assertTrue((ROOT/'assets'/name).exists(),name)

@@ -198,9 +198,11 @@ if dist.exists():
     sitemap=(dist/'sitemap.xml').read_text(errors='ignore')
     ok('Sitemap excludes retired research, prediction and archive routes',
        all(x not in sitemap for x in ['/prediction-markets/','/research/</loc>','/legacy/']))
+    ok('Part 1 redirect-only Sessions route is excluded from sitemap','/sessions/' not in sitemap)
     if __import__('os').getenv('SITE_URL'):
-        ok('Part 1 primary routes are discoverable in the indexable sitemap',
-           all(x in sitemap for x in ['/sessions/','/contract-specs/','/risk/','/futures-intelligence/','/academy/']))
+        ok('Part 1 canonical routes are discoverable in the indexable sitemap',
+           all(x in sitemap for x in ['/contract-specs/','/risk/','/futures-intelligence/','/academy/']) and
+           all(x not in sitemap for x in ['/sessions/','/tools/','/prediction-markets/','/legacy/']))
     else:
         ok('Part 1 local noindex build keeps sitemap empty','<url>' not in sitemap)
     ok('Service worker cache no longer references generic 73-instrument dataset',
