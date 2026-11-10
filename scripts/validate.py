@@ -198,8 +198,11 @@ if dist.exists():
     sitemap=(dist/'sitemap.xml').read_text(errors='ignore')
     ok('Sitemap excludes retired research, prediction and archive routes',
        all(x not in sitemap for x in ['/prediction-markets/','/research/</loc>','/legacy/']))
-    ok('Part 1 primary routes are discoverable in the sitemap',
-       all(x in sitemap for x in ['/sessions/','/contract-specs/','/risk/','/futures-intelligence/','/academy/']))
+    if __import__('os').getenv('SITE_URL'):
+        ok('Part 1 primary routes are discoverable in the indexable sitemap',
+           all(x in sitemap for x in ['/sessions/','/contract-specs/','/risk/','/futures-intelligence/','/academy/']))
+    else:
+        ok('Part 1 local noindex build keeps sitemap empty','<url>' not in sitemap)
     ok('Service worker cache no longer references generic 73-instrument dataset',
        'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.0-futures-only-p1' in (ROOT/'sw.js').read_text())
     ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
