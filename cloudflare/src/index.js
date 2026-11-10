@@ -4,16 +4,10 @@ const NEWS_KEY = "snapshot:gdelt:news:v1";
 const NEWS_REFRESH_LOCK_KEY = "lock:gdelt:manual-refresh:v1";
 const PROVIDER_STATE_KEY = "provider:gdelt:state:v1";
 const ALLOWED_BUILDER_MODELS = new Set(["page", "ict-lesson", "research-article", "glossary"]);
-const GDELT_QUERIES = [
-  { label: "Index futures & derivatives", query: '(("Nasdaq futures" OR "S&P 500 futures" OR "E-mini" OR "equity index futures") OR (CME OR "Chicago Mercantile Exchange") (futures OR derivatives))' },
-  { label: "Gold & metals futures", query: '(("gold futures" OR "silver futures" OR COMEX OR "precious metals") OR (gold OR silver) (futures OR bullion))' },
-  { label: "Crude oil & energy futures", query: '(("WTI futures" OR "crude oil futures" OR "natural gas futures" OR NYMEX) OR (Brent OR OPEC) (oil OR futures))' },
-  { label: "Treasury & rates futures", query: '(("Treasury futures" OR "SOFR futures" OR "bond futures" OR "Federal Reserve") OR (FOMC OR yields OR rates) (futures OR markets))' },
-  { label: "FX & dollar futures", query: '(("Euro FX futures" OR "British pound futures" OR "Japanese yen futures" OR "Dollar Index") OR (forex OR currencies) (futures OR markets))' },
-  { label: "Macro releases & central banks", query: '("Federal Reserve" OR FOMC OR inflation OR CPI OR PCE OR payrolls OR NFP OR GDP OR ISM OR "Treasury yields")' },
-  { label: "Commodities, supply & geopolitics", query: '(commodities OR metals OR energy OR agriculture) (supply OR inventories OR OPEC OR sanctions OR tariffs OR shipping)' },
-  { label: "CFTC positioning & exchange notices", query: '(CFTC OR "Commitments of Traders" OR "CME Group" OR "ICE Futures" OR "exchange notice" OR "clearing advisory")' }
-];
+const GDELT_QUERY = {
+ label: "Finance futures, macro & commodities",
+ query: '("Nasdaq futures" OR "S&P 500 futures" OR "E-mini" OR "equity index futures" OR "gold futures" OR "silver futures" OR COMEX OR "WTI futures" OR "crude oil futures" OR "natural gas futures" OR NYMEX OR "Treasury futures" OR "SOFR futures" OR FOMC OR inflation OR CPI OR PCE OR payrolls OR NFP OR GDP OR ISM OR OPEC OR commodities OR metals OR energy OR agriculture OR CFTC OR "Commitments of Traders" OR "CME Group" OR "ICE Futures" OR "central bank")'
+};
 const CORS_HEADERS = { "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization", "Vary": "Origin" };
 function supabaseAdminKey(env){
  return env.SUPABASE_SECRET_KEY||env.SUPABASE_SERVICE_ROLE_KEY||"";
@@ -143,7 +137,7 @@ export default {
    let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(cacheKey,"json"):null;
    if(!snapshot||!snapshot.retrievedAt||Date.now()-Date.parse(snapshot.retrievedAt)>6*60*60*1000){
     try{snapshot=await fetchBls();if(env.SNAPSHOTS)await env.SNAPSHOTS.put(cacheKey,JSON.stringify(snapshot),{expirationTtl:60*60*8});}
-    catch(error){if(!snapshot)return json({status:"unavailable",provider:"BLS Public Data API v1",series:[],error:"BLS request failed"},502,cors);snapshot.status="stale";}
+    catch(error){if(!snapshot)return json({status:"unavailable",provider:"BLS Public Data API v1",series:[],error:"BLS request failed: "+String(error.message||error).slice(0,180)},502,cors);snapshot={...snapshot,status:"stale",lastError:"BLS refresh failed; serving the last successful snapshot."};}
    }
    return json(snapshot,200,{...cors,"Cache-Control":"public, max-age=1800, s-maxage=3600"});
   }
@@ -371,13 +365,13 @@ async function refreshNews(env){
  if(!env.SNAPSHOTS)return;
  const checkedAt=new Date().toISOString();
  const previous=await env.SNAPSHOTS.get(NEWS_KEY,"json")||{articles:[]};
- const results=await Promise.allSettled(GDELT_QUERIES.map(q=>fetchGdelt(q)));
- const good=results.filter(x=>x.status==="fulfilled");
- const articles=dedupe(good.flatMap(x=>x.value.articles)).slice(0,120);
- const status=articles.length?(good.length===GDELT_QUERIES.length?"fresh":"partial"):(previous.articles?.length?"stale":"unavailable");
- const next={schemaVersion:1,provider:"GDELT DOC API",status,generatedAt:articles.length?checkedAt:previous.generatedAt||null,lastCheckedAt:checkedAt,queryCount:GDELT_QUERIES.length,successfulQueries:good.length,articles:articles.length?articles:(previous.articles||[]),notes:["GDELT is a broad news-discovery index, not a complete newswire.","seendate is GDELT indexing/seen time and may differ from publisher publication time.","Headlines are leads for verification, not trading signals."]};
+ let fresh=null,error=null;
+ try{fresh=await fetchGdelt(GDELT_QUERY);}catch(cause){error=cause;}
+ const articles=fresh?dedupe(fresh.articles).slice(0,100):[];
+ const status=fresh?"fresh":(previous.articles?.length?"stale":"unavailable");
+ const next={schemaVersion:1,provider:"GDELT DOC API",status,generatedAt:fresh?checkedAt:previous.generatedAt||null,lastCheckedAt:checkedAt,queryCount:1,successfulQueries:fresh?1:0,articles:articles.length?articles:(previous.articles||[]),lastError:error?String(error.message||error).slice(0,180):null,notes:["One consolidated 72-hour query is used to respect GDELT's request-rate guidance.","GDELT is a broad news-discovery index, not a complete licensed newswire.","seendate is GDELT indexing/seen time and may differ from publisher publication time.","Headlines are leads for verification, not trading signals."]};
  await env.SNAPSHOTS.put(NEWS_KEY,JSON.stringify(next),{expirationTtl:60*60*24*3});
- await env.SNAPSHOTS.put(PROVIDER_STATE_KEY,JSON.stringify({status,lastCheckedAt:checkedAt,successfulQueries:good.length,queryCount:GDELT_QUERIES.length,articleCount:next.articles.length}),{expirationTtl:60*60*24*7});
+ await env.SNAPSHOTS.put(PROVIDER_STATE_KEY,JSON.stringify({status,lastCheckedAt:checkedAt,successfulQueries:fresh?1:0,queryCount:1,articleCount:next.articles.length,lastError:next.lastError}),{expirationTtl:60*60*24*7});
  if(env.SUPABASE_URL&&supabaseAdminKey(env)&&next.articles.length){
   const rows=next.articles.map(a=>({provider:"GDELT DOC API",title:a.title,url:a.url,domain:a.domain,topic:a.topic,retrieved_at:checkedAt,data_as_of:checkedAt,freshness_status:status,payload:a}));
   const endpoint=env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/news_items?on_conflict=provider,url";
@@ -431,7 +425,7 @@ async function fetchCot(report,market=""){
    u.searchParams.set("$where","upper(contract_market_name) like '%"+term+"%' OR upper(market_and_exchange_names) like '%"+term+"%'");
   }
  }
- const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.0 public research"},signal:AbortSignal.timeout(12000)});
+ const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.1 public research"},signal:AbortSignal.timeout(18000)});
  if(!response.ok)throw new Error("CFTC PRE "+response.status);
  const rows=await response.json();if(!Array.isArray(rows))throw new Error("CFTC PRE response was not an array");
  const dates=rows.map(r=>r.report_date_as_yyyy_mm_dd).filter(Boolean).sort();
@@ -447,9 +441,20 @@ const BLS_SERIES=[
 async function fetchBls(){
  const year=new Date().getUTCFullYear();
  const body={seriesid:BLS_SERIES.map(s=>s.id),startyear:String(year-4),endyear:String(year)};
- const response=await fetch("https://api.bls.gov/publicAPI/v1/timeseries/data/",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
- if(!response.ok)throw new Error("BLS "+response.status);
- const data=await response.json();if(data.status!=="REQUEST_SUCCEEDED")throw new Error("BLS request failed");
+ let data=null,lastError=null;
+ for(let attempt=0;attempt<2;attempt++){
+  try{
+   const response=await fetch("https://api.bls.gov/publicAPI/v1/timeseries/data/",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(18000)});
+   if(!response.ok)throw new Error("BLS HTTP "+response.status);
+   data=await response.json();
+   if(data.status!=="REQUEST_SUCCEEDED")throw new Error("BLS request failed: "+String(data.message?.[0]||data.status).slice(0,160));
+   lastError=null;break;
+  }catch(error){
+   lastError=error;
+   if(attempt===0)await new Promise(resolve=>setTimeout(resolve,700));
+  }
+ }
+ if(lastError||!data)throw lastError||new Error("BLS returned no response");
  const byId=new Map((data.Results?.series||[]).map(s=>[s.seriesID,s.data||[]]));
  const series=BLS_SERIES.map(meta=>({...meta,observations:(byId.get(meta.id)||[]).filter(o=>/^M\d{2}$/.test(o.period||"")).slice(0,36).map(o=>({year:o.year,period:o.period,periodName:o.periodName,value:Number(o.value),footnotes:o.footnotes||[]}))}));
  const periods=series.flatMap(s=>s.observations.slice(0,1).map(o=>String(o.year)+"-"+o.period)).sort();
@@ -458,7 +463,7 @@ async function fetchBls(){
 
 async function fetchGdelt(spec){
  const u=new URL("https://api.gdeltproject.org/api/v2/doc/doc");
- u.searchParams.set("query",spec.query);u.searchParams.set("mode","ArtList");u.searchParams.set("format","json");u.searchParams.set("maxrecords","20");u.searchParams.set("sort","DateDesc");u.searchParams.set("timespan","48h");
+ u.searchParams.set("query",spec.query);u.searchParams.set("mode","ArtList");u.searchParams.set("format","json");u.searchParams.set("maxrecords","100");u.searchParams.set("sort","DateDesc");u.searchParams.set("timespan","72h");
  const response=await fetch(u,{headers:{"Accept":"application/json","User-Agent":"FinanceIntelligenceOS/1.0 public research"},signal:AbortSignal.timeout(12000)});
  if(!response.ok)throw new Error("GDELT "+response.status);
  const data=await response.json();return{articles:(data.articles||[]).map(a=>normalizeArticle(a,spec.label)).filter(Boolean)};
