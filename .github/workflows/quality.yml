@@ -31,7 +31,7 @@ jobs:
               sys.exit("package.json must contain a semantic version")
           checks = {
               "homepage release badge": f"v{version}" in pathlib.Path("index.html").read_text(),
-              "service-worker cache": f"fios-shell-v{version}" in pathlib.Path("sw.js").read_text(),
+              "service-worker cache": f"v{version}" in pathlib.Path("sw.js").read_text() and "CACHE_NAME = CACHE_PREFIX" in pathlib.Path("sw.js").read_text(),
           }
           for label, passed in checks.items():
               print(("PASS" if passed else "FAIL") + " " + label)
