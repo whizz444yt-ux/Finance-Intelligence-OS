@@ -1,9 +1,9 @@
 # Finance Intelligence OS — Build & Integration Report
 
-**Build date:** 8 November 2026  
-**Release:** Local source build 1.0.0 / Cloudflare edge Worker 1.0.2  
+**Build date:** 10 November 2026  
+**Release:** Finance Intelligence OS v1.1.0 candidate / Cloudflare Worker deployment version 13  
 **Build output:** `dist/`  
-**Deployment status:** Cloudflare edge service deployed; full website not yet publicly hosted.
+**Deployment status:** Vercel production website deployed and responding; production aliases verified HTTP 200; Preview SSO protection retained.
 
 ## What was merged
 
@@ -32,16 +32,16 @@
 |---|---:|
 | Python build scripts compile | Pass |
 | JavaScript syntax checks | Pass (10 files) |
-| Unit tests | 6/6 passed |
-| Structural/security checks | 33/33 passed |
-| Generated HTML pages | 104 |
-| Internal links checked | 779 |
+| Unit tests | 34/34 passed |
+| Structural/security checks | 98/98 passed |
+| Generated HTML pages | 120 |
+| Internal links checked | 1,398 |
 | Broken internal links | 0 |
 | ICT Futures contract pages | 15 preserved |
 | ICT Academy pages | 76 preserved |
 | Resource directory entries | 585 preserved |
 
-The static build has `noindex` enabled and `robots.txt` blocks indexing because a final public site URL/domain has not been configured. Do not deploy an indexable production build until `SITE_URL` is set to the actual production origin.
+Local builds remain `noindex` when `SITE_URL` is absent. The Vercel Production environment has `SITE_URL` configured to the public production alias, so the production build can emit canonical URLs, an indexable `robots.txt` and a populated sitemap.
 
 ## Connected service state
 
@@ -55,8 +55,8 @@ The static build has `noindex` enabled and `robots.txt` blocks indexing because 
 - Cron: `*/30 * * * *` for GDELT news-discovery snapshots.
 - Worker routes: `/health`, `/api/v1/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/cot?report=tff|disaggregated`, `/api/v1/macro`, `/api/v1/cms/{model}`. Provider status also reports GDELT, BLS, CFTC, Builder.io and Supabase configuration state.
 - BLS and CFTC endpoints fetch on demand and cache successful snapshots for six hours; GDELT discovery is scheduled every 30 minutes.
-- Worker script source, schedule, binding and subdomain settings were read back from Cloudflare successfully. Latest uploaded Worker deployment ID: `bf0ded78cdac45c59b51a40dcace155f` (Worker source version 1.0.2). The external HTTP health probe was blocked by the execution environment's outbound network policy, so a browser-level response test remains outstanding.
-- `ALLOWED_ORIGINS` is currently `*` for public read-only routes. Narrow it to the final production and preview origins after the site domain is known. No write endpoint is exposed by this Worker version.
+- Worker script source, schedule, KV binding and deployment versions were read back from Cloudflare. Current Worker deployed version is 13 and Cron is `*/30 * * * *`. No Worker secrets are bound, so protected Supabase writes and BEA/EIA/FRED credential-backed historical ingestion remain inactive. Public health/provider endpoint checks should be re-run after secret configuration.
+- `ALLOWED_ORIGINS` is restricted to the configured production Vercel origins. The public gateway remains read-only except for the bearer-token-protected ingestion route.
 - The optional Supabase server-write path is dormant until a service-role secret is configured server-side. No service-role key is present in this project package.
 
 ### Supabase — active, schema verified
@@ -65,26 +65,28 @@ The static build has `noindex` enabled and `robots.txt` blocks indexing because 
 - Project ID: `xlhfxjseukjsifpwblrk`.
 - Region: `ap-south-1` (Mumbai).
 - Provisioning quote confirmed at `$0/month` at creation time; monitor the account plan and usage for future changes.
-- 16 public tables exist and all 16 have RLS enabled.
-- 32 owner-scoped RLS policies were verified across the 8 user-owned tables.
+- 22 public tables exist and all 22 have RLS enabled.
+- User-owned data is protected by owner-scoped RLS policies; Supabase security and health advisors currently report no findings.
 - New-user profile trigger is installed.
 - 15 imported contract specifications were seeded with `verification_status = 'unverified'`; they are not asserted as current verified exchange specifications.
 - Browser runtime contains only Supabase URL and publishable key. No elevated key is included.
 - Auth UI is built, but a real user sign-up/sign-in/email-confirmation flow has not been exercised in an end-user browser. Final Auth redirect URLs and SMTP settings depend on production domain and email setup.
 
-### Vercel — pending one-time team approval
+### Vercel — deployed
 
-- Account/connector exists, but no project was created.
-- Creating the project was blocked by a Vercel team-scope authorization check.
-- The one-time team-access approval request must be opened and approved before retrying project creation.
-- Once approved, Vercel project can be linked after the new GitHub repository is created. Build output should be `dist/`; set `SITE_URL` for production.
-- The connected account is on Hobby. Vercel documents Hobby as personal/non-commercial; use a commercially eligible plan or alternate hosting if this site is used commercially.
+- Project: `finance-intelligence-os`, linked to `whizz444yt-ux/Finance-Intelligence-OS`.
+- Build command: `python3 scripts/build_site.py`; output: `dist/`.
+- Production Git deployments from `main` are working; latest verified deployment state was `READY`.
+- Public aliases were smoke-tested and returned HTTP 200.
+- SSO protection is restricted to Preview deployments; production is public. The configured canonical `SITE_URL` points to the public Vercel alias.
+- No custom domain is attached yet. The deployment is on a Vercel Hobby account; review the plan's commercial-use terms before commercial operation.
 
-### GitHub — new repository not created
+### GitHub — connected and versioned
 
-- Existing `whizz444yt-ux/new.w` was found and remains untouched (empty).
-- The connected GitHub tool does not expose a create-repository action. The master plan calls for a new repository, so this package has not been pushed into the old repository or misrepresented as a new repo.
-- Once a new empty repository is created, the source package can be pushed and Vercel can be linked for automatic deployment. GitHub Actions workflows are included.
+- Public repository: `whizz444yt-ux/Finance-Intelligence-OS`; production source branch: `main`.
+- Quality workflow runs build, unit tests, structural/security validation and internal-link audit on pushes and pull requests.
+- v1.1.0 release candidate is maintained on `codex/v1-1-premium-release`; merge to `main` only after the PR checks pass.
+- Tag-triggered release workflow publishes a GitHub Release only when the tag matches `package.json` and all release checks pass.
 
 ### Builder.io — integration prepared, space/key missing
 
@@ -95,10 +97,10 @@ The static build has `noindex` enabled and `robots.txt` blocks indexing because 
 
 ## Known limitations / not represented as complete
 
-- The website is a complete local static build, not an already public production website.
-- No custom domain is known or configured; canonical tags and sitemap remain non-indexable.
+- The public website is deployed on Vercel; no custom domain is attached yet.
+- No custom domain is attached; the Vercel production alias is the canonical host for now.
 - Builder.io is not connected to an actual Space/API key.
-- GitHub new repository and Vercel project link are blocked as described above.
+- Production website hosting is configured; data-service credential configuration and end-user Auth smoke tests remain outstanding.
 - Supabase cloud account UI has not been end-to-end tested with a newly registered user.
 - CFTC/BLS external data responses have not been browser-tested from this environment. Provider response errors must be shown as unavailable/stale, not replaced by invented values.
 - GDELT is a broad news discovery index, not Reuters/Bloomberg-equivalent complete licensed newswire.
