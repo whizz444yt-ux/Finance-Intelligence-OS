@@ -32,7 +32,7 @@
 |---|---:|
 | Python build scripts compile | Pass |
 | JavaScript syntax checks | Pass (10 files) |
-| Unit tests | 34/34 passed |
+| Unit tests | 38/38 passed |
 | Structural/security checks | 98/98 passed |
 | Generated HTML pages | 120 |
 | Internal links checked | 1,398 |
