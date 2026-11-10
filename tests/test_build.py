@@ -142,6 +142,12 @@ class BuildTests(unittest.TestCase):
             self.assertIn(token,dashboard)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',dashboard)
         self.assertNotIn('service_role',dashboard.lower())
+        self.assertIn('Futures news is unavailable:',dashboard)
+        self.assertIn('state === "not-yet-fetched"',dashboard)
+        self.assertIn('articles, but none matched this contract',dashboard)
+        source_loader=(ROOT/'assets/research-directory.js').read_text()
+        self.assertIn('The futures source directory is temporarily unavailable',source_loader)
+        self.assertNotIn('main Finance OS research workspace',source_loader)
         for token in ['overviewCalendarTitle','NOT CONNECTED','QUOTE NOT CONNECTED']:
             self.assertIn(token,home)
         self.assertIn('calendar is not available',home.lower())
