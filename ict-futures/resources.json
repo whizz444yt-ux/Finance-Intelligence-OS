@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-11-08",
-  "count": 52,
+  "count": 44,
   "categories": [
     "Charts & Research",
     "Energy & Commodity Events",
@@ -10,7 +10,6 @@
     "ICT Learning",
     "Market News & Specialist Coverage",
     "Positioning & disclosures",
-    "Prediction Markets",
     "Public Research Channels",
     "US Macro & Central Banks"
   ],
@@ -76,13 +75,6 @@
       "name": "CFTC — Bank Participation Reports",
       "url": "https://www.cftc.gov/MarketReports/BankParticipationReports/index.htm",
       "description": "Monthly aggregate positions of banks; not named bank employee positions.",
-      "type": "official"
-    },
-    {
-      "category": "Positioning & disclosures",
-      "name": "SEC EDGAR — Company Filings Search",
-      "url": "https://www.sec.gov/edgar/search/",
-      "description": "Search public filings including Form 4 insider ownership-change reports for listed companies.",
       "type": "official"
     },
     {
@@ -275,41 +267,6 @@
       "type": "social"
     },
     {
-      "category": "Public Research Channels",
-      "name": "Stocktwits — public market sentiment",
-      "url": "https://stocktwits.com/",
-      "description": "Public social sentiment; futures symbol coverage varies.",
-      "type": "social"
-    },
-    {
-      "category": "Prediction Markets",
-      "name": "Polymarket — Public event markets",
-      "url": "https://polymarket.com/",
-      "description": "Public prediction-market events and market pages. Quote prices reflect traded markets, spreads and liquidity; not guaranteed probabilities.",
-      "type": "platform"
-    },
-    {
-      "category": "Prediction Markets",
-      "name": "Polymarket — Gamma API documentation",
-      "url": "https://gamma-api.polymarket.com/docs",
-      "description": "Public event and market discovery API documentation; browser access can be affected by CORS and service limits.",
-      "type": "api"
-    },
-    {
-      "category": "Prediction Markets",
-      "name": "Kalshi — Event markets",
-      "url": "https://kalshi.com/",
-      "description": "Public event-contract marketplace; contract rules, access and jurisdictional eligibility apply.",
-      "type": "platform"
-    },
-    {
-      "category": "Prediction Markets",
-      "name": "Kalshi — API documentation",
-      "url": "https://docs.kalshi.com/",
-      "description": "Official public market-data and trading API documentation; this site uses discovery as read-only context.",
-      "type": "api"
-    },
-    {
       "category": "ICT Learning",
       "name": "Inner Circle Trader — Official YouTube channel",
       "url": "https://www.youtube.com/@InnerCircleTrader",
@@ -335,20 +292,6 @@
       "name": "CFTC — Historical COT reports",
       "url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/HistoricalViewable/index.htm",
       "description": "Historical report archives for public futures positioning research.",
-      "type": "official"
-    },
-    {
-      "category": "Positioning & disclosures",
-      "name": "SEC — Developer resources and APIs",
-      "url": "https://www.sec.gov/about/developer-resources",
-      "description": "Official SEC data/API guidance. Submissions/XBRL endpoints should be called server-side with compliant user-agent and rate limits.",
-      "type": "official"
-    },
-    {
-      "category": "Positioning & disclosures",
-      "name": "SEC — EDGAR API reference",
-      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
-      "description": "Public company filing submissions and XBRL data; not futures positions or non-public information.",
       "type": "official"
     },
     {

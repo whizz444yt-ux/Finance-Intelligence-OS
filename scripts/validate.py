@@ -11,13 +11,17 @@ def ok(name, condition, detail=''):
 def readj(p): return json.loads((ROOT/p).read_text(encoding='utf-8'))
 
 try:
-    resources=readj(Path('resources.json')); ok('Resource directory has 585 curated records',len(resources.get('resources',[]))==585,f"found {len(resources.get('resources',[]))}")
+    resources=readj(Path('resources.json'))
+    source_hay=' '.join(' '.join(str(x.get(k,'')) for k in ('category','name','description','url')).lower() for x in resources.get('resources',[]))
+    ok('Active resource directory is futures-only',resources.get('scope')=='futures-only' and len(resources.get('resources',[]))>=40 and not any(x in source_hay for x in ['polymarket','kalshi','stocktwits','sec.gov','sec edgar']))
+    archived_resources=readj(Path('legacy/global-research/resources.json'))
+    archived_markets=readj(Path('legacy/global-research/data/market-universe.json'))
+    ok('Full Global Research source baselines remain archived',len(archived_resources.get('resources',[]))==585 and len(archived_markets.get('markets',[]))>=70)
     markets=readj(Path('ict-futures/data/market-universe.json')); ok('ICT Futures retains 15 contract families',len(markets.get('markets',[]))==15,f"found {len(markets.get('markets',[]))}")
-    academy=readj(Path('ict-futures/data/ict-academy.json')); ok('ICT Academy retains 76 concepts',len(academy.get('concepts',[]))==76,f"found {len(academy.get('concepts',[]))}")
-    fm=readj(Path('data/market-universe.json')); ok('Finance instrument navigator retains market records',len(fm.get('markets',[]))>=70,f"found {len(fm.get('markets',[]))}")
+    academy=readj(Path('ict-futures/data/ict-academy.json')); ok('ICT Academy retains 76 concepts and nine tutorials',len(academy.get('concepts',[]))==76 and len(academy.get('learningProgram',{}).get('tutorials',[]))==9,f"lessons={len(academy.get('concepts',[]))}, tutorials={len(academy.get('learningProgram',{}).get('tutorials',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
-for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/prediction-markets.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
+for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
     r=subprocess.run(['node','--check',str(ROOT/p)],capture_output=True,text=True)
     ok(f'JavaScript syntax: {p}',r.returncode==0,(r.stderr or r.stdout).strip()[:300])
 
@@ -27,7 +31,7 @@ ok('Worker has GDELT scheduled collection','async scheduled' in worker and 'refr
 ok('Worker contains health/news/provider endpoints','/api/v1/health' in worker and '/api/v1/news' in worker and '/api/v1/providers' in worker)
 ok('Worker contains BLS and CFTC endpoints','/api/v1/macro' in worker and '/api/v1/cot' in worker and 'api.bls.gov/publicAPI/v1' in worker and 'publicreporting.cftc.gov/resource/' in worker)
 ok('Worker contains NY Fed public reference rates','/api/v1/macro/funding' in worker and 'markets.newyorkfed.org/api/rates/all/latest.json' in worker)
-ok('Worker contains read-only Polymarket and Kalshi endpoints','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker and 'gamma-api.polymarket.com/events' in worker and 'external-api.kalshi.com/trade-api/v2/markets' in worker)
+ok('Worker prediction endpoints are retained as dormant compatibility code','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker and 'gamma-api.polymarket.com/events' in worker and 'external-api.kalshi.com/trade-api/v2/markets' in worker)
 ok('Worker has production-origin allow-list without wildcard','finance-intelligence-os-whizz444yt-7353.vercel.app' in worker and 'includes("*")' in worker and 'return json' in worker)
 
 worker=(ROOT/'cloudflare/src/index.js').read_text()
@@ -44,10 +48,12 @@ ok('Prediction volume metrics remain nullable','volume24hr:asNumberOrNull(event.
 ok('Static assets no longer receive a one-year immutable cache','max-age=300, stale-while-revalidate=86400' in (ROOT/'vercel.json').read_text() and 'immutable' not in (ROOT/'vercel.json').read_text())
 
 nav_source=(ROOT/'scripts/build_site.py').read_text()
-ok('12-area navigation is defined centrally',all("('"+label+"'," in nav_source for label in ['Overview','Futures Markets','Volume & OI','News Intelligence','Macro Calendar','COT & Positioning','Prediction Markets','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources & Data Health']))
+ok('Futures-only navigation is defined centrally',all("('"+label+"'," in nav_source for label in ['Overview','Futures Desk','Futures Markets','Volume & OI','News','Macro','COT & Positioning','ICT Academy','Entry Models','Strategy Lab','Risk & Journal','Sources','Data Health']) and "('Prediction Markets'," not in nav_source)
 ok('Weekly open-interest endpoint is distinct from exchange volume','/api/v1/volume-open-interest' in worker and 'cadence:"weekly"' in worker and 'metric:"open_interest"' in worker and 'status:"not-connected"' in worker)
 ok('P1 health checker tests provider endpoints independently','Promise.allSettled' in (ROOT/'assets/data-health.js').read_text() and '/api/v1/providers' in (ROOT/'assets/data-health.js').read_text())
-ok('Prediction page uses read-only venue endpoints','/api/v1/prediction/polymarket' in (ROOT/'assets/prediction-markets.js').read_text() and '/api/v1/prediction/kalshi' in (ROOT/'assets/prediction-markets.js').read_text())
+active_frontends=[(ROOT/'assets/futures-intelligence.js').read_text(),(ROOT/'assets/data-health.js').read_text(),(ROOT/'ict-futures/index.html').read_text()]
+ok('No active frontend calls retired event-market APIs',all('/api/v1/prediction/polymarket' not in x and '/api/v1/prediction/kalshi' not in x and 'gamma-api.polymarket.com' not in x and 'api.elections.kalshi.com' not in x for x in active_frontends) and 'id="predictions"' not in active_frontends[2])
+ok('Prediction Worker APIs remain server-side only for compatibility','/api/v1/prediction/polymarket' in worker and '/api/v1/prediction/kalshi' in worker)
 ok('Entry Models page does not claim an audited ranking',"no audited win-rate" in nav_source.lower() and 'Strategy Lab' in nav_source)
 
 economic=(ROOT/'cloudflare/src/economic-providers.js').read_text()
@@ -124,9 +130,14 @@ ok('No service role in browser assets','SUPABASE_SERVICE_ROLE_KEY' not in ''.joi
 # Run generated route build and test final output if it exists.
 dist=ROOT/'dist'
 if dist.exists():
-    expected=['index.html','markets/index.html','academy/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html','volume-open-interest/index.html','prediction-markets/index.html','entry-models/index.html','strategy-lab/index.html','data-health/index.html']
+    expected=['index.html','markets/index.html','academy/index.html','sources/index.html','research/index.html','research/positioning/index.html','macro/index.html','news/index.html','tools/index.html','account/index.html','status/index.html','docs/index.html','legacy/index.html','ict-futures/index.html','futures-intelligence/index.html','volume-open-interest/index.html','prediction-markets/index.html','entry-models/index.html','strategy-lab/index.html','data-health/index.html']
     ok('All primary route entry points generated',all((dist/p).exists() for p in expected),', '.join(p for p in expected if not (dist/p).exists()))
     html=list(dist.rglob('*.html'))
+    ok('Futures-only homepage and generated product boundaries are present','Futures Command Center' in (dist/'index.html').read_text() and len(list((dist/'markets').glob('*.html')))==1 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
+    active_resources=readj(Path('dist/resources.json'))
+    ok('Generated resource directory contains only reviewed futures sources',active_resources.get('scope')=='futures-only' and len(active_resources.get('resources',[]))>=40)
+    ok('Retired event markets and legacy data are not active assets',not (dist/'assets/prediction-markets.js').exists() and not (dist/'data/market-universe.json').exists())
+    ok('Legacy archive content is not copied into public output',not (dist/'legacy/previous-markdown').exists() and not (dist/'legacy/global-research').exists())
     ok('Legacy ICT SEO route set preserved',len(list((dist/'ict-futures/academy').glob('*.html')))==76 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
     bad=[]
     for p in html:
@@ -157,11 +168,23 @@ if dist.exists():
         (dist/'assets/economic-data.js').exists() and (dist/'assets/economic-data.js').read_bytes()==(ROOT/'assets/economic-data.js').read_bytes())
     ok('P1 module assets match source files',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes()
-            for name in ['volume-open-interest.js','data-health.js','prediction-markets.js','site-shell.css']))
+            for name in ['volume-open-interest.js','data-health.js','site-shell.css']))
     ok('Built Futures Desk assets match source files',
         (dist/'assets/futures-intelligence.js').exists() and (dist/'assets/futures-intelligence.css').exists() and
         (dist/'assets/futures-intelligence.js').read_bytes()==(ROOT/'assets/futures-intelligence.js').read_bytes() and
         (dist/'assets/futures-intelligence.css').read_bytes()==(ROOT/'assets/futures-intelligence.css').read_bytes())
+    ok('Retired routes are noindex redirects',all('noindex' in (dist/path).read_text(errors='ignore') for path in ['research/index.html','prediction-markets/index.html','legacy/index.html']))
+    ok('Generated navigation has no event-market item','Prediction Markets' not in (dist/'index.html').read_text() and '/prediction-markets/' not in (dist/'index.html').read_text())
+    active_ict=(dist/'ict-futures/index.html').read_text(errors='ignore')
+    ok('ICT terminal excludes retired event-market and issuer content',
+       'id="predictions"' not in active_ict and 'href="#predictions"' not in active_ict and
+       'Polymarket' not in active_ict and 'Kalshi' not in active_ict and
+       'Stocktwits' not in active_ict and 'SEC EDGAR — Form 4' not in active_ict)
+    sitemap=(dist/'sitemap.xml').read_text(errors='ignore')
+    ok('Sitemap excludes retired research, prediction and archive routes',
+       all(x not in sitemap for x in ['/prediction-markets/','/research/</loc>','/legacy/']))
+    ok('Service worker cache no longer references generic 73-instrument dataset',
+       'data/market-universe.json' not in (ROOT/'sw.js').read_text() and 'v1.1.1-futures-only' in (ROOT/'sw.js').read_text())
     ok('Runtime config exists only with publishable Supabase key', (dist/'assets/runtime-config.js').exists() and 'service_role' not in (dist/'assets/runtime-config.js').read_text().lower())
     # Validate inline scripts in the two preserved monolithic applications.
     for page in [dist/'index.html', dist/'ict-futures/index.html']:

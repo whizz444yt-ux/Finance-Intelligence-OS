@@ -1,6 +1,6 @@
 /* Finance Intelligence OS — offline application shell. External feeds are never cached here. */
 const CACHE_PREFIX = 'fios-shell-';
-const CACHE_NAME = CACHE_PREFIX + 'v1.1.0';
+const CACHE_NAME = CACHE_PREFIX + 'v1.1.1-futures-only';
 const BASE_URL = new URL('./', self.registration.scope);
 const BASE_PATH = BASE_URL.pathname;
 const CORE_PATHS = [
@@ -9,7 +9,6 @@ const CORE_PATHS = [
   BASE_PATH + 'manifest.webmanifest',
   BASE_PATH + 'icon.svg',
   BASE_PATH + 'resources.json',
-  BASE_PATH + 'data/market-universe.json'
 ];
 self.addEventListener('install', event => {
   event.waitUntil((async () => {

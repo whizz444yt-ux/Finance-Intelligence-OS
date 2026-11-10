@@ -18,7 +18,7 @@ Open `http://localhost:8000`. Build without `SITE_URL` sets the output to `noind
 3. Set `ALLOWED_ORIGINS` to the exact Vercel production and preview origins (comma separated; never `*` for credentialed private routes).
 4. Deploy `cloudflare/src/index.js` with Wrangler; configure the `SNAPSHOTS` binding and Cron trigger from `wrangler.toml`.
 5. Set optional Builder/Supabase secrets with `wrangler secret put`; never commit secret values.
-6. Verify `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/cot?report=tff`, `/api/v1/cot?report=disaggregated`, `/api/v1/macro` and `/api/v1/cms/ict-lesson`. CFTC PRE is cached for six hours and BLS v1 for six hours; the request paths intentionally return provider-labelled snapshots rather than claiming streaming market data.
+6. Verify `/health`, `/api/v1/providers`, `/api/v1/news`, `/api/v1/cot?report=tff`, `/api/v1/cot?report=disaggregated`, `/api/v1/macro` and `/api/v1/cms/ict-lesson`. Legacy prediction-market routes are not part of active product verification. CFTC PRE is cached for six hours and BLS v1 for six hours; the request paths intentionally return provider-labelled snapshots rather than claiming streaming market data.
 
 The Worker is published as `https://finance-intelligence-os-edge.finance-intelligence-os.workers.dev` with a 30-minute Cron trigger. The Worker Cron performs GDELT snapshot discovery every 30 minutes. GDELT discovery is not a complete news service or a trading signal.
 
@@ -29,6 +29,7 @@ Public endpoints currently deployed in the Worker:
 - `GET /api/v1/macro` — BLS public v1 monthly series (CPI-U, core CPI, unemployment, payroll employment and PPI); six-hour cache.
 - `GET /api/v1/cot?report=tff` or `?report=disaggregated` — CFTC PRE latest 200 futures-only report rows; six-hour cache.
 - `GET /api/v1/cms/{model}` — Builder public Content API proxy when the key is configured.
+- `/api/v1/prediction/{polymarket|kalshi}` — legacy dormant compatibility handlers only; the active site does not link to or call these routes.
 
 BLS and CFTC calls are public dataset/history access, not licensed real-time exchange prices. COT is a weekly position report; it is not an intraday indicator.
 
