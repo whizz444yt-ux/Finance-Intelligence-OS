@@ -40,7 +40,7 @@ jobs:
           version = str(json.loads(pathlib.Path("package.json").read_text())["version"])
           checks = {
               "homepage badge": f"v{version}" in pathlib.Path("index.html").read_text(),
-              "service-worker cache": f"fios-shell-v{version}" in pathlib.Path("sw.js").read_text(),
+              "service-worker cache": f"v{version}" in pathlib.Path("sw.js").read_text() and "CACHE_NAME = CACHE_PREFIX" in pathlib.Path("sw.js").read_text(),
           }
           for name, passed in checks.items():
               print(("PASS" if passed else "FAIL") + " " + name)
