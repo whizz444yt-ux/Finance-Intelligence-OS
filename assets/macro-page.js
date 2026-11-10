@@ -2,11 +2,11 @@
  const root=document.getElementById('macroSeries'),state=document.getElementById('macroState'),refresh=document.getElementById('macroRefresh');if(!root)return;
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const api=(window.FINANCE_OS_CONFIG?.apiBase||'').replace(/\/$/,'');
- async function load(){
-  refresh.disabled=true;refresh.textContent='Loading official BLS data…';state.textContent='Querying BLS Public Data API v1 through Cloudflare edge cache.';
+ async function load(force=false){
+  refresh.disabled=true;refresh.textContent='Loading official BLS data…';state.textContent='Querying the BLS public data API through the Cloudflare edge cache.';
   try{
    if(!api)throw new Error('Cloudflare API endpoint is not configured.');
-   const r=await fetch(api+'/api/v1/macro',{headers:{Accept:'application/json'}});if(!r.ok)throw new Error(`BLS API gateway returned HTTP ${r.status}`);const d=await r.json();if(!Array.isArray(d.series))throw new Error('Provider did not return a series array.');
+   const r=await fetch(api+'/api/v1/macro'+(force?'?refresh=1':''),{headers:{Accept:'application/json'}});const d=await r.json();if(!r.ok){const detail=d.error||d.lastError||`BLS API gateway returned HTTP ${r.status}`;throw new Error(detail);}if(!Array.isArray(d.series))throw new Error('Provider did not return a series array.');
    root.innerHTML='';
    for(const s of d.series){
     const obs=(s.observations||[]).slice(0,24);const max=Math.max(...obs.map(x=>x.value).filter(Number.isFinite));const min=Math.min(...obs.map(x=>x.value).filter(Number.isFinite));
@@ -19,9 +19,9 @@
     const note=document.createElement('p');note.textContent=s.marketContext||'';card.appendChild(note);
     root.appendChild(card);
    }
-   const time=d.retrievedAt?new Date(d.retrievedAt).toLocaleString():'not available';state.textContent=`${d.provider} · ${d.status||'unknown'} · retrieved ${time}. BLS API v1 historical observations; this is not a real-time market quote.`;
+   const time=d.retrievedAt?new Date(d.retrievedAt).toLocaleString():'not available';state.textContent=`${d.provider} · ${d.status||'unknown'} · retrieved ${time}. Historical observations, not real-time market quotes.${d.lastError?' '+d.lastError:''}`;
   }catch(e){root.innerHTML='<p class="muted">Official BLS historical series are currently unavailable. Use the linked official provider below.</p>';state.textContent=e.message;}
   finally{refresh.disabled=false;refresh.textContent='Load / update BLS snapshot';}
  }
- refresh?.addEventListener('click',load);await load();
+ refresh?.addEventListener('click',()=>load(true));await load();
 })();
