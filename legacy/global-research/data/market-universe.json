@@ -1,0 +1,1248 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-26",
+  "count": 73,
+  "markets": [
+    {
+      "id": "xau",
+      "label": "Gold · XAUUSD",
+      "symbol": "XAUUSD",
+      "group": "Metals",
+      "q": "Gold XAUUSD spot price",
+      "drivers": [
+        "US real yields",
+        "DXY / USD",
+        "Fed repricing",
+        "ETF flows",
+        "COT positioning"
+      ],
+      "note": "Gold often reacts to real yields, the dollar, policy expectations and risk demand. Safe-haven flows can be offset by rising yields or USD strength.",
+      "source": "https://www.lbma.org.uk/prices-and-data",
+      "calendar": "https://www.tradingview.com/economic-calendar/"
+    },
+    {
+      "id": "xag",
+      "label": "Silver · XAGUSD",
+      "symbol": "XAGUSD",
+      "group": "Metals",
+      "q": "Silver XAGUSD spot price",
+      "drivers": [
+        "USD / real yields",
+        "Gold ratio",
+        "Industrial demand",
+        "Solar / electronics",
+        "COT positioning"
+      ],
+      "note": "Silver combines precious-metal and industrial demand exposure; its volatility and liquidity can differ materially from Gold.",
+      "source": "https://www.cmegroup.com/markets/metals.html",
+      "calendar": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm"
+    },
+    {
+      "id": "eurusd",
+      "label": "EUR/USD",
+      "symbol": "EURUSD",
+      "group": "FX",
+      "q": "EUR USD exchange rate euro dollar",
+      "drivers": [
+        "Fed vs ECB",
+        "US / Euro inflation",
+        "Yield spread",
+        "Risk sentiment",
+        "European data"
+      ],
+      "note": "FX is relative: compare both central banks, growth/inflation surprises and yield spreads rather than analysing one currency alone.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.tradingview.com/economic-calendar/"
+    },
+    {
+      "id": "gbpusd",
+      "label": "GBP/USD",
+      "symbol": "GBPUSD",
+      "group": "FX",
+      "q": "GBP USD exchange rate sterling dollar",
+      "drivers": [
+        "BoE vs Fed",
+        "UK CPI / wages",
+        "US yields",
+        "UK growth",
+        "Risk mood"
+      ],
+      "note": "Sterling reacts to UK policy and data versus US conditions. UK-specific political/fiscal headlines can change the transmission.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.bankofengland.co.uk/news"
+    },
+    {
+      "id": "usdjpy",
+      "label": "USD/JPY",
+      "symbol": "USDJPY",
+      "group": "FX",
+      "q": "USD JPY exchange rate yen dollar",
+      "drivers": [
+        "US-Japan yield gap",
+        "BoJ policy",
+        "Intervention risk",
+        "Carry positioning",
+        "Risk-off flows"
+      ],
+      "note": "The yield differential and central-bank signals often matter, but intervention warnings and rapid carry unwinds can dominate short-term price action.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.boj.or.jp/en/"
+    },
+    {
+      "id": "usdinr",
+      "label": "USD/INR",
+      "symbol": "USDINR",
+      "group": "FX",
+      "q": "USD INR exchange rate RBI India rupee",
+      "drivers": [
+        "RBI policy",
+        "DXY",
+        "Crude prices",
+        "Foreign flows",
+        "India trade/current account"
+      ],
+      "note": "INR can be influenced by oil import costs, dollar conditions, local flows and RBI actions. Confirm contract/venue eligibility with authorised sources.",
+      "source": "https://www.rbi.org.in/scripts/FS_FAQs.aspx?Id=146",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "dxy",
+      "label": "US Dollar Index · DXY",
+      "symbol": "DXY",
+      "group": "FX",
+      "q": "US Dollar Index DXY",
+      "drivers": [
+        "Fed expectations",
+        "Relative yields",
+        "Global risk demand",
+        "Euro performance",
+        "US data surprises"
+      ],
+      "note": "DXY is a currency benchmark, not a currency pair. Its composition and weights matter; strength does not mechanically force every asset lower.",
+      "source": "https://www.ice.com/products/194/US-Dollar-Index-Futures",
+      "calendar": "https://www.federalreserve.gov/newsevents/calendar.htm"
+    },
+    {
+      "id": "us02y",
+      "label": "US 2-Year Treasury Yield",
+      "symbol": "US02Y",
+      "group": "Bonds & Rates",
+      "q": "US 2 year Treasury yield bond market",
+      "drivers": [
+        "Fed path",
+        "Inflation data",
+        "Policy expectations",
+        "Treasury supply",
+        "Risk sentiment"
+      ],
+      "note": "Short yields are especially sensitive to expected policy rates. Yield up usually means bond price down, but broader asset reactions depend on why yields moved.",
+      "source": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
+      "calendar": "https://www.federalreserve.gov/newsevents/calendar.htm"
+    },
+    {
+      "id": "us10y",
+      "label": "US 10-Year Treasury Yield",
+      "symbol": "US10Y",
+      "group": "Bonds & Rates",
+      "q": "US 10 year Treasury yield yield curve",
+      "drivers": [
+        "Growth / inflation",
+        "Term premium",
+        "Treasury supply",
+        "Fed path",
+        "Global demand"
+      ],
+      "note": "The 10-year reflects expected short rates plus term premium and other factors. Distinguish a growth-led rise from an inflation/fiscal-risk rise.",
+      "source": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
+      "calendar": "https://fred.stlouisfed.org/"
+    },
+    {
+      "id": "us30y",
+      "label": "US 30-Year Treasury Yield",
+      "symbol": "US30Y",
+      "group": "Bonds & Rates",
+      "q": "US 30 year Treasury yield long bond",
+      "drivers": [
+        "Inflation expectations",
+        "Fiscal supply",
+        "Term premium",
+        "Pension demand",
+        "Auction results"
+      ],
+      "note": "Long bonds are sensitive to long-run inflation, supply/demand and term premium; duration risk can be substantial.",
+      "source": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates",
+      "calendar": "https://fiscaldata.treasury.gov/"
+    },
+    {
+      "id": "spx",
+      "label": "S&P 500",
+      "symbol": "SPX",
+      "group": "Equity Indices",
+      "q": "S&P 500 index stocks market",
+      "drivers": [
+        "Earnings revisions",
+        "Treasury yields",
+        "Breadth",
+        "VIX",
+        "Buybacks / flows"
+      ],
+      "note": "Index direction combines earnings, rates, breadth and concentration. A few mega-caps can hide weak underlying breadth.",
+      "source": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "ndx",
+      "label": "Nasdaq-100",
+      "symbol": "NDX",
+      "group": "Equity Indices",
+      "q": "Nasdaq 100 index technology growth stocks",
+      "drivers": [
+        "Real yields",
+        "Mega-cap earnings",
+        "AI/capex guidance",
+        "Semiconductor cycle",
+        "Market breadth"
+      ],
+      "note": "Long-duration growth stocks can be rate-sensitive, but earnings growth and positioning may dominate. Track semiconductor and mega-cap earnings separately.",
+      "source": "https://www.nasdaq.com/market-activity/indexes",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "vix",
+      "label": "VIX Volatility Index",
+      "symbol": "VIX",
+      "group": "Volatility",
+      "q": "Cboe VIX volatility index options",
+      "drivers": [
+        "S&P options pricing",
+        "Event risk",
+        "Put demand",
+        "Dealer hedging",
+        "Volatility term structure"
+      ],
+      "note": "VIX is an implied-volatility measure, not a directional index or a directly tradable share. Futures/options have their own term structure and risks.",
+      "source": "https://www.cboe.com/tradable-products/vix/",
+      "calendar": "https://www.cboe.com/us/options/market_statistics/"
+    },
+    {
+      "id": "nifty",
+      "label": "Nifty 50",
+      "symbol": "NIFTY",
+      "group": "Indian Equities",
+      "q": "Nifty 50 NSE India index",
+      "drivers": [
+        "RBI / inflation",
+        "FII/DII flows",
+        "Earnings",
+        "Banking weights",
+        "Rupee / crude"
+      ],
+      "note": "Indian equities combine earnings and global risk with INR, crude, domestic flows and index composition. Verify exchange notices and holidays.",
+      "source": "https://www.nseindia.com/",
+      "calendar": "https://www.nseindia.com/resources/exchange-communication-holidays"
+    },
+    {
+      "id": "banknifty",
+      "label": "Nifty Bank",
+      "symbol": "BANKNIFTY",
+      "group": "Indian Equities",
+      "q": "Nifty Bank index Indian banks",
+      "drivers": [
+        "Credit growth",
+        "Deposit costs",
+        "NIM guidance",
+        "Asset quality",
+        "RBI policy"
+      ],
+      "note": "Bank indices are sensitive to rate transmission, deposit costs, loan growth and credit quality—not just the policy-rate decision.",
+      "source": "https://www.nseindia.com/",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "dax",
+      "label": "DAX · Germany",
+      "symbol": "DAX",
+      "group": "Equity Indices",
+      "q": "DAX Germany stock index",
+      "drivers": [
+        "ECB rates",
+        "German industry",
+        "EUR",
+        "Energy costs",
+        "Global exports"
+      ],
+      "note": "European equity performance can respond to ECB expectations, industrial cycle, energy costs and currency moves.",
+      "source": "https://www.eurex.com/ex-en/markets",
+      "calendar": "https://www.ecb.europa.eu/press/calendars/html/index.en.html"
+    },
+    {
+      "id": "nikkei",
+      "label": "Nikkei 225 · Japan",
+      "symbol": "NI225",
+      "group": "Equity Indices",
+      "q": "Nikkei 225 Japan stock index",
+      "drivers": [
+        "JPY moves",
+        "BoJ policy",
+        "Exporters",
+        "Global tech",
+        "Overnight US moves"
+      ],
+      "note": "Export sensitivity and the yen can create meaningful cross-asset effects; track local-market hours and overnight US developments.",
+      "source": "https://www.jpx.co.jp/english/markets/indices/",
+      "calendar": "https://www.boj.or.jp/en/"
+    },
+    {
+      "id": "wti",
+      "label": "WTI Crude Oil",
+      "symbol": "CL1!",
+      "group": "Energy",
+      "q": "WTI crude oil futures price",
+      "drivers": [
+        "EIA inventories",
+        "OPEC+ supply",
+        "Geopolitics",
+        "Refinery demand",
+        "Futures curve"
+      ],
+      "note": "Oil prices reflect both physical balances and risk premium. An inventory draw can be bullish in one context and irrelevant if already expected.",
+      "source": "https://www.eia.gov/petroleum/supply/weekly/",
+      "calendar": "https://www.eia.gov/petroleum/supply/weekly/"
+    },
+    {
+      "id": "brent",
+      "label": "Brent Crude",
+      "symbol": "BZ1!",
+      "group": "Energy",
+      "q": "Brent crude oil futures price",
+      "drivers": [
+        "Global supply",
+        "OPEC+",
+        "Shipping / sanctions",
+        "Demand outlook",
+        "Brent-WTI spread"
+      ],
+      "note": "Brent has a global benchmark role; compare regional supply, freight/insurance risk and product-market spreads.",
+      "source": "https://www.iea.org/reports/oil-market-report",
+      "calendar": "https://www.opec.org/"
+    },
+    {
+      "id": "natgas",
+      "label": "Natural Gas",
+      "symbol": "NG1!",
+      "group": "Energy",
+      "q": "Natural gas futures price storage weather",
+      "drivers": [
+        "Storage reports",
+        "Weather",
+        "LNG exports",
+        "Production",
+        "Seasonality"
+      ],
+      "note": "Gas markets are highly regional and weather/seasonality sensitive. A contract benchmark may not reflect local retail gas prices.",
+      "source": "https://www.eia.gov/naturalgas/",
+      "calendar": "https://www.eia.gov/naturalgas/weekly/"
+    },
+    {
+      "id": "copper",
+      "label": "Copper",
+      "symbol": "HG1!",
+      "group": "Metals",
+      "q": "Copper futures price LME inventory China demand",
+      "drivers": [
+        "China demand",
+        "LME stocks",
+        "Mine supply",
+        "USD",
+        "Manufacturing PMIs"
+      ],
+      "note": "Copper is often used as an industrial-cycle gauge, but inventory location, supply disruptions, currency and positioning can change the signal.",
+      "source": "https://www.lme.com/Metals/Non-ferrous/Copper",
+      "calendar": "https://www.cmegroup.com/markets/metals.html"
+    },
+    {
+      "id": "aluminium",
+      "label": "Aluminium",
+      "symbol": "ALI",
+      "group": "Metals",
+      "q": "Aluminium price LME warehouse inventory",
+      "drivers": [
+        "LME inventory",
+        "Power costs",
+        "China output",
+        "Supply sanctions",
+        "Manufacturing"
+      ],
+      "note": "Aluminium is energy-intensive; power pricing, production restrictions and regional inventory flows can affect premiums and futures.",
+      "source": "https://www.lme.com/Metals/Non-ferrous/Aluminium",
+      "calendar": "https://www.lme.com/Market-data/Reports-and-data/Warehouse-and-stocks"
+    },
+    {
+      "id": "lithium",
+      "label": "Lithium / Battery Materials",
+      "symbol": "LITHIUM",
+      "group": "Battery Materials",
+      "q": "lithium prices battery materials supply demand",
+      "drivers": [
+        "EV sales",
+        "Battery chemistry",
+        "Mine/refinery supply",
+        "Inventory",
+        "China policy"
+      ],
+      "note": "Not every battery material has a liquid retail-tradable contract. Many prices are specialist assessments or private/physical agreements.",
+      "source": "https://www.usgs.gov/centers/national-minerals-information-center",
+      "calendar": "https://www.iea.org/topics/critical-minerals"
+    },
+    {
+      "id": "btc",
+      "label": "Bitcoin · BTC",
+      "symbol": "BTCUSD",
+      "group": "Crypto",
+      "q": "Bitcoin BTC crypto price ETF flows derivatives",
+      "drivers": [
+        "ETF flows",
+        "Funding / OI",
+        "USD and real yields",
+        "Exchange flows",
+        "Liquidations"
+      ],
+      "note": "Crypto can trade 24/7 and react to liquidity, leverage and market-structure events. Exchange deposits alone do not prove an intent to sell.",
+      "source": "https://www.coinglass.com/",
+      "calendar": "https://farside.co.uk/bitcoin-etf-flow-all-data/"
+    },
+    {
+      "id": "eth",
+      "label": "Ethereum · ETH",
+      "symbol": "ETHUSD",
+      "group": "Crypto",
+      "q": "Ethereum ETH crypto price network fees ETF flows",
+      "drivers": [
+        "ETH/BTC",
+        "ETF flows where applicable",
+        "Network activity",
+        "Staking / unlocks",
+        "Perpetual funding"
+      ],
+      "note": "Ethereum price may respond to broader crypto risk, network economics, product flows and supply dynamics. Verify chain and asset-specific facts.",
+      "source": "https://defillama.com/",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "sol",
+      "label": "Solana · SOL",
+      "symbol": "SOLUSD",
+      "group": "Crypto",
+      "q": "Solana SOL crypto price DEX volume unlocks",
+      "drivers": [
+        "Network reliability",
+        "DEX activity",
+        "Token supply",
+        "BTC direction",
+        "Perpetual leverage"
+      ],
+      "note": "DEX activity and high social attention do not guarantee token value accrual; verify liquidity, concentration, unlocks and technical risks.",
+      "source": "https://defillama.com/",
+      "calendar": "https://www.geckoterminal.com/"
+    },
+    {
+      "id": "xrp",
+      "label": "XRP",
+      "symbol": "XRPUSD",
+      "group": "Crypto",
+      "q": "XRP crypto price regulation exchange flows",
+      "drivers": [
+        "Regulatory news",
+        "Exchange liquidity",
+        "BTC direction",
+        "Supply / escrow",
+        "Derivatives positioning"
+      ],
+      "note": "Legal headlines need primary documents and precise scope. Social narratives can overstate the practical effect of a court or regulator update.",
+      "source": "https://www.coindesk.com/",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "nvda",
+      "label": "NVIDIA · NVDA",
+      "symbol": "NVDA",
+      "group": "US Equities",
+      "q": "NVIDIA NVDA earnings guidance AI chip stocks",
+      "drivers": [
+        "Earnings / guidance",
+        "AI capex",
+        "Gross margins",
+        "Export rules",
+        "Valuation / yields"
+      ],
+      "note": "For single stocks, compare reported results with consensus, guidance, estimate revisions and what the price already reflects.",
+      "source": "https://investor.nvidia.com/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "aapl",
+      "label": "Apple · AAPL",
+      "symbol": "AAPL",
+      "group": "US Equities",
+      "q": "Apple AAPL earnings iPhone demand China",
+      "drivers": [
+        "Earnings / guidance",
+        "iPhone demand",
+        "China exposure",
+        "Services margin",
+        "Buybacks / valuation"
+      ],
+      "note": "Single-stock catalysts include results, guidance, product cycle, legal/regulatory events and market positioning. Use issuer IR filings.",
+      "source": "https://investor.apple.com/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "tsla",
+      "label": "Tesla · TSLA",
+      "symbol": "TSLA",
+      "group": "US Equities",
+      "q": "Tesla TSLA deliveries earnings margins EV demand",
+      "drivers": [
+        "Deliveries",
+        "Margins / pricing",
+        "Autonomy news",
+        "China competition",
+        "Rates / sentiment"
+      ],
+      "note": "Delivery reports, margins and official guidance may affect the thesis; social claims about autonomy or private deals require strong verification.",
+      "source": "https://ir.tesla.com/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "reliance",
+      "label": "Reliance Industries · NSE",
+      "symbol": "RELIANCE",
+      "group": "Indian Equities",
+      "q": "Reliance Industries NSE results retail telecom refining",
+      "drivers": [
+        "Results / guidance",
+        "Refining margins",
+        "Retail / telecom",
+        "Capex",
+        "India demand"
+      ],
+      "note": "Use NSE/BSE disclosures and issuer IR; segment results may have different drivers and market expectations.",
+      "source": "https://www.ril.com/InvestorRelations",
+      "calendar": "https://www.nseindia.com/companies-listing/corporate-filings"
+    },
+    {
+      "id": "hdfcbank",
+      "label": "HDFC Bank · NSE",
+      "symbol": "HDFCBANK",
+      "group": "Indian Equities",
+      "q": "HDFC Bank results deposits loan growth NIM",
+      "drivers": [
+        "Deposit growth",
+        "Loan growth",
+        "NIM",
+        "Asset quality",
+        "RBI policy"
+      ],
+      "note": "For banks, analyse deposit mix/costs, credit growth and asset quality together instead of relying on one headline.",
+      "source": "https://www.hdfcbank.com/personal/about-us/investor-relations",
+      "calendar": "https://www.nseindia.com/companies-listing/corporate-filings"
+    },
+    {
+      "id": "coffee",
+      "label": "Coffee Futures",
+      "symbol": "KC1!",
+      "group": "Agriculture",
+      "q": "coffee futures Brazil crop weather price",
+      "drivers": [
+        "Brazil / Vietnam crop",
+        "Weather",
+        "Export data",
+        "Inventory",
+        "Currency"
+      ],
+      "note": "Coffee can respond to crop/weather shocks and logistics; seasonal headlines need confirmation from supply and inventory data.",
+      "source": "https://www.ice.com/products/Futures-Options/Softs",
+      "calendar": "https://www.cmegroup.com/markets/agriculture.html"
+    },
+    {
+      "id": "wheat",
+      "label": "Wheat Futures",
+      "symbol": "ZW1!",
+      "group": "Agriculture",
+      "q": "wheat futures crop weather Black Sea exports",
+      "drivers": [
+        "Crop conditions",
+        "Weather",
+        "Export flows",
+        "Geopolitics",
+        "USDA WASDE"
+      ],
+      "note": "Crop reports and export policy matter, but prices also reflect inventories, seasonality and global substitution among origins.",
+      "source": "https://www.cmegroup.com/markets/agriculture/grains/wheat.html",
+      "calendar": "https://www.usda.gov/oce/commodity/wasde"
+    },
+    {
+      "id": "corn",
+      "label": "Corn Futures",
+      "symbol": "ZC1!",
+      "group": "Agriculture",
+      "q": "corn futures USDA crop yield ethanol exports",
+      "drivers": [
+        "USDA acreage/yield",
+        "Weather",
+        "Ethanol demand",
+        "Export sales",
+        "Stocks-to-use"
+      ],
+      "note": "Corn reacts to crop estimates, weather windows and demand. Distinguish futures benchmark price from local physical basis.",
+      "source": "https://www.cmegroup.com/markets/agriculture/grains/corn.html",
+      "calendar": "https://www.usda.gov/oce/commodity/wasde"
+    },
+    {
+      "id": "coffee-cocoa",
+      "label": "Cocoa Futures",
+      "symbol": "CC1!",
+      "group": "Agriculture",
+      "q": "cocoa futures Ivory Coast crop weather grindings",
+      "drivers": [
+        "West Africa crop",
+        "Disease / weather",
+        "Port arrivals",
+        "Processing demand",
+        "Inventory"
+      ],
+      "note": "Cocoa supply is geographically concentrated, so local crop or logistics headlines can matter; confirm through industry and exchange data.",
+      "source": "https://www.ice.com/products/Futures-Options/Softs",
+      "calendar": "https://www.ice.com/products/Futures-Options/Softs"
+    },
+    {
+      "id": "usdchf",
+      "label": "USD/CHF",
+      "symbol": "USDCHF",
+      "group": "FX",
+      "q": "USD CHF exchange rate Swiss franc",
+      "drivers": [
+        "SNB vs Fed",
+        "Risk-off flows",
+        "Yield spread",
+        "Inflation",
+        "Swiss policy"
+      ],
+      "note": "CHF often reacts to relative rates and safe-haven demand; the response depends on event geography and policy context.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.snb.ch/en/"
+    },
+    {
+      "id": "audusd",
+      "label": "AUD/USD",
+      "symbol": "AUDUSD",
+      "group": "FX",
+      "q": "AUD USD exchange rate Australian dollar",
+      "drivers": [
+        "RBA vs Fed",
+        "China demand",
+        "Iron ore",
+        "Risk sentiment",
+        "Commodity prices"
+      ],
+      "note": "AUD is sensitive to domestic policy and China/commodity demand, but relative yields and broader risk appetite also matter.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.rba.gov.au/"
+    },
+    {
+      "id": "usdcad",
+      "label": "USD/CAD",
+      "symbol": "USDCAD",
+      "group": "FX",
+      "q": "USD CAD exchange rate Canadian dollar crude oil",
+      "drivers": [
+        "BoC vs Fed",
+        "Crude oil",
+        "Canada jobs/CPI",
+        "US data",
+        "Risk appetite"
+      ],
+      "note": "Oil can affect CAD through terms-of-trade channels, but rate spreads, domestic data and USD direction also influence the pair.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.bankofcanada.ca/"
+    },
+    {
+      "id": "nzdusd",
+      "label": "NZD/USD",
+      "symbol": "NZDUSD",
+      "group": "FX",
+      "q": "NZD USD exchange rate New Zealand dollar",
+      "drivers": [
+        "RBNZ vs Fed",
+        "Dairy exports",
+        "China activity",
+        "Risk mood",
+        "Local inflation"
+      ],
+      "note": "NZD combines local central-bank expectations with Asia-linked demand and global risk appetite.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.rbnz.govt.nz/"
+    },
+    {
+      "id": "eurgbp",
+      "label": "EUR/GBP",
+      "symbol": "EURGBP",
+      "group": "FX",
+      "q": "EUR GBP exchange rate ECB Bank of England",
+      "drivers": [
+        "ECB vs BoE",
+        "UK vs euro inflation",
+        "Growth surprises",
+        "Yield spread",
+        "Political/fiscal risk"
+      ],
+      "note": "Cross-currency pairs are relative trades: compare both economies, data surprises and central-bank pricing.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.ecb.europa.eu/press/calendars/html/index.en.html"
+    },
+    {
+      "id": "eurjpy",
+      "label": "EUR/JPY",
+      "symbol": "EURJPY",
+      "group": "FX",
+      "q": "EUR JPY exchange rate ECB Bank of Japan",
+      "drivers": [
+        "ECB vs BoJ",
+        "Yield spread",
+        "Carry positioning",
+        "Risk-off",
+        "Euro-area data"
+      ],
+      "note": "Carry and yield differentials may be important, but sharp risk-off episodes and policy surprises can unwind positioning quickly.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.boj.or.jp/en/"
+    },
+    {
+      "id": "gbpjpy",
+      "label": "GBP/JPY",
+      "symbol": "GBPJPY",
+      "group": "FX",
+      "q": "GBP JPY exchange rate sterling yen",
+      "drivers": [
+        "BoE vs BoJ",
+        "Yield gap",
+        "Carry trades",
+        "Risk sentiment",
+        "UK wages/CPI"
+      ],
+      "note": "Often a volatile cross; combine yield differentials with risk sentiment and volatility rather than assuming it only follows carry.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.bankofengland.co.uk/news"
+    },
+    {
+      "id": "audjpy",
+      "label": "AUD/JPY",
+      "symbol": "AUDJPY",
+      "group": "FX",
+      "q": "AUD JPY exchange rate carry trade",
+      "drivers": [
+        "Risk appetite",
+        "RBA vs BoJ",
+        "China demand",
+        "Yield gap",
+        "Volatility"
+      ],
+      "note": "AUD/JPY is often treated as risk-sensitive, but that relationship can change during policy shocks or commodity-specific moves.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.boj.or.jp/en/"
+    },
+    {
+      "id": "euraud",
+      "label": "EUR/AUD",
+      "symbol": "EURAUD",
+      "group": "FX",
+      "q": "EUR AUD exchange rate ECB RBA",
+      "drivers": [
+        "ECB vs RBA",
+        "China/commodity cycle",
+        "Euro-area data",
+        "Yield spread",
+        "Risk mood"
+      ],
+      "note": "Compare Europe and Australia data relative to expectations; commodity and China signals can affect the AUD side.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.rba.gov.au/"
+    },
+    {
+      "id": "gbpaud",
+      "label": "GBP/AUD",
+      "symbol": "GBPAUD",
+      "group": "FX",
+      "q": "GBP AUD exchange rate Bank of England RBA",
+      "drivers": [
+        "BoE vs RBA",
+        "UK wages",
+        "China demand",
+        "Yield spread",
+        "Risk appetite"
+      ],
+      "note": "A relative macro pair; local surprises can dominate if they materially change expected policy paths.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.bankofengland.co.uk/news"
+    },
+    {
+      "id": "usdmxn",
+      "label": "USD/MXN",
+      "symbol": "USDMXN",
+      "group": "FX",
+      "q": "USD MXN exchange rate Mexico peso",
+      "drivers": [
+        "Banxico vs Fed",
+        "Carry",
+        "US trade policy",
+        "Oil/industrial flows",
+        "Risk appetite"
+      ],
+      "note": "Higher carry does not remove FX gap risk; policy, trade and risk-off developments can cause abrupt moves.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.banxico.org.mx/"
+    },
+    {
+      "id": "usdzar",
+      "label": "USD/ZAR",
+      "symbol": "USDZAR",
+      "group": "FX",
+      "q": "USD ZAR exchange rate South African rand",
+      "drivers": [
+        "SARB vs Fed",
+        "Commodities",
+        "Power/infrastructure",
+        "Fiscal risk",
+        "Global risk appetite"
+      ],
+      "note": "ZAR can be highly sensitive to global risk sentiment and commodity exposures alongside local structural and policy factors.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.resbank.co.za/"
+    },
+    {
+      "id": "usdtry",
+      "label": "USD/TRY",
+      "symbol": "USDTRY",
+      "group": "FX",
+      "q": "USD TRY exchange rate Turkish lira inflation central bank",
+      "drivers": [
+        "CBRT policy",
+        "Inflation",
+        "Reserves",
+        "Capital controls",
+        "Political/fiscal risk"
+      ],
+      "note": "Policy framework, inflation, reserves and access restrictions matter; price feeds and tradability differ across venues.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.tcmb.gov.tr/"
+    },
+    {
+      "id": "usdcnh",
+      "label": "USD/CNH",
+      "symbol": "USDCNH",
+      "group": "FX",
+      "q": "USD CNH offshore yuan exchange rate China",
+      "drivers": [
+        "PBoC fixing",
+        "China data",
+        "Trade policy",
+        "Capital flows",
+        "USD direction"
+      ],
+      "note": "Offshore CNH and onshore CNY are different market references. Use the right symbol and session for the instrument under study.",
+      "source": "https://www.cmegroup.com/markets/fx.html",
+      "calendar": "https://www.pbc.gov.cn/en/"
+    },
+    {
+      "id": "eurinr",
+      "label": "EUR/INR",
+      "symbol": "EURINR",
+      "group": "FX",
+      "q": "EUR INR exchange rate euro rupee NSE",
+      "drivers": [
+        "ECB vs RBI",
+        "EURUSD",
+        "Crude/oil import bill",
+        "Portfolio flows",
+        "India data"
+      ],
+      "note": "Cross rates inherit both currency legs; confirm the actual exchange-listed contract and its trading hours.",
+      "source": "https://www.nseindia.com/market-data/market-timings",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "gbpinr",
+      "label": "GBP/INR",
+      "symbol": "GBPINR",
+      "group": "FX",
+      "q": "GBP INR exchange rate pound rupee",
+      "drivers": [
+        "BoE vs RBI",
+        "GBPUSD",
+        "Oil/import demand",
+        "Portfolio flows",
+        "India/UK data"
+      ],
+      "note": "GBP/INR can move through both GBP/USD and USD/INR; use the actual listed instrument and contract specifications.",
+      "source": "https://www.nseindia.com/market-data/market-timings",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "jpyinr",
+      "label": "JPY/INR",
+      "symbol": "JPYINR",
+      "group": "FX",
+      "q": "JPY INR exchange rate yen rupee",
+      "drivers": [
+        "BoJ vs RBI",
+        "USDJPY",
+        "Carry unwind",
+        "India flows",
+        "Oil"
+      ],
+      "note": "Cross-rate mechanics matter: compare USD/JPY and USD/INR alongside local market quotes.",
+      "source": "https://www.nseindia.com/market-data/market-timings",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "bund10",
+      "label": "Germany 10-Year Bund Yield",
+      "symbol": "DE10Y",
+      "group": "Bonds & Rates",
+      "q": "Germany 10 year Bund yield",
+      "drivers": [
+        "ECB policy",
+        "Euro inflation",
+        "German issuance",
+        "Growth",
+        "Spread vs US"
+      ],
+      "note": "Sovereign yields are market-specific. Compare Bunds with other countries using the same maturity and yield convention.",
+      "source": "https://data.ecb.europa.eu/",
+      "calendar": "https://www.ecb.europa.eu/press/calendars/html/index.en.html"
+    },
+    {
+      "id": "uk10",
+      "label": "UK 10-Year Gilt Yield",
+      "symbol": "UK10Y",
+      "group": "Bonds & Rates",
+      "q": "UK 10 year Gilt yield Bank of England",
+      "drivers": [
+        "BoE policy",
+        "UK inflation/wages",
+        "Gilt supply",
+        "Fiscal news",
+        "Global rates"
+      ],
+      "note": "UK gilt yields reflect policy expectations plus term premium, fiscal/issuance expectations and global duration conditions.",
+      "source": "https://www.bankofengland.co.uk/statistics",
+      "calendar": "https://www.bankofengland.co.uk/news"
+    },
+    {
+      "id": "in10y",
+      "label": "India 10-Year Government Bond Yield",
+      "symbol": "IN10Y",
+      "group": "Bonds & Rates",
+      "q": "India 10 year government bond yield RBI",
+      "drivers": [
+        "RBI policy",
+        "Inflation",
+        "Government borrowing",
+        "Rupee/oil",
+        "Bond index flows"
+      ],
+      "note": "Domestic yields depend on inflation, RBI liquidity/policy, supply and institutional demand. Check current RBI/FBIL/official market source data.",
+      "source": "https://data.rbi.org.in/DBIE/",
+      "calendar": "https://www.rbi.org.in/"
+    },
+    {
+      "id": "ftse",
+      "label": "FTSE 100 · UK",
+      "symbol": "UKX",
+      "group": "Equity Indices",
+      "q": "FTSE 100 index UK stocks",
+      "drivers": [
+        "GBP exchange rate",
+        "Energy/miners weights",
+        "BoE policy",
+        "Global earnings",
+        "UK data"
+      ],
+      "note": "FTSE sector composition and foreign revenue exposure mean its drivers can differ from the domestic UK economy.",
+      "source": "https://www.londonstockexchange.com/",
+      "calendar": "https://www.bankofengland.co.uk/news"
+    },
+    {
+      "id": "hangseng",
+      "label": "Hang Seng · Hong Kong",
+      "symbol": "HSI",
+      "group": "Equity Indices",
+      "q": "Hang Seng Index Hong Kong China stocks",
+      "drivers": [
+        "China policy",
+        "Property sector",
+        "CNH",
+        "Tech regulation",
+        "Global liquidity"
+      ],
+      "note": "China policy, property risks, listings and offshore capital flows can all matter; verify announcements from HKEX/company filings.",
+      "source": "https://www.hkex.com.hk/",
+      "calendar": "https://www.hkexnews.hk/"
+    },
+    {
+      "id": "stoxx",
+      "label": "Euro Stoxx 50",
+      "symbol": "SX5E",
+      "group": "Equity Indices",
+      "q": "Euro Stoxx 50 index Europe equities",
+      "drivers": [
+        "ECB",
+        "European earnings",
+        "EUR",
+        "Energy costs",
+        "Sector breadth"
+      ],
+      "note": "A major euro-area equity benchmark; consider country/sector mix and currency effects when comparing returns.",
+      "source": "https://www.stoxx.com/",
+      "calendar": "https://www.ecb.europa.eu/press/calendars/html/index.en.html"
+    },
+    {
+      "id": "platinum",
+      "label": "Platinum",
+      "symbol": "PL1!",
+      "group": "Metals",
+      "q": "Platinum futures price supply demand South Africa",
+      "drivers": [
+        "Auto catalysts",
+        "South African supply",
+        "Jewellery",
+        "Substitution vs palladium",
+        "USD"
+      ],
+      "note": "Platinum has distinct industrial and supply drivers. Do not use Gold as a direct proxy for its fundamentals.",
+      "source": "https://www.cmegroup.com/markets/metals.html",
+      "calendar": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm"
+    },
+    {
+      "id": "palladium",
+      "label": "Palladium",
+      "symbol": "PA1!",
+      "group": "Metals",
+      "q": "Palladium futures price auto catalyst supply Russia South Africa",
+      "drivers": [
+        "Auto catalysts",
+        "EV mix",
+        "Mine supply",
+        "Substitution",
+        "Sanctions/logistics"
+      ],
+      "note": "Automotive demand, substitution with platinum and concentrated supply can create different dynamics from Gold and Silver.",
+      "source": "https://www.cmegroup.com/markets/metals.html",
+      "calendar": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm"
+    },
+    {
+      "id": "bnb",
+      "label": "BNB",
+      "symbol": "BNBUSD",
+      "group": "Crypto",
+      "q": "BNB crypto price exchange token regulatory news",
+      "drivers": [
+        "Exchange ecosystem",
+        "Regulation",
+        "Chain activity",
+        "BTC direction",
+        "Liquidity"
+      ],
+      "note": "Exchange-related tokens can carry platform, regulatory and concentration risks beyond ordinary crypto market risk.",
+      "source": "https://www.coingecko.com/en/coins/bnb",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "doge",
+      "label": "Dogecoin · DOGE",
+      "symbol": "DOGEUSD",
+      "group": "Crypto",
+      "q": "Dogecoin DOGE price social sentiment liquidity",
+      "drivers": [
+        "Social attention",
+        "BTC direction",
+        "Liquidity",
+        "Large holders",
+        "Exchange support"
+      ],
+      "note": "Meme-token attention can be rapidly amplified and reversed. Verify market depth and avoid treating social mentions as value evidence.",
+      "source": "https://www.coingecko.com/en/coins/dogecoin",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "ada",
+      "label": "Cardano · ADA",
+      "symbol": "ADAUSD",
+      "group": "Crypto",
+      "q": "Cardano ADA crypto price network updates",
+      "drivers": [
+        "Network usage",
+        "Development/upgrade",
+        "Token liquidity",
+        "BTC direction",
+        "Derivatives"
+      ],
+      "note": "Protocol updates are not automatically price-positive; check user activity, actual adoption and release status.",
+      "source": "https://defillama.com/",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "link",
+      "label": "Chainlink · LINK",
+      "symbol": "LINKUSD",
+      "group": "Crypto",
+      "q": "Chainlink LINK crypto price integrations staking",
+      "drivers": [
+        "Oracle adoption",
+        "Token economics",
+        "Integrations",
+        "BTC direction",
+        "Unlock/supply"
+      ],
+      "note": "Partnership headlines should be checked for what is live, what is planned and whether token demand changes materially.",
+      "source": "https://www.coingecko.com/en/coins/chainlink",
+      "calendar": "https://www.coinglass.com/"
+    },
+    {
+      "id": "meta",
+      "label": "Meta Platforms · META",
+      "symbol": "META",
+      "group": "US Equities",
+      "q": "Meta Platforms META earnings ad revenue AI capex",
+      "drivers": [
+        "Ad growth",
+        "AI capex",
+        "Margins",
+        "Regulation",
+        "Guidance"
+      ],
+      "note": "Compare ad demand, capex, margins and forward guidance to consensus; increased spending may be interpreted differently by timeframe.",
+      "source": "https://investor.fb.com/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "msft",
+      "label": "Microsoft · MSFT",
+      "symbol": "MSFT",
+      "group": "US Equities",
+      "q": "Microsoft MSFT earnings cloud Azure AI capex",
+      "drivers": [
+        "Azure growth",
+        "AI capex",
+        "Margins",
+        "Enterprise spend",
+        "Guidance"
+      ],
+      "note": "Cloud growth and AI investment returns are separate questions; compare reported growth with capex and guidance.",
+      "source": "https://www.microsoft.com/en-us/Investor/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "amd",
+      "label": "AMD · Advanced Micro Devices",
+      "symbol": "AMD",
+      "group": "US Equities",
+      "q": "AMD earnings data center chips AI GPU market",
+      "drivers": [
+        "Data-centre revenue",
+        "AI accelerator demand",
+        "Gross margins",
+        "Supply chain",
+        "Export policy"
+      ],
+      "note": "Sector sympathy can be strong, but track company-specific product, margin and guidance details rather than reading only a competitor headline.",
+      "source": "https://ir.amd.com/",
+      "calendar": "https://www.nasdaq.com/market-activity/earnings"
+    },
+    {
+      "id": "soybean",
+      "label": "Soybean Futures",
+      "symbol": "ZS1!",
+      "group": "Agriculture",
+      "q": "soybean futures USDA South America crop exports",
+      "drivers": [
+        "Brazil/US crop",
+        "USDA stocks",
+        "China imports",
+        "Weather",
+        "Soymeal/soyoil spreads"
+      ],
+      "note": "Crop balances, export sales and crush margins are central; production estimates and actual shipment data can diverge.",
+      "source": "https://www.cmegroup.com/markets/agriculture/oilseeds/soybean.html",
+      "calendar": "https://www.usda.gov/oce/commodity/wasde"
+    },
+    {
+      "id": "sugar",
+      "label": "Sugar Futures",
+      "symbol": "SB1!",
+      "group": "Agriculture",
+      "q": "sugar futures Brazil ethanol India export policy",
+      "drivers": [
+        "Brazil sugar/ethanol mix",
+        "India export policy",
+        "Weather",
+        "Global stocks",
+        "Oil prices"
+      ],
+      "note": "Sugar prices link agricultural supply to energy economics in key producer regions; policy changes should be confirmed with official notices.",
+      "source": "https://www.ice.com/products/Futures-Options/Softs",
+      "calendar": "https://www.ice.com/products/Futures-Options/Softs"
+    },
+    {
+      "id": "cotton",
+      "label": "Cotton Futures",
+      "symbol": "CT1!",
+      "group": "Agriculture",
+      "q": "cotton futures USDA crop demand textile exports",
+      "drivers": [
+        "USDA crop estimates",
+        "Textile demand",
+        "Weather",
+        "China imports",
+        "Dollar"
+      ],
+      "note": "Cotton combines crop/weather risk with textile demand and inventory; futures price differs from local physical basis.",
+      "source": "https://www.ice.com/products/Futures-Options/Softs",
+      "calendar": "https://www.usda.gov/oce/commodity/wasde"
+    },
+    {
+      "id": "freight",
+      "label": "Global Freight / Baltic Dry",
+      "symbol": "BDI",
+      "group": "Freight & Alternatives",
+      "q": "Baltic Dry Index freight rates shipping",
+      "drivers": [
+        "Dry-bulk demand",
+        "Vessel availability",
+        "Port congestion",
+        "Fuel cost",
+        "Trade flows"
+      ],
+      "note": "Freight indices and freight futures are specialist markets; verify index definition, route coverage, liquidity and contract settlement.",
+      "source": "https://www.balticexchange.com/",
+      "calendar": "https://www.ice.com/products/Futures-Options/Freight"
+    },
+    {
+      "id": "carbon",
+      "label": "EU Carbon Allowances",
+      "symbol": "EUA",
+      "group": "Environmental",
+      "q": "EU carbon allowance price EUA emissions futures",
+      "drivers": [
+        "EU policy/supply",
+        "Auction volumes",
+        "Power generation mix",
+        "Gas/coal spreads",
+        "Industrial output"
+      ],
+      "note": "Carbon allowance prices depend on scheme rules, cap/supply and energy economics. Product eligibility and regional rules are specific.",
+      "source": "https://www.ice.com/products/Futures-Options/Energy/Emissions",
+      "calendar": "https://climate.ec.europa.eu/eu-action/carbon-markets_en"
+    }
+  ]
+}
