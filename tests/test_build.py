@@ -25,7 +25,7 @@ class BuildTests(unittest.TestCase):
         self.assertIn('registrationkey',worker)
         self.assertIn('status:\"rate-limited\"',worker)
         self.assertIn('nextMidnight',worker)
-        self.assertIn('snapshot?.status===\"rate-limited\"&&!forced',worker)
+        self.assertIn('snapshot?.status===\"rate-limited\"&&(!forced||!env.BLS_API_KEY)',worker)
     def test_macro_page_manual_refresh_bypasses_limit_cache(self):
         js=(ROOT/'assets/macro-page.js').read_text()
         self.assertIn('load(force=false)',js)

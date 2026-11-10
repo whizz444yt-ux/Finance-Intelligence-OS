@@ -136,7 +136,7 @@ export default {
    const cacheKey="macro:bls:v1";
    const forced=url.searchParams.get("refresh")==="1";
    let snapshot=env.SNAPSHOTS?await env.SNAPSHOTS.get(cacheKey,"json"):null;
-   if(snapshot?.status==="rate-limited"&&!forced){
+   if(snapshot?.status==="rate-limited"&&(!forced||!env.BLS_API_KEY)){
     const retrySeconds=Math.max(60,Math.ceil((Date.parse(snapshot.retryAt||"")-Date.now())/1000)||3600);
     return json(snapshot,429,{...cors,"Cache-Control":"no-store","Retry-After":String(retrySeconds)});
    }
