@@ -1,6 +1,8 @@
 # Finance Intelligence OS
 
-A consolidated global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a contract-aware Futures Intelligence Desk, 585-resource source directory, macro/COT data adapters, read-only prediction-market discovery, risk tools, news research, ICT learning catalogue and Supabase-backed private workspace foundation.
+A premium global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a contract-aware Futures Intelligence Desk, 585-resource source directory, macro/COT data adapters, read-only prediction-market discovery, risk tools, news research, ICT learning catalogue and Supabase-backed private workspace foundation.
+
+**Current release:** `v1.1.0` · **Release date:** 10 November 2026 · **Status:** Release candidate on `codex/v1-1-premium-release` pending QA and merge.
 
 ## Preserved source work
 
@@ -35,6 +37,14 @@ A consolidated global financial research workspace with the preserved Global Res
 
 The primary navigation is organized into 12 areas: Overview, Futures Markets, Volume & OI, News Intelligence, Macro Calendar, COT & Positioning, Prediction Markets, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, and Sources & Data Health. The older `/markets/`, `/status/`, and `/ict-futures/` routes remain available as supporting catalogues and preserved experiences.
 
+## v1.1.0 — Premium interface and release engineering
+
+- A coordinated visual refresh improves the homepage and generated module pages with clearer typography, spacing, responsive layouts, focus states, restrained motion and more consistent components.
+- The PWA manifest, package metadata, homepage release label and Service Worker cache namespace are aligned to version 1.1.0.
+- A tag-triggered release workflow verifies that a `vX.Y.Z` tag matches `package.json`, runs the build and quality gates, then publishes GitHub release notes.
+- Vercel production deployments are publicly accessible while Preview deployments retain SSO protection.
+- See [release notes](docs/RELEASE-NOTES-v1.1.0.md) and the [release checklist](docs/RELEASE-CHECKLIST.md).
+
 ## Build and local preview
 
 ```bash
@@ -52,14 +62,14 @@ python3 scripts/validate.py
 python3 scripts/audit_internal_links.py
 ```
 
-## Platform state (verified 8 November 2026)
+## Platform state (verified 10 November 2026)
 
 | Platform | Verified state | Remaining setup |
 |---|---|---|
 | GitHub | Public repo `whizz444yt-ux/Finance-Intelligence-OS` on `main`; CI quality workflow is enabled. | Continue using the linked repository and protect production releases with CI status checks. |
-| Vercel | `finance-intelligence-os` project exists; Git-linked production deploys are triggered for commits on `main`; canonical `SITE_URL` is set. | Verify the latest deployment after build completion; add custom domain only when DNS is ready. |
-| Supabase | Active Mumbai (`ap-south-1`) project; 22 public tables with RLS enabled; security advisors returned no lints. | Complete a real browser sign-in test, set allowed Auth redirect URLs, and configure email delivery. |
-| Cloudflare | `finance-intelligence-os-edge` Worker deployed with KV binding and a 30-minute GDELT scheduled job. CORS is restricted to configured production origins. | No Worker secrets are currently bound, so Builder Admin and automated Supabase writes remain disabled. |
+| Vercel | `finance-intelligence-os` project is linked to GitHub; latest verified production deployment is `READY`; both public production aliases return HTTP 200. SSO protection is now limited to Preview deployments. | No custom domain is configured; the public `vercel.app` aliases are the current production URLs. |
+| Supabase | Active healthy Mumbai (`ap-south-1`) project; 22 public tables have RLS enabled; security and health advisors return no findings. | Complete a real end-user signup, email confirmation and sign-in smoke test; verify Auth redirect URLs and email delivery. |
+| Cloudflare | `finance-intelligence-os-edge` Worker is deployed (Worker version 13) with KV binding, a 30-minute Cron and production-origin CORS allow-list. | No Worker secrets are currently bound. Protected Supabase writes and BEA/EIA/FRED credential-backed ingestion remain inactive until secrets are configured. |
 | Builder.io | Allow-listed content proxy code remains available. | A Builder Space public API key and read-only Admin PAT have not been configured. |
 
 ### Deployed Cloudflare API
