@@ -26,7 +26,8 @@ jobs:
           python3 - <<'PY'
           import json, re, pathlib, sys
           version = str(json.loads(pathlib.Path("package.json").read_text())["version"])
-          if not re.fullmatch(r"\\d+\\.\\d+\\.\\d+", version):
+          parts = version.split(".")
+          if len(parts) != 3 or any(not part.isdigit() for part in parts):
               sys.exit("package.json must contain a semantic version")
           checks = {
               "homepage release badge": f"v{version}" in pathlib.Path("index.html").read_text(),
