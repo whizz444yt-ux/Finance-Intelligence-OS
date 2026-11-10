@@ -163,6 +163,7 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn("'/sessions/',",sitemap_urls)
         shell_css=(ROOT/'assets/site-shell.css').read_text()
         self.assertIn('body.os-ict-terminal .topbar{z-index:var(--os-z-topbar)',shell_css)
+        self.assertIn("html = html.replace('<body>', '<body class=\"dark os-ict-terminal\">', 1)",builder)
         self.assertIn('--os-z-sidebar:30',shell_css)
         self.assertIn('--os-z-topbar:20',shell_css)
     def test_futures_module_assets_and_retired_route_redirects(self):

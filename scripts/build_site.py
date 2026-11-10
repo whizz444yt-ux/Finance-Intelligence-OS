@@ -159,8 +159,8 @@ def wrap_standalone_shell(path, current_path, kind):
     if '</head>' in html and css_link not in html:
         html = html.replace('</head>', css_link + '</head>', 1)
     if kind == 'ict':
-        html = html.replace('<body>', '<body class="os-ict-terminal">', 1)
-        html = html.replace('<body class="os-ict-terminal">', '<body class="os-ict-terminal"><div class="os-app-shell os-ict-shell" data-os-shell>' + sidebar + '<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div><div class="os-main-column">', 1)
+        html = html.replace('<body>', '<body class="dark os-ict-terminal">', 1)
+        html = html.replace('<body class="dark os-ict-terminal">', '<body class="dark os-ict-terminal"><div class="os-app-shell os-ict-shell" data-os-shell>' + sidebar + '<div class="os-sidebar-scrim" id="sidebarScrim" hidden></div><div class="os-main-column">', 1)
         html = html.replace("if(localStorage.getItem('ictfos.theme')==='dark')document.body.classList.add('dark');", "if(localStorage.getItem('ictfos.theme')==='light')document.body.classList.remove('dark');else document.body.classList.add('dark');")
         html = html.replace('<div class="wrap topbar-inner">', '<div class="wrap topbar-inner"><button class="os-sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="appSidebar" aria-label="Collapse navigation">☰</button>', 1)
         # Retain the terminal's own theme preference/toggle and its anchor-based secondary navigation.
