@@ -2,7 +2,7 @@
 
 A premium global financial research workspace with the preserved Global Research cockpit, a dedicated ICT Futures terminal, a contract-aware Futures Intelligence Desk, 585-resource source directory, macro/COT data adapters, read-only prediction-market discovery, risk tools, news research, ICT learning catalogue and Supabase-backed private workspace foundation.
 
-**Current release:** `v1.1.0` · **Release date:** 10 November 2026 · **Status:** Release candidate on `codex/v1-1-premium-release` pending QA and merge.
+**Current release:** `v1.1.0` · **Production branch:** `main` · **Deployment:** Live on Vercel · **Release date:** 10 November 2026. The tagged GitHub release remains a separate release-management step.
 
 ## Preserved source work
 
