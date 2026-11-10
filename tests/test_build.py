@@ -98,12 +98,14 @@ class BuildTests(unittest.TestCase):
         js=(ROOT/'assets/news-page.js').read_text()
         self.assertIn("force?'?refresh=1':''",js)
         self.assertIn('Refresh news snapshot',js)
-    def test_prediction_volume_fields_keep_null(self):
+    def test_dormant_event_market_handlers_preserve_unknown_volume_as_null(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('volume24hr:asNumberOrNull(event.volume24hr)',js)
         self.assertIn('volume24h:asNumberOrNull(m.volume_24h_fp??m.volume_24h)',js)
+        # These server handlers remain only as dormant compatibility code; no frontend consumes them.
         desk=(ROOT/'assets/futures-intelligence.js').read_text()
-        self.assertIn('24h unavailable',desk)
+        self.assertNotIn('/api/v1/prediction/polymarket',desk)
+        self.assertNotIn('/api/v1/prediction/kalshi',desk)
 
     def test_cot_fetch_is_scoped_to_selected_contract(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
