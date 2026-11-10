@@ -21,6 +21,22 @@ jobs:
         run: python3 scripts/build_site.py
       - name: Unit tests
         run: python3 -m unittest discover -s tests -v
+      - name: Verify release version consistency
+        run: |
+          python3 - <<'PY'
+          import json, re, pathlib, sys
+          version = str(json.loads(pathlib.Path("package.json").read_text())["version"])
+          if not re.fullmatch(r"\\d+\\.\\d+\\.\\d+", version):
+              sys.exit("package.json must contain a semantic version")
+          checks = {
+              "homepage release badge": f"v{version}" in pathlib.Path("index.html").read_text(),
+              "service-worker cache": f"fios-shell-v{version}" in pathlib.Path("sw.js").read_text(),
+          }
+          for label, passed in checks.items():
+              print(("PASS" if passed else "FAIL") + " " + label)
+          if not all(checks.values()):
+              sys.exit(1)
+          PY
       - name: Structural and security validation
         run: python3 scripts/validate.py
       - name: Internal link and anchor audit
