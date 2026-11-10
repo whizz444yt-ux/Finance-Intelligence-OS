@@ -163,3 +163,25 @@ Consolidate to a canonical registry. Do not hardcode a different tick value in a
 ## 10. Part-specific execution prompt
 
 > Execute Part 3 only. Audit all 15 existing family pages and every unverified contract specification record. Build one canonical contract registry and reconcile all pages, selectors, symbol maps and risk-calculator inputs to it. Verify every published specification from current official CME/ICE material and record effective date/source. If you cannot verify a field, leave it null/UNVERIFIED and explain. Implement expiry-aware mapping, roll metadata and same-expiry SMT guards. Do not claim all 15 are verified merely because a record exists. Add numeric/rounding tests and contract page checks. Stop after contract intelligence and comparison support; do not implement live data adapters here.
+
+## Standalone handoff context — use this file by itself
+
+**Repository:** https://github.com/whizz444yt-ux/Finance-Intelligence-OS  
+**Product:** Futures Intelligence OS — futures-only markets, ICT futures education, futures news/data, positioning, backtesting, risk and trader workspace.  
+**Architecture to inspect and preserve:** static HTML/JavaScript/JSON; Python build at `scripts/build_site.py`; Cloudflare Worker at `cloudflare/src/index.js` with KV; Supabase Postgres/Auth/RLS; Vercel static output `dist/`; GitHub Actions and tests. This is a baseline, not proof each service/credential is currently healthy.
+
+**When this single Part file is the only document supplied:** treat it as the complete request to execute this Part. The user should not need to repeat the repository URL, product purpose or stack. Apply these global rules:
+- Execute only the Part named in this file; do not implement another Part.
+- Inspect current branch, commit, relevant source, dependencies and runtime first. Actual repo/runtime overrides stale documentation.
+- Preserve futures modules, ICT lesson IDs, user data, Auth/RLS, build system and legacy backups. Do not blindly delete/rewrite.
+- Futures-only includes CME/ICE listed futures, including currency futures and CME Bitcoin futures. Exclude unrelated equities, generic spot crypto, generic FX/CFD, prediction markets and other non-futures product areas only after dependency audit.
+- Never invent prices, volume/OI, specs, expiry, schedules, prop rules, provider capability, licences, API limits or strategy performance.
+- Separate real-time, delayed, historical, weekly, cached and unavailable data; display source, frequency and timestamps.
+- Keep secrets out of Git/browser; use platform secret stores. Make DB migrations additive; preserve production data. No destructive action without approval.
+- Edit canonical source/builders, not generated `dist/`. Use a focused feature branch and reviewable PR, not direct destructive pushes to main.
+- Run build, unit tests, structural/security validator and internal-link audit where applicable; add tests and report commands that could not run.
+- Verify changed routes/API states, mobile/accessibility, provider freshness/licensing, or RLS according to the Part.
+- Complete unblocked work; missing credentials/licenses remain explicitly `NOT CONFIGURED`.
+- Never claim a test, deployment or completion without observed evidence.
+
+**Execution:** Read this file fully, inspect the repository and execute only the named Part. Return changed paths, test commands/results, branch/commit/PR, blockers and acceptance checklist. Stop after this Part.
