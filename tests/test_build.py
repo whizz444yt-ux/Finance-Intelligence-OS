@@ -28,6 +28,17 @@ class BuildTests(unittest.TestCase):
         data=(ROOT/'.env.example').read_text()
         self.assertNotRegex(data,r'(sk_live_|sb_secret_|Bearer [A-Za-z0-9])')
 
+    def test_gdelt_refresh_uses_a_single_rate_limited_query(self):
+        js=(ROOT/'cloudflare/src/index.js').read_text()
+        self.assertIn('const GDELT_QUERY = {',js)
+        self.assertIn('queryCount:1',js)
+        self.assertNotIn('GDELT_QUERIES.map',js)
+        self.assertIn('maxrecords","100"',js)
+    def test_bls_provider_retries_transient_failures(self):
+        js=(ROOT/'cloudflare/src/index.js').read_text()
+        self.assertIn('attempt<2',js)
+        self.assertIn('setTimeout(resolve,700)',js)
+        self.assertIn('BLS HTTP ',js)
     def test_worker_manual_news_refresh_is_bounded(self):
         js=(ROOT/'cloudflare/src/index.js').read_text()
         self.assertIn('url.searchParams.get("refresh")==="1"',js)
