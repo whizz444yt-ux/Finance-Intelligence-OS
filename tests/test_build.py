@@ -138,11 +138,12 @@ class BuildTests(unittest.TestCase):
             self.assertIn(token,shell)
         for token in ['prefers-reduced-motion','os-app-shell','os-sidebar','os-contract-spec-card','os-state-chip','os-loading-state','os-error-state','--os-focus']:
             self.assertIn(token,css)
-        for token in ['overviewContract','overviewClockET','overviewClockLocal','overviewTimezone','overviewCalendarTitle','NOT CONNECTED','overviewNewsList','overviewCotSummary','overviewPrivateMetrics','Promise.allSettled','/api/v1/news','/api/v1/cot?report=tff','/auth/v1/user','/rest/v1/watchlists','/rest/v1/journal_trades','America/New_York']:
+        for token in ['overviewContract','overviewClockET','overviewClockLocal','overviewTimezone','overviewNewsList','overviewCotSummary','overviewPrivateMetrics','overviewHealthBadge','Promise.allSettled','/api/v1/news','/api/v1/cot?report=tff','/auth/v1/user','/rest/v1/watchlists','/rest/v1/journal_trades','America/New_York']:
             self.assertIn(token,dashboard)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',dashboard)
         self.assertNotIn('service_role',dashboard.lower())
-        self.assertIn('QUOTE NOT CONNECTED',home)
+        for token in ['overviewCalendarTitle','NOT CONNECTED','QUOTE NOT CONNECTED']:
+            self.assertIn(token,home)
         self.assertIn('calendar is not available',home.lower())
         self.assertIn('wrap_standalone_shell',builder)
         self.assertIn('os-ict-terminal',builder)
