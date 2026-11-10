@@ -11,6 +11,20 @@ python3 -m http.server 8000 --directory dist
 
 Open `http://localhost:8000`. Build without `SITE_URL` sets the output to `noindex`. Set `SITE_URL=https://your-production-host` for production metadata and sitemap generation.
 
+## Application shell and route responsibilities
+
+The active interface is a static futures terminal. Use the current builder and assets rather than migrating frameworks:
+
+- scripts/build_site.py owns the 13-area navigation, shared generated-page shell, sessions, contract-specs, risk, and compatibility redirects.
+- assets/site-shell.css defines the dark-first semantic tokens, responsive sidebar/top bar/drawer, data-state chips, contract cards and dashboard widget styles.
+- assets/site-shell.js controls desktop collapse, mobile drawer, keyboard dismissal and local light/dark theme preference.
+- assets/overview-dashboard.js fetches the public Worker status/news/COT endpoints independently and loads private summary counts only from the authenticated Supabase browser session under existing RLS.
+- ict-futures/index.html keeps its existing session/calendar, learning, chart, risk and journal behavior. Its current New York-time session clock remains the canonical session tool. The sessions route redirects there rather than duplicating that logic.
+- The contract-specs route reads the 15-family imported registry. Imported tick values are labelled unverified; expiry/first-notice/roll fields are labelled not supplied.
+- The risk route reuses the existing risk calculator. Prop-firm rulebooks/fees/payout terms remain not configured; the tools route redirects to the canonical route.
+
+Do not use provider health as a proxy for quote freshness. Each widget presents its own state. The consolidated release calendar, exchange quotes/DOM and automated prop-firm data are not configured in this Part. The service-worker cache namespace is bumped when the app shell changes; API/news/session/user data must not be cached as static shell assets.
+
 ## Cloudflare
 
 1. Create a KV namespace named `finance-os-snapshots`.

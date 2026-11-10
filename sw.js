@@ -1,6 +1,6 @@
 /* Finance Intelligence OS — offline application shell. External feeds are never cached here. */
 const CACHE_PREFIX = 'fios-shell-';
-const CACHE_NAME = CACHE_PREFIX + 'v1.1.0-futures-only';
+const CACHE_NAME = CACHE_PREFIX + 'v1.1.0-futures-only-p1';
 const BASE_URL = new URL('./', self.registration.scope);
 const BASE_PATH = BASE_URL.pathname;
 const CORE_PATHS = [

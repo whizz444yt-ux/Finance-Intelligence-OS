@@ -4,9 +4,12 @@
 
 ```text
 Browser
-  ├─ Futures Command Center homepage and futures-only navigation
-  ├─ Static modules: 15 Futures Families / Futures Desk / Futures News / Macro / COT / Volume & OI
-  └─ ICT Futures terminal: 15 futures families + 76 ICT concepts + 9 guided tutorials
+  ├─ Futures Command Center homepage and shared 13-area app shell
+  │    ├── Grouped desktop sidebar / compact top bar / responsive mobile drawer
+  │    ├── Dark-first CSS tokens / optional light preference / independent widget states
+  │    └── Overview widgets: contract reference, gateway health, news, weekly COT, clocks, private summary
+  ├─ Static modules: 15 Futures Families / Futures Desk / Futures News / Macro / COT / Volume & OI / Contract Specs / Risk
+  └─ ICT Futures terminal: 15 futures families + 76 ICT concepts + 9 guided tutorials + existing DST-aware sessions/calendar
        │
        ├── Vercel static hosting (Git-linked from main)
        ├── Cloudflare Worker API gateway
@@ -20,6 +23,16 @@ Browser
        │      └── provider health / freshness metadata
        └── Supabase Postgres/Auth (public normalized data model + private per-user workspace)
 ```
+
+## User-interface architecture
+
+The Python builder owns the shared shell for generated pages and applies the same sidebar wrapper to the two standalone Futures Desk and ICT terminal apps. The root overview remains a maintained static HTML page and loads its own small dashboard controller. The shell is browser-native HTML/CSS/JavaScript; it does not add a framework or component-library dependency.
+
+The 13 primary areas are Overview, Futures Markets, ICT Academy, Entry Models, Sessions & Calendar, Futures News, Volume & Open Interest, COT & Positioning, Contract Specs & Expiry, Strategy Lab, Risk & Prop Firms, Journal & Watchlists, and Data Health & Sources. Existing routes /markets/, /macro/, /tools/, and /sources/ remain compatible supporting routes or redirects.
+
+Overview widgets request data independently. A failed news or COT request must not blank the session clock or other page modules. The overview shows ET and a selectable browser/profile timezone; the current ICT terminal keeps its own DST-aware ET/IST session clock. No session high/low or range is shown unless an intraday source is connected.
+
+The imported 15-family contract registry currently lacks expiry/first-notice fields and its tick references remain unverified. The contract-specs page marks the source values accordingly and shows missing lifecycle fields as unavailable. The sessions route reuses the ICT Futures terminal sessions anchor; no second event calendar is fabricated. The risk page retains the existing sizing logic and marks prop-firm rulebooks as not configured. Real-time CME/ICE quotes, depth, delayed quotes, consolidated event schedules and prop-firm pricing are not implied by shell state.
 
 ## Runtime and provider responsibilities
 

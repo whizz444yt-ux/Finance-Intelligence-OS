@@ -17,7 +17,7 @@ A futures-only research and education workspace for exchange-listed futures and 
 - `/` — Futures Command Center homepage.
 - `/futures-intelligence/` — Futures Desk with contract context, news, macro observations and CFTC positioning.
 - `/markets/` — exactly 15 futures family profiles; no generic cross-asset catalogue.
-- `/ict-futures/` — ICT Futures terminal, sessions, calendar, charts, risk and journal tools.
+- `/ict-futures/` — ICT Futures terminal, sessions, calendar, charts, risk and journal tools; reused by the `/sessions/` compatibility entry.
 - `/ict-futures/markets/{id}.html` — 15 individual family pages.
 - `/academy/` and `/ict-futures/academy/{concept-id}.html` — searchable Academy and 76 retained concept lessons.
 - `/ict-futures/academy/tutorials/` — nine guided tutorials.
@@ -27,8 +27,12 @@ A futures-only research and education workspace for exchange-listed futures and 
 - `/research/positioning/` — CFTC TFF and Disaggregated weekly futures positioning.
 - `/volume-open-interest/` — CFTC weekly open interest; daily/intraday exchange volume remains explicitly unavailable until a verified licensed feed is connected.
 - `/strategy-lab/` — deterministic signal-driven futures backtesting.
-- `/tools/` and `/account/` — futures risk tools and authenticated private journal/watchlists/notes/alerts/progress.
-- `/sources/` — reviewed futures exchange, regulator, macro, news and ICT education source directory.
+- `/risk/` — futures risk calculator and prop-firm rulebook status. Imported tick values remain unverified and prop-firm records are not configured.
+- `/tools/` — compatibility redirect to `/risk/`.
+- `/account/` — authenticated private journal/watchlists/notes/alerts/progress.
+- `/contract-specs/` — 15-family reference view; imported tick references are marked unverified, and expiry/first-notice fields are not supplied.
+- `/sessions/` — compatibility route to the existing timezone-aware session/calendar tools in `/ict-futures/#sessions`.
+- `/sources/` — compatibility entry to the reviewed futures exchange, regulator, macro, news and ICT education source directory.
 - `/data-health/`, `/status/`, `/docs/` — provider health, system status and operator documentation.
 
 ## Retired public routes
@@ -40,7 +44,18 @@ A futures-only research and education workspace for exchange-listed futures and 
 
 ## Product navigation
 
-Primary navigation includes Overview, Futures Desk, Futures Markets, Volume & OI, News, Macro, COT & Positioning, ICT Academy, Entry Models, Strategy Lab, Risk & Journal, Sources and Data Health.
+The primary app shell has 13 futures-only areas: Overview, Futures Markets, ICT Academy, Entry Models, Sessions & Calendar, Futures News, Volume & Open Interest, COT & Positioning, Contract Specs & Expiry, Strategy Lab, Risk & Prop Firms, Journal & Watchlists, and Data Health & Sources. Desktop uses a collapsible sidebar and compact top bar; mobile uses a drawer. Dark is the default theme and the light theme preference is stored locally in the browser. Legacy routes remain available as supporting entries or redirects.
+
+## Part 1 — Futures Command Center UI and information architecture
+
+- Shared static shell: 13-area grouped sidebar, compact top bar, desktop collapse, mobile drawer, keyboard Escape close and visible focus.
+- Dark-first visual tokens, reusable data-state chips, empty/loading/error treatment, responsive tables and reduced-motion support. Light/dark theme preference is local to the browser; no database setting is required.
+- The overview isolates each widget: contract metadata, gateway and provider status, futures news, weekly COT, ET plus selectable browser/profile timezone clock, quick study links and authenticated private summary.
+- Prices and order-book depth are explicitly not connected. The economic release calendar is not consolidated/connected. Session high/low is not displayed without an underlying intraday feed.
+- /sessions/ reuses the existing ICT terminal section rather than maintaining a second session clock/calendar.
+- /contract-specs/ displays 15 imported family references with UNVERIFIED IMPORTED REFERENCE labels. Expiry/first-notice/roll dates are NOT SUPPLIED by the current registry.
+- /risk/ uses the existing calculator; prop-firm rulebooks, fees, drawdown and payout terms are labelled NOT CONFIGURED until source-backed records exist. /tools/ redirects to /risk/.
+- The Futures Desk and ICT terminal retain their existing page-specific tools inside the shared shell. No React/framework migration was introduced.
 
 ## v1.1.0 — Premium interface and release engineering
 
