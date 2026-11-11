@@ -1,6 +1,6 @@
 # Finance Intelligence OS
 
-A futures-only research and education workspace for exchange-listed futures and ICT Futures. It includes a 15-family futures catalogue, the preserved 76-concept ICT Academy and nine guided tutorials, futures news and official macro adapters, CFTC positioning, deterministic backtesting, risk tools and a Supabase-backed private workspace.
+A futures-only research and education workspace for exchange-listed futures and ICT Futures. It includes a 15-family futures catalogue, the 82-lesson ICT Futures Academy (preserving all 76 original concept IDs), nine guided tutorials and ten prerequisite-based learning tracks, futures news and official macro adapters, CFTC positioning, deterministic backtesting, risk tools and a Supabase-backed private workspace.
 
 **Current release:** `v1.1.0` · **Production branch:** `main` · **Deployment:** Live on Vercel · **Release date:** 10 November 2026. The tagged GitHub release remains a separate release-management step.
 
@@ -8,7 +8,7 @@ A futures-only research and education workspace for exchange-listed futures and 
 
 - The active homepage and primary navigation are Futures Intelligence OS, focused on listed futures markets and ICT Futures education.
 - The active futures universe is `ict-futures/data/market-universe.json` with 15 families, including listed currency futures and CME Bitcoin/MBT futures.
-- ICT Futures retains 76 concept IDs and nine guided tutorials at their existing lesson/tutorial routes.
+- ICT Futures retains all 76 original concept IDs and nine tutorial routes, with six added futures-foundation lessons (82 lessons total) and ten structured learning tracks.
 - The active `resources.json` is a reviewed futures-only allowlist. The former 585-entry general catalogue, 73-record generic instrument universe, previous homepage and unfiltered source lists are preserved unchanged under `legacy/global-research/`.
 - Supabase schema, Auth, RLS and existing private user data are not altered by the scope cleanup. Existing local-first import paths remain available.
 
@@ -19,7 +19,7 @@ A futures-only research and education workspace for exchange-listed futures and 
 - `/markets/` — exactly 15 futures family profiles; no generic cross-asset catalogue.
 - `/ict-futures/` — ICT Futures terminal, sessions, calendar, charts, risk and journal tools; reused by the `/sessions/` compatibility entry.
 - `/ict-futures/markets/{id}.html` — 15 individual family pages.
-- `/academy/` and `/ict-futures/academy/{concept-id}.html` — searchable Academy and 76 retained concept lessons.
+- `/academy/` and `/ict-futures/academy/{concept-id}.html` — searchable 82-lesson Academy; all 76 original concept IDs/routes are retained, plus six futures-foundation lessons. `/academy/search-index.json` exposes the filterable lesson metadata.
 - `/ict-futures/academy/tutorials/` — nine guided tutorials.
 - `/entry-models/` — eight educational model concepts, without unsupported performance rankings.
 - `/news/` — futures-focused GDELT discovery snapshots.
@@ -64,6 +64,15 @@ The primary app shell has 13 futures-only areas: Overview, Futures Markets, ICT 
 - A tag-triggered release workflow verifies that a `vX.Y.Z` tag matches `package.json`, runs the build and quality gates, then publishes GitHub release notes.
 - Vercel production deployments are publicly accessible while Preview deployments retain SSO protection.
 - See [release notes](docs/RELEASE-NOTES-v1.1.0.md) and the [release checklist](docs/RELEASE-CHECKLIST.md).
+
+## Part 2 — ICT Futures Academy
+
+- The canonical source remains `ict-futures/data/ict-academy.json`; existing 76 lesson IDs/routes are preserved and six futures-foundation lessons extend the library to 82.
+- Ten prerequisite-based tracks cover listed-futures mechanics, market structure, liquidity, imbalances, PD Arrays, time/narrative, entry models, cross-market SMT, contract roll/risk, and replay/journaling/evaluation.
+- The nine existing tutorials remain reachable and are assigned to the replay/journaling track. Search facets include aliases, instrument family, timeframe, session, bias direction and evidence label.
+- Lesson pages separate source evidence from performance evidence, use clearly marked hypothetical examples, and avoid fake historical candles or unverified live specifications. `TESTED` is reserved for a reproducible test artifact.
+- Lesson progress uses the existing `lesson_progress` table and local storage keys. On content-version updates, previous completion and exercise records are kept in `legacyCompletion`; learners must complete the current version without erasing the prior record.
+- The PDF is a secondary synthesis and discloses gaps in its original source review. Current expiry, tick, margin, session and feed values must be rechecked against primary sources.
 
 ## Build and local preview
 

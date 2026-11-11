@@ -18,7 +18,7 @@ try:
     archived_markets=readj(Path('legacy/global-research/data/market-universe.json'))
     ok('Full Global Research source baselines remain archived',len(archived_resources.get('resources',[]))==585 and len(archived_markets.get('markets',[]))>=70)
     markets=readj(Path('ict-futures/data/market-universe.json')); ok('ICT Futures retains 15 contract families',len(markets.get('markets',[]))==15,f"found {len(markets.get('markets',[]))}")
-    academy=readj(Path('ict-futures/data/ict-academy.json')); ok('ICT Academy retains 76 concepts and nine tutorials',len(academy.get('concepts',[]))==76 and len(academy.get('learningProgram',{}).get('tutorials',[]))==9,f"lessons={len(academy.get('concepts',[]))}, tutorials={len(academy.get('learningProgram',{}).get('tutorials',[]))}")
+    academy=readj(Path('ict-futures/data/ict-academy.json')); ok('Part 2 ICT Academy preserves 76 IDs, expands to 82 lessons and 10 tracks, and keeps nine tutorials',len(academy.get('concepts',[]))==82 and len(academy.get('tracks',[]))==10 and len(academy.get('learningProgram',{}).get('tutorials',[]))==9 and len(academy.get('curriculum',{}).get('preservedConceptIds',[]))==76 and set(academy.get('curriculum',{}).get('preservedConceptIds',[])).issubset({c.get('id') for c in academy.get('concepts',[])}),f"lessons={len(academy.get('concepts',[]))}, tracks={len(academy.get('tracks',[]))}, tutorials={len(academy.get('learningProgram',{}).get('tutorials',[]))}")
 except Exception as e: errors.append(f'dataset parsing: {e}')
 
 for p in ['cloudflare/src/index.js','cloudflare/src/economic-providers.js','assets/academy-learning.js','assets/academy-catalog.js','assets/site-shell.js','assets/overview-dashboard.js','assets/runtime-config.js','assets/research-directory.js','assets/academy-search.js','assets/academy-learning.js','assets/academy-catalog.js','assets/news-page.js','assets/risk-calculator.js','assets/account.js','assets/macro-page.js','assets/economic-data.js','assets/cot-page.js','assets/futures-intelligence.js','assets/volume-open-interest.js','assets/data-health.js','assets/strategy-lab.js','assets/strategy-backtest-engine.mjs']:
@@ -73,14 +73,24 @@ ok('P2 economic dashboard loads all five providers',all(('id:"'+x+'"') in (ROOT/
 academy_data=readj(Path('ict-futures/data/ict-academy.json'))
 academy_concepts=academy_data.get('concepts',[])
 learning_program=academy_data.get('learningProgram',{})
-ok('P3 enriches all 76 lessons with objectives, walkthrough, example, exercise and quiz',
-   len(academy_concepts)==76 and all(len(c.get('learning',{}).get('learningObjectives',[]))>=3 and len(c.get('learning',{}).get('guidedWalkthrough',[]))>=3 and c.get('learning',{}).get('workedExample',{}).get('body') and c.get('learning',{}).get('practicalExercise',{}).get('task') and len(c.get('learning',{}).get('knowledgeCheck',{}).get('options',[]))==3 for c in academy_concepts))
-ok('P3 supplies nine guided tutorials with tasks and review criteria',
-   len(learning_program.get('tutorials',[]))==9 and all(len(t.get('steps',[]))>=4 and t.get('deliverable') and len(t.get('review',[]))>=3 for t in learning_program.get('tutorials',[])))
+ok('Part 2 enriches all 82 lessons with objectives, walkthrough, hypothetical example, exercise and quiz',
+   len(academy_concepts)==82 and all(len(c.get('learning',{}).get('learningObjectives',[]))>=3 and len(c.get('learning',{}).get('guidedWalkthrough',[]))>=3 and c.get('learning',{}).get('workedExample',{}).get('body') and c.get('learning',{}).get('practicalExercise',{}).get('task') and len(c.get('learning',{}).get('knowledgeCheck',{}).get('options',[]))==3 and len(c.get('curriculum',{}).get('knowledgeChecks',[]))>=3 for c in academy_concepts))
+tracks=academy_data.get('tracks',[])
+preserved_ids=academy_data.get('curriculum',{}).get('preservedConceptIds',[])
+resource_ids={r.get('id') for r in academy_data.get('curriculum',{}).get('resourceRegistry',[])}
+track_lesson_ids=[lesson_id for track in tracks for lesson_id in track.get('sequence',[])]
+ok('Part 2 maps every lesson once into the nine concept tracks and keeps a tutorial track',len(tracks)==10 and len(track_lesson_ids)==82 and len(set(track_lesson_ids))==82 and set(track_lesson_ids)=={c.get('id') for c in academy_concepts} and bool(tracks[-1].get('tutorialIds')))
+ok('Part 2 prerequisite graph and source registry references resolve',all(p in {c.get('id') for c in academy_concepts} for c in academy_concepts for p in c.get('curriculum',{}).get('prerequisiteIds',[])) and all(s in resource_ids for c in academy_concepts for s in c.get('curriculum',{}).get('sourceRefs',[])))
+ok('Part 2 playbook traceability covers all 39 source pages',len(academy_data.get('curriculum',{}).get('sourceDocument',{}).get('reviewedPages',[]))==39 and len(academy_data.get('curriculum',{}).get('playbookTraceability',[]))>=8)
+ok('Part 2 source evidence never promotes a model to TESTED without a test artifact',all(c.get('curriculum',{}).get('performanceEvidenceLabel')!='TESTED' for c in academy_concepts) and 'reproducible linked test artifact' in academy_data.get('curriculum',{}).get('performancePolicy',''))
+ok('Part 2 preserves nine guided tutorials with tasks, reviews and curriculum track links',
+   len(learning_program.get('tutorials',[]))==9 and all(len(t.get('steps',[]))>=4 and t.get('deliverable') and len(t.get('review',[]))>=3 and t.get('trackId') in {x.get('id') for x in tracks} for t in learning_program.get('tutorials',[])))
 verified_video_urls=[v.get('url') for v in academy_data.get('featuredVideos',[]) if v.get('verifiedOfficial')]
 ok('P3 verified video references are drawn only from marked official records',
    all(ref.get('url') in verified_video_urls for c in academy_concepts for ref in c.get('learning',{}).get('references',{}).get('officialVideos',[])))
-ok('P3 progress sync uses authenticated user and existing lesson_progress table',
+ok('Part 2 progress sync uses authenticated user, current content version and preserves legacy records',
+   'migrateContentVersion' in (ROOT/'assets/academy-learning.js').read_text() and 'legacyCompletion' in (ROOT/'assets/academy-learning.js').read_text() and 'part-2-v2' in (ROOT/'assets/academy-learning.js').read_text() and 'mergeRemote(root,slug,checks,quizData)' in (ROOT/'assets/academy-learning.js').read_text() and 'checks.length' not in (ROOT/'assets/academy-learning.js').read_text().split('async function mergeRemote')[1].split('function initRoot')[0])
+ok('Part 2 progress sync uses authenticated user and existing lesson_progress table',
    'finance-os-supabase-session-v1' in (ROOT/'assets/academy-learning.js').read_text() and '/rest/v1/lesson_progress' in (ROOT/'assets/academy-learning.js').read_text() and 'on_conflict=user_id,lesson_slug' in (ROOT/'assets/academy-learning.js').read_text() and 'progress_data' in (ROOT/'assets/academy-learning.js').read_text() and 'lesson_version' in (ROOT/'assets/academy-learning.js').read_text())
 ok('P3 progress client exposes no service-role credential',
    'service_role' not in (ROOT/'assets/academy-learning.js').read_text().lower() and 'SUPABASE_SERVICE_ROLE_KEY' not in (ROOT/'assets/academy-learning.js').read_text())
@@ -153,7 +163,7 @@ if dist.exists():
     ok('Generated resource directory contains only reviewed futures sources',active_resources.get('scope')=='futures-only' and len(active_resources.get('resources',[]))>=40)
     ok('Retired event markets and legacy data are not active assets',not (dist/'assets/prediction-markets.js').exists() and not (dist/'data/market-universe.json').exists())
     ok('Legacy archive content is not copied into public output',not (dist/'legacy/previous-markdown').exists() and not (dist/'legacy/global-research').exists())
-    ok('Legacy ICT SEO route set preserved',len(list((dist/'ict-futures/academy').glob('*.html')))==76 and len(list((dist/'ict-futures/markets').glob('*.html')))==15)
+    ok('Legacy ICT SEO routes remain and six new futures-foundation lessons are added',len(list((dist/'ict-futures/academy').glob('*.html')))==82 and len(list((dist/'ict-futures/markets').glob('*.html')))==15 and all((dist/'ict-futures/academy'/f'{lesson_id}.html').exists() for lesson_id in ['listed-futures-market-basics','contract-specs-and-tick-math','futures-expiry-first-notice-and-roll','continuous-contract-mapping','futures-margin-and-position-risk','futures-volume-open-interest']))
     bad=[]
     for p in html:
         if 'whizz444yt-ux.github.io/new.w' in p.read_text(errors='ignore'): bad.append(str(p.relative_to(dist)))
@@ -166,7 +176,9 @@ if dist.exists():
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['academy-learning.css','academy-learning.js','academy-catalog.js']))
     p3_lessons=list((dist/'ict-futures/academy').glob('*.html'))
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
-    ok('P3 builds 76 enhanced standalone lessons',len(p3_lessons)==76 and all('KNOWLEDGE CHECK' in p.read_text(errors='ignore') and 'PRACTICAL EXERCISE' in p.read_text(errors='ignore') for p in p3_lessons))
+    ok('Part 2 builds 82 full standalone lessons with multi-question practice and source provenance',len(p3_lessons)==82 and all('IDENTIFICATION RULES' in p.read_text(errors='ignore') and 'HYPOTHETICAL EXAMPLES' in p.read_text(errors='ignore') and 'SOURCES AND VIDEO CLASSIFICATION' in p.read_text(errors='ignore') and 'PRACTICE TASK' in p.read_text(errors='ignore') and 'SOURCE NOTES AND EDITORIAL REVIEW' in p.read_text(errors='ignore') for p in p3_lessons))
+    search_index=readj(Path('dist/academy/search-index.json')) if (dist/'academy/search-index.json').exists() else {}
+    ok('Part 2 builds an 82-record Academy search index with required facets',search_index.get('version')==2 and search_index.get('count')==82 and len(search_index.get('lessons',[]))==82 and all(x.get('aliases') and x.get('instrumentFamilies') and x.get('timeframes') and x.get('sessions') and x.get('sourceEvidenceLabel') for x in search_index.get('lessons',[])))
     ok('P3 builds nine guided tutorials plus their index',len(p3_tutorials)==10 and (dist/'ict-futures/academy/tutorials/index.html').exists())
     ok('P4 Strategy Lab assets match source',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['strategy-lab.css','strategy-lab.js','strategy-backtest-engine.mjs']))
