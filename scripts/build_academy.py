@@ -56,6 +56,17 @@ def _lesson_section(number, eyebrow, title, content, section_id=""):
     ident = ' id="' + escape(section_id, quote=True) + '"' if section_id else ""
     return f'<section class="lesson-section"{ident}><div class="section-head"><span>{number:02d}</span><div><p class="eyebrow">{escape(eyebrow)}</p><h2>{escape(title)}</h2></div></div>{content}</section>'
 
+def _walkthrough_html(items):
+    values = []
+    for item in items or []:
+        if isinstance(item, dict):
+            title = str(item.get("title") or item.get("step") or "Study step")
+            detail = str(item.get("instruction") or item.get("description") or "")
+            values.append('<li><b>' + escape(title) + '</b><p>' + escape(detail) + '</p></li>')
+        else:
+            values.append('<li>' + escape(str(item)) + '</li>')
+    return '<ol class="walkthrough">' + ''.join(values) + '</ol>' if values else '<p class="academy-unmapped">No structured walkthrough is supplied.</p>'
+
 def render_lesson(concept, all_concepts, site_url="", tracks=None, resource_registry=None):
     learning = concept.get("learning") or {}
     spec = concept.get("lessonSpec") or {}
@@ -70,11 +81,6 @@ def render_lesson(concept, all_concepts, site_url="", tracks=None, resource_regi
             related_html.append('<a class="chip" href="' + escape(str(item.get("id", "")), quote=True) + '.html">' + escape(name) + ' →</a>')
         else:
             related_html.append('<span class="chip">' + escape(name) + '</span>')
-    step_html = "".join(
-        f'<li><b>{escape(str(step.get("title") or "Study step"))}</b><p>{escape(str(step.get("instruction") or ""))}</p></li>'
-        for step in learning.get("guidedWalkthrough") or []
-    )
-    objectives = _plain_list(learning.get("learningObjectives"), "Learning objectives are not yet mapped for this concept.")
     example = learning.get("workedExample") or {}
     exercise = learning.get("practicalExercise") or {}
     checks = exercise.get("checklist") or []
@@ -117,7 +123,7 @@ def render_lesson(concept, all_concepts, site_url="", tracks=None, resource_regi
     session_context = spec.get("sessionContext") or "Not standardized. Verify the contract's official schedule, holiday calendar and maintenance break."
     timeframe_role = spec.get("timeframeRole") or "Not standardized. Declare HTF context, setup and execution roles before replay."
     preconditions = spec.get("preconditions") or learning.get("prerequisites") or "Not supplied."
-    setup_html = _plain_list(spec.get("setupSequence") or learning.get("guidedWalkthrough"), "No reproducible setup sequence is supplied.")
+    setup_html = _walkthrough_html(spec.get("setupSequence") or learning.get("guidedWalkthrough"))
     invalidation_html = _plain_list(spec.get("invalidation"), "No concept-specific invalidation rule is supplied. Define it before testing; do not invent one after the outcome.")
     no_trade_html = _plain_list(spec.get("noTradeConditions"), "No concept-specific no-trade conditions are supplied. Record ambiguous and disqualified cases during replay.")
     related_block = '<div class="related-lessons">' + ("".join(related_html) or '<span class="academy-unmapped">No related concepts were mapped.</span>') + '</div>'
