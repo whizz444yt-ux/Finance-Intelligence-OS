@@ -4,6 +4,7 @@
  const search=document.getElementById("academySearch");
  const category=document.getElementById("academyCategory");
  const level=document.getElementById("academyLevel");
+ const evidence=document.getElementById("academyEvidence");
  const count=document.getElementById("academyCount");
  const progress=document.querySelector("[data-academy-global-progress]");
  const cards=[...root.querySelectorAll("[data-academy-card]")];
@@ -19,12 +20,12 @@
   const q=(search?.value||"").trim().toLowerCase(),cat=category?.value||"",lvl=level?.value||"";
   let shown=0;
   cards.forEach(card=>{
-   const visible=(!q||card.dataset.search.includes(q))&&(!cat||card.dataset.category===cat)&&(!lvl||card.dataset.level===lvl);
+   const visible=(!q||card.dataset.search.includes(q))&&(!cat||card.dataset.category===cat)&&(!lvl||card.dataset.level===lvl)&&(!evidence||!evidence.value||card.dataset.evidence===evidence.value);
    card.hidden=!visible;if(visible)shown++;
   });
   if(count)count.textContent=shown+" of "+cards.length+" lessons";
  }
- [search,category,level].forEach(el=>el?.addEventListener(el===search?"input":"change",filter));
+ [search,category,level,evidence].forEach(el=>el?.addEventListener(el===search?"input":"change",filter));
  window.addEventListener("storage",updateProgress);
  window.addEventListener("academy:progress-updated",updateProgress);
  filter();updateProgress();
