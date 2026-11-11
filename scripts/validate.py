@@ -85,6 +85,29 @@ ok('P3 progress sync uses authenticated user and existing lesson_progress table'
 ok('P3 progress client exposes no service-role credential',
    'service_role' not in (ROOT/'assets/academy-learning.js').read_text().lower() and 'SUPABASE_SERVICE_ROLE_KEY' not in (ROOT/'assets/academy-learning.js').read_text())
 
+academy_ids=[x.get('id') for x in academy_concepts]
+academy_tracks=academy_data.get('tracks',[])
+track_ids={t.get('id') for t in academy_tracks}
+core_coverage={lesson_id for t in academy_tracks[:8] for lesson_id in (t.get('lessonIds') or [])}
+registry=academy_data.get('resourceRegistry',[])
+registry_urls=[x.get('url') for x in registry]
+registry_by_url={x.get('url'):x for x in registry}
+ok('Part 2 defines ten prerequisite-aware Academy tracks',
+   len(academy_tracks)==10 and all(t.get('id') and t.get('prerequisites') is not None and t.get('completionCriteria') and t.get('estimatedEffort') and t.get('effortEstimateType')=='EDITORIAL ESTIMATE' for t in academy_tracks))
+ok('Part 2 maps all 76 stable lessons into the eight core learning tracks',
+   len(academy_ids)==76 and len(set(academy_ids))==76 and set(academy_ids).issubset(core_coverage))
+ok('Part 2 lesson metadata preserves stable ids and valid track references',
+   all(c.get('lessonSpec') and c.get('lessonSpec',{}).get('primaryTrackId') in track_ids and c.get('lessonSpec',{}).get('trackIds') and set(c.get('lessonSpec',{}).get('trackIds')).issubset(track_ids) for c in academy_concepts))
+ok('Part 2 source registry has unique HTTPS URLs and provenance fields',
+   bool(registry) and len(registry_urls)==len(set(registry_urls)) and all(str(x.get('url','')).startswith('https://') and x.get('publisher') and x.get('classification') and x.get('verificationStatus') and x.get('linkHealth') is not None and x.get('conceptIds') is not None for x in registry))
+verified_resources={x.get('url') for x in registry if x.get('classification')=='original_ict_upload' and x.get('verificationStatus')=='verified'}
+ok('Part 2 official lesson video labels only reference verified registry records',
+   all(ref.get('url') in verified_resources for c in academy_concepts for ref in c.get('learning',{}).get('references',{}).get('officialVideos',[])) and all(v.get('verifiedOfficial')==(v.get('url') in verified_resources) for v in academy_data.get('featuredVideos',[])))
+ok('Part 2 playbook traceability references known concept ids',
+   all(set(g.get('conceptIds',[])).issubset(set(academy_ids)) for g in academy_data.get('playbookTraceability',[])))
+ok('Part 2 remote progress merge scopes completion checks to the current lesson',
+   'const checks=[...root.querySelectorAll("[data-exercise-check]")],quiz=root.querySelector("[data-academy-quiz]")' in (ROOT/'assets/academy-learning.js').read_text() and 'remoteDone.map(Number)' in (ROOT/'assets/academy-learning.js').read_text())
+
 
 ok('P2 exposes bounded read-only Supabase history API','url.pathname==="/api/v1/economic/history"' in worker and 'query.set("and"' in worker and 'Math.min(5000' in worker)
 ok('P2 records provider skips and fetch failures when persistence is configured','recordIngestionRun(env,provider,"skipped"' in worker and 'recordIngestionRun(env,provider,"failed"' in worker)
@@ -168,6 +191,13 @@ if dist.exists():
     p3_tutorials=list((dist/'ict-futures/academy/tutorials').glob('*.html'))
     ok('P3 builds 76 enhanced standalone lessons',len(p3_lessons)==76 and all('KNOWLEDGE CHECK' in p.read_text(errors='ignore') and 'PRACTICAL EXERCISE' in p.read_text(errors='ignore') for p in p3_lessons))
     ok('P3 builds nine guided tutorials plus their index',len(p3_tutorials)==10 and (dist/'ict-futures/academy/tutorials/index.html').exists())
+    section_titles=['CONCEPT IDENTITY','DEFINITION','INTENDED USE','FUTURES CONTEXT','PREREQUISITES & TIMEFRAME','IDENTIFICATION RULES','HYPOTHETICAL EXAMPLES','VISUAL LEARNING','PRECONDITIONS','ENTRY ASSUMPTIONS','RISK LOGIC','TARGET MANAGEMENT','INVALIDATION','NO-TRADE CONDITIONS','DEFINITION VARIANTS','RELATED CONCEPTS','SOURCE REGISTRY','PRACTICE','KNOWLEDGE CHECK','PROVENANCE & VERSIONING']
+    def ordered_sections(content):
+        positions=[content.find('>'+title+'</p>') for title in section_titles]
+        return all(p>=0 for p in positions) and positions==sorted(positions) and content.count('class="section-head"')==20
+    ok('Part 2 renders all 20 ordered lesson specification sections',len(p3_lessons)==76 and all(ordered_sections(p.read_text(errors='ignore')) for p in p3_lessons))
+    dashboard=(dist/'academy/index.html').read_text(errors='ignore') if (dist/'academy/index.html').exists() else ''
+    ok('Part 2 Academy dashboard renders ten tracks, nine tutorials and evidence filters','Ten learning tracks' in dashboard or 'ten-track' in dashboard.lower())
     ok('P4 Strategy Lab assets match source',
         all((dist/'assets'/name).exists() and (dist/'assets'/name).read_bytes()==(ROOT/'assets'/name).read_bytes() for name in ['strategy-lab.css','strategy-lab.js','strategy-backtest-engine.mjs']))
     p4_page=(dist/'strategy-lab/index.html').read_text(errors='ignore') if (dist/'strategy-lab/index.html').exists() else ''
