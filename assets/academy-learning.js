@@ -27,7 +27,7 @@
  }
  async function syncWrite(slug,record,s,uid){
   if(!uid||!record)return;
-  const payload={user_id:uid,lesson_slug:slug,status:record.status||"in-progress",score:record.score??null,completed_at:record.completedAt||null,progress_data:{exerciseDone:record.exerciseDone||[],quizAnswered:typeof record.score==="number",lessonVersion:"p3-v1"},lesson_version:"p3-v1",updated_at:new Date().toISOString()};
+  const payload={user_id:uid,lesson_slug:slug,status:record.status||"in-progress",score:record.score??null,completed_at:record.completedAt||null,progress_data:{exerciseDone:record.exerciseDone||[],quizAnswered:typeof record.score==="number",lessonVersion:record.lessonVersion||"part2-v2"},lesson_version:record.lessonVersion||"part2-v2",updated_at:new Date().toISOString()};
   const r=await fetch(apiBase+"/rest/v1/lesson_progress?on_conflict=user_id,lesson_slug",{
    method:"POST",headers:headers(s,{"Content-Type":"application/json","Prefer":"resolution=merge-duplicates,return=minimal"}),body:JSON.stringify(payload)
   });
@@ -50,15 +50,25 @@
   const s=session();if(!apiBase||!publishable||!s?.access_token)return;
   try{
    const uid=await userId(s);if(!uid)return;
+   const checks=[...root.querySelectorAll("[data-exercise-check]")],quiz=root.querySelector("[data-academy-quiz]");
    const q="?select=lesson_slug,status,score,completed_at,updated_at,progress_data,lesson_version&lesson_slug=eq."+encodeURIComponent(slug)+"&limit=1";
    const r=await fetch(apiBase+"/rest/v1/lesson_progress"+q,{headers:headers(s)});if(!r.ok)return;
    const rows=await r.json(),remote=rows[0];if(!remote)return;
    const map=progressMap(),local=map[slug];
    const rt=Date.parse(remote.updated_at||remote.completed_at||"")||0,lt=Date.parse(local?.updatedAt||local?.completedAt||"")||0;
+   const rawDone=Array.isArray(remote.progress_data?.exerciseDone)?remote.progress_data.exerciseDone:[];
+   const remoteDone=[...new Set(rawDone.map(Number).filter(i=>Number.isInteger(i)&&i>=0&&i<checks.length))];
+   const allRemoteSteps=checks.every((_,i)=>remoteDone.includes(i));
+   const requirementsMet=allRemoteSteps&&(!quiz||Number(remote.score)>=100);
    if(!local||rt>lt){
-    const remoteDone=remote.progress_data?.exerciseDone||[],requirementsMet=remoteDone.length===checks.length&&(!quiz||Number(remote.score)>=100);
-    map[slug]={status:remote.status==="completed"&&!requirementsMet?"in-progress":remote.status,score:remote.score,completedAt:remote.completed_at,updatedAt:remote.updated_at,exerciseDone:local?.exerciseDone||remoteDone,lessonVersion:remote.lesson_version||"legacy"};write(PROGRESS_KEY,map);
-    if(!slug.startsWith("tutorial-")){let done=legacyDone().filter(x=>x!==slug);if(remote.status==="completed")done.push(slug);write(LEGACY_KEY,done);}
+    const safeStatus=remote.status==="completed"&&!requirementsMet?"in-progress":remote.status;
+    map[slug]={status:safeStatus,score:remote.score,completedAt:safeStatus==="completed"?remote.completed_at:null,updatedAt:remote.updated_at,exerciseDone:remoteDone,lessonVersion:remote.lesson_version||"legacy"};
+    write(PROGRESS_KEY,map);
+    if(!slug.startsWith("tutorial-")){
+     let done=legacyDone().filter(x=>x!==slug);
+     if(safeStatus==="completed")done.push(slug);
+     write(LEGACY_KEY,done);
+    }
    }else if(local){await syncWrite(slug,local,s,uid);}
   }catch{const el=$(root,"[data-progress-sync]");if(el)el.textContent="Local progress active · cloud sync needs attention.";}
  }
@@ -77,7 +87,7 @@
   function update(){
    const done=checks.map((x,i)=>x.checked?i:null).filter(x=>x!==null),all=checks.length?done.length===checks.length:true;
    const old=progressMap()[slug]||{},status=old.status==="completed"&&all&&(!quiz||quizCorrect)?"completed":done.length||quizCorrect?"in-progress":"not-started";
-   const record={...old,status,score:score??old.score??null,completedAt:status==="completed"?(old.completedAt||new Date().toISOString()):null,exerciseDone:done,updatedAt:new Date().toISOString()};
+   const record={...old,lessonVersion:"part2-v2",status,score:score??old.score??null,completedAt:status==="completed"?(old.completedAt||new Date().toISOString()):null,exerciseDone:done,updatedAt:new Date().toISOString()};
    setRecord(slug,record);paint(root,record,done.length,checks.length);
    if(markBtn)markBtn.disabled=!(all&&(!quiz||quizCorrect));
    if(message&&markBtn)message.textContent=markBtn.disabled?"Complete all practice checks and answer the question correctly to mark the lesson complete.":"All requirements met. You can now mark this lesson complete.";
@@ -93,7 +103,7 @@
   if(markBtn)markBtn.addEventListener("click",()=>{
    if(markBtn.disabled)return;
    const old=progressMap()[slug]||{},status=old.status==="completed"?"in-progress":"completed";
-   const record={...old,status,score:quiz?score:old.score??null,completedAt:status==="completed"?new Date().toISOString():null,exerciseDone:checks.map((x,i)=>x.checked?i:null).filter(x=>x!==null),updatedAt:new Date().toISOString()};
+   const record={...old,lessonVersion:"part2-v2",status,score:quiz?score:old.score??null,completedAt:status==="completed"?new Date().toISOString():null,exerciseDone:checks.map((x,i)=>x.checked?i:null).filter(x=>x!==null),updatedAt:new Date().toISOString()};
    setRecord(slug,record);markBtn.textContent=status==="completed"?"Mark incomplete":"Complete lesson after exercise + correct answer";
    if(message)message.textContent=status==="completed"?"Lesson completed. Your progress has been saved.":"Lesson reopened for review.";
    paint(root,record,record.exerciseDone.length,checks.length);syncRecord(slug,record,syncEl);
