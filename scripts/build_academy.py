@@ -373,7 +373,9 @@ def validate_academy(academy):
             errors.append(f"unknown performance evidence label for {lesson_id}")
         if c.get("performanceEvidenceLabel") == "TESTED" and not c.get("testArtifact"):
             errors.append(f"TESTED lesson lacks reproducible test artifact: {lesson_id}")
-        required_metadata = ("aliases", "purpose", "instrumentFamilies", "timeframes", "sessions", "prerequisiteIds", "identificationRules", "preconditions", "setupSequence", "invalidation", "noTradeConditions", "definitionVariants", "sourceRefs", "bullishExample", "bearishExample", "chartIllustration", "entryOptions", "stopLogic", "targets", "practice", "knowledgeChecks", "contentVersion")
+        required_metadata = ("aliases", "purpose", "instrumentFamilies", "timeframes", "sessions", "identificationRules", "preconditions", "setupSequence", "invalidation", "noTradeConditions", "definitionVariants", "sourceRefs", "bullishExample", "bearishExample", "chartIllustration", "entryOptions", "stopLogic", "targets", "practice", "knowledgeChecks", "contentVersion")
+        if not isinstance(c.get("prerequisiteIds"), list):
+            errors.append(f"prerequisite list missing for {lesson_id}")
         if any(not c.get(field) for field in required_metadata):
             errors.append(f"full lesson metadata missing for {lesson_id}")
         chart = c.get("chartIllustration") or {}
