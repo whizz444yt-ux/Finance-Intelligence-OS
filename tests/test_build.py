@@ -261,40 +261,89 @@ class BuildTests(unittest.TestCase):
 
 
 
-    def test_p3_all_76_concepts_have_full_learning_content(self):
+    def test_part2_preserves_76_concept_ids_and_builds_82_full_lessons(self):
         data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
         lessons=data['concepts']
-        self.assertEqual(len(lessons),76)
+        self.assertEqual(len(lessons),82)
+        self.assertEqual(len(data['curriculum']['preservedConceptIds']),76)
+        self.assertTrue(set(data['curriculum']['preservedConceptIds']).issubset({x['id'] for x in lessons}))
+        self.assertEqual(len({x['id'] for x in lessons}),82)
         for lesson in lessons:
             content=lesson['learning']
+            curriculum=lesson['curriculum']
             self.assertGreaterEqual(len(content['learningObjectives']),3)
             self.assertGreaterEqual(len(content['guidedWalkthrough']),3)
             self.assertTrue(content['workedExample']['body'])
             self.assertTrue(content['practicalExercise']['task'])
             self.assertTrue(content['practicalExercise']['deliverable'])
-            self.assertEqual(len(content['knowledgeCheck']['options']),3)
-            self.assertIn(content['knowledgeCheck']['correctIndex'],[0,1,2])
-            self.assertEqual(content['knowledgeCheck']['correctAnswer'],content['knowledgeCheck']['options'][content['knowledgeCheck']['correctIndex']])
-    def test_p3_nine_guided_tutorials_have_workflows_and_reviews(self):
+            self.assertGreaterEqual(len(curriculum['knowledgeChecks']),3)
+            self.assertIn(curriculum['sourceEvidenceLabel'],['SOURCED','CONVENTION'])
+            self.assertNotEqual(curriculum.get('performanceEvidenceLabel'),'TESTED')
+            for question in curriculum['knowledgeChecks']:
+                self.assertGreaterEqual(len(question['options']),3)
+                self.assertIn(question['correctIndex'],range(len(question['options'])))
+                self.assertTrue(question['explanation'])
+    def test_part2_has_ten_prerequisite_tracks_and_preserves_nine_tutorials(self):
         data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
-        tutorials=data['learningProgram']['tutorials']
+        tracks=data['tracks'];tutorials=data['learningProgram']['tutorials']
+        self.assertEqual(len(tracks),10)
         self.assertEqual(len(tutorials),9)
+        lesson_ids={x['id'] for x in data['concepts']}
+        mapped=[lesson_id for track in tracks for lesson_id in track.get('sequence',[])]
+        self.assertEqual(len(mapped),82)
+        self.assertEqual(len(set(mapped)),82)
+        self.assertEqual(set(mapped),lesson_ids)
+        track_ids={x['id'] for x in tracks}
+        for track in tracks:
+            self.assertIsInstance(track['readingMinutes'],int)
+            self.assertIsInstance(track['practiceMinutes'],int)
+            self.assertTrue(track['completionCriteria'])
+            for prerequisite in track.get('prerequisites',[]):
+                self.assertIn(prerequisite,track_ids)
+        self.assertTrue(tracks[-1]['tutorialIds'])
         for tutorial in tutorials:
             self.assertGreaterEqual(len(tutorial['steps']),4)
             self.assertTrue(tutorial['deliverable'])
             self.assertGreaterEqual(len(tutorial['review']),3)
-    def test_p3_academy_build_generates_pages_and_tutorials(self):
+            self.assertEqual(tutorial['trackId'],'replay-journaling-evaluation')
+    def test_part2_academy_builder_generates_82_lessons_and_tutorial_compatibility(self):
         lessons=list((ROOT/'dist/ict-futures/academy').glob('*.html'))
         tutorials=list((ROOT/'dist/ict-futures/academy/tutorials').glob('*.html'))
-        self.assertEqual(len(lessons),76)
+        self.assertEqual(len(lessons),82)
         self.assertEqual(len(tutorials),10)
         for page in lessons:
             content=page.read_text()
-            self.assertIn('PRACTICAL EXERCISE',content)
-            self.assertIn('KNOWLEDGE CHECK',content)
-            self.assertIn('REFERENCES & FURTHER STUDY',content)
+            self.assertIn('IDENTIFICATION RULES',content)
+            self.assertIn('HYPOTHETICAL EXAMPLES',content)
+            self.assertIn('PRACTICE TASK',content)
+            self.assertIn('SOURCES AND VIDEO CLASSIFICATION',content)
+            self.assertIn('SOURCE NOTES AND EDITORIAL REVIEW',content)
+            self.assertIn('data-academy-quiz-question',content)
+        for lesson_id in ['listed-futures-market-basics','contract-specs-and-tick-math','futures-expiry-first-notice-and-roll','continuous-contract-mapping','futures-margin-and-position-risk','futures-volume-open-interest']:
+            self.assertTrue((ROOT/'dist/ict-futures/academy'/f'{lesson_id}.html').exists())
+        self.assertTrue((ROOT/'dist/ict-futures/academy/tutorials/index.html').exists())
         self.assertTrue((ROOT/'dist/academy/index.html').exists())
-    def test_p3_progress_sync_is_user_authenticated_and_scoped(self):
+        search_index=json.loads((ROOT/'dist/academy/search-index.json').read_text())
+        self.assertEqual(search_index['version'],2)
+        self.assertEqual(search_index['count'],82)
+        self.assertEqual(len(search_index['lessons']),82)
+        self.assertTrue(all(x['aliases'] and x['instrumentFamilies'] and x['timeframes'] and x['sessions'] and x['sourceEvidenceLabel'] for x in search_index['lessons']))
+    def test_part2_prerequisite_and_resource_registries_are_consistent(self):
+        data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        ids={c['id'] for c in data['concepts']}
+        sources={r['id'] for r in data['curriculum']['resourceRegistry']}
+        for lesson in data['concepts']:
+            curriculum=lesson['curriculum']
+            self.assertTrue(curriculum['aliases'])
+            self.assertTrue(curriculum['purpose'])
+            self.assertTrue(curriculum['instrumentFamilies'])
+            self.assertTrue(curriculum['timeframes'])
+            self.assertTrue(curriculum['sessions'])
+            self.assertTrue(set(curriculum['prerequisiteIds']).issubset(ids))
+            self.assertTrue(set(curriculum['sourceRefs']).issubset(sources))
+        self.assertEqual(len(data['curriculum']['sourceDocument']['reviewedPages']),39)
+        self.assertGreaterEqual(len(data['curriculum']['playbookTraceability']),8)
+    def test_part2_progress_sync_preserves_legacy_and_supports_all_quiz_questions(self):
         js=(ROOT/'assets/academy-learning.js').read_text()
         self.assertIn('finance-os-supabase-session-v1',js)
         self.assertIn('/auth/v1/user',js)
@@ -303,13 +352,18 @@ class BuildTests(unittest.TestCase):
         self.assertIn('progress_data',js)
         self.assertIn('lesson_version',js)
         self.assertIn('ictfos.academy.progress.v2',js)
+        self.assertIn('legacyCompletion',js)
+        self.assertIn('migrateContentVersion',js)
+        self.assertIn('quizAnswers',js)
+        self.assertIn('mergeRemote(root,slug,checks,quizData)',js)
+        merge=js.split('async function mergeRemote')[1].split('function initRoot')[0]
+        self.assertNotIn('checks.length',merge)
+        self.assertNotIn('quiz||',merge)
         migration=(ROOT/'supabase/migrations/20261108144106_add_lesson_progress_data.sql').read_text()
         self.assertIn('add column if not exists progress_data jsonb',migration)
         self.assertIn('add column if not exists lesson_version text',migration)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY',js)
         self.assertNotIn('service_role',js.lower())
-
-
     def test_p4_reproducible_strategy_backtest_engine(self):
         engine=(ROOT/'assets/strategy-backtest-engine.mjs').read_text()
         self.assertIn('ENGINE_VERSION = "p4.1.0"',engine)

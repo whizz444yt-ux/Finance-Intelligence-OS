@@ -13,7 +13,7 @@
   let map={};try{map=JSON.parse(localStorage.getItem("ictfos.academy.progress.v2")||"{}");}catch{}
   const merged=new Set([...done,...Object.entries(map).filter(([id,p])=>p?.status==="completed"&&!id.startsWith("tutorial-")).map(([id])=>id)]);
   const current=[...merged].filter(id=>cards.some(c=>c.querySelector("a")?.getAttribute("href")==="/ict-futures/academy/"+id+".html")).length;
-  if(progress)progress.textContent=current+" / "+cards.length+" lessons completed";
+  if(progress)progress.textContent=current+" / "+cards.length+" current-version lessons completed";
  }
  function filter(){
   const q=(search?.value||"").trim().toLowerCase(),cat=category?.value||"",lvl=level?.value||"";
