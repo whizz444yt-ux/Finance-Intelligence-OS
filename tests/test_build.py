@@ -19,7 +19,10 @@ class BuildTests(unittest.TestCase):
         self.assertGreaterEqual(len(archived_markets['markets']),70)
         self.assertEqual(len(json.loads((ROOT/'ict-futures/data/market-universe.json').read_text())['markets']),15)
         academy=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
-        self.assertEqual(len(academy['concepts']),76)
+        self.assertEqual(len(academy['concepts']),82)
+        self.assertEqual(len(academy['curriculum']['preservedConceptIds']),76)
+        self.assertTrue(set(academy['curriculum']['preservedConceptIds']).issubset({x['id'] for x in academy['concepts']}))
+        self.assertEqual(len(academy['tracks']),10)
         self.assertEqual(len(academy['learningProgram']['tutorials']),9)
         for path in ['legacy/global-research/index.html','legacy/global-research/assets/prediction-markets.js',
                      'legacy/global-research/assets/research-directory.js',
