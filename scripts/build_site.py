@@ -268,53 +268,78 @@ def build():
     body+=f'<section class="content-section"><h2>Contract data quality rules</h2><p>Tick size, tick value, multiplier, expiry, first notice and session hours are reference values only until independently reconciled with the official exchange specification and date-stamped. No broker margin is inferred.</p></section>'
     write(DIST/'markets/index.html',shell('Futures Markets | Futures Intelligence OS','Explore 15 futures families across equity-index, rates, currency, metals, energy and CME Bitcoin futures.',body,'/markets/'))
 
-    # P3 Academy dashboard: all 76 lessons, learning tracks, tutorials and progress.
+    # Part 2 Academy dashboard: ten prerequisite-aware tracks, all stable lessons and tutorials.
     program=academy_data.get('learningProgram',{})
     tutorials=program.get('tutorials',[])
     tracks=academy_data.get('tracks',[])
-    concept_by_name={c.get('name'):c for c in academy}
+    concept_by_id={c.get('id'):c for c in academy}
+    track_by_id={t.get('id'):t for t in tracks}
     track_cards=[]
     for i,t in enumerate(tracks):
-        ids=[concept_by_name[n]['id'] for n in t.get('sequence',[]) if n in concept_by_name]
+        ids=t.get('lessonIds') or [concept_by_id.get(n,{}).get('id') for n in t.get('sequence',[]) if concept_by_id.get(n)]
+        ids=[x for x in ids if x in concept_by_id]
         first=ids[0] if ids else ''
+        lessons_html=''.join(
+            '<li><a href="/ict-futures/academy/'+escape(str(cid),quote=True)+'.html">'+escape(str(concept_by_id[cid].get('name','Lesson')))+' →</a></li>'
+            for cid in ids
+        )
+        prereq_html=''.join('<li>'+escape(str(x))+'</li>' for x in t.get('prerequisites',[]))
+        criteria_html=''.join('<li>'+escape(str(x))+'</li>' for x in t.get('completionCriteria',[]))
         track_cards.append(
-            f'<article class="academy-track-card"><span class="badge">PATH {i+1} · {escape(str(t.get("level","Study")))}</span>'
-            f'<h3>{escape(str(t.get("name","Learning track")))}</h3><p>{escape(str(t.get("description","")))}</p>'
-            f'<p>{len(ids)} sequenced lessons</p>'
-            f'<a href="/ict-futures/academy/{escape(first)}.html">Start path →</a></article>'
+            f'<article class="academy-track-card" data-track-id="{escape(str(t.get("id","")),quote=True)}">'
+            f'<span class="badge">TRACK {i+1} · {escape(str(t.get("level","Study")))}</span>'
+            f'<h3>{escape(str(t.get("name","Learning track")))}</h3>'
+            f'<p>{escape(str(t.get("description","")))}</p>'
+            f'<div class="academy-track-meta"><span><b>{len(ids)}</b> sequenced lessons</span><span>{escape(str(t.get("effortEstimateType","EDITORIAL ESTIMATE")))} · {escape(str(t.get("estimatedEffort","Not estimated")))}</span></div>'
+            f'<div class="academy-track-details"><b>Prerequisites</b><ul>{prereq_html or "<li>None specified</li>"}</ul>'
+            f'<b>Completion criteria</b><ul>{criteria_html or "<li>Review all assigned lessons</li>"}</ul></div>'
+            f'<details class="academy-track-lessons"><summary>View {len(ids)} lessons</summary><ol>{lessons_html}</ol></details>'
+            f'<a href="/ict-futures/academy/{escape(first,quote=True)}.html">Start track →</a></article>'
         )
     tutorial_cards=[]
     for t in tutorials:
         slug=str(t.get('id',''))
         tutorial_cards.append(
-            f'<article class="academy-tutorial-card"><span class="badge">{escape(str(t.get("level","Tutorial")))} · {escape(str(t.get("duration","")))}'
-            f'</span><h3>{escape(str(t.get("title","Guided tutorial")))}</h3><p>{escape(str(t.get("objective","")))}</p>'
-            f'<a href="/ict-futures/academy/tutorials/{escape(slug)}.html">Open tutorial →</a></article>'
+            f'<article class="academy-tutorial-card"><span class="badge">{escape(str(t.get("level","Tutorial")))} · {escape(str(t.get("duration","")))}</span>'
+            f'<h3>{escape(str(t.get("title","Guided tutorial")))}</h3><p>{escape(str(t.get("objective","")))}</p>'
+            f'<a href="/ict-futures/academy/tutorials/{escape(slug,quote=True)}.html">Open tutorial →</a></article>'
         )
     catalog_cards=[]
     for c in academy:
         slug=str(c.get('id',''))
-        searchable=' '.join([str(c.get('name','')),str(c.get('category','')),str(c.get('definition','')),str(c.get('evidence',''))]).lower()
+        spec=c.get('lessonSpec') or {}
+        track_names=[str(track_by_id.get(tid,{}).get('name',tid)) for tid in spec.get('trackIds',[])]
+        searchable=' '.join([
+            str(c.get('name','')),str(c.get('category','')),str(c.get('definition','')),str(c.get('evidence','')),
+            str(spec.get('acronym','')),' '.join(spec.get('aliases') or []),
+            ' '.join(spec.get('instrumentTags') or []),' '.join(spec.get('instrumentFamilies') or []),
+            str(spec.get('timeframeRole','')),str(spec.get('sessionContext','')),
+            str(spec.get('purpose','')),' '.join(track_names)
+        ]).lower()
         catalog_cards.append(
             f'<article class="academy-catalog-card" data-academy-card data-search="{escape(searchable,quote=True)}" '
-            f'data-category="{escape(str(c.get("category","")),quote=True)}" data-level="{escape(str(c.get("level","")),quote=True)}">'
+            f'data-category="{escape(str(c.get("category","")),quote=True)}" data-level="{escape(str(c.get("level","")),quote=True)}" '
+            f'data-evidence="{escape(str(spec.get("evidenceGovernance") or ("NO DATA" if "NO AUDITED" in str(c.get("evidence","")).upper() else "CONVENTION" if "CONVENTION" in str(c.get("evidence","")).upper() or "SUPPLEMENTAL" in str(c.get("evidence","")).upper() else "SOURCED" if "SOURCED" in str(c.get("evidence","")).upper() else "SOURCE REVIEW NEEDED")),quote=True)}">'
             f'<span class="badge">{escape(str(c.get("level","Study")))} · {escape(str(c.get("category","ICT")))}</span>'
             f'<h3>{escape(str(c.get("name","Lesson")))}</h3><p>{escape(str(c.get("definition","")))}</p>'
-            f'<small class="muted">{escape(str(c.get("evidence","")))}</small><p><a href="/ict-futures/academy/{escape(slug)}.html">Study lesson →</a></p></article>'
+            f'<div class="academy-card-meta"><small>{escape(str(c.get("evidence","")))}</small><span>{escape(" · ".join(track_names[:2]))}</span></div>'
+            f'<p><a href="/ict-futures/academy/{escape(slug,quote=True)}.html">Study lesson →</a></p></article>'
         )
     categories=sorted({str(c.get('category','ICT')) for c in academy})
     category_options=''.join(f'<option value="{escape(c,quote=True)}">{escape(c)}</option>' for c in categories)
+    evidence_values=sorted({str((c.get('lessonSpec') or {}).get('evidenceGovernance') or ("NO DATA" if "NO AUDITED" in str(c.get("evidence","")).upper() else "CONVENTION" if "CONVENTION" in str(c.get("evidence","")).upper() or "SUPPLEMENTAL" in str(c.get("evidence","")).upper() else "SOURCED" if "SOURCED" in str(c.get("evidence","")).upper() else "SOURCE REVIEW NEEDED")) for c in academy})
+    evidence_options=''.join(f'<option value="{escape(x,quote=True)}">{escape(x)}</option>' for x in evidence_values)
     body=page_intro('Education library','ICT Academy',
-        'A structured study program with 76 guided concept lessons, 9 practice tutorials, 7 learning tracks, worked examples, replay assignments, knowledge checks and source-labelled references.',
-        f'<div class="stats-row"><b>{len(academy)}</b><span>Guided lessons</span><b>{len(tutorials)}</b><span>Practice tutorials</span><b>{len(tracks)}</b><span>Learning tracks</span></div>')
-    body+='<section class="academy-progress-summary"><strong data-academy-global-progress>0 / 76 lessons completed</strong><span id="academyProgressMeta">Progress is saved on this device and syncs to your account when signed in.</span></section>'
-    body+='<section class="content-section"><div class="section-top"><div><h2>Guided practice tutorials</h2><p>Step-by-step chart workbooks, deliverables and review criteria.</p></div><a class="text-link" href="/ict-futures/academy/tutorials/">Open all tutorials →</a></div><div class="academy-course-grid">'+''.join(tutorial_cards)+'</div></section>'
-    body+='<section class="content-section"><div class="section-top"><div><h2>Seven learning tracks</h2><p>Follow the recommended lesson order from foundational chart reading to advanced research terms.</p></div></div><div class="academy-course-grid">'+''.join(track_cards)+'</div></section>'
-    body+='<section class="content-section"><div class="section-top"><div><h2>76-concept lesson catalogue</h2><p>Each lesson has objectives, walkthrough, worked example, a chart-replay assignment, knowledge check and references.</p></div></div>'
-    body+='<div class="academy-filter"><input id="academySearch" type="search" placeholder="Search concepts, definitions, or evidence labels"><select id="academyCategory"><option value="">All categories</option>'+category_options+'</select><select id="academyLevel"><option value="">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><span class="muted" id="academyCount"></span></div>'
+        'A ten-track futures learning curriculum with 76 preserved concept IDs, nine guided tutorials, prerequisite guidance, structured lesson specifications and transparent source/evidence labels. Missing chart examples and execution rules are marked for editorial completion rather than invented.',
+        f'<div class="stats-row"><b>{len(academy)}</b><span>Preserved lessons</span><b>{len(tutorials)}</b><span>Guided tutorials</span><b>{len(tracks)}</b><span>Learning tracks</span><b>{len(academy_data.get("resourceRegistry",[]))}</b><span>Registered sources</span></div>')
+    body+='<section class="academy-progress-summary"><strong data-academy-global-progress>0 / 76 lessons completed</strong><span id="academyProgressMeta">Progress remains keyed to stable lesson IDs. Sign in to sync with your account.</span></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>Learning roadmap</h2><p>Tracks identify editorial effort estimates, prerequisites and completion criteria. Track sequencing is an Academy curriculum convention, not a universal ICT rule.</p></div></div><div class="academy-course-grid academy-track-grid">'+''.join(track_cards)+'</div></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>Guided practice tutorials</h2><p>Existing tutorial identifiers and routes are retained. Each workbook contains a task, sequence, deliverable and review criteria.</p></div><a class="text-link" href="/ict-futures/academy/tutorials/">Open all tutorials →</a></div><div class="academy-course-grid">'+''.join(tutorial_cards)+'</div></section>'
+    body+='<section class="content-section"><div class="section-top"><div><h2>76-concept lesson catalogue</h2><p>Search by concept, acronym, category, track, source-listed instrument and supplied context tags. Unsupported dimensions remain explicitly unmapped.</p></div></div>'
+    body+='<div class="academy-filter"><input id="academySearch" type="search" aria-label="Search ICT lessons" placeholder="Search concept, acronym, instrument, session or track"><select id="academyCategory" aria-label="Filter by category"><option value="">All categories</option>'+category_options+'</select><select id="academyLevel" aria-label="Filter by skill level"><option value="">All levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><select id="academyEvidence" aria-label="Filter by evidence class"><option value="">All evidence classes</option>'+evidence_options+'</select><span class="muted" id="academyCount" aria-live="polite"></span></div>'
     body+='<div class="academy-catalog-grid" id="academyCatalog">'+''.join(catalog_cards)+'</div></section>'
-    body+='<section class="content-section"><h2>Reference standards</h2><p>Official ICT uploads are linked directly only where the source catalogue already verifies the concept match. Other YouTube links are topic searches for discovery. CME and CFTC references provide general market mechanics and risk education; they are not ICT certification or proof of strategy edge.</p><div class="source-notes"><a href="https://www.youtube.com/@InnerCircleTrader" target="_blank" rel="noopener noreferrer">Official ICT channel ↗</a><a href="https://www.youtube.com/@InnerCircleTrader/playlists" target="_blank" rel="noopener noreferrer">Official ICT playlists ↗</a><a href="https://www.cmegroup.com/education/courses/trade-and-risk-management" target="_blank" rel="noopener noreferrer">CME risk education ↗</a><a href="https://www.cftc.gov/LearnAndProtect" target="_blank" rel="noopener noreferrer">CFTC customer education ↗</a></div></section>'
-    write(DIST/'academy/index.html',shell('ICT Academy | Futures Intelligence OS','76 complete concept lessons, guided ICT tutorials, chart exercises, knowledge checks, progress tracking and source references.',body,'/academy/', '<script defer src="/assets/academy-catalog.js"></script>'))
+    body+='<section class="content-section"><h2>Evidence and learning policy</h2><p>“SOURCED” means the supplied source/claim mapping is recorded, not that the concept predicts price. “CONVENTION” marks practitioner terminology or synthesis. “NO DATA” means independently audited public performance evidence was not located. “HYPOTHESIS” requires a testable rule. “TESTED” is reserved for a reproducible linked test artifact with costs, dates, sample size and out-of-sample results.</p><p>No supplied public evidence establishes a universally best ICT model or a profitable futures edge. Descriptive popularity, spot-gold examples or BTC examples must not be represented as verified futures performance.</p><div class="source-notes"><a href="https://www.youtube.com/@InnerCircleTrader" target="_blank" rel="noopener noreferrer">Official ICT channel ↗</a><a href="https://www.youtube.com/@InnerCircleTrader/playlists" target="_blank" rel="noopener noreferrer">Official ICT playlists · discovery ↗</a><a href="https://www.cmegroup.com/education/courses/trade-and-risk-management" target="_blank" rel="noopener noreferrer">CME risk education ↗</a><a href="https://www.cftc.gov/LearnAndProtect" target="_blank" rel="noopener noreferrer">CFTC customer education ↗</a></div></section>'
+    write(DIST/'academy/index.html',shell('ICT Academy | Futures Intelligence OS','Ten-track ICT Futures learning roadmap, 76 preserved lessons, nine tutorials, practice exercises and source governance.',body,'/academy/', '<script defer src="/assets/academy-catalog.js"></script>'))
 
     # Macro indicators: official BLS historical observations via the edge gateway.
     body=page_intro('Official macro data','US inflation & labour indicators','Five series from the US Bureau of Labor Statistics Public Data API v1. Values are published historical observations with their own index bases and units; they are not live market quotes or a complete economic calendar.')
