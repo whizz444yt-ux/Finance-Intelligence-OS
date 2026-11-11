@@ -292,8 +292,47 @@ class BuildTests(unittest.TestCase):
             content=page.read_text()
             self.assertIn('PRACTICAL EXERCISE',content)
             self.assertIn('KNOWLEDGE CHECK',content)
-            self.assertIn('REFERENCES & FURTHER STUDY',content)
+            self.assertIn('SOURCE REGISTRY',content)
         self.assertTrue((ROOT/'dist/academy/index.html').exists())
+    def test_part2_ten_tracks_cover_all_76_existing_lesson_ids(self):
+        data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        lessons=data['concepts']
+        tracks=data['tracks']
+        ids=[x['id'] for x in lessons]
+        self.assertEqual(len(ids),76)
+        self.assertEqual(len(set(ids)),76)
+        self.assertEqual(len(tracks),10)
+        self.assertTrue(all(t['id'] and t['prerequisites'] is not None and t['estimatedEffort'] and t['effortEstimateType']=='EDITORIAL ESTIMATE' and t['completionCriteria'] for t in tracks))
+        core={lesson_id for t in tracks[:8] for lesson_id in t['lessonIds']}
+        self.assertEqual(core,set(ids))
+        known={t['id'] for t in tracks}
+        for lesson in lessons:
+            spec=lesson['lessonSpec']
+            self.assertIn(spec['primaryTrackId'],known)
+            self.assertTrue(set(spec['trackIds']).issubset(known))
+
+    def test_part2_resource_registry_and_video_verification_are_source_disciplined(self):
+        data=json.loads((ROOT/'ict-futures/data/ict-academy.json').read_text())
+        registry=data['resourceRegistry']
+        by_url={x['url']:x for x in registry}
+        self.assertEqual(len(by_url),len(registry))
+        self.assertTrue(all(x['url'].startswith('https://') and x['publisher'] and x['classification'] and x['verificationStatus'] and 'linkHealth' in x for x in registry))
+        verified={x['url'] for x in registry if x['classification']=='original_ict_upload' and x['verificationStatus']=='verified'}
+        self.assertTrue(verified)
+        self.assertTrue(all(ref['url'] in verified for lesson in data['concepts'] for ref in lesson['learning']['references'].get('officialVideos',[])))
+        for video in data['featuredVideos']:
+            self.assertEqual(bool(video.get('verifiedOfficial')),video['url'] in verified)
+
+    def test_part2_progress_merge_uses_current_lesson_scope(self):
+        js=(ROOT/'assets/academy-learning.js').read_text()
+        start=js.index('async function mergeRemote')
+        end=js.index('function initRoot',start)
+        merge=js[start:end]
+        self.assertIn('const checks=[...root.querySelectorAll("[data-exercise-check]")]',merge)
+        self.assertIn('quiz=root.querySelector("[data-academy-quiz]")',merge)
+        self.assertIn('remoteDone.map(Number)',merge)
+        self.assertIn('requirementsMet=allRemoteSteps&&(!quiz||Number(remote.score)>=100)',merge)
+
     def test_p3_progress_sync_is_user_authenticated_and_scoped(self):
         js=(ROOT/'assets/academy-learning.js').read_text()
         self.assertIn('finance-os-supabase-session-v1',js)
